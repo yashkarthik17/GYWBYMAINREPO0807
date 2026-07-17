@@ -1,0 +1,46 @@
+[
+  {
+    "id": "3a4bd662-0eef-449a-9129-3fdd3e8bb25d",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_022101_3a4bd662-0eef-449a-9129-3fdd3e8bb25d.png",
+    "created_at": 1784168461.944586,
+    "params": {
+      "width": 2048,
+      "height": 1360,
+      "prompt": "Isometric glossy vinyl-toy diorama floating as a small rounded island on a plain solid sky blue #5BB8F0 background with a soft contact shadow beneath it. Smooth shiny plastic vinyl shading, soft rim light, collectible designer-toy look, tilt-shift miniature. Cohesive color palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Highly detailed, centered composition, absolutely no text, no letters, no numbers, no logos.\nSubject: a small dull birthday party diorama drained of celebration inside a plain beige living room — a round table holding a plain flat white sheet cake with a single unlit candle, three sagging half-deflated gray and beige balloons drooping on strings, one limp paper streamer, empty beige folding chairs, and a small bored birthday kid toy figure sitting alone at the table with chin in hands; the entire room interior rendered in muted grays and beiges, quiet, tidy and joyless, centered on the cake table.",
+      "medias": [
+        {
+          "data": {
+            "id": "0aae6fae-09f8-49c8-b5dc-706dfd081120",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/0aae6fae-09f8-49c8-b5dc-706dfd081120.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "ee83dac2-387c-4d73-9379-58debd36f48b",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/ee83dac2-387c-4d73-9379-58debd36f48b_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "2b0fbb93-07e3-48aa-961b-dbf2fb8f7cab",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/2b0fbb93-07e3-48aa-961b-dbf2fb8f7cab.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "3:2",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "87c34391-cdae-46bb-977a-aeb3f83ee962",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_023137_87c34391-cdae-46bb-977a-aeb3f83ee962.mp4",
+    "created_at": 1784169097.323206,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. The camera smoothly pulls up and back out of the golden star-shaped cloud clubhouse, rising above the puffy clouds, then dives forward and down out of the sky, gliding across the connected miniature world and arriving above the beige living room diorama just as the small hooded Crasher characters streak toward it on streamer trails, beginning to descend toward its open roof. One connected miniature vinyl-toy world, seamless flowing aerial transition. Glossy vinyl-toy miniature diorama world, smooth shiny plastic shading, soft rim light, tilt-shift miniature, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth graceful slow motion. No text, no captions.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "90ba5df7-93ca-4e7b-9ef1-5f80e6bbec1e",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/90ba5df7-93ca-4e7b-9ef1-5f80e6bbec1e.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "1cbd4f04-d8a9-4364-bf19-0a715a0990fb",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/1cbd4f04-d8a9-4364-bf19-0a715a0990fb.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

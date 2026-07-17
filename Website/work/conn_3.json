@@ -1,0 +1,47 @@
+[
+  {
+    "id": "335dd69a-7d40-4715-94e6-11d6d1fed5d4",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_024319_335dd69a-7d40-4715-94e6-11d6d1fed5d4.mp4",
+    "created_at": 1784169799.635432,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. The camera smoothly pulls up and back out of the living room mid-crash, rising into the sky with confetti drifting past, then glides forward in a gentle arc across the connected miniature world toward the same room now fully transformed into a glowing rainbow birthday party, and ends HIGH AND FAR from it: the final frame shows the whole party house tiny and distant, small in the center of the frame surrounded by open sky blue background, the camera still drifting slowly toward it. One connected miniature vinyl-toy world, seamless flowing aerial transition. Glossy vinyl-toy miniature diorama world, smooth shiny plastic shading, soft rim light, tilt-shift miniature, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth graceful slow motion. No text, no captions.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "70f4a72f-7a82-46ac-957b-6d1818c6b0a3",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/70f4a72f-7a82-46ac-957b-6d1818c6b0a3.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "de4baa5a-293a-4218-a553-6a8d8e8f1b71",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/de4baa5a-293a-4218-a553-6a8d8e8f1b71.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

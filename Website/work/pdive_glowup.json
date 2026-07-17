@@ -1,0 +1,39 @@
+[
+  {
+    "id": "1f1337f9-1be4-4f35-9386-39d875c10a44",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_041520_1f1337f9-1be4-4f35-9386-39d875c10a44.mp4",
+    "created_at": 1784175320.547138,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Begin high and far, looking down at the fully transformed birthday party diorama from outside like a tiny model. The camera slowly glides forward and descends toward it, sweeping in toward the towering five-layer rainbow cake at the center, as if flying inside. As the camera pushes in, the roof and upper structure gently lift and open away to reveal the party in full swing — balloon arches, a checkered dance floor with a glossy disco ball, the birthday kid figure dancing with the three hooded Crasher characters, garlands and confetti everywhere. Glossy vinyl-toy miniature diorama world, smooth shiny plastic shading, soft rim light, tilt-shift miniature, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth, graceful, slow motion, subtle parallax. No text, no captions. Tall vertical portrait framing throughout, the scene always fully composed within the tall frame.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "2d6332b7-647c-4814-8233-6acc44b4cdf3",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/2d6332b7-647c-4814-8233-6acc44b4cdf3.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

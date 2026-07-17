@@ -1,0 +1,46 @@
+[
+  {
+    "id": "fc148621-f442-48ec-966f-f188e52480ef",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_022059_fc148621-f442-48ec-966f-f188e52480ef.png",
+    "created_at": 1784168459.199356,
+    "params": {
+      "width": 2048,
+      "height": 1360,
+      "prompt": "Isometric glossy vinyl-toy diorama floating as a small rounded island on a plain solid sky blue #5BB8F0 background with a soft contact shadow beneath it. Smooth shiny plastic vinyl shading, soft rim light, collectible designer-toy look, tilt-shift miniature. Cohesive color palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Highly detailed, centered composition, absolutely no text, no letters, no numbers, no logos.\nSubject: the same living room diorama fully transformed into the best birthday party ever — a towering five-layer rainbow cake in star gold, crash pink, party purple and confetti green at the center, balloon arches curving over the room, a small checkered dance floor with a glossy disco ball, wrapped gifts piled high, garlands and confetti everywhere; the small birthday kid toy figure dances in the middle with the three Crasher characters — chibi round-hooded toy figures in orange zigzag, blue diamond and green paint-splatter onesies with red-and-white striped cone party hats — everything glossy, saturated and bursting with celebration.",
+      "medias": [
+        {
+          "data": {
+            "id": "59ac5816-6146-4cbd-afda-bbeb7ea2900f",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/59ac5816-6146-4cbd-afda-bbeb7ea2900f.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "6be17564-2763-42e8-b094-418249f807f3",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/6be17564-2763-42e8-b094-418249f807f3_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "d7e3a84b-370d-4577-9a16-b4c7b529c5b5",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/d7e3a84b-370d-4577-9a16-b4c7b529c5b5.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "3:2",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

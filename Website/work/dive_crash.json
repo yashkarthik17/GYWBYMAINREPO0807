@@ -1,0 +1,39 @@
+[
+  {
+    "id": "c37fe64e-5ad1-4297-83c3-58583cbb92bf",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_022629_c37fe64e-5ad1-4297-83c3-58583cbb92bf.mp4",
+    "created_at": 1784168789.038346,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. Begin high and far, looking down at the beige living room diorama at the exact moment of the joyful party crash, from outside like a tiny model. The camera slowly glides forward and descends toward it, flying in through the open roof amid drifting confetti, sweeping in toward the cake table where the small birthday kid figure leaps up with arms raised while the three hooded Crasher characters ride streamer trails in through the window, confetti cannons firing, a wave of bright gold, pink, purple and green color flooding across the muted beige room. Glossy vinyl-toy miniature diorama world, smooth shiny plastic shading, soft rim light, tilt-shift miniature, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth, graceful, slow motion, subtle parallax. No text, no captions.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "65ed2bda-897e-4995-933c-fde627502d15",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/65ed2bda-897e-4995-933c-fde627502d15.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

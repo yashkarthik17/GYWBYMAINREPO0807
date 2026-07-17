@@ -1,0 +1,39 @@
+[
+  {
+    "id": "56f3a588-cf40-42e7-b1c9-41dfe719b8c0",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_041518_56f3a588-cf40-42e7-b1c9-41dfe719b8c0.mp4",
+    "created_at": 1784175318.969632,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Begin high and far, looking down at the whole golden star-shaped cloud clubhouse diorama from outside like a tiny model. The camera slowly glides forward and descends through the puffy white clouds toward it, sweeping in toward the big round party-radar dish where Starry the golden star character stands pointing, as if flying inside. As the camera pushes in, the roof of the star clubhouse gently lifts and opens away to reveal the warm interior where the small hooded Crasher characters load confetti cannons and stack gifts. Glossy vinyl-toy miniature diorama world, smooth shiny plastic shading, soft rim light, tilt-shift miniature, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth, graceful, slow motion, subtle parallax. No text, no captions. Tall vertical portrait framing throughout, the scene always fully composed within the tall frame.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "456d0476-37d8-4915-8343-b98a9fee8441",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/456d0476-37d8-4915-8343-b98a9fee8441.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

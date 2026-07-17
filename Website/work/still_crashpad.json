@@ -1,0 +1,46 @@
+[
+  {
+    "id": "b452d1e5-eb74-467e-9a43-cdbe6cd9b649",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_022101_b452d1e5-eb74-467e-9a43-cdbe6cd9b649.png",
+    "created_at": 1784168461.552116,
+    "params": {
+      "width": 2048,
+      "height": 1360,
+      "prompt": "Isometric glossy vinyl-toy diorama floating as a small rounded island on a plain solid sky blue #5BB8F0 background with a soft contact shadow beneath it. Smooth shiny plastic vinyl shading, soft rim light, collectible designer-toy look, tilt-shift miniature. Cohesive color palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Highly detailed, centered composition, absolutely no text, no letters, no numbers, no logos.\nSubject: Starry's cloud headquarters — a glossy golden star-shaped clubhouse perched on puffy white vinyl clouds; at its center Starry, a big cheerful golden five-pointed star character with a happy cartoon face, blue eyes, a pink polka-dot party hat, rainbow checkered arms and legs, white cartoon gloves and round yellow boots, points at a big round party-radar dish shaped like a spinning cake; around him three small Crasher characters — chibi round-hooded toddler-sized toy figures in patterned onesies (one orange zigzag, one blue diamond, one green paint-splatter) wearing red-and-white striped cone party hats — load glossy confetti cannons and stack wrapped gift boxes onto a star-shaped launch sled at the edge of the cloud.",
+      "medias": [
+        {
+          "data": {
+            "id": "069aa48b-5050-4ea0-828f-0e4c09f2afed",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/069aa48b-5050-4ea0-828f-0e4c09f2afed.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "61a8b68e-1197-4ce8-8863-0daec6b8d9c4",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/61a8b68e-1197-4ce8-8863-0daec6b8d9c4_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "59b834cb-e19d-4b08-9177-a78e1e69486e",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/59b834cb-e19d-4b08-9177-a78e1e69486e.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "3:2",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

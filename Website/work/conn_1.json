@@ -1,0 +1,47 @@
+[
+  {
+    "id": "deb6f9f3-b2fe-4637-833f-04459c741f24",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_023137_deb6f9f3-b2fe-4637-833f-04459c741f24.mp4",
+    "created_at": 1784169097.146015,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. The camera smoothly pulls up and back out of the dull beige birthday party room, rising into the sky, then glides forward across the connected miniature world and up through puffy white vinyl clouds, arriving above Starry's golden star-shaped cloud clubhouse, beginning to descend toward it. One connected miniature vinyl-toy world, seamless flowing aerial transition. Glossy vinyl-toy miniature diorama world, smooth shiny plastic shading, soft rim light, tilt-shift miniature, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth graceful slow motion. No text, no captions.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "cf8098c8-94e0-49eb-84f3-2f5f0ad063f3",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/cf8098c8-94e0-49eb-84f3-2f5f0ad063f3.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "2fbd2ba0-ff2d-4cea-9324-d7c6fff6084b",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/2fbd2ba0-ff2d-4cea-9324-d7c6fff6084b.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

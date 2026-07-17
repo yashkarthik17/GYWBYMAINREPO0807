@@ -1,0 +1,39 @@
+[
+  {
+    "id": "74e677cd-78b5-4130-b4ac-d76c54fea9fa",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_022626_74e677cd-78b5-4130-b4ac-d76c54fea9fa.mp4",
+    "created_at": 1784168786.848532,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. Begin high and far, looking down at the whole golden star-shaped cloud clubhouse diorama from outside like a tiny model. The camera slowly glides forward and descends through the puffy white clouds toward it, sweeping in toward the big round party-radar dish where Starry the golden star character stands pointing, as if flying inside. As the camera pushes in, the roof of the star clubhouse gently lifts and opens away to reveal the warm interior where the small hooded Crasher characters load confetti cannons and stack gifts. Glossy vinyl-toy miniature diorama world, smooth shiny plastic shading, soft rim light, tilt-shift miniature, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth, graceful, slow motion, subtle parallax. No text, no captions.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "bb59a8c2-a733-4976-a1db-8a995f41d588",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/bb59a8c2-a733-4976-a1db-8a995f41d588.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

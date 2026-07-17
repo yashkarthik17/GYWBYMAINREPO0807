@@ -1,0 +1,47 @@
+[
+  {
+    "id": "3ef69064-6e01-4006-9f40-da2d3faa8b97",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_044000_3ef69064-6e01-4006-9f40-da2d3faa8b97.mp4",
+    "created_at": 1784176800.896525,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. The camera smoothly pulls up and back out of the golden star-shaped cloud clubhouse, rising above the puffy clouds, then dives forward and down through open empty sky — nothing below but soft sky blue background and a few drifting white vinyl clouds, NO landscape, NO hills, NO ground — and arrives high above the small beige living room house diorama floating on its own cloud, the house small and distant in the frame, the camera still descending gently toward it. One connected miniature vinyl-toy world, seamless flowing aerial transition. Glossy vinyl-toy miniature diorama world, smooth shiny plastic shading, soft rim light, tilt-shift miniature, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth graceful slow motion. No text, no captions. Tall vertical portrait framing throughout, the scene always fully composed within the tall frame.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "ae94901e-700a-4859-9851-7ce2f7ff234e",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/ae94901e-700a-4859-9851-7ce2f7ff234e.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "08e0c8c2-45ae-491a-8211-7bb7aaa6b47a",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/08e0c8c2-45ae-491a-8211-7bb7aaa6b47a.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

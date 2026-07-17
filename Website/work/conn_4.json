@@ -1,0 +1,47 @@
+[
+  {
+    "id": "75f8d63f-a722-49dd-8e3a-61ae7f679156",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_023137_75f8d63f-a722-49dd-8e3a-61ae7f679156.mp4",
+    "created_at": 1784169097.270571,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. The camera smoothly pulls up and back out of the glowing rainbow birthday party room, rising into the soft sky, and the miniature world gently dissolves toward a celebration stage floating in soft sky blue space, where Starry, the big golden five-pointed star character, takes a joyful bow surrounded by the three small hooded Crasher characters tossing confetti, the camera arriving in front of the stage and beginning to descend toward Starry. One connected miniature vinyl-toy world, seamless flowing aerial transition. Glossy vinyl-toy miniature diorama world, smooth shiny plastic shading, soft rim light, tilt-shift miniature, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth graceful slow motion. No text, no captions.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "8b8d89ee-a022-4af7-9a30-8d4a611049ad",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/8b8d89ee-a022-4af7-9a30-8d4a611049ad.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "6fa415b2-a5a0-44a8-8d59-43c302b03329",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/6fa415b2-a5a0-44a8-8d59-43c302b03329.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

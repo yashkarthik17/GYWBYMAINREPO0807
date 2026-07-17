@@ -1,0 +1,46 @@
+[
+  {
+    "id": "5066461e-a8ec-42fd-ac65-4664a6ad4584",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260716_041148_5066461e-a8ec-42fd-ac65-4664a6ad4584.png",
+    "created_at": 1784175108.310333,
+    "params": {
+      "width": 1360,
+      "height": 2048,
+      "prompt": "Isometric glossy vinyl-toy diorama floating as a small rounded island on a plain solid sky blue #5BB8F0 background with a soft contact shadow beneath it. Smooth shiny plastic vinyl shading, soft rim light, collectible designer-toy look, tilt-shift miniature. Cohesive color palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Highly detailed, centered composition, absolutely no text, no letters, no numbers, no logos.\r\nSubject: a celebration stage diorama — Starry, a big cheerful golden five-pointed star character with a happy cartoon face, blue eyes, a pink polka-dot party hat, rainbow checkered arms and legs, white cartoon gloves and round yellow boots, stands front and center on a small round stage of gold, pink and blue rings, taking a joyful bow with one arm spread wide; around him the three small Crasher characters — chibi round-hooded toy figures in orange zigzag, blue diamond and green paint-splatter patterned onesies with red-and-white striped cone party hats — toss confetti and hold balloon strings; wrapped gift boxes and a few floating balloons in star gold, crash pink and party purple complete the scene, Starry kept perfectly centered. Tall vertical portrait composition: the whole diorama island fully visible and centered in the tall frame, with generous empty sky blue background above and below it, nothing cropped at the edges.",
+      "medias": [
+        {
+          "data": {
+            "id": "0c854bf3-576d-4f9c-95c0-40428975c31c",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/0c854bf3-576d-4f9c-95c0-40428975c31c.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "d2624ca2-8274-4b56-8b55-1a3a709dd086",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/d2624ca2-8274-4b56-8b55-1a3a709dd086_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "a57bbf27-467d-47eb-8d4e-2d881745cb98",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/a57bbf27-467d-47eb-8d4e-2d881745cb98.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "2:3",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]
