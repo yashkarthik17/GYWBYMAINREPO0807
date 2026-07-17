@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Glad You Were Born Today — the world of Starry &amp; the Crashers</title>
+  <meta name="description" content="Scroll to fly through the world of Starry and the Crashers — the crew that crashes boring birthday parties and makes them unforgettable." />
+  <!-- Runs before first paint: when JS is on, the crawlable SEO block below never
+       flashes (the engine replaces it). Crawlers and no-JS visitors still get it. -->
+  <script>document.documentElement.classList.add('sw-js');</script>
+  <style>
+    :root, .sw-root {
+      --sw-bg: #5BB8F0;          /* == the scene background colour */
+      --sw-ink: #1D2B50;
+      --sw-ink-soft: #3E5580;
+      --sw-accent: #E84A9B;      /* per-section accents override this at runtime */
+    }
+    .sw-js [data-sw-seo] { display: none; }
+    /* pre-mount canvas: page shows the sky colour, not white, while the engine loads */
+    html, body { margin: 0; background: var(--sw-bg); }
+  </style>
+</head>
+<body>
+  <div id="top"></div>
+  <div id="world">
+    <!-- Static SEO copy — the only crawlable text; the engine hides it on mount. -->
+    <section data-sw-seo>
+      <h1>Another birthday. Another beige party.</h1>
+      <p>Glad You Were Born Today is the world of Starry and the Crashers — the crew that crashes boring birthday parties and rebuilds them bigger, brighter, and better.</p>
+      <h2>Meanwhile, above the clouds — Somebody call the Crashers.</h2>
+      <p>From a star-shaped clubhouse in the clouds, Starry and the crew watch the party radar and gear up the confetti cannons.</p>
+      <h2>3… 2… 1… — This party is officially crashed.</h2>
+      <p>The Crashers burst in on streamer trails, and color floods the room from the moment they land.</p>
+      <h2>Minutes later — Now THAT'S a birthday.</h2>
+      <p>They don't just crash the party — they rebuild it: cake tower, balloon arches, dance floor.</p>
+      <h2>From Starry &amp; the Crashers — Glad you were born today.</h2>
+      <p>Bring the Crashers to your next party.</p>
+      <p><a href="store.html">Shop the party store</a> · <a href="#top">Play the story again</a></p>
+    </section>
+  </div>
+
+  <script src="scrub-engine.js"></script>
+  <script src="music.js"></script>
+  <script>
+    // Phone-class screens (same rule the engine uses for clip tiering) get the
+    // portrait stills, so stills-fallback mode (Low Power Mode, data-saver,
+    // reduced-motion) shows portrait art instead of cropped landscape.
+    var SW_PHONE = Math.min(screen.width, screen.height) <= 600;
+    function sw_still(name) { return 'assets/' + name + (SW_PHONE ? '-p' : '') + '.webp'; }
+    mountScrollWorld(document.getElementById('world'), {
+      brand: { name: 'Glad You Were Born Today', href: '#top' },
+      // when the logo file lands: brand: { name: '…', href: '#top', logo: 'assets/logo.png' }
+      cta: { label: 'Shop the Party', href: 'store.html' },
+      hint: 'scroll to crash the party',
+      crossfade: 0.15,
+      diveScroll: 1.3,
+      connScroll: 0.9,
+      // Phones scrub ONE stitched clip (single decoder — iPhones cap concurrent video
+      // decoders and silently blank clips past the cap). Spans come from
+      // work/stitch_journey.py — regenerate them if the clips are re-rolled.
+      journeyMobile: {
+        clip: 'assets/vid/journey-m.mp4',
+        poster: 'assets/beige-poster-m.webp',
+        spans: [[0.0, 7.842], [7.842, 12.733], [12.733, 20.5], [20.5, 25.392], [25.392, 33.158], [33.158, 36.8], [36.8, 44.567], [44.567, 49.458], [49.458, 57.283]],
+      },
+      sections: [
+        {
+          id: 'beige', label: 'The Beige Party',
+          still: sw_still('beige'),
+          poster: 'assets/beige-poster.webp',
+          clip: 'assets/vid/beige.mp4',
+          clipMobile: 'assets/vid/beige-m.mp4',
+          posterMobile: 'assets/beige-poster-m.webp',
+          accent: '#8B95A6',
+          scroll: 1.5, linger: 0.3,
+          eyebrow: 'Every day, somewhere…',
+          title: 'Another birthday. Another beige party.',
+          body: 'Boring cake, quiet room, zero sparkle.',
+          tags: ['Deflated balloons', 'Store-bought cake'],
+        },
+        {
+          id: 'crashpad', label: 'The Crash Pad',
+          still: sw_still('crashpad'),
+          poster: 'assets/crashpad-poster.webp',
+          clip: 'assets/vid/crashpad.mp4',
+          clipMobile: 'assets/vid/crashpad-m.mp4',
+          posterMobile: 'assets/crashpad-poster-m.webp',
+          accent: '#FFC93C',
+          eyebrow: 'Meanwhile, above the clouds',
+          title: 'Somebody call the Crashers.',
+          body: 'Starry and the crew spot the signal and gear up.',
+          tags: ['Party radar', 'Confetti cannons'],
+        },
+        {
+          id: 'crash', label: 'The Crash',
+          still: sw_still('crash'),
+          poster: 'assets/crash-poster.webp',
+          clip: 'assets/vid/crash.mp4',
+          clipMobile: 'assets/vid/crash-m.mp4',
+          posterMobile: 'assets/crash-poster-m.webp',
+          accent: '#E84A9B',
+          eyebrow: '3… 2… 1…',
+          title: 'This party is officially crashed.',
+          body: 'Color spreads from the moment they land.',
+          tags: ['Confetti storm', 'Streamer trails'],
+        },
+        {
+          id: 'glowup', label: 'The Glow-Up',
+          still: sw_still('glowup'),
+          poster: 'assets/glowup-poster.webp',
+          clip: 'assets/vid/glowup.mp4',
+          clipMobile: 'assets/vid/glowup-m.mp4',
+          posterMobile: 'assets/glowup-poster-m.webp',
+          accent: '#8B5CF6',
+          scroll: 1.6, linger: 0.4,
+          eyebrow: 'Minutes later',
+          title: 'Now THAT’S a birthday.',
+          body: 'The Crashers don’t just crash — they rebuild the party bigger.',
+          tags: ['Cake tower', 'Balloon arch', 'Dance floor'],
+        },
+        {
+          id: 'finale', label: 'Starry’s Send-Off',
+          still: sw_still('finale'),
+          poster: 'assets/finale-poster.webp',
+          clip: 'assets/vid/finale.mp4',
+          clipMobile: 'assets/vid/finale-m.mp4',
+          posterMobile: 'assets/finale-poster-m.webp',
+          accent: '#FFC93C',
+          scroll: 1.8, linger: 0.5,
+          eyebrow: 'From Starry & the Crashers',
+          title: 'Glad you were born today.',
+          body: 'Bring the Crashers to your next party.',
+          tags: [],
+          cta: { primary: { label: 'Bring the Crashers', href: 'store.html' },
+                 secondary: { label: 'Play it again', href: '#top' } },
+        },
+      ],
+      connectors: [
+        'assets/vid/conn1.mp4',
+        'assets/vid/conn2.mp4',
+        'assets/vid/conn3.mp4',
+        'assets/vid/conn4.mp4',
+      ],
+      connectorsMobile: [
+        'assets/vid/conn1-m.mp4',
+        'assets/vid/conn2-m.mp4',
+        'assets/vid/conn3-m.mp4',
+        'assets/vid/conn4-m.mp4',
+      ],
+    });
+  </script>
+</body>
+</html>

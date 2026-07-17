@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>The Party Store — Glad You Were Born Today</title>
   <meta name="description" content="Party kits, plush, balloon arches, and confetti cannons from Starry &amp; the Crashers — everything they bring through the door, packed up and shipped to yours." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #5BB8F0;
@@ -14,7 +17,11 @@
       --yellow: #FFC93C;
       --purple: #8B5CF6;
       --card: #FFFFFF;
+      --gold: #C9A227;
+      --gold-deep: #B8862E;
+      --ivory: #FFFDF6;
       --font-display: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+      --font-royal: "Cormorant Garamond", Georgia, serif;
       --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
     }
     * { box-sizing: border-box; }
@@ -34,7 +41,14 @@
     .dot--c { left: 68vw; top: 70vh; background: var(--purple); animation-delay: -14s; }
     @keyframes drift { 0% { transform: translateY(6vh); opacity: 0; } 15% { opacity: .35; }
                        85% { opacity: .3; } 100% { transform: translateY(-14vh); opacity: 0; } }
-    @media (prefers-reduced-motion: reduce) { .dot { animation: none; opacity: .2; } }
+    .cloud { position: fixed; z-index: 0; pointer-events: none; border-radius: 50%;
+             background: radial-gradient(closest-side, rgba(255,255,255,.8), rgba(255,255,255,0));
+             filter: blur(2px); animation: cloud-drift 48s linear infinite; }
+    .cloud--a { width: 42vw; height: 15vh; left: -6vw; top: 12vh; }
+    .cloud--b { width: 34vw; height: 12vh; left: 66vw; top: 44vh; animation-delay: -20s; animation-duration: 58s; }
+    .cloud--c { width: 28vw; height: 10vh; left: 24vw; top: 78vh; animation-delay: -36s; animation-duration: 66s; }
+    @keyframes cloud-drift { 0% { transform: translateX(0); } 50% { transform: translateX(5vw); } 100% { transform: translateX(0); } }
+    @media (prefers-reduced-motion: reduce) { .dot { animation: none; opacity: .2; } .cloud { animation: none; } }
 
     .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 48px); }
 
@@ -52,8 +66,13 @@
     .hero { padding: clamp(30px, 7vh, 84px) 0 clamp(22px, 4vh, 44px); max-width: 640px; }
     .hero__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: .8rem;
                      letter-spacing: .16em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 70%, var(--pink)); }
+    .hero__eyebrow::before { content: "♛"; display: inline-block; margin-right: 8px;
+                             background: linear-gradient(165deg, #f4dd97, var(--gold-deep));
+                             -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .hero h1 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em;
                font-size: clamp(2.4rem, 6.5vw, 4rem); line-height: 1.02; margin: 12px 0 0; }
+    .hero__rule { width: 128px; height: 2px; margin-top: 18px; border: 0;
+                  background: linear-gradient(90deg, var(--gold), transparent); }
     .hero p { margin-top: 16px; font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.55;
               color: color-mix(in srgb, var(--ink) 80%, var(--ink-soft)); max-width: 46ch; }
 
@@ -76,12 +95,23 @@
               font-family: var(--font-display); font-weight: 700; font-size: .72rem; letter-spacing: .1em;
               text-transform: uppercase; color: #fff; background: var(--acc, var(--pink));
               box-shadow: 0 4px 12px color-mix(in srgb, var(--acc, var(--pink)) 50%, transparent); }
-    .card__body { padding: 18px 20px 20px; }
-    .card h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; margin: 0; }
+    /* the sheet inside the card: royal invitation paper — ivory, gold hairline frame,
+       serif product names, foil price */
+    .card__body { position: relative; padding: 20px 24px 22px;
+                  background: linear-gradient(180deg, var(--ivory), #F8F0DC); }
+    .card__body::before { content: ""; position: absolute; inset: 8px; border-radius: 14px;
+                          border: 1px solid color-mix(in srgb, var(--gold) 42%, transparent);
+                          pointer-events: none; }
+    .card__body::after { content: "♛"; position: absolute; top: 1px; left: 50%; transform: translateX(-50%);
+                         font-size: .7rem; color: color-mix(in srgb, var(--gold) 80%, #fff);
+                         background: inherit; padding: 0 8px; line-height: 1; }
+    .card h2 { font-family: var(--font-royal); font-weight: 600; font-size: 1.4rem;
+               letter-spacing: .01em; margin: 0; }
     .card p { margin: 8px 0 0; font-size: .92rem; line-height: 1.5; color: var(--ink-soft); }
     .card__row { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
-    .price { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
-             color: color-mix(in srgb, var(--acc, var(--pink)) 75%, var(--ink)); }
+    .price { font-family: var(--font-royal); font-weight: 600; font-size: 1.3rem;
+             background: linear-gradient(165deg, #d9b65c 10%, var(--gold-deep) 90%);
+             -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .tag { font-size: .78rem; font-weight: 600; color: color-mix(in srgb, var(--acc, var(--pink)) 70%, #000);
            background: color-mix(in srgb, var(--acc, var(--pink)) 14%, #fff);
            border: 1px solid color-mix(in srgb, var(--acc, var(--pink)) 30%, transparent);
@@ -103,17 +133,19 @@
 </head>
 <body>
   <div class="sky"></div>
+  <span class="cloud cloud--a"></span><span class="cloud cloud--b"></span><span class="cloud cloud--c"></span>
   <span class="dot dot--a"></span><span class="dot dot--b"></span><span class="dot dot--c"></span>
 
   <div class="wrap">
     <nav class="topbar">
       <a class="brand" href="index.html"><span class="brand__mark"></span><span class="brand__name">Glad You Were Born Today</span></a>
-      <a class="back" href="index.html">&larr; Back to the story</a>
+      <a class="back" href="story.html">&larr; Back to the story</a>
     </nav>
 
     <header class="hero">
       <span class="hero__eyebrow">The party store</span>
       <h1>The party, boxed.</h1>
+      <hr class="hero__rule" />
       <p>Everything the Crashers bring through the door — cake towers, balloon arches, confetti storms — packed up and shipped to yours.</p>
     </header>
 
@@ -178,7 +210,7 @@
         <h2>The store opens soon.</h2>
         <p>We're packing the first boxes now. Come back after the next flyover — or watch the crash again while you wait.</p>
       </div>
-      <a href="index.html">Replay the story</a>
+      <a href="story.html">Replay the story</a>
     </section>
   </div>
 

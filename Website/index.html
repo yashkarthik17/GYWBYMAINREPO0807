@@ -1,153 +1,822 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Glad You Were Born Today — the world of Starry &amp; the Crashers</title>
-  <meta name="description" content="Scroll to fly through the world of Starry and the Crashers — the crew that crashes boring birthday parties and makes them unforgettable." />
-  <!-- Runs before first paint: when JS is on, the crawlable SEO block below never
-       flashes (the engine replaces it). Crawlers and no-JS visitors still get it. -->
-  <script>document.documentElement.classList.add('sw-js');</script>
-  <style>
-    :root, .sw-root {
-      --sw-bg: #5BB8F0;          /* == the scene background colour */
-      --sw-ink: #1D2B50;
-      --sw-ink-soft: #3E5580;
-      --sw-accent: #E84A9B;      /* per-section accents override this at runtime */
-    }
-    .sw-js [data-sw-seo] { display: none; }
-    /* pre-mount canvas: page shows the sky colour, not white, while the engine loads */
-    html, body { margin: 0; background: var(--sw-bg); }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>Glad You Were Born Today</title>
+<meta name="description" content="You're invited. Break the seal to enter the world of Starry &amp; the Crashers — the crew that crashes boring birthday parties and makes them unforgettable." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --sky:#5BB8F0;
+    --royal:#2E4396;
+    --royal-deep:#1D2B50;
+    --gold:#e6c46a;
+    --gold-deep:#b8862e;
+    --ink:#1D2B50;
+    --cream:#FFF9EE;
+    --pink:#E84A9B;
+    --font-display:ui-rounded,"SF Pro Rounded","Segoe UI",system-ui,sans-serif;
+    --font-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;margin:0;}
+  body{
+    overflow:hidden;
+    background:var(--sky);
+    font-family:var(--font-body);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---- the world's sky: bright, candy, alive (replaces the dark video bg) ---- */
+  .sky{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(60% 42% at 74% 12%, color-mix(in srgb,#FFC93C 20%,transparent), transparent 70%),
+      radial-gradient(50% 38% at 20% 74%, color-mix(in srgb,#fff 46%,transparent), transparent 72%),
+      linear-gradient(178deg, color-mix(in srgb,var(--pink) 10%,var(--sky)) 0%, var(--sky) 55%, color-mix(in srgb,#8B5CF6 12%,var(--sky)) 100%);
+  }
+  .cloud{
+    position:fixed;z-index:0;pointer-events:none;border-radius:50%;
+    background:radial-gradient(closest-side, rgba(255,255,255,.85), rgba(255,255,255,0));
+    filter:blur(2px);
+    animation:cloud-drift 44s linear infinite;
+  }
+  .cloud--a{width:44vw;height:16vh;left:-8vw;top:16vh;}
+  .cloud--b{width:36vw;height:13vh;left:64vw;top:64vh;animation-delay:-18s;animation-duration:56s;}
+  .cloud--c{width:30vw;height:11vh;left:30vw;top:82vh;animation-delay:-32s;animation-duration:64s;}
+  @keyframes cloud-drift{0%{transform:translateX(0)}50%{transform:translateX(6vw)}100%{transform:translateX(0)}}
+  @media (prefers-reduced-motion: reduce){ .cloud{animation:none;} }
+  #scene{position:fixed;inset:0;z-index:2;touch-action:none;display:block;}
+  #confetti{position:fixed;inset:0;z-index:5;pointer-events:none;}
+
+  .ui{position:fixed;inset:0;z-index:3;pointer-events:none;}
+
+  .title{
+    position:absolute;top:clamp(28px,7vh,64px);left:0;right:0;text-align:center;
+    margin:0;padding:0 24px;
+    font-family:var(--font-display);
+    font-weight:700;font-size:clamp(30px,5.6vw,56px);
+    line-height:1.02;letter-spacing:-.01em;color:var(--ink);
+    text-shadow:0 2px 24px rgba(255,255,255,.55);
+    transition:opacity .55s ease, transform .55s ease;
+  }
+  .title em{
+    display:block;font-style:normal;
+    background:linear-gradient(165deg,#f4dd97 6%,#e6c46a 42%,#b8862e 92%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-shadow:none;
+  }
+  .title.faded{opacity:0;transform:translateY(-8px);}
+
+  .dock{
+    position:absolute;left:0;right:0;bottom:max(clamp(26px,6vh,52px), env(safe-area-inset-bottom));
+    display:flex;justify-content:center;
+    transition:opacity .45s ease, transform .45s ease;
+  }
+  .dock.faded{opacity:0;transform:translateY(10px);pointer-events:none;}
+  .open-btn{
+    pointer-events:auto;cursor:pointer;
+    background:linear-gradient(180deg,var(--royal),var(--royal-deep));
+    color:#fff;border:1px solid rgba(233,211,145,.7);
+    font-family:var(--font-display);font-size:12.5px;font-weight:700;
+    letter-spacing:.2em;text-transform:uppercase;
+    padding:14px 30px;border-radius:999px;
+    box-shadow:0 12px 34px rgba(29,43,80,.42), inset 0 1px 0 rgba(255,255,255,.2);
+    transition:transform .18s ease, filter .18s ease, box-shadow .18s ease;
+  }
+  .open-btn:hover{transform:translateY(-2px);filter:brightness(1.12);box-shadow:0 16px 40px rgba(29,43,80,.5);}
+  .open-btn:active{transform:translateY(0);}
+  .open-btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+
+  /* ---- the two choices: rendered ON the letter, tracked in JS ---- */
+  .sheet-actions{
+    position:fixed;left:50%;top:60%;z-index:6;
+    display:flex;flex-direction:column;align-items:stretch;gap:11px;
+    width:min(64vw,260px);
+    transform:translate(-50%,-50%) scale(var(--s,1));
+    transform-origin:center center;
+    opacity:0;pointer-events:none;
+    transition:opacity .45s ease;
+  }
+  .sheet-btn{
+    pointer-events:auto;cursor:pointer;text-decoration:none;text-align:center;
+    color:#fff;border:1px solid rgba(233,211,145,.7);
+    font-family:var(--font-display);font-size:13px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;
+    padding:13px 20px;border-radius:12px;
+    box-shadow:0 8px 22px rgba(29,43,80,.35), inset 0 1px 0 rgba(255,255,255,.22);
+    transition:transform .16s ease, filter .16s ease;
+  }
+  .sheet-btn:hover{transform:translateY(-2px);filter:brightness(1.08);}
+  .sheet-btn:active{transform:translateY(0);}
+  .sheet-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+  .sheet-btn.grown{background:linear-gradient(180deg,var(--royal),var(--royal-deep));}
+  .sheet-btn.kids{background:linear-gradient(180deg,#f973ab,#e84393);border-color:rgba(255,210,235,.75);}
+
+  .loading{
+    position:fixed;inset:0;z-index:7;display:flex;align-items:center;justify-content:center;
+    background:var(--sky);color:rgba(29,43,80,.75);font-size:11px;letter-spacing:.34em;text-transform:uppercase;
+    font-family:var(--font-display);font-weight:700;
+    transition:opacity .6s ease;
+  }
+  .loading.gone{opacity:0;pointer-events:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    .open-btn,.title,.dock,.sheet-actions{transition:none;}
+  }
+</style>
 </head>
 <body>
-  <div id="top"></div>
-  <div id="world">
-    <!-- Static SEO copy — the only crawlable text; the engine hides it on mount. -->
-    <section data-sw-seo>
-      <h1>Another birthday. Another beige party.</h1>
-      <p>Glad You Were Born Today is the world of Starry and the Crashers — the crew that crashes boring birthday parties and rebuilds them bigger, brighter, and better.</p>
-      <h2>Meanwhile, above the clouds — Somebody call the Crashers.</h2>
-      <p>From a star-shaped clubhouse in the clouds, Starry and the crew watch the party radar and gear up the confetti cannons.</p>
-      <h2>3… 2… 1… — This party is officially crashed.</h2>
-      <p>The Crashers burst in on streamer trails, and color floods the room from the moment they land.</p>
-      <h2>Minutes later — Now THAT'S a birthday.</h2>
-      <p>They don't just crash the party — they rebuild it: cake tower, balloon arches, dance floor.</p>
-      <h2>From Starry &amp; the Crashers — Glad you were born today.</h2>
-      <p>Bring the Crashers to your next party.</p>
-      <p><a href="store.html">Shop the party store</a> · <a href="#top">Play the story again</a></p>
-    </section>
+  <div class="sky"></div>
+  <span class="cloud cloud--a"></span><span class="cloud cloud--b"></span><span class="cloud cloud--c"></span>
+  <canvas id="scene"></canvas>
+
+  <div class="ui">
+    <h1 class="title">Glad You Were <em>Born Today</em></h1>
+    <div class="dock" id="dock">
+      <button class="open-btn" id="toggle" aria-label="Open the envelope">Break the seal</button>
+    </div>
   </div>
 
-  <script src="scrub-engine.js"></script>
-  <script src="music.js"></script>
+  <!-- choices live on the letter; positioned by JS, revealed when the envelope opens -->
+  <div class="sheet-actions" id="sheet" aria-hidden="true">
+    <a class="sheet-btn grown" href="https://06142026-final.vercel.app/">Grown Ups</a>
+    <a class="sheet-btn kids" href="story.html">Kids Zone</a>
+  </div>
+
+  <canvas id="confetti"></canvas>
+  <div class="loading" id="loading">Folding the paper…</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    // Phone-class screens (same rule the engine uses for clip tiering) get the
-    // portrait stills, so stills-fallback mode (Low Power Mode, data-saver,
-    // reduced-motion) shows portrait art instead of cropped landscape.
-    var SW_PHONE = Math.min(screen.width, screen.height) <= 600;
-    function sw_still(name) { return 'assets/' + name + (SW_PHONE ? '-p' : '') + '.webp'; }
-    mountScrollWorld(document.getElementById('world'), {
-      brand: { name: 'Glad You Were Born Today', href: '#top' },
-      // when the logo file lands: brand: { name: '…', href: '#top', logo: 'assets/logo.png' }
-      cta: { label: 'Shop the Party', href: 'store.html' },
-      hint: 'scroll to crash the party',
-      crossfade: 0.15,
-      diveScroll: 1.3,
-      connScroll: 0.9,
-      // Phones scrub ONE stitched clip (single decoder — iPhones cap concurrent video
-      // decoders and silently blank clips past the cap). Spans come from
-      // work/stitch_journey.py — regenerate them if the clips are re-rolled.
-      journeyMobile: {
-        clip: 'assets/vid/journey-m.mp4',
-        poster: 'assets/beige-poster-m.webp',
-        spans: [[0.0, 7.842], [7.842, 12.733], [12.733, 20.5], [20.5, 25.392], [25.392, 33.158], [33.158, 36.8], [36.8, 44.567], [44.567, 49.458], [49.458, 57.283]],
-      },
-      sections: [
-        {
-          id: 'beige', label: 'The Beige Party',
-          still: sw_still('beige'),
-          poster: 'assets/beige-poster.webp',
-          clip: 'assets/vid/beige.mp4',
-          clipMobile: 'assets/vid/beige-m.mp4',
-          posterMobile: 'assets/beige-poster-m.webp',
-          accent: '#8B95A6',
-          scroll: 1.5, linger: 0.3,
-          eyebrow: 'Every day, somewhere…',
-          title: 'Another birthday. Another beige party.',
-          body: 'Boring cake, quiet room, zero sparkle.',
-          tags: ['Deflated balloons', 'Store-bought cake'],
-        },
-        {
-          id: 'crashpad', label: 'The Crash Pad',
-          still: sw_still('crashpad'),
-          poster: 'assets/crashpad-poster.webp',
-          clip: 'assets/vid/crashpad.mp4',
-          clipMobile: 'assets/vid/crashpad-m.mp4',
-          posterMobile: 'assets/crashpad-poster-m.webp',
-          accent: '#FFC93C',
-          eyebrow: 'Meanwhile, above the clouds',
-          title: 'Somebody call the Crashers.',
-          body: 'Starry and the crew spot the signal and gear up.',
-          tags: ['Party radar', 'Confetti cannons'],
-        },
-        {
-          id: 'crash', label: 'The Crash',
-          still: sw_still('crash'),
-          poster: 'assets/crash-poster.webp',
-          clip: 'assets/vid/crash.mp4',
-          clipMobile: 'assets/vid/crash-m.mp4',
-          posterMobile: 'assets/crash-poster-m.webp',
-          accent: '#E84A9B',
-          eyebrow: '3… 2… 1…',
-          title: 'This party is officially crashed.',
-          body: 'Color spreads from the moment they land.',
-          tags: ['Confetti storm', 'Streamer trails'],
-        },
-        {
-          id: 'glowup', label: 'The Glow-Up',
-          still: sw_still('glowup'),
-          poster: 'assets/glowup-poster.webp',
-          clip: 'assets/vid/glowup.mp4',
-          clipMobile: 'assets/vid/glowup-m.mp4',
-          posterMobile: 'assets/glowup-poster-m.webp',
-          accent: '#8B5CF6',
-          scroll: 1.6, linger: 0.4,
-          eyebrow: 'Minutes later',
-          title: 'Now THAT’S a birthday.',
-          body: 'The Crashers don’t just crash — they rebuild the party bigger.',
-          tags: ['Cake tower', 'Balloon arch', 'Dance floor'],
-        },
-        {
-          id: 'finale', label: 'Starry’s Send-Off',
-          still: sw_still('finale'),
-          poster: 'assets/finale-poster.webp',
-          clip: 'assets/vid/finale.mp4',
-          clipMobile: 'assets/vid/finale-m.mp4',
-          posterMobile: 'assets/finale-poster-m.webp',
-          accent: '#FFC93C',
-          scroll: 1.8, linger: 0.5,
-          eyebrow: 'From Starry & the Crashers',
-          title: 'Glad you were born today.',
-          body: 'Bring the Crashers to your next party.',
-          tags: [],
-          cta: { primary: { label: 'Bring the Crashers', href: 'store.html' },
-                 secondary: { label: 'Play it again', href: '#top' } },
-        },
-      ],
-      connectors: [
-        'assets/vid/conn1.mp4',
-        'assets/vid/conn2.mp4',
-        'assets/vid/conn3.mp4',
-        'assets/vid/conn4.mp4',
-      ],
-      connectorsMobile: [
-        'assets/vid/conn1-m.mp4',
-        'assets/vid/conn2-m.mp4',
-        'assets/vid/conn3-m.mp4',
-        'assets/vid/conn4-m.mp4',
-      ],
+  (function () {
+    "use strict";
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
+
+    // ---- Renderer / scene / camera --------------------------------------
+    const canvas = document.getElementById("scene");
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = false;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x7cc4f2, 14, 34);
+
+    const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
+
+    // ---- Lights ----------------------------------------------------------
+    scene.add(new THREE.AmbientLight(0xffffff, 0.66));
+
+    const key = new THREE.DirectionalLight(0xfff0dd, 1.18);
+    key.position.set(4.5, 7, 6.5);
+    key.castShadow = true;
+    const SHADOW = isMobile ? 1024 : 2048;
+    key.shadow.mapSize.set(SHADOW, SHADOW);
+    key.shadow.camera.near = 1;
+    key.shadow.camera.far = 30;
+    key.shadow.camera.left = -7; key.shadow.camera.right = 7;
+    key.shadow.camera.top = 7; key.shadow.camera.bottom = -7;
+    key.shadow.bias = -0.0006;
+    key.shadow.radius = 6;
+    scene.add(key);
+
+    const fill = new THREE.DirectionalLight(0xffd2e8, 0.36);
+    fill.position.set(-6, 2, 4);
+    scene.add(fill);
+
+    const front = new THREE.DirectionalLight(0xfff4e6, 0.5);
+    front.position.set(0, 1.5, 8);
+    scene.add(front);
+
+    const warmRim = new THREE.PointLight(0xffc48a, 0.7, 40);
+    warmRim.position.set(-2, 3.5, -6);
+    scene.add(warmRim);
+
+    // ---- Envelope dimensions --------------------------------------------
+    const W = 3.0, H = 2.0;
+    const hw = W / 2, hh = H / 2;
+
+    // ---- Materials -------------------------------------------------------
+    function makeRoyalPanelTexture(ornate) {
+      const c = document.createElement("canvas");
+      c.width = 1152; c.height = 768;
+      const x = c.getContext("2d");
+      const TW = c.width, TH = c.height, CX = TW / 2, CY = TH / 2;
+      const base = x.createLinearGradient(0, 0, 0, TH);
+      base.addColorStop(0, "#33499e"); base.addColorStop(0.5, "#28397f"); base.addColorStop(1, "#1b2760");
+      x.fillStyle = base; x.fillRect(0, 0, TW, TH);
+      const sheen = x.createRadialGradient(CX, CY - 40, 30, CX, CY, 720);
+      sheen.addColorStop(0, "rgba(190,215,255,0.14)"); sheen.addColorStop(1, "rgba(4,10,32,0.28)");
+      x.fillStyle = sheen; x.fillRect(0, 0, TW, TH);
+      for (let i = 0; i < 1100; i++) {
+        x.fillStyle = Math.random() < 0.5 ? "rgba(0,0,20,0.05)" : "rgba(190,215,255,0.04)";
+        x.fillRect(Math.random() * TW, Math.random() * TH, 1.6, 1.6);
+      }
+      const gold = (a) => "rgba(234,196,102," + a + ")";
+      x.fillStyle = gold(0.07);
+      for (let yy = 22; yy < TH; yy += 46) {
+        for (let xx = (((yy / 46) | 0) % 2) ? 23 : 46; xx < TW; xx += 46) {
+          x.save(); x.translate(xx, yy); x.rotate(Math.PI / 4); x.fillRect(-4.5, -4.5, 9, 9); x.restore();
+        }
+      }
+      function scallops(ins) {
+        const r = 14, st = 30;
+        x.strokeStyle = gold(0.85); x.lineWidth = 2.6; x.lineCap = "round";
+        x.fillStyle = gold(0.9);
+        for (let xx = ins + 30; xx <= TW - ins - 30; xx += st) {
+          x.beginPath(); x.arc(xx, ins, r, 0, Math.PI); x.stroke();
+          x.beginPath(); x.arc(xx + st / 2, ins + 4, 2.4, 0, 7); x.fill();
+          x.beginPath(); x.arc(xx, TH - ins, r, Math.PI, Math.PI * 2); x.stroke();
+          x.beginPath(); x.arc(xx + st / 2, TH - ins - 4, 2.4, 0, 7); x.fill();
+        }
+        for (let yy = ins + 30; yy <= TH - ins - 30; yy += st) {
+          x.beginPath(); x.arc(ins, yy, r, -Math.PI / 2, Math.PI / 2); x.stroke();
+          x.beginPath(); x.arc(ins + 4, yy + st / 2, 2.4, 0, 7); x.fill();
+          x.beginPath(); x.arc(TW - ins, yy, r, Math.PI / 2, Math.PI * 1.5); x.stroke();
+          x.beginPath(); x.arc(TW - ins - 4, yy + st / 2, 2.4, 0, 7); x.fill();
+        }
+      }
+      scallops(26);
+      x.strokeStyle = gold(0.8); x.lineWidth = 2.4; x.setLineDash([11, 9]); x.lineCap = "round";
+      x.strokeRect(58, 58, TW - 116, TH - 116);
+      x.setLineDash([]);
+      function crown(cx2, cy2, s, a) {
+        x.save(); x.translate(cx2, cy2); x.scale(s, s);
+        x.fillStyle = gold(a);
+        x.beginPath();
+        x.moveTo(-34, 16); x.lineTo(-34, 0); x.lineTo(-21, -18); x.lineTo(-11, -2);
+        x.lineTo(0, -26); x.lineTo(11, -2); x.lineTo(21, -18); x.lineTo(34, 0);
+        x.lineTo(34, 16); x.closePath(); x.fill();
+        x.fillRect(-34, 20, 68, 7);
+        [[-21, -18], [0, -26], [21, -18]].forEach((p) => { x.beginPath(); x.arc(p[0], p[1] - 5, 4.4, 0, 7); x.fill(); });
+        x.fillStyle = "rgba(232,74,155," + a + ")";
+        x.beginPath(); x.arc(0, 8, 5, 0, 7); x.fill();
+        x.restore();
+      }
+      if (ornate) {
+        [[0, 0], [TW, 0], [0, TH], [TW, TH]].forEach((p) => {
+          const dx = CX - p[0], dy = CY - p[1], L = Math.hypot(dx, dy);
+          const nx = -dy / L, ny = dx / L;
+          x.strokeStyle = gold(0.85); x.lineWidth = 2.6; x.setLineDash([12, 9]); x.lineCap = "round";
+          [14, -14].forEach((o) => {
+            x.beginPath();
+            x.moveTo(p[0] + nx * o, p[1] + ny * o);
+            x.lineTo(CX + nx * o, CY + ny * o);
+            x.stroke();
+          });
+          x.setLineDash([]);
+        });
+        crown(CX, 96, 0.85, 0.95);
+        crown(CX, 632, 0.7, 0.9);
+      } else {
+        x.strokeStyle = gold(0.6); x.lineWidth = 3;
+        x.beginPath(); x.arc(CX, CY, 96, 0, 7); x.stroke();
+        x.beginPath(); x.arc(CX, CY, 84, 0, 7); x.stroke();
+        crown(CX, CY + 10, 1.15, 0.8);
+      }
+      for (let i = 0; i < 70; i++) {
+        x.fillStyle = gold(0.05 + Math.random() * 0.1);
+        x.beginPath(); x.arc(Math.random() * TW, Math.random() * TH, 1 + Math.random() * 1.6, 0, 7); x.fill();
+      }
+      const t = new THREE.CanvasTexture(c);
+      t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      return t;
+    }
+
+    function remapUV(geo, dy) {
+      const pos = geo.attributes.position, uv = geo.attributes.uv;
+      for (let i = 0; i < pos.count; i++) uv.setXY(i, (pos.getX(i) + hw) / W, (pos.getY(i) + dy + hh) / H);
+      uv.needsUpdate = true;
+    }
+
+    const paper = new THREE.MeshStandardMaterial({ map: makeRoyalPanelTexture(true), roughness: 0.6, metalness: 0.14, side: THREE.DoubleSide });
+    const paperBack = new THREE.MeshStandardMaterial({ map: makeRoyalPanelTexture(false), roughness: 0.64, metalness: 0.12, side: THREE.DoubleSide });
+    const gold = new THREE.MeshStandardMaterial({ color: 0xd9b65c, metalness: 0.7, roughness: 0.3, emissive: 0x6e4f14, emissiveIntensity: 0.4 });
+    const goldSealMat = gold.clone(); goldSealMat.transparent = true;
+
+    function makeLinerTexture() {
+      const c = document.createElement("canvas"); c.width = c.height = 128;
+      const x = c.getContext("2d");
+      x.fillStyle = "#1e2c66"; x.fillRect(0, 0, 128, 128);
+      x.strokeStyle = "rgba(222,186,98,0.5)"; x.lineWidth = 2;
+      x.beginPath();
+      x.moveTo(-4, 64); x.lineTo(64, -4); x.moveTo(64, 132); x.lineTo(132, 64);
+      x.moveTo(-4, 64); x.lineTo(64, 132); x.moveTo(64, -4); x.lineTo(132, 64);
+      x.stroke();
+      x.fillStyle = "rgba(222,186,98,0.78)";
+      x.beginPath(); x.arc(64, 64, 5, 0, Math.PI * 2); x.fill();
+      [[64, 46], [64, 82], [46, 64], [82, 64]].forEach(([px, py]) => { x.beginPath(); x.arc(px, py, 2.6, 0, Math.PI * 2); x.fill(); });
+      [[0, 0], [128, 0], [0, 128], [128, 128]].forEach(([px, py]) => { x.beginPath(); x.arc(px, py, 3.2, 0, Math.PI * 2); x.fill(); });
+      const t = new THREE.CanvasTexture(c);
+      t.wrapS = t.wrapT = THREE.RepeatWrapping;
+      t.repeat.set(2.4, 2.4);
+      t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      return t;
+    }
+
+    function makeCrownTexture() {
+      const c = document.createElement("canvas"); c.width = c.height = 256;
+      const x = c.getContext("2d");
+      x.fillStyle = "#fff0c2";
+      x.strokeStyle = "rgba(94,64,10,0.9)"; x.lineWidth = 7; x.lineJoin = "round";
+      x.beginPath();
+      x.moveTo(58, 168); x.lineTo(58, 112); x.lineTo(94, 142); x.lineTo(128, 96);
+      x.lineTo(162, 142); x.lineTo(198, 112); x.lineTo(198, 168);
+      x.closePath(); x.stroke(); x.fill();
+      x.strokeRect(54, 176, 148, 18);
+      x.fillRect(54, 176, 148, 18);
+      [[58, 102], [128, 86], [198, 102]].forEach(([px, py]) => { x.beginPath(); x.arc(px, py, 9, 0, Math.PI * 2); x.stroke(); x.fill(); });
+      x.fillStyle = "#E84A9B";
+      [[84, 185], [128, 185], [172, 185]].forEach(([px, py]) => { x.beginPath(); x.arc(px, py, 6, 0, Math.PI * 2); x.fill(); });
+      const t = new THREE.CanvasTexture(c);
+      return t;
+    }
+
+    function makeFlourishTexture() {
+      const c = document.createElement("canvas"); c.width = c.height = 256;
+      const x = c.getContext("2d");
+      x.strokeStyle = "rgba(226,191,104,0.95)"; x.lineCap = "round";
+      x.lineWidth = 9;
+      x.beginPath(); x.moveTo(14, 232); x.lineTo(14, 14); x.lineTo(232, 14); x.stroke();
+      x.lineWidth = 4;
+      x.beginPath(); x.moveTo(46, 232); x.lineTo(46, 46); x.lineTo(232, 46); x.stroke();
+      x.lineWidth = 5;
+      x.beginPath(); x.arc(96, 96, 26, Math.PI * 1.05, Math.PI * 2.35); x.stroke();
+      x.fillStyle = "rgba(226,191,104,0.95)";
+      x.save(); x.translate(76, 76); x.rotate(Math.PI / 4); x.fillRect(-9, -9, 18, 18); x.restore();
+      const t = new THREE.CanvasTexture(c);
+      return t;
+    }
+
+    // ---- Envelope group --------------------------------------------------
+    const envelope = new THREE.Group();
+    envelope.rotation.x = -0.18;
+    scene.add(envelope);
+
+    function triMesh(ax, ay, bx, by, cx, cy, mat, z) {
+      const s = new THREE.Shape();
+      s.moveTo(ax, ay); s.lineTo(bx, by); s.lineTo(cx, cy); s.lineTo(ax, ay);
+      const m = new THREE.Mesh(new THREE.ShapeGeometry(s), mat);
+      m.position.z = z || 0;
+      m.castShadow = true; m.receiveShadow = true;
+      return m;
+    }
+
+    const back = new THREE.Mesh(new THREE.PlaneGeometry(W, H), paperBack);
+    back.position.z = -0.03;
+    back.castShadow = true; back.receiveShadow = true;
+    envelope.add(back);
+
+    const triB = triMesh(-hw, -hh, hw, -hh, 0, 0, paper, 0.000); remapUV(triB.geometry, 0); envelope.add(triB);
+    const triL = triMesh(-hw, -hh, -hw, hh, 0, 0, paper, 0.006); remapUV(triL.geometry, 0); envelope.add(triL);
+    const triR = triMesh(hw, -hh, hw, hh, 0, 0, paper, 0.006); remapUV(triR.geometry, 0); envelope.add(triR);
+
+    function goldPipe(ax, ay, az, bx, by, bz, r) {
+      const a = new THREE.Vector3(ax, ay, az), b = new THREE.Vector3(bx, by, bz);
+      const dir = new THREE.Vector3().subVectors(b, a);
+      const len = dir.length();
+      const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 10), gold);
+      m.position.copy(a).add(b).multiplyScalar(0.5);
+      m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+      m.castShadow = true;
+      return m;
+    }
+    envelope.add(goldPipe(-hw, -hh, 0.012, 0, 0, 0.012, 0.008));
+    envelope.add(goldPipe(hw, -hh, 0.012, 0, 0, 0.012, 0.008));
+    envelope.add(goldPipe(-hw, hh, 0.012, 0, 0, 0.012, 0.008));
+    envelope.add(goldPipe(hw, hh, 0.012, 0, 0, 0.012, 0.008));
+    const stud = new THREE.Mesh(new THREE.SphereGeometry(0.022, 16, 12), gold);
+    stud.position.set(0, 0, 0.012); stud.castShadow = true;
+    envelope.add(stud);
+    envelope.add(goldPipe(-hw, hh, 0, hw, hh, 0, 0.014));
+    envelope.add(goldPipe(-hw, -hh, 0, hw, -hh, 0, 0.014));
+    envelope.add(goldPipe(-hw, -hh, 0, -hw, hh, 0, 0.014));
+    envelope.add(goldPipe(hw, -hh, 0, hw, hh, 0, 0.014));
+    [[-hw, -hh], [hw, -hh], [-hw, hh], [hw, hh]].forEach(([px, py]) => {
+      const s2 = new THREE.Mesh(new THREE.SphereGeometry(0.024, 16, 12), gold);
+      s2.position.set(px, py, 0); s2.castShadow = true;
+      envelope.add(s2);
     });
+
+    const linerTex = makeLinerTexture();
+    const linerMat = new THREE.MeshStandardMaterial({ map: linerTex, roughness: 0.82, metalness: 0.0, side: THREE.DoubleSide });
+    const linerBackTex = linerTex.clone(); linerBackTex.needsUpdate = true;
+    linerBackTex.repeat.set(2.4 * W, 2.4 * H);
+    const linerBack = new THREE.Mesh(
+      new THREE.PlaneGeometry(W - 0.04, H - 0.04),
+      new THREE.MeshStandardMaterial({ map: linerBackTex, roughness: 0.82, side: THREE.DoubleSide })
+    );
+    linerBack.position.z = -0.022;
+    linerBack.receiveShadow = true;
+    envelope.add(linerBack);
+
+    const flourishTex = makeFlourishTexture();
+    function cornerOrnament(px, py, rz, parent, pz) {
+      const m = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.56, 0.56),
+        new THREE.MeshBasicMaterial({ map: flourishTex, transparent: true, depthWrite: false, side: THREE.DoubleSide })
+      );
+      m.position.set(px, py, pz);
+      m.rotation.z = rz;
+      parent.add(m);
+      return m;
+    }
+    cornerOrnament(-(hw - 0.34), -(hh - 0.34), Math.PI / 2, envelope, 0.013);
+    cornerOrnament(hw - 0.34, -(hh - 0.34), Math.PI, envelope, 0.013);
+
+    // ---- The letter (rises out; choices overlay its lower half) ----------
+    function makeLetterTexture() {
+      const c = document.createElement("canvas");
+      c.width = 1290; c.height = 860;
+      const x = c.getContext("2d");
+      const g = x.createLinearGradient(0, 0, 0, c.height);
+      g.addColorStop(0, "#fbf5e7"); g.addColorStop(1, "#efe3c9");
+      x.fillStyle = g; x.fillRect(0, 0, c.width, c.height);
+      for (let i = 0; i < 1400; i++) {
+        x.fillStyle = "rgba(120,100,70," + (Math.random() * 0.04) + ")";
+        x.fillRect(Math.random() * c.width, Math.random() * c.height, 1.4, 1.4);
+      }
+      x.strokeStyle = "rgba(164,121,31,0.9)"; x.lineWidth = 3;
+      x.strokeRect(70, 70, c.width - 140, c.height - 140);
+      x.strokeStyle = "rgba(164,121,31,0.45)"; x.lineWidth = 1;
+      x.strokeRect(84, 84, c.width - 168, c.height - 168);
+
+      const cx = c.width / 2;
+      x.textAlign = "center";
+
+      // small gold crown
+      x.fillStyle = "#a4791f";
+      const hx = cx, hy = 188;
+      x.beginPath();
+      x.moveTo(hx - 30, hy + 14); x.lineTo(hx - 30, hy - 12); x.lineTo(hx - 14, hy + 2);
+      x.lineTo(hx, hy - 22); x.lineTo(hx + 14, hy + 2); x.lineTo(hx + 30, hy - 12);
+      x.lineTo(hx + 30, hy + 14); x.closePath(); x.fill();
+      x.fillRect(hx - 32, hy + 18, 64, 8);
+
+      x.fillStyle = "#2a2128";
+      x.font = "italic 82px 'Cormorant Garamond', Georgia, serif";
+      x.fillText("Glad you were", cx, 330);
+      x.fillText("born today", cx, 418);
+
+      // hairline divider
+      x.strokeStyle = "rgba(164,121,31,0.55)"; x.lineWidth = 2;
+      x.beginPath(); x.moveTo(cx - 150, 470); x.lineTo(cx + 150, 470); x.stroke();
+      x.fillStyle = "#9c7a2a";
+      x.beginPath(); x.arc(cx, 470, 5, 0, 7); x.fill();
+
+      x.fillStyle = "#6a5340";
+      x.font = "26px 'Inter', sans-serif";
+      x.fillText("CHOOSE WHERE TO CELEBRATE", cx, 522);
+
+      const t = new THREE.CanvasTexture(c);
+      t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      return t;
+    }
+
+    const lw = W * 0.86, lh = H * 0.86;
+    const faceMat = new THREE.MeshStandardMaterial({ map: makeLetterTexture(), roughness: 0.9, metalness: 0.0, emissive: 0x2a2418, emissiveIntensity: 0.18 });
+    const edgeMat = new THREE.MeshStandardMaterial({ color: 0xf3ead4, roughness: 0.9 });
+    const letter = new THREE.Mesh(
+      new THREE.BoxGeometry(lw, lh, 0.02),
+      [edgeMat, edgeMat, edgeMat, edgeMat, faceMat, edgeMat]
+    );
+    letter.castShadow = true;
+    const LETTER_CLOSED = { y: 0.0, z: -0.015, rx: 0 };
+    const LETTER_OPEN = { y: 1.95, z: 0.32, rx: 0.12 };
+    letter.position.set(0, LETTER_CLOSED.y, LETTER_CLOSED.z);
+    envelope.add(letter);
+
+    // ---- Top flap (hinged) ----------------------------------------------
+    const flap = new THREE.Group();
+    flap.position.set(0, hh, 0.03);
+    envelope.add(flap);
+    const flapMesh = triMesh(-hw, 0, hw, 0, 0, -hh, paper, 0);
+    remapUV(flapMesh.geometry, hh);
+    flap.add(flapMesh);
+    flap.add(triMesh(-hw, 0, hw, 0, 0, -hh, linerMat, -0.004));
+    flap.add(goldPipe(-hw, 0, 0.006, 0, -hh, 0.006, 0.009));
+    flap.add(goldPipe(hw, 0, 0.006, 0, -hh, 0.006, 0.009));
+    cornerOrnament(-(hw - 0.30), -0.30, 0, flap, 0.005);
+    cornerOrnament(hw - 0.30, -0.30, -Math.PI / 2, flap, 0.005);
+
+    // ---- Wax seal --------------------------------------------------------
+    const seal = new THREE.Group();
+    seal.position.set(0, -hh, 0.02);
+    flap.add(seal);
+    const waxMat = new THREE.MeshStandardMaterial({ color: 0xc89a3a, roughness: 0.34, metalness: 0.75, emissive: 0x4a3000, emissiveIntensity: 0.35, transparent: true });
+    const disc = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.275, 0.055, 56), waxMat);
+    disc.rotation.x = Math.PI / 2; disc.castShadow = true;
+    seal.add(disc);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.19, 0.016, 14, 56), goldSealMat);
+    ring.position.z = 0.03;
+    seal.add(ring);
+    for (let i = 0; i < 8; i++) {
+      const a = (i / 8) * Math.PI * 2;
+      const bead = new THREE.Mesh(new THREE.SphereGeometry(0.016, 12, 10), goldSealMat);
+      bead.position.set(Math.cos(a) * 0.235, Math.sin(a) * 0.235, 0.026);
+      seal.add(bead);
+    }
+    const crownMat = new THREE.MeshBasicMaterial({ map: makeCrownTexture(), transparent: true, depthWrite: false });
+    const crownMesh = new THREE.Mesh(new THREE.CircleGeometry(0.155, 40), crownMat);
+    crownMesh.position.z = 0.034;
+    seal.add(crownMesh);
+    const sealFadeMats = [waxMat, goldSealMat, crownMat];
+
+    // ---- Drifting embers + haze (lighter on mobile) ----------------------
+    function makeLayer(count, color, size, opacity, additive, zoff) {
+      const pos = new Float32Array(count * 3);
+      const seed = new Float32Array(count * 3);
+      const vy = new Float32Array(count);
+      for (let i = 0; i < count; i++) {
+        const x = (Math.random() - 0.5) * 26;
+        const y = (Math.random() - 0.5) * 17;
+        const z = (Math.random() - 0.5) * 16 + zoff;
+        pos[i * 3] = x; pos[i * 3 + 1] = y; pos[i * 3 + 2] = z;
+        seed[i * 3] = x; seed[i * 3 + 1] = Math.random() * Math.PI * 2; seed[i * 3 + 2] = 0.2 + Math.random() * 0.55;
+        vy[i] = 0.004 + Math.random() * 0.012;
+      }
+      const g = new THREE.BufferGeometry();
+      g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      const m = new THREE.PointsMaterial({
+        color: color, size: size, transparent: true, opacity: opacity,
+        depthWrite: false, sizeAttenuation: true,
+        blending: additive ? THREE.AdditiveBlending : THREE.NormalBlending,
+      });
+      const points = new THREE.Points(g, m);
+      scene.add(points);
+      return { points, geo: g, mat: m, pos, seed, vy, count, zoff };
+    }
+
+    const embers = makeLayer(isMobile ? 90 : 210, 0xfff0c2, 0.06, 0.6, true, -4);
+    const haze = makeLayer(isMobile ? 50 : 120, 0xf4b8e0, 0.035, 0.30, false, -3);
+
+    let _lastT = performance.now();
+    const bg = {
+      update(t) {
+        const now = performance.now();
+        let dt = (now - _lastT) / 16.67; _lastT = now;
+        if (dt > 3) dt = 3;
+        const rise = reduced ? 0.12 : 1;
+        for (let i = 0; i < embers.count; i++) {
+          let y = embers.pos[i * 3 + 1] + embers.vy[i] * dt * rise;
+          if (y > 8.5) {
+            y = -8.5;
+            embers.seed[i * 3] = (Math.random() - 0.5) * 26;
+            embers.pos[i * 3 + 2] = (Math.random() - 0.5) * 16 + embers.zoff;
+          }
+          embers.pos[i * 3 + 1] = y;
+          const a = embers.seed[i * 3 + 2];
+          embers.pos[i * 3] = embers.seed[i * 3] + Math.sin(t * 0.0006 * a + embers.seed[i * 3 + 1]) * a * 2.4;
+        }
+        embers.geo.attributes.position.needsUpdate = true;
+        embers.mat.opacity = reduced ? 0.5 : 0.38 + 0.32 * (0.5 + 0.5 * Math.sin(t * 0.0017));
+        haze.points.rotation.y = t * 0.00004 * (reduced ? 0.25 : 1);
+        haze.points.position.y = reduced ? 0 : Math.sin(t * 0.0003) * 0.7;
+      }
+    };
+
+    // ---- Confetti --------------------------------------------------------
+    const confettiCanvas = document.getElementById("confetti");
+    const cctx = confettiCanvas.getContext("2d");
+    let cdpr = Math.min(window.devicePixelRatio, 2);
+    function sizeConfetti() {
+      cdpr = Math.min(window.devicePixelRatio, 2);
+      confettiCanvas.width = Math.floor(window.innerWidth * cdpr);
+      confettiCanvas.height = Math.floor(window.innerHeight * cdpr);
+      confettiCanvas.style.width = window.innerWidth + "px";
+      confettiCanvas.style.height = window.innerHeight + "px";
+    }
+    sizeConfetti();
+
+    const CONFETTI_COLORS = ["#f973ab", "#ff9ec7", "#e9b949", "#f4d06f", "#8fdcc0", "#c9a7f5", "#fff6fb", "#a23a2e"];
+    let confetti = [];
+    let confettiRAF = 0, confettiLast = 0;
+
+    function fireConfetti() {
+      const cw = window.innerWidth, chh = window.innerHeight;
+      const ox = cw * 0.5, oy = chh * 0.5;
+      const n = reduced ? 36 : (isMobile ? 90 : 170);
+      const vscale = reduced ? 0.5 : 1;
+      for (let i = 0; i < n; i++) {
+        const ang = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.15;
+        const sp = (reduced ? 180 : 520) + Math.random() * (reduced ? 150 : 760);
+        confetti.push({
+          x: ox + (Math.random() - 0.5) * 60,
+          y: oy + (Math.random() - 0.5) * 30,
+          vx: Math.cos(ang) * sp * vscale,
+          vy: Math.sin(ang) * sp * vscale,
+          w: 6 + Math.random() * 6,
+          h: 9 + Math.random() * 9,
+          rot: Math.random() * Math.PI,
+          vr: (Math.random() - 0.5) * 12,
+          tilt: Math.random() * Math.PI * 2,
+          vt: 4 + Math.random() * 6,
+          sway: 1 + Math.random() * 2,
+          phase: Math.random() * Math.PI * 2,
+          color: CONFETTI_COLORS[(Math.random() * CONFETTI_COLORS.length) | 0],
+          life: 0,
+          max: (reduced ? 1.6 : 2.6) + Math.random() * 1.2,
+          round: Math.random() < 0.18,
+        });
+      }
+      if (!confettiRAF) { confettiLast = performance.now(); confettiRAF = requestAnimationFrame(confettiStep); }
+    }
+
+    function confettiStep(now) {
+      let dt = (now - confettiLast) / 1000; confettiLast = now;
+      if (dt > 0.05) dt = 0.05;
+      const chh = window.innerHeight;
+      const grav = reduced ? 600 : 1500;
+      cctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      cctx.save();
+      cctx.scale(cdpr, cdpr);
+      for (let i = confetti.length - 1; i >= 0; i--) {
+        const c = confetti[i];
+        c.life += dt;
+        c.vy += grav * dt;
+        c.vx *= 0.99;
+        c.x += c.vx * dt + Math.sin(c.life * c.sway + c.phase) * 0.6;
+        c.y += c.vy * dt;
+        c.rot += c.vr * dt;
+        c.tilt += c.vt * dt;
+        if (c.life > c.max || c.y > chh + 60) { confetti.splice(i, 1); continue; }
+        const fade = c.life > c.max - 0.8 ? Math.max(0, (c.max - c.life) / 0.8) : 1;
+        cctx.save();
+        cctx.translate(c.x, c.y);
+        cctx.rotate(c.rot);
+        cctx.scale(1, Math.cos(c.tilt));
+        cctx.globalAlpha = fade;
+        cctx.fillStyle = c.color;
+        if (c.round) { cctx.beginPath(); cctx.arc(0, 0, c.w * 0.5, 0, Math.PI * 2); cctx.fill(); }
+        else { cctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h); }
+        cctx.restore();
+      }
+      cctx.restore();
+      if (confetti.length) { confettiRAF = requestAnimationFrame(confettiStep); }
+      else { cctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height); confettiRAF = 0; }
+    }
+
+    // ---- Camera (static, front-on; tap to open — no drag-rotate, no zoom) -
+    const ctrl = {
+      theta: 0.0, phi: 1.12, radius: 8.4,
+      target: new THREE.Vector3(0, 0.5, 0),
+      minR: 4.2, maxR: 14, minP: 0.35, maxP: Math.PI - 0.45,
+    };
+    let down = false, moved = false, sx = 0, sy = 0, downT = 0;
+
+    // Frame the envelope: comfortable on desktop; only zoom OUT (never in) for narrow/portrait.
+    function fitCamera() {
+      const aspect = window.innerWidth / window.innerHeight;
+      const vfov = THREE.MathUtils.degToRad(camera.fov);
+      const tanV = Math.tan(vfov / 2);
+      const BASE = 8.4;                                    // comfortable default framing
+      const fitW = (3.4 / 2) / (tanV * aspect) * 1.12;     // keep the width in-frame on tall screens
+      ctrl.radius = Math.min(Math.max(BASE, fitW), ctrl.maxR);
+    }
+
+    function applyCamera() {
+      ctrl.phi = Math.max(ctrl.minP, Math.min(ctrl.maxP, ctrl.phi));
+      ctrl.radius = Math.max(ctrl.minR, Math.min(ctrl.maxR, ctrl.radius));
+      const sp = Math.sin(ctrl.phi);
+      camera.position.set(
+        ctrl.target.x + ctrl.radius * sp * Math.sin(ctrl.theta),
+        ctrl.target.y + ctrl.radius * Math.cos(ctrl.phi),
+        ctrl.target.z + ctrl.radius * sp * Math.cos(ctrl.theta)
+      );
+      camera.lookAt(ctrl.target);
+    }
+
+    // Tap to open / close — the envelope holds its position (no drag-rotate, no zoom).
+    canvas.addEventListener("pointerdown", (e) => {
+      down = true; moved = false; sx = e.clientX; sy = e.clientY; downT = performance.now();
+    });
+    canvas.addEventListener("pointermove", (e) => {
+      if (down && Math.hypot(e.clientX - sx, e.clientY - sy) > 8) moved = true;
+    });
+    function endTap(e) {
+      if (!down) return;
+      down = false;
+      if (!moved && performance.now() - downT < 400) tryClick(e.clientX, e.clientY);
+    }
+    canvas.addEventListener("pointerup", endTap);
+    canvas.addEventListener("pointercancel", () => { down = false; });
+
+    const ray = new THREE.Raycaster();
+    const ndc = new THREE.Vector2();
+    function tryClick(px, py) {
+      const r = canvas.getBoundingClientRect();
+      ndc.x = ((px - r.left) / r.width) * 2 - 1;
+      ndc.y = -((py - r.top) / r.height) * 2 + 1;
+      ray.setFromCamera(ndc, camera);
+      if (ray.intersectObject(envelope, true).length) toggle();
+    }
+
+    // ---- Open / close ----------------------------------------------------
+    let target = 0, p = 0;
+    const FLAP_OPEN = 2.95;
+    const titleEl = document.querySelector(".title");
+    const dockEl = document.getElementById("dock");
+    const sheetEl = document.getElementById("sheet");
+    const btn = document.getElementById("toggle");
+    function toggle() {
+      target = target < 0.5 ? 1 : 0;
+      const open = target === 1;
+      btn.textContent = open ? "Seal it back" : "Break the seal";
+      btn.setAttribute("aria-label", open ? "Close the envelope" : "Open the envelope");
+      titleEl.classList.toggle("faded", open);
+      dockEl.classList.toggle("faded", open);
+      sheetEl.setAttribute("aria-hidden", open ? "false" : "true");
+      if (open) fireConfetti();
+    }
+    btn.addEventListener("click", toggle);
+
+    const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+    const easeIO = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    const clamp01 = (x) => Math.max(0, Math.min(1, x));
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    // project the letter's choices overlay onto the screen
+    const _v = new THREE.Vector3();
+    function projLocal(lyy) {
+      _v.set(0, lyy, 0.02);
+      letter.localToWorld(_v);
+      _v.project(camera);
+      return { x: (_v.x * 0.5 + 0.5) * window.innerWidth, y: (-_v.y * 0.5 + 0.5) * window.innerHeight };
+    }
+    function positionSheet() {
+      const c = projLocal(0);
+      const top = projLocal(lh / 2);
+      const bot = projLocal(-lh / 2);
+      const sheetPx = Math.hypot(bot.x - top.x, bot.y - top.y) || 320;
+      sheetEl.style.left = c.x + "px";
+      sheetEl.style.top = (c.y + sheetPx * 0.14) + "px";
+      const s = Math.min(1.18, Math.max(0.62, sheetPx / 440));
+      sheetEl.style.setProperty("--s", s.toFixed(3));
+      const vis = (target === 1 && p > 0.62);
+      sheetEl.style.opacity = vis ? "1" : "0";
+      sheetEl.style.pointerEvents = (target === 1 && p > 0.75) ? "auto" : "none";
+    }
+
+    // ---- Animation loop --------------------------------------------------
+    let baseY = 0;
+    function frame(t) {
+      requestAnimationFrame(frame);
+
+      p += (target - p) * (reduced ? 0.5 : 0.09);
+
+      const fa = easeOut(clamp01(p / 0.6)) * FLAP_OPEN;
+      flap.rotation.x = fa;
+
+      const rise = easeIO(clamp01((p - 0.4) / 0.6));
+      letter.position.y = lerp(LETTER_CLOSED.y, LETTER_OPEN.y, rise);
+      letter.position.z = lerp(LETTER_CLOSED.z, LETTER_OPEN.z, rise);
+      letter.rotation.x = lerp(LETTER_CLOSED.rx, LETTER_OPEN.rx, rise);
+
+      const so = 1 - clamp01(p / 0.22);
+      for (const m of sealFadeMats) m.opacity = so;
+      seal.visible = so > 0.01;
+
+      bg.update(t);
+
+      // gentle floating bob (always on) — the envelope holds its position otherwise
+      baseY = Math.sin(t * 0.0011) * 0.05;
+      envelope.position.y = baseY;
+
+      applyCamera();
+      renderer.render(scene, camera);
+
+      if (target === 1 || p > 0.02) positionSheet();
+    }
+
+    // ---- Resize (ignore mobile URL-bar height jitter for framing) --------
+    let lastW = window.innerWidth;
+    window.addEventListener("resize", () => {
+      const w = window.innerWidth, h = window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+      sizeConfetti();
+      if (Math.abs(w - lastW) > 2) { lastW = w; fitCamera(); }
+    });
+
+    fitCamera();
+    applyCamera();
+    requestAnimationFrame(frame);
+
+    requestAnimationFrame(() => {
+      const l = document.getElementById("loading");
+      l.classList.add("gone");
+      setTimeout(() => l.remove(), 600);
+    });
+  })();
   </script>
 </body>
 </html>
