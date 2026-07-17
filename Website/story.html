@@ -8,12 +8,16 @@
   <!-- Runs before first paint: when JS is on, the crawlable SEO block below never
        flashes (the engine replaces it). Crawlers and no-JS visitors still get it. -->
   <script>document.documentElement.classList.add('sw-js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root, .sw-root {
       --sw-bg: #5BB8F0;          /* == the scene background colour */
       --sw-ink: #1D2B50;
       --sw-ink-soft: #3E5580;
       --sw-accent: #E84A9B;      /* per-section accents override this at runtime */
+      --sw-font-display: "Baloo 2", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
     }
     .sw-js [data-sw-seo] { display: none; }
     /* pre-mount canvas: page shows the sky colour, not white, while the engine loads */
