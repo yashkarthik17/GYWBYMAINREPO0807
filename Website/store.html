@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en" class="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>The Party Store — Glad You Were Born Today</title>
+  <meta name="description" content="Party kits, plush, balloon arches, and confetti cannons from Starry &amp; the Crashers — everything they bring through the door, packed up and shipped to yours." />
+  <style>
+    :root {
+      --bg: #5BB8F0;
+      --ink: #1D2B50;
+      --ink-soft: #3E5580;
+      --pink: #E84A9B;
+      --yellow: #FFC93C;
+      --purple: #8B5CF6;
+      --card: #FFFFFF;
+      --font-display: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); }
+
+    .sky {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(60% 42% at 74% 12%, color-mix(in srgb, var(--yellow) 20%, transparent), transparent 70%),
+        radial-gradient(46% 34% at 22% 60%, color-mix(in srgb, #fff 40%, transparent), transparent 70%),
+        linear-gradient(178deg, color-mix(in srgb, var(--pink) 10%, var(--bg)) 0%, var(--bg) 55%, color-mix(in srgb, var(--purple) 10%, var(--bg)) 100%);
+    }
+    .dot { position: fixed; z-index: 0; width: 10px; height: 10px; border-radius: 50%; opacity: .35; pointer-events: none;
+           animation: drift 18s linear infinite; }
+    .dot--a { left: 12vw; top: 30vh; background: var(--yellow); animation-delay: -3s; }
+    .dot--b { left: 82vw; top: 22vh; background: var(--pink); animation-delay: -9s; }
+    .dot--c { left: 68vw; top: 70vh; background: var(--purple); animation-delay: -14s; }
+    @keyframes drift { 0% { transform: translateY(6vh); opacity: 0; } 15% { opacity: .35; }
+                       85% { opacity: .3; } 100% { transform: translateY(-14vh); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .dot { animation: none; opacity: .2; } }
+
+    .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 48px); }
+
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+              padding: clamp(14px, 2.4vw, 26px) 0; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+    .brand__mark { width: 24px; height: 28px; border-radius: 7px 7px 10px 10px;
+                   background: linear-gradient(160deg, var(--pink), color-mix(in srgb, var(--pink) 60%, #000));
+                   box-shadow: 0 6px 14px color-mix(in srgb, var(--pink) 40%, transparent); }
+    .brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
+    .back { text-decoration: none; font-weight: 600; font-size: .9rem; color: #fff; background: var(--ink);
+            padding: 10px 20px; border-radius: 999px; white-space: nowrap; }
+    .back:focus-visible, .card:focus-within, a:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+    .hero { padding: clamp(30px, 7vh, 84px) 0 clamp(22px, 4vh, 44px); max-width: 640px; }
+    .hero__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: .8rem;
+                     letter-spacing: .16em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 70%, var(--pink)); }
+    .hero h1 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em;
+               font-size: clamp(2.4rem, 6.5vw, 4rem); line-height: 1.02; margin: 12px 0 0; }
+    .hero p { margin-top: 16px; font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.55;
+              color: color-mix(in srgb, var(--ink) 80%, var(--ink-soft)); max-width: 46ch; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 2.2vw, 24px);
+            padding: clamp(10px, 2vh, 26px) 0 10px; }
+    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+
+    .card { position: relative; background: var(--card); border-radius: 22px; overflow: hidden;
+            box-shadow: 0 10px 30px color-mix(in srgb, var(--ink) 18%, transparent);
+            transition: transform .25s ease, box-shadow .25s ease; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 16px 38px color-mix(in srgb, var(--ink) 26%, transparent); }
+    @media (prefers-reduced-motion: reduce) { .card, .card:hover { transform: none; transition: none; } }
+    .card__imgbox { position: relative; aspect-ratio: 4 / 3; overflow: hidden;
+                    background: color-mix(in srgb, var(--bg) 40%, #fff); }
+    .card__imgbox img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* the gift ribbon: one diagonal band in the product's accent, like the box is wrapped */
+    .ribbon { position: absolute; top: 18px; right: -44px; transform: rotate(38deg); z-index: 2;
+              width: 170px; text-align: center; padding: 7px 0;
+              font-family: var(--font-display); font-weight: 700; font-size: .72rem; letter-spacing: .1em;
+              text-transform: uppercase; color: #fff; background: var(--acc, var(--pink));
+              box-shadow: 0 4px 12px color-mix(in srgb, var(--acc, var(--pink)) 50%, transparent); }
+    .card__body { padding: 18px 20px 20px; }
+    .card h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; margin: 0; }
+    .card p { margin: 8px 0 0; font-size: .92rem; line-height: 1.5; color: var(--ink-soft); }
+    .card__row { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+    .price { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+             color: color-mix(in srgb, var(--acc, var(--pink)) 75%, var(--ink)); }
+    .tag { font-size: .78rem; font-weight: 600; color: color-mix(in srgb, var(--acc, var(--pink)) 70%, #000);
+           background: color-mix(in srgb, var(--acc, var(--pink)) 14%, #fff);
+           border: 1px solid color-mix(in srgb, var(--acc, var(--pink)) 30%, transparent);
+           padding: 6px 12px; border-radius: 999px; }
+
+    .band { margin: clamp(30px, 6vh, 64px) 0 0; background: color-mix(in srgb, #fff 72%, transparent);
+            border: 1px solid color-mix(in srgb, var(--pink) 16%, transparent); backdrop-filter: blur(8px);
+            border-radius: 26px; padding: clamp(24px, 4vw, 44px);
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+    .band h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); margin: 0; }
+    .band p { margin: 8px 0 0; color: var(--ink-soft); max-width: 46ch; }
+    .band a { text-decoration: none; font-weight: 600; color: #fff; background: var(--ink);
+              padding: 13px 24px; border-radius: 999px; white-space: nowrap; }
+
+    footer { position: relative; z-index: 1; text-align: center; padding: clamp(30px, 6vh, 60px) 18px 34px;
+             color: color-mix(in srgb, var(--ink) 66%, var(--ink-soft)); font-size: .85rem; }
+    footer b { font-family: var(--font-display); }
+  </style>
+</head>
+<body>
+  <div class="sky"></div>
+  <span class="dot dot--a"></span><span class="dot dot--b"></span><span class="dot dot--c"></span>
+
+  <div class="wrap">
+    <nav class="topbar">
+      <a class="brand" href="index.html"><span class="brand__mark"></span><span class="brand__name">Glad You Were Born Today</span></a>
+      <a class="back" href="index.html">&larr; Back to the story</a>
+    </nav>
+
+    <header class="hero">
+      <span class="hero__eyebrow">The party store</span>
+      <h1>The party, boxed.</h1>
+      <p>Everything the Crashers bring through the door — cake towers, balloon arches, confetti storms — packed up and shipped to yours.</p>
+    </header>
+
+    <main class="grid">
+      <article class="card" style="--acc:#E84A9B">
+        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/crash-p.webp" alt="The Crashers bursting into a party on streamer trails" loading="lazy" /></div>
+        <div class="card__body">
+          <h2>Party Crash Kit</h2>
+          <p>The full crash: confetti cannons, streamer trails, and a door-kicking playlist.</p>
+          <div class="card__row"><span class="price">$49</span><span class="tag">Crowd favorite</span></div>
+        </div>
+      </article>
+
+      <article class="card" style="--acc:#FFC93C">
+        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/finale-p.webp" alt="Starry taking a bow at the send-off" loading="lazy" /></div>
+        <div class="card__body">
+          <h2>Starry Plush</h2>
+          <p>The star of the show, hug-sized. Glows softly after lights-out.</p>
+          <div class="card__row"><span class="price">$29</span><span class="tag">Hug-sized</span></div>
+        </div>
+      </article>
+
+      <article class="card" style="--acc:#8B5CF6">
+        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/glowup-p.webp" alt="The rebuilt party with balloon arches and a cake tower" loading="lazy" /></div>
+        <div class="card__body">
+          <h2>Balloon Arch Kit</h2>
+          <p>Sixty balloons, one arch, zero sad corners.</p>
+          <div class="card__row"><span class="price">$39</span><span class="tag">Room-sized</span></div>
+        </div>
+      </article>
+
+      <article class="card" style="--acc:#E84A9B">
+        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/crash.webp" alt="Confetti storm filling the room" loading="lazy" /></div>
+        <div class="card__body">
+          <h2>Confetti Cannons — 2-pack</h2>
+          <p>Safe for indoors. Unsafe for boring.</p>
+          <div class="card__row"><span class="price">$19</span><span class="tag">2-pack</span></div>
+        </div>
+      </article>
+
+      <article class="card" style="--acc:#8B5CF6">
+        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/glowup.webp" alt="Cake tower centerpiece at the glow-up" loading="lazy" /></div>
+        <div class="card__body">
+          <h2>Cake Tower Topper Set</h2>
+          <p>Turns a store-bought cake into the centerpiece.</p>
+          <div class="card__row"><span class="price">$15</span><span class="tag">Oven-free</span></div>
+        </div>
+      </article>
+
+      <article class="card" style="--acc:#FFC93C">
+        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/crashpad-p.webp" alt="The Crash Pad radar spotting a boring party" loading="lazy" /></div>
+        <div class="card__body">
+          <h2>Digital Invitations</h2>
+          <p>Send the signal. The radar does the rest.</p>
+          <div class="card__row"><span class="price">Free</span><span class="tag">Printable too</span></div>
+        </div>
+      </article>
+    </main>
+
+    <section class="band">
+      <div>
+        <h2>The store opens soon.</h2>
+        <p>We're packing the first boxes now. Come back after the next flyover — or watch the crash again while you wait.</p>
+      </div>
+      <a href="index.html">Replay the story</a>
+    </section>
+  </div>
+
+  <footer>&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
+
+  <script src="music.js"></script>
+</body>
+</html>

@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Glad You Were Born Today — the world of Starry &amp; the Crashers</title>
   <meta name="description" content="Scroll to fly through the world of Starry and the Crashers — the crew that crashes boring birthday parties and makes them unforgettable." />
+  <!-- Runs before first paint: when JS is on, the crawlable SEO block below never
+       flashes (the engine replaces it). Crawlers and no-JS visitors still get it. -->
+  <script>document.documentElement.classList.add('sw-js');</script>
   <style>
     :root, .sw-root {
       --sw-bg: #5BB8F0;          /* == the scene background colour */
@@ -12,6 +15,9 @@
       --sw-ink-soft: #3E5580;
       --sw-accent: #E84A9B;      /* per-section accents override this at runtime */
     }
+    .sw-js [data-sw-seo] { display: none; }
+    /* pre-mount canvas: page shows the sky colour, not white, while the engine loads */
+    html, body { margin: 0; background: var(--sw-bg); }
   </style>
 </head>
 <body>
@@ -29,11 +35,12 @@
       <p>They don't just crash the party — they rebuild it: cake tower, balloon arches, dance floor.</p>
       <h2>From Starry &amp; the Crashers — Glad you were born today.</h2>
       <p>Bring the Crashers to your next party.</p>
-      <p><a href="#">Bring the Crashers</a> · <a href="#">Meet Starry</a></p>
+      <p><a href="store.html">Shop the party store</a> · <a href="#top">Play the story again</a></p>
     </section>
   </div>
 
   <script src="scrub-engine.js"></script>
+  <script src="music.js"></script>
   <script>
     // Phone-class screens (same rule the engine uses for clip tiering) get the
     // portrait stills, so stills-fallback mode (Low Power Mode, data-saver,
@@ -42,7 +49,8 @@
     function sw_still(name) { return 'assets/' + name + (SW_PHONE ? '-p' : '') + '.webp'; }
     mountScrollWorld(document.getElementById('world'), {
       brand: { name: 'Glad You Were Born Today', href: '#top' },
-      cta: { label: 'Bring the Crashers', href: '#finale' },
+      // when the logo file lands: brand: { name: '…', href: '#top', logo: 'assets/logo.png' }
+      cta: { label: 'Shop the Party', href: 'store.html' },
       hint: 'scroll to crash the party',
       crossfade: 0.15,
       diveScroll: 1.3,
@@ -123,8 +131,8 @@
           title: 'Glad you were born today.',
           body: 'Bring the Crashers to your next party.',
           tags: [],
-          cta: { primary: { label: 'Bring the Crashers', href: '#' },
-                 secondary: { label: 'Meet Starry', href: '#' } },
+          cta: { primary: { label: 'Bring the Crashers', href: 'store.html' },
+                 secondary: { label: 'Play it again', href: '#top' } },
         },
       ],
       connectors: [
