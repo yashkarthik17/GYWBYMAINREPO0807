@@ -767,9 +767,14 @@ function injectCSS() {
        dvh + env() are progressive: browsers that lack them keep the vh fallback line. */
     .sw-copy{left:clamp(18px,5vw,64px);right:clamp(18px,5vw,64px);top:auto;bottom:clamp(64px,14vh,120px);transform:none;width:auto;max-width:560px;}
     .sw-copy{bottom:calc(clamp(56px,12dvh,110px) + env(safe-area-inset-bottom));}
-    .sw-copy__title{font-size:clamp(1.9rem,7.5vw,2.7rem);}
-    .sw-copy__body{max-width:none;font-size:clamp(.98rem,3.6vw,1.1rem);} .sw-scene__video,.sw-scene__still{object-position:center 46%;}
-    .sw-hint{bottom:calc(20px + env(safe-area-inset-bottom));}
+    .sw-copy__eyebrow{margin-top:10px;}
+    .sw-copy__title{font-size:clamp(1.9rem,7.5vw,2.7rem);margin-top:8px;}
+    .sw-copy__body{max-width:none;font-size:clamp(.98rem,3.6vw,1.1rem);margin-top:12px;} .sw-scene__video,.sw-scene__still{object-position:center 46%;}
+    /* the bottom strip belongs to the copy on phones: no tag pills competing for
+       the same lines, no scroll hint layered through them */
+    .sw-copy__tags{display:none;}
+    .sw-hint{display:none;}
+    .sw-brand__name{font-size:.95rem;max-width:44vw;line-height:1.15;}
     .sw-route{gap:16px;right:6px;} .sw-route__label{display:none;}
   }
   /* Portrait phones crop a 16:9 clip hard; keep the framing centred so the focal
