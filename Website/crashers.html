@@ -139,6 +139,16 @@
     footer { position: relative; z-index: 1; text-align: center; padding: clamp(30px, 6vh, 60px) 18px 34px;
              color: color-mix(in srgb, var(--ink) 66%, var(--ink-soft)); font-size: .85rem; }
     footer b { font-family: var(--font-display); }
+  
+    /* top nav tabs */
+    .tabs { display: flex; gap: 7px; flex-wrap: wrap; justify-content: flex-end; }
+    .tabs a { text-decoration: none; font-family: var(--font-display); font-weight: 600; font-size: .85rem;
+              color: var(--ink); background: color-mix(in srgb, #fff 62%, transparent);
+              border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+              padding: 8px 15px; border-radius: 999px; white-space: nowrap; }
+    .tabs a:hover { background: #fff; }
+    .tabs a.is-here { color: #fff; background: var(--ink); border-color: var(--ink); }
+    @media (max-width: 560px) { .tabs a { font-size: .78rem; padding: 7px 11px; } }
   </style>
 </head>
 <body>
@@ -148,7 +158,7 @@
   <div class="wrap">
     <nav class="topbar">
       <a class="brand" href="index.html"><span class="brand__mark"></span><span class="brand__name">Glad You Were Born Today</span></a>
-      <a class="back" href="story.html">&larr; Back to the story</a>
+      <div class="tabs"><a href="story.html">Story</a><a href="crashers.html" class="is-here">Crashers</a><a href="games.html">Games</a><a href="cards.html">Cards</a></div>
     </nav>
 
     <header class="hero">

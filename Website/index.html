@@ -154,7 +154,7 @@
   <canvas id="scene"></canvas>
 
   <div class="ui">
-    <h1 class="title">
+    <h1 class="title faded">
       <span class="title__eyebrow">You&rsquo;re invited</span>
       Glad You Were <em>Born Today</em>
       <span class="title__sub">One envelope. Two celebrations. Tap it to break the seal.</span>
@@ -752,11 +752,15 @@
 
     // ---- Open / close ----------------------------------------------------
     let target = 0, p = 0;
+    // Fly-in: the envelope swoops down from the sky before it can be opened.
+    let introStart = -1, intro = reduced ? 1 : 0, titleShown = false;
+    const INTRO_MS = 1900;
     const FLAP_OPEN = 2.95;
     const titleEl = document.querySelector(".title");
     const sheetEl = document.getElementById("sheet");
     const btn = document.getElementById("toggle");
     function toggle() {
+      if (intro < 0.98) return;   // not until the envelope has landed
       target = target < 0.5 ? 1 : 0;
       const open = target === 1;
       btn.textContent = open ? "Seal it back" : "Break the seal";
@@ -816,9 +820,19 @@
 
       bg.update(t);
 
-      // gentle floating bob (always on) — the envelope holds its position otherwise
+      // fly-in: swoop down from the upper sky, arc, settle into the rest pose —
+      // then hand over to the gentle floating bob (always on)
+      if (introStart < 0) introStart = t + 240;
+      if (intro < 1 && !reduced) intro = clamp01((t - introStart) / INTRO_MS);
+      const fly = easeOut(intro);
       baseY = Math.sin(t * 0.0011) * 0.05;
-      envelope.position.y = baseY;
+      envelope.position.x = (1 - fly) * 5.4;
+      envelope.position.y = baseY * fly + (1 - fly) * 3.4 + Math.sin(fly * Math.PI) * 0.5;
+      envelope.position.z = (1 - fly) * -7;
+      envelope.rotation.x = -0.18 + (1 - fly) * 0.6;
+      envelope.rotation.y = (1 - fly) * -2.6;
+      envelope.rotation.z = (1 - fly) * 0.3;
+      if (!titleShown && intro >= 0.72) { titleShown = true; titleEl.classList.remove("faded"); }
 
       applyCamera();
       renderer.render(scene, camera);

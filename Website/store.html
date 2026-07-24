@@ -180,6 +180,17 @@
                                        letter-spacing: .18em; text-transform: uppercase;
                                        color: color-mix(in srgb, var(--gold) 85%, #fff); }
     .band--mission a { background: linear-gradient(165deg, #f4dd97 6%, #e6c46a 42%, #b8862e 92%); color: var(--ink); font-weight: 700; }
+
+    /* top nav tabs */
+    .tabs { display: flex; gap: 7px; flex-wrap: wrap; justify-content: flex-end; }
+    .tabs a { text-decoration: none; font-family: var(--font-display); font-weight: 600; font-size: .85rem;
+              color: var(--ink); background: color-mix(in srgb, #fff 62%, transparent);
+              border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+              padding: 8px 15px; border-radius: 999px; white-space: nowrap; }
+    .tabs a:hover { background: #fff; }
+    .tabs a.is-here { color: #fff; background: var(--ink); border-color: var(--ink); }
+    @media (max-width: 560px) { .tabs a { font-size: .78rem; padding: 7px 11px; } }
+  </style>
 </head>
 <body>
   <div class="sky"></div>
@@ -189,7 +200,7 @@
   <div class="wrap">
     <nav class="topbar">
       <a class="brand" href="index.html"><span class="brand__mark"></span><span class="brand__name">Glad You Were Born Today</span></a>
-      <a class="back" href="adult/">&larr; Back to the celebration</a>
+      <div class="tabs"><a href="adult/">The Crash</a><a href="adult/crew.html">The Crew</a><a href="#mission">Mission</a></div>
     </nav>
 
     <header class="hero">

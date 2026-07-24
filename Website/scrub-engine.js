@@ -205,6 +205,27 @@ function mountScrollWorld(container, config) {
     const c = el('a', 'sw-topcta'); c.href = config.cta.href || '#'; c.textContent = config.cta.label;
     topbar.appendChild(c);
   }
+  // Persistent site tabs — `tabs: [{label, href}]` renders page links in the topbar
+  // on every device (unlike .sw-nav, the scene jumper, which hides on phones).
+  if (config.tabs && config.tabs.length) {
+    const tb = el('nav', 'sw-tabs');
+    config.tabs.forEach(tab => {
+      const a = el('a'); a.href = tab.href || '#'; a.textContent = tab.label || '';
+      tb.appendChild(a);
+    });
+    topbar.appendChild(tb);
+  }
+  // The topbar sleeps after a moment of stillness — the film owns the screen;
+  // the chrome returns the instant the viewer stirs (scroll, touch, mouse, key).
+  let tbTimer = 0;
+  function tbWake() {
+    topbar.classList.remove('is-asleep');
+    clearTimeout(tbTimer);
+    tbTimer = setTimeout(() => topbar.classList.add('is-asleep'), 3200);
+  }
+  ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(evName =>
+    window.addEventListener(evName, tbWake, { passive: true }));
+  tbWake();
 
   const stage = el('div', 'sw-stage');
   const copylayer = el('div', 'sw-copylayer');
@@ -772,11 +793,17 @@ function injectCSS() {
   @keyframes sw-drift{0%{opacity:0;transform:scale(var(--sw-sc)) translate(0,12vh) rotate(0)}12%{opacity:.5}88%{opacity:.45}100%{opacity:0;transform:scale(var(--sw-sc)) translate(4vw,-22vh) rotate(210deg)}}
   .sw-scrollbar{position:fixed;top:0;left:0;right:0;height:3px;z-index:60;background:color-mix(in srgb,var(--sw-accent) 14%,transparent);}
   .sw-scrollbar span{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--sw-accent);}
-  .sw-topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:clamp(14px,2.4vw,26px) clamp(18px,5vw,64px);}
+  .sw-topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:clamp(14px,2.4vw,26px) clamp(18px,5vw,64px);transition:opacity .5s ease,transform .5s ease;}
+  .sw-topbar.is-asleep{opacity:0;transform:translateY(-10px);pointer-events:none;}
+  @media (prefers-reduced-motion: reduce){ .sw-topbar{transition:opacity .5s ease;transform:none;} .sw-topbar.is-asleep{transform:none;} }
   .sw-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--sw-ink);}
   .sw-brand__mark{width:24px;height:28px;border-radius:7px 7px 10px 10px;background:linear-gradient(160deg,var(--sw-accent),color-mix(in srgb,var(--sw-accent) 60%,#000));box-shadow:0 6px 14px color-mix(in srgb,var(--sw-accent) 40%,transparent);}
   .sw-brand__logo{height:34px;width:auto;display:block;}
   .sw-brand__name{font-family:var(--sw-font-display);font-weight:700;font-size:1.1rem;}
+  .sw-tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+  .sw-tabs a{text-decoration:none;font-family:var(--sw-font-display);font-weight:600;font-size:.84rem;color:var(--sw-ink);background:color-mix(in srgb,#fff 62%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid color-mix(in srgb,var(--sw-ink) 16%,transparent);padding:8px 15px;border-radius:999px;white-space:nowrap;transition:background .15s ease;}
+  .sw-tabs a:hover{background:#fff;}
+  .sw-tabs a:focus-visible{outline:2px solid var(--sw-accent);outline-offset:2px;}
   .sw-nav{display:flex;gap:4px;padding:5px;background:color-mix(in srgb,#fff 55%,transparent);backdrop-filter:blur(10px);border:1px solid color-mix(in srgb,var(--sw-accent) 16%,transparent);border-radius:999px;}
   .sw-nav__item{font:inherit;font-size:.82rem;color:var(--sw-ink-soft);border:0;background:transparent;cursor:pointer;padding:7px 14px;border-radius:999px;transition:color .25s,background .25s;}
   .sw-nav__item:hover{color:var(--sw-ink);} .sw-nav__item.is-active{color:#fff;background:var(--sw-accent);}
@@ -826,6 +853,8 @@ function injectCSS() {
   .sw-motionpill::before{content:"";display:inline-block;width:0;height:0;margin-right:9px;border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent var(--sw-accent);vertical-align:-1px;}
   @media (max-width:860px){
     .sw-nav{display:none;}
+    .sw-tabs{gap:5px;}
+    .sw-tabs a{color:#fff;background:rgba(0,0,0,.30);border-color:rgba(255,255,255,.32);font-size:.78rem;padding:7px 12px;}
     /* Blue full-width scrim removed — copy sits in its own frosted card instead, so
        the video is never washed blue. */
     .sw-copylayer::before{display:none;}

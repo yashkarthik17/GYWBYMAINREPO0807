@@ -51,7 +51,7 @@
     </section>
   </div>
 
-  <script src="scrub-engine.js?v=9"></script>
+  <script src="scrub-engine.js?v=10"></script>
   <script src="music.js"></script>
   <script>
     // Desktop/tablet serve the landscape tier (re-rendered July 2026 from the
@@ -63,6 +63,11 @@
     mountScrollWorld(document.getElementById('world'), {
       brand: { name: 'Glad You Were Born Today', href: '#top' },
       // when the logo file lands: brand: { name: '…', href: '#top', logo: 'assets/logo.png' }
+      tabs: [
+        { label: 'Crashers', href: 'crashers.html' },
+        { label: 'Games', href: 'games.html' },
+        { label: 'Cards', href: 'cards.html' },
+      ],
       hint: 'scroll to crash the party',
       crossfade: 0.15,
       diveScroll: 1.3,
