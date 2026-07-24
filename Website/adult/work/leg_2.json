@@ -1,0 +1,47 @@
+[
+  {
+    "id": "09306c16-7cd6-4742-a973-e1e615d72933",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260721_055442_09306c16-7cd6-4742-a973-e1e615d72933.mp4",
+    "created_at": 1784613282.580261,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Continue the exact same slow steady forward drift of the opening frame seamlessly, with no cut and no speed change. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. The animated characters are glossy vinyl designer toys EXACTLY as shown in the reference image — identical faces, sparkly jewel eyes, materials and proportions — integrated into the real scene with matched lighting and true contact shadows. Smooth graceful slow camera motion. Absolutely no text, no captions, no logos. The small fluffy toy cloud with its cute face leads the camera forward and gently down over a wooden backyard fence, descending into a different real backyard at pink-gold dusk where a party is mid-transformation: string lights flickering on, a balloon arch in gold, pink, purple and green, floating paper lanterns, gentle confetti. The camera glides forward through a lively group of adult friends in their twenties and thirties, one holding a baby, toward Starry spinning a delighted guest by both hands in the center while one little Crasher dances with the guests and another rides the toy cloud spilling sparkles. In the final second the camera eases to a gentle, smooth stop framing the whole celebration exactly as the final composition. The animated characters, kept exactly on-model from the reference images. STARRY: a tall golden five-pointed star character with a friendly cartoon face on the star body — large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile — wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots. THE CRASHERS: three small toddler-sized creatures whose bodies are simple ROUND hooded onesies — soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats; the patterns are only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print. Each Crasher has a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood.\nTHE CLOUD: a fluffy glossy cotton-soft cartoon toy cloud the size of a small car, gently rounded and puffy like a designer vinyl toy, that the Crashers ride on, trailing fine golden sparkles and thin curling ribbon streamers in pink, purple and green.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "e7af885f-2694-4d15-8974-38caa1badd86",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/e7af885f-2694-4d15-8974-38caa1badd86.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "b9a34715-d5b2-4b32-a976-38df402bfad9",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/b9a34715-d5b2-4b32-a976-38df402bfad9_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

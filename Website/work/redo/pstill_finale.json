@@ -1,0 +1,46 @@
+[
+  {
+    "id": "1d2a03d5-6618-4480-8950-eb13611863c8",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260720_061820_1d2a03d5-6618-4480-8950-eb13611863c8.png",
+    "created_at": 1784528300.4321,
+    "params": {
+      "width": 1360,
+      "height": 2048,
+      "prompt": "Cinematic still from a Pixar-style 3D animated film. Soft warm cinematic lighting, gentle depth of field, rich glossy materials, storybook charm. A lush enchanted forest world under a bright candy-blue sky with puffy white clouds: giant leafy trees with plain natural bark and absolutely no faces on the trees, mossy ground, winding stone paths, oversized mushrooms, drifting dandelion sparkles and tiny glowing fireflies. Cohesive color palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Highly detailed, absolutely no text, no letters, no numbers, no logos. Tall vertical portrait composition, focal subject centered, nothing important cropped at the edges.\nSubject: the sunlit clearing outside the cottage after the party — the cottage now decked out for celebration: balloons on the fence, pennant garlands and glowing paper lanterns strung between the trees, confetti drifting through sunbeams. Starry the cheerful golden star character stands front and center in a warm hero pose with open arms, the three Crasher characters — small round-hooded figures in orange zigzag, blue diamond and green paint-splatter onesies with red-and-white striped cone party hats — gathered playfully around, and the happy Pixar-style boy with round cheeks and soft brown hair waving beside them still wearing his party hat and hugging the little golden star toy. Bright candy-blue sky with puffy clouds above the forest canopy, warm golden light, heartfelt joyful send-off mood.",
+      "medias": [
+        {
+          "data": {
+            "id": "281ed7e9-5f9c-49a2-8ae9-8d9613cc5daa",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/281ed7e9-5f9c-49a2-8ae9-8d9613cc5daa.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "e6929706-8b56-4dd3-833f-44f9b2101234",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/e6929706-8b56-4dd3-833f-44f9b2101234_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "5321d49b-e50f-4813-b440-0aa6e8d92729",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/5321d49b-e50f-4813-b440-0aa6e8d92729.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "2:3",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

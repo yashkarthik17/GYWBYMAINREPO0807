@@ -1,0 +1,43 @@
+[
+  {
+    "id": "762c6329-1609-45e8-b206-0334a639280e",
+    "status": "completed",
+    "display_name": "Nano Banana Pro",
+    "job_set_type": "nano_banana_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260721_031939_762c6329-1609-45e8-b206-0334a639280e.png",
+    "created_at": 1784603979.81736,
+    "params": {
+      "width": 1536,
+      "height": 2752,
+      "aspect_ratio": "9:16",
+      "resolution": "2k",
+      "batch_size": 1,
+      "input_images": [
+        {
+          "id": "4568e5c2-4f68-483d-b59e-30093d567f04",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/4568e5c2-4f68-483d-b59e-30093d567f04_resize.jpg",
+          "type": "media_input"
+        },
+        {
+          "id": "33aa3fee-8848-44c1-ab13-0efea9c3c5df",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/33aa3fee-8848-44c1-ab13-0efea9c3c5df.png",
+          "type": "media_input"
+        },
+        {
+          "id": "5e17cc7a-0da2-4edf-be5c-60c86e42ac01",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/5e17cc7a-0da2-4edf-be5c-60c86e42ac01.png",
+          "type": "media_input"
+        },
+        {
+          "id": "33413b51-bfc3-46a4-97f6-8482e4bf7402",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/33413b51-bfc3-46a4-97f6-8482e4bf7402.png",
+          "type": "media_input"
+        }
+      ],
+      "input_image": null,
+      "application": null,
+      "surface": null,
+      "prompt": "Cinematic photorealistic vertical photograph, 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the vertical center of frame, safe for portrait phone screens. Absolutely no text, no letters, no numbers, no logos, no watermarks.\nThe animated characters, kept exactly on-model from the reference images. STARRY: a tall golden five-pointed star character with a friendly cartoon face on the star body — large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile — wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots. THE CRASHERS: three small toddler-sized creatures whose bodies are simple ROUND hooded onesies — soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats; the patterns are only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print. Each Crasher has a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood.\nSubject: Under glowing string lights at blue-hour dusk in the enchanted real backyard, a real multigenerational family poses for a group photo with the animated characters: a dad stands closest to camera holding up his phone to take the picture, grandparents laugh arm in arm, Starry stands in the middle of the group with both arms spread wide, and the three little Crashers hug and play with two real giggling children — one Crasher in a warm mid-hug with a little girl, one high-fiving a young boy, one striking a cute pose for the camera. Candid joy, golden fairy sparkles in the air, photo-moment framing."
+    }
+  }
+]

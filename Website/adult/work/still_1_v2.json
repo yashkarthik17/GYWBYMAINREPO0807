@@ -1,0 +1,28 @@
+[
+  {
+    "id": "f1ea646c-5c97-4c29-84b9-f895d3b46075",
+    "status": "completed",
+    "display_name": "Nano Banana Pro",
+    "job_set_type": "nano_banana_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260721_054815_f1ea646c-5c97-4c29-84b9-f895d3b46075.png",
+    "created_at": 1784612895.130013,
+    "params": {
+      "width": 1536,
+      "height": 2752,
+      "aspect_ratio": "9:16",
+      "resolution": "2k",
+      "batch_size": 1,
+      "input_images": [
+        {
+          "id": "ca611eb4-900e-4cd5-a5c7-523214bf4712",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/ca611eb4-900e-4cd5-a5c7-523214bf4712_resize.jpg",
+          "type": "media_input"
+        }
+      ],
+      "input_image": null,
+      "application": null,
+      "surface": null,
+      "prompt": "Cinematic photorealistic vertical photograph, 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the vertical center of frame, safe for portrait phone screens. Absolutely no text, no letters, no numbers, no logos, no watermarks.\nSubject: A modest real backyard birthday party for a child, late golden afternoon, one family: a picnic table holds a plain white sheet cake with unlit candles, a few pastel balloons sag on strings tied to folding chairs, paper plates and plastic cups, a small multigenerational family stands around in quiet polite small talk, and the birthday child — a real kid about eight years old in a paper party hat — sits alone at the table with chin resting in both hands, sweetly bored. Ordinary flat everyday suburban light. High in the sky far beyond the rooftops, very small in the distance, a tiny fluffy glossy cartoon toy cloud with a cute face approaches trailing a faint line of golden sparkles — the only magical thing in the frame."
+    }
+  }
+]

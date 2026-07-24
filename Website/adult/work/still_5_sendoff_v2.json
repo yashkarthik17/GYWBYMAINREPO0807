@@ -1,0 +1,48 @@
+[
+  {
+    "id": "6c3692bc-cb4a-47db-bc96-258209535068",
+    "status": "completed",
+    "display_name": "Nano Banana Pro",
+    "job_set_type": "nano_banana_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260721_034253_6c3692bc-cb4a-47db-bc96-258209535068.png",
+    "created_at": 1784605373.359467,
+    "params": {
+      "width": 1536,
+      "height": 2752,
+      "aspect_ratio": "9:16",
+      "resolution": "2k",
+      "batch_size": 1,
+      "input_images": [
+        {
+          "id": "5e19092a-9f76-4235-bba7-4e871a0792c3",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/5e19092a-9f76-4235-bba7-4e871a0792c3_resize.jpg",
+          "type": "media_input"
+        },
+        {
+          "id": "94142874-7215-421d-921c-2e6303d43cbb",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/94142874-7215-421d-921c-2e6303d43cbb_resize.jpg",
+          "type": "media_input"
+        },
+        {
+          "id": "274b262f-2576-4794-9715-d535ec31f62b",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/274b262f-2576-4794-9715-d535ec31f62b.png",
+          "type": "media_input"
+        },
+        {
+          "id": "ae5316f5-911c-4438-9634-62746b70d0ea",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/ae5316f5-911c-4438-9634-62746b70d0ea.png",
+          "type": "media_input"
+        },
+        {
+          "id": "790cc0e1-61ba-4f2d-a320-9d1bfe758213",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/790cc0e1-61ba-4f2d-a320-9d1bfe758213.png",
+          "type": "media_input"
+        }
+      ],
+      "input_image": null,
+      "application": null,
+      "surface": null,
+      "prompt": "Cinematic photorealistic vertical photograph, 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the vertical center of frame, safe for portrait phone screens. Absolutely no text, no letters, no numbers, no logos, no watermarks.\nThe animated characters, kept exactly on-model from the reference images. STARRY: a tall golden five-pointed star character with a friendly cartoon face on the star body — large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile — wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots. THE CRASHERS: three small toddler-sized creatures whose bodies are simple ROUND hooded onesies — soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats; the patterns are only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print. Each Crasher has a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood.\nTHE CLOUD: a fluffy glossy cotton-soft cartoon toy cloud the size of a small car, gently rounded and puffy like a designer vinyl toy, that the Crashers ride on, trailing fine golden sparkles and thin curling ribbon streamers in pink, purple and green.\nSubject: High above the suburban neighborhood at night, aerial view: the fluffy glossy toy cloud sails over dark rooftops with the three little Crashers waving goodbye from its puffy edge, while Starry soars alongside leaving a glowing golden star-trail arcing across the deep-blue starry sky. IMPORTANT: Starry and the Crashers appear ONLY up in the sky — down below, the glowing backyards hold only tiny ordinary human families waving up at the sky, absolutely no star characters and no Crasher creatures on the ground. Three separate backyards below glow warmly with string lights. The last confetti drifts down over the rooftops, magical warm farewell."
+    }
+  }
+]

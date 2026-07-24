@@ -1,0 +1,47 @@
+[
+  {
+    "id": "a8f226a3-c388-4d6d-87ab-b20456e3d845",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260721_060043_a8f226a3-c388-4d6d-87ab-b20456e3d845.mp4",
+    "created_at": 1784613643.023632,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Continue the exact same slow steady forward drift of the opening frame seamlessly, with no cut and no speed change. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. The animated characters are glossy vinyl designer toys EXACTLY as shown in the reference image — identical faces, sparkly jewel eyes, materials and proportions — integrated into the real scene with matched lighting and true contact shadows. Smooth graceful slow camera motion. Absolutely no text, no captions, no logos. The camera rises away from the dusk party, gliding forward over the wooden fence and across dark rooftops as dusk deepens into blue hour, then gently descends into a third real backyard strung with glowing string lights, gliding forward toward a joyful family group photo: a dad closest to camera holding up his phone, grandparents laughing arm in arm, Starry in the middle with arms spread wide, and the three little Crashers hugging and playing with two real giggling children. Golden fairy sparkles drift through the air. In the final second the camera eases to a gentle, smooth stop framing the scene exactly as the final composition. The animated characters, kept exactly on-model from the reference images. STARRY: a tall golden five-pointed star character with a friendly cartoon face on the star body — large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile — wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots. THE CRASHERS: three small toddler-sized creatures whose bodies are simple ROUND hooded onesies — soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats; the patterns are only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print. Each Crasher has a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood.\nTHE CLOUD: a fluffy glossy cotton-soft cartoon toy cloud the size of a small car, gently rounded and puffy like a designer vinyl toy, that the Crashers ride on, trailing fine golden sparkles and thin curling ribbon streamers in pink, purple and green.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "098e2eb1-9807-4593-ba27-b965117d5de4",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/098e2eb1-9807-4593-ba27-b965117d5de4.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "29d65387-a576-4aac-923d-4e3f309304da",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/29d65387-a576-4aac-923d-4e3f309304da_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

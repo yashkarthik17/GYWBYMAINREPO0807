@@ -1,0 +1,48 @@
+[
+  {
+    "id": "67cdffaa-8d60-4c14-b03d-fab27f214027",
+    "status": "completed",
+    "display_name": "Nano Banana Pro",
+    "job_set_type": "nano_banana_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260721_034023_67cdffaa-8d60-4c14-b03d-fab27f214027.png",
+    "created_at": 1784605223.868131,
+    "params": {
+      "width": 1536,
+      "height": 2752,
+      "aspect_ratio": "9:16",
+      "resolution": "2k",
+      "batch_size": 1,
+      "input_images": [
+        {
+          "id": "fbbf85e8-1c86-4f7f-85db-166de06b1932",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/fbbf85e8-1c86-4f7f-85db-166de06b1932_resize.jpg",
+          "type": "media_input"
+        },
+        {
+          "id": "ab0b6745-3ab0-45c0-a692-e597c1b0eae1",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/ab0b6745-3ab0-45c0-a692-e597c1b0eae1_resize.jpg",
+          "type": "media_input"
+        },
+        {
+          "id": "80080189-6a4f-4d53-ab20-8568066d3812",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/80080189-6a4f-4d53-ab20-8568066d3812.png",
+          "type": "media_input"
+        },
+        {
+          "id": "c7dd9533-87ff-46a5-8be2-3e6d1ec7ff67",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/c7dd9533-87ff-46a5-8be2-3e6d1ec7ff67.png",
+          "type": "media_input"
+        },
+        {
+          "id": "504c9b43-bccd-4d4e-8e1b-b89bcee14393",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/504c9b43-bccd-4d4e-8e1b-b89bcee14393.png",
+          "type": "media_input"
+        }
+      ],
+      "input_image": null,
+      "application": null,
+      "surface": null,
+      "prompt": "Cinematic photorealistic vertical photograph, 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the vertical center of frame, safe for portrait phone screens. Absolutely no text, no letters, no numbers, no logos, no watermarks.\nThe animated characters, kept exactly on-model from the reference images. STARRY: a tall golden five-pointed star character with a friendly cartoon face on the star body — large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile — wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots. THE CRASHERS: three small toddler-sized creatures whose bodies are simple ROUND hooded onesies — soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats; the patterns are only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print. Each Crasher has a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood.\nTHE CLOUD: a fluffy glossy cotton-soft cartoon toy cloud the size of a small car, gently rounded and puffy like a designer vinyl toy, that the Crashers ride on, trailing fine golden sparkles and thin curling ribbon streamers in pink, purple and green.\nSubject: High above the suburban neighborhood at night, aerial view: the fluffy glossy toy cloud sails over dark rooftops with the three little Crashers waving goodbye from its puffy edge, while Starry soars alongside leaving a glowing golden star-trail arcing across the deep-blue starry sky. Below, three or four separate backyards glow warmly with string lights, each with a tiny celebrating family waving up at the sky. The last confetti drifts down over the rooftops, magical warm farewell."
+    }
+  }
+]

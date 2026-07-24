@@ -1,0 +1,39 @@
+[
+  {
+    "id": "33a44d81-296b-41df-a587-ff46c73f4365",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260720_062747_33a44d81-296b-41df-a587-ff46c73f4365.mp4",
+    "created_at": 1784528867.108867,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Begin framing the whole cozy cottage living room at the moment the party gets crashed, then glide smoothly forward into the action: the three Crasher characters swirl through the air on their glittering rainbow streamer trails, confetti bursting and fluttering everywhere, Starry landing joyfully beside the birthday cake, while the amazed young boy throws his arms up in delight. The camera weaves gently between drifting confetti toward the boy and the cake table, ending settled close on the joyful celebration. In the final second the camera settles into a slow, steady forward drift. Pixar-style 3D animated film look, soft warm cinematic lighting, cozy wooden storybook interior with the bright enchanted forest visible through the door, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth, graceful, slow motion, subtle parallax. No text, no captions. Tall vertical portrait framing throughout, the scene always fully composed within the tall frame.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "1210c91b-f7a2-4d63-be96-288f28841925",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/1210c91b-f7a2-4d63-be96-288f28841925.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

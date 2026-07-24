@@ -1,0 +1,33 @@
+[
+  {
+    "id": "73b334cf-3dce-489e-90a3-fdc084745385",
+    "status": "completed",
+    "display_name": "Nano Banana Pro",
+    "job_set_type": "nano_banana_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260721_031736_73b334cf-3dce-489e-90a3-fdc084745385.png",
+    "created_at": 1784603856.906982,
+    "params": {
+      "width": 1536,
+      "height": 2752,
+      "aspect_ratio": "9:16",
+      "resolution": "2k",
+      "batch_size": 1,
+      "input_images": [
+        {
+          "id": "48bade13-2b73-4de3-98d5-0b40a9d37a0a",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/48bade13-2b73-4de3-98d5-0b40a9d37a0a_resize.jpg",
+          "type": "media_input"
+        },
+        {
+          "id": "37d4ac12-e1fe-468e-9314-60809251c478",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/37d4ac12-e1fe-468e-9314-60809251c478.png",
+          "type": "media_input"
+        }
+      ],
+      "input_image": null,
+      "application": null,
+      "surface": null,
+      "prompt": "Cinematic photorealistic vertical photograph, 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the vertical center of frame, safe for portrait phone screens. Absolutely no text, no letters, no numbers, no logos, no watermarks.\nThe animated characters, kept exactly on-model from the reference images: STARRY, a tall golden five-pointed star character with a friendly cartoon face, big blue eyes, a pink polka-dot party hat, rainbow-checkered arms and legs, white cartoon gloves and round golden boots; and THE CRASHERS, three small toddler-sized round hooded vinyl creatures with big sparkly jewel eyes, rosy blush cheeks and red-and-white striped cone party hats — one in an orange zigzag-pattern hoodie, one in a blue-and-purple diamond-pattern hoodie, one in a green paint-splatter-pattern hoodie.\nSubject: Under glowing string lights at blue-hour dusk in the enchanted real backyard, a real multigenerational family poses for a group photo with the animated characters: a dad stands closest to camera holding up his phone to take the picture, grandparents laugh arm in arm, Starry stands in the middle of the group with both arms spread wide, and the three little Crashers hug and play with two real giggling children — one Crasher in a warm mid-hug with a little girl, one high-fiving a young boy, one striking a cute pose for the camera. Candid joy, golden fairy sparkles in the air, photo-moment framing."
+    }
+  }
+]

@@ -1,0 +1,48 @@
+[
+  {
+    "id": "8f2d7b87-3700-4210-ba7a-ee1463758da6",
+    "status": "completed",
+    "display_name": "Nano Banana Pro",
+    "job_set_type": "nano_banana_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260721_034434_8f2d7b87-3700-4210-ba7a-ee1463758da6.png",
+    "created_at": 1784605474.586144,
+    "params": {
+      "width": 1536,
+      "height": 2752,
+      "aspect_ratio": "9:16",
+      "resolution": "2k",
+      "batch_size": 1,
+      "input_images": [
+        {
+          "id": "ca47071a-b4c4-4f9c-9fd4-7d73300a124a",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/ca47071a-b4c4-4f9c-9fd4-7d73300a124a_resize.jpg",
+          "type": "media_input"
+        },
+        {
+          "id": "02de5a10-6888-41d5-bb99-4f9ffcbb0222",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/02de5a10-6888-41d5-bb99-4f9ffcbb0222_resize.jpg",
+          "type": "media_input"
+        },
+        {
+          "id": "0eb2124a-a53b-420c-87cf-609f0e887ab3",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/0eb2124a-a53b-420c-87cf-609f0e887ab3.png",
+          "type": "media_input"
+        },
+        {
+          "id": "0a2025a4-aa7f-4f38-9cce-b4ffa7805c81",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/0a2025a4-aa7f-4f38-9cce-b4ffa7805c81.png",
+          "type": "media_input"
+        },
+        {
+          "id": "e569125e-9184-4a54-b750-9746f1781047",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/e569125e-9184-4a54-b750-9746f1781047.png",
+          "type": "media_input"
+        }
+      ],
+      "input_image": null,
+      "application": null,
+      "surface": null,
+      "prompt": "Cinematic photorealistic vertical photograph, 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the vertical center of frame, safe for portrait phone screens. Absolutely no text, no letters, no numbers, no logos, no watermarks.\nThe animated characters, kept exactly on-model from the reference images. STARRY: a tall golden five-pointed star character with a friendly cartoon face on the star body — large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile — wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots. THE CRASHERS: three small toddler-sized creatures whose bodies are simple ROUND hooded onesies — soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats; the patterns are only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print. Each Crasher has a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood.\nTHE CLOUD: a fluffy glossy cotton-soft cartoon toy cloud the size of a small car, gently rounded and puffy like a designer vinyl toy, that the Crashers ride on, trailing fine golden sparkles and thin curling ribbon streamers in pink, purple and green.\nSubject: Night aerial view above a suburban neighborhood, camera close to a large fluffy glossy toy cloud sailing over dark rooftops. Sitting on the cloud's puffy edge waving goodbye are the three little Crashers, rendered LARGE and close to camera, kept EXACTLY on-model from the reference images: round hooded onesie creatures with soft round baby-suit silhouettes, pale round faces peeking out of snug hoods, big sparkly jewel eyes, rosy blush cheeks, red-and-white striped cone party hats — one onesie orange with yellow zigzag print, one blue with purple diamond print, one green with paint-splatter print. They are NOT flat shapes, NOT a bolt, NOT a diamond, NOT a splat. Flying right beside the cloud is Starry, kept EXACTLY on-model: the tall golden five-pointed star with big blue cartoon eyes with white sclera, thin eyebrows, happy open smile, pink polka-dot party hat, rainbow-checkered arms and legs, white gloves, golden boots, arms spread wide, leaving a glowing golden star-trail arcing behind him across the deep-blue starry sky. Below, three glowing backyards hold only tiny ordinary human families waving up — no characters on the ground. Last confetti drifting down, magical warm farewell."
+    }
+  }
+]

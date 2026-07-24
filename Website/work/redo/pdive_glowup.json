@@ -1,0 +1,39 @@
+[
+  {
+    "id": "cd85bee0-028a-4d9c-ae48-c8df0463f443",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260720_062745_cd85bee0-028a-4d9c-ae48-c8df0463f443.mp4",
+    "created_at": 1784528865.598165,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Begin framing the whole transformed party room, then glide smoothly forward across the checkered dance floor in a gentle arcing half-orbit around the towering rainbow star cake, passing the young boy and the three Crasher characters dancing mid-move, rising slightly as Starry hovers above the cake sprinkling golden sparkles, the disco ball glittering and balloon arches glowing overhead. Complete the arc and ease forward again, ending settled facing the glowing heart of the party. In the final second the camera settles into a slow, steady forward drift. The characters dance joyfully in place, confetti drifting. Pixar-style 3D animated film look, soft warm cinematic lighting, cozy wooden storybook interior bursting with celebration, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth, graceful, slow motion, subtle parallax. No text, no captions. Tall vertical portrait framing throughout, the scene always fully composed within the tall frame.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "0aa3b564-14dc-4e2c-8123-2babc14e616c",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/0aa3b564-14dc-4e2c-8123-2babc14e616c.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

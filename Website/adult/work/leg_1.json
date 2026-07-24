@@ -1,0 +1,39 @@
+[
+  {
+    "id": "bd9d74b8-f2d7-446f-9002-5fdac8ac1298",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260721_054936_bd9d74b8-f2d7-446f-9002-5fdac8ac1298.mp4",
+    "created_at": 1784612976.795395,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos. The camera begins inside a modest, quiet real backyard birthday party in late golden afternoon light and glides gently forward past sagging pastel balloons and politely chatting adults, over the picnic table with its plain white sheet cake, past the sweetly bored birthday kid in a paper party hat sitting with chin in hands, then tilts softly upward toward the sky beyond the rooftops, where a tiny fluffy glossy cartoon toy cloud with a cute face approaches in the far distance, trailing a faint line of golden sparkles, slowly growing closer. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift toward the distant cloud, ready to continue. The scene stays photorealistic and ordinary except the tiny magical cloud.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "ccdf592b-1531-4e13-850e-d7a89d2a6724",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/ccdf592b-1531-4e13-850e-d7a89d2a6724_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

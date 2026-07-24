@@ -46,8 +46,12 @@ for k in range(1, len(CHAIN)):
     prev = label
 fc = ";".join(parts)
 
+# crf 26 + a 4 Mbps VBV cap: GOP-4 inflates bitrate badly and the confetti scenes
+# spike it further — spikes are what choke phone decoders during 4x chase playback.
+# Capped-CRF keeps quality steady while flattening decode load (and halves the file).
 sh(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", fc, "-map", f"[{prev}]",
-    "-an", "-c:v", "libx264", "-preset", "slow", "-crf", "23", "-pix_fmt", "yuv420p",
+    "-an", "-c:v", "libx264", "-preset", "slow", "-crf", "26", "-pix_fmt", "yuv420p",
+    "-maxrate", "4M", "-bufsize", "8M",
     "-g", "4", "-keyint_min", "4", "-sc_threshold", "0", "-movflags", "+faststart", OUT])
 
 total = dur(OUT)

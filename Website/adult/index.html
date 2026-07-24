@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Glad You Were Born Today — In Real Life</title>
+<meta name="description" content="Starry &amp; the Crashers crash real birthdays now. Scroll to fly through the night they made unforgettable." />
+<script>document.documentElement.classList.add('sw-js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root, .sw-root {
+    --sw-bg:#1D2B50;
+    --sw-ink:#FFF9EE;
+    --sw-ink-soft:#c9c4d8;
+    --sw-accent:#e6c46a;
+    --sw-font-display:"Baloo 2",ui-rounded,"SF Pro Rounded","Segoe UI",system-ui,sans-serif;
+  }
+  .sw-js [data-sw-seo]{display:none;}
+  html,body{margin:0;background:var(--sw-bg);}
+  /* No gradient wash — the portrait footage is the show. */
+  .sw-copylayer::before{display:none !important;}
+  /* Desktop: letterbox the portrait flight centered; copy floats in the left margin. */
+  @media (min-width:861px){
+    .sw-scene__video,.sw-scene__still{object-fit:contain !important;object-position:center !important;}
+  }
+</style>
+</head>
+<body>
+<div id="top"></div>
+<div id="world">
+  <section data-sw-seo>
+    <h1>Another quiet birthday.</h1>
+    <p>Glad You Were Born Today — in real life. Starry and the Crashers crash real parties now.</p>
+    <h2>The Crashers crash in.</h2>
+    <p>One little cloud clears the fence and everything changes.</p>
+    <h2>Photos worth fighting over.</h2>
+    <p>Hugs from the little ones included.</p>
+    <h2>Yes, they crash 40ths.</h2>
+    <p>Enchantment doesn't card.</p>
+    <h2>Glad you were born today.</h2>
+    <p><a href="#book">Bring the Crashers</a> · <a href="../">Visit the storybook world</a></p>
+  </section>
+</div>
+<script src="scrub-engine.js?v=3"></script>
+<script>
+mountScrollWorld(document.getElementById('world'), {
+  brand: { name: 'Glad You Were Born Today', href: '#top' },
+  hint: 'scroll to crash the party',
+  diveScroll: 1.5,
+  crossfade: 0.12,
+  journeyMobile: {
+    clip: 'assets/vid/journey-m.mp4',
+    poster: 'assets/quiet-poster-m.webp',
+    spans: [[0.0, 7.967], [7.967, 15.858], [15.858, 23.75], [23.75, 31.642], [31.642, 39.575]],
+  },
+  sections: [
+    { id:'quiet', label:'The Quiet Party',
+      still:'assets/quiet.webp?v=2', poster:'assets/quiet-poster.webp?v=2', posterMobile:'assets/quiet-poster-m.webp?v=2',
+      clip:'assets/vid/quiet.mp4?v=2', clipMobile:'assets/vid/quiet-m.mp4?v=2',
+      scroll:1.4,
+      accent:'#b9a27a', eyebrow:'Every year, somewhere…',
+      title:'Another quiet birthday.',
+      body:'Nice cake. No spark.',
+      tags:['Sagging balloons','Small talk'] },
+    { id:'glowup', label:'The Crash',
+      still:'assets/glowup.webp?v=2', poster:'assets/glowup-poster.webp?v=2', posterMobile:'assets/glowup-poster-m.webp?v=2',
+      clip:'assets/vid/glowup.mp4?v=2', clipMobile:'assets/vid/glowup-m.mp4?v=2',
+      scroll:1.6, linger:0.35,
+      accent:'#E84A9B', eyebrow:'Then the sky RSVPs',
+      title:'The Crashers crash in.',
+      body:'One little cloud changes everything.',
+      tags:['Confetti included'] },
+    { id:'photo', label:'Say Cheese',
+      still:'assets/photo.webp?v=2', poster:'assets/photo-poster.webp?v=2', posterMobile:'assets/photo-poster-m.webp?v=2',
+      clip:'assets/vid/photo.mp4?v=2', clipMobile:'assets/vid/photo-m.mp4?v=2',
+      scroll:1.8, linger:0.5,
+      accent:'#8B5CF6', eyebrow:'Say cheese',
+      title:'Photos worth fighting over.',
+      body:'Hugs from the little ones included.',
+      tags:[] },
+    { id:'patio', label:'The Patio Party',
+      still:'assets/patio.webp?v=2', poster:'assets/patio-poster.webp?v=2', posterMobile:'assets/patio-poster-m.webp?v=2',
+      clip:'assets/vid/patio.mp4?v=2', clipMobile:'assets/vid/patio-m.mp4?v=2',
+      scroll:1.6, linger:0.35,
+      accent:'#FFC93C', eyebrow:'Grown-ups too',
+      title:'Yes, they crash 40ths.',
+      body:'Enchantment doesn’t card.',
+      tags:[] },
+    { id:'sendoff', label:'The Send-Off',
+      still:'assets/sendoff.webp?v=2', poster:'assets/sendoff-poster.webp?v=2', posterMobile:'assets/sendoff-poster-m.webp?v=2',
+      clip:'assets/vid/sendoff.mp4?v=2', clipMobile:'assets/vid/sendoff-m.mp4?v=2',
+      scroll:2, linger:0.45,
+      accent:'#5BB8F0', eyebrow:'From Starry & the Crashers',
+      title:'Glad you were born today.',
+      body:'Until next year.',
+      cta:{ primary:{label:'Bring the Crashers', href:'#book'},
+            secondary:{label:'Visit the storybook world', href:'../'} } },
+  ],
+  connectors: [],
+});
+</script>
+</body>
+</html>

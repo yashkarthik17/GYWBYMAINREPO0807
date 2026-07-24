@@ -1,0 +1,46 @@
+[
+  {
+    "id": "1979934a-95df-4351-b23c-126626e42929",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260720_061822_1979934a-95df-4351-b23c-126626e42929.png",
+    "created_at": 1784528302.422195,
+    "params": {
+      "width": 1360,
+      "height": 2048,
+      "prompt": "Cinematic still from a Pixar-style 3D animated film. Soft warm cinematic lighting, gentle depth of field, rich glossy materials, storybook charm. A lush enchanted forest world under a bright candy-blue sky with puffy white clouds: giant leafy trees with plain natural bark and absolutely no faces on the trees, mossy ground, winding stone paths, oversized mushrooms, drifting dandelion sparkles and tiny glowing fireflies. Cohesive color palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Highly detailed, absolutely no text, no letters, no numbers, no logos. Tall vertical portrait composition, focal subject centered, nothing important cropped at the edges.\nSubject: the same cottage living room minutes later, fully rebuilt into the best birthday party ever — a towering five-layer rainbow cake in star gold, crash pink, party purple and confetti green at the center of the room, balloon arches curving beneath the wooden ceiling beams, a checkered dance floor laid over the rug with a glossy disco ball hanging from the beam, wrapped gifts piled high by the fireplace, garlands and drifting confetti everywhere, the big window glowing with the bright forest outside. The small Pixar-style boy with round cheeks and soft brown hair dances joyfully in the middle wearing a party hat, surrounded by the three Crasher characters — small round-hooded figures in orange zigzag, blue diamond and green paint-splatter onesies with red-and-white striped cone party hats — mid-dance-move, while Starry the cheerful golden star character hovers above the cake trailing golden sparkles. Saturated, glossy, bursting with celebration.",
+      "medias": [
+        {
+          "data": {
+            "id": "3632d642-2045-4de3-8c4d-b027ef7f1a20",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/3632d642-2045-4de3-8c4d-b027ef7f1a20.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "7a4cb808-e2ec-48c8-9663-15bf0d13c42e",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/7a4cb808-e2ec-48c8-9663-15bf0d13c42e_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "6c0c00f8-eb7a-459e-95b3-2230b67080b0",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/6c0c00f8-eb7a-459e-95b3-2230b67080b0.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "2:3",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

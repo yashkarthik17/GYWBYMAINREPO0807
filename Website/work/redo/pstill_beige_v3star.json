@@ -1,0 +1,38 @@
+[
+  {
+    "id": "a5358790-13a1-4b79-bf04-826e2fbcf5bc",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260720_061430_a5358790-13a1-4b79-bf04-826e2fbcf5bc.png",
+    "created_at": 1784528070.412996,
+    "params": {
+      "width": 1360,
+      "height": 2048,
+      "prompt": "Cinematic still from a Pixar-style 3D animated film. Soft warm cinematic lighting, gentle depth of field, rich glossy materials, storybook charm. A lush enchanted forest world under a bright candy-blue sky with puffy white clouds: giant leafy trees with plain natural bark and absolutely no faces on the trees, mossy ground, winding stone paths, oversized mushrooms, drifting dandelion sparkles and tiny glowing fireflies. Cohesive color palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Highly detailed, absolutely no text, no letters, no numbers, no logos. Tall vertical portrait composition, focal subject centered, nothing important cropped at the edges.\nSubject: a wide magical establishing shot of the enchanted forest with a small cozy storybook cottage in a sunlit clearing at its center, seen from slightly above between the tall trees, a winding stone path leading from the foreground down to its front door. The cottage is warm and inviting — honey-toned wooden walls, a simple shingled roof, a thin wisp of chimney smoke, flower boxes under the windows, a little fenced yard with a mailbox. Through its big warm-lit front window a small, quiet birthday party is just visible in miniature: a small Pixar-style boy with round cheeks and soft brown hair sitting at a table with a simple birthday cake and a couple of balloons, chin in hands, looking kinda bored, staring wistfully at a little golden star toy figure standing on the table beside the cake. Composition guides the eye from the treetops down the path to the glowing front window.",
+      "medias": [
+        {
+          "data": {
+            "id": "6c967392-b75f-4a83-8b02-fe095aea1cf9",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/6c967392-b75f-4a83-8b02-fe095aea1cf9.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "6ba860d2-57f4-4343-8ab8-81d0f4ff25c8",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/6ba860d2-57f4-4343-8ab8-81d0f4ff25c8_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "2:3",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

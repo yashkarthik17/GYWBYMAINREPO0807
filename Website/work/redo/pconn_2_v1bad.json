@@ -1,0 +1,47 @@
+[
+  {
+    "id": "b9830267-b15b-4a35-815a-8a1c79e6532b",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260720_063422_b9830267-b15b-4a35-815a-8a1c79e6532b.mp4",
+    "created_at": 1784529262.456721,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. The camera pulls up and away from Starry's golden star-shaped cloud clubhouse, tips over the edge of the puffy cloud and dives down through the clouds toward the enchanted forest far below, swooping over the treetops and down along the winding stone path toward the cozy cottage in its clearing, approaching the glowing front of the cottage where flickers of colorful confetti light spill out, beginning to push inside toward the celebration. One connected storybook world, seamless flowing aerial transition. Pixar-style 3D animated film look, soft warm cinematic lighting, bright candy-blue sky, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth graceful slow motion. No text, no captions. Tall vertical portrait framing throughout, the scene always fully composed within the tall frame.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "68f2ab1f-b28c-4418-81b3-3b44ddffcae8",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/68f2ab1f-b28c-4418-81b3-3b44ddffcae8.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "7e2d462f-fb11-48f9-9de1-10fe0ab3bc92",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/7e2d462f-fb11-48f9-9de1-10fe0ab3bc92.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

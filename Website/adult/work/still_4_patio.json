@@ -1,0 +1,48 @@
+[
+  {
+    "id": "d507f1b7-e510-43ba-8462-24586850c551",
+    "status": "completed",
+    "display_name": "Nano Banana Pro",
+    "job_set_type": "nano_banana_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260721_034026_d507f1b7-e510-43ba-8462-24586850c551.png",
+    "created_at": 1784605226.344262,
+    "params": {
+      "width": 1536,
+      "height": 2752,
+      "aspect_ratio": "9:16",
+      "resolution": "2k",
+      "batch_size": 1,
+      "input_images": [
+        {
+          "id": "e2841b19-6ec2-40e5-b782-011c876fd485",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/e2841b19-6ec2-40e5-b782-011c876fd485_resize.jpg",
+          "type": "media_input"
+        },
+        {
+          "id": "43c4d277-6f5c-46db-80ef-30eb1a39a40a",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/43c4d277-6f5c-46db-80ef-30eb1a39a40a_resize.jpg",
+          "type": "media_input"
+        },
+        {
+          "id": "81e9bff4-86b1-42a3-8d7c-52ca2df0057d",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/81e9bff4-86b1-42a3-8d7c-52ca2df0057d.png",
+          "type": "media_input"
+        },
+        {
+          "id": "25765003-d2ec-4d93-8c15-cf06748ef350",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/25765003-d2ec-4d93-8c15-cf06748ef350.png",
+          "type": "media_input"
+        },
+        {
+          "id": "66c51202-91cd-46a1-8aae-368acff72df6",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/66c51202-91cd-46a1-8aae-368acff72df6.png",
+          "type": "media_input"
+        }
+      ],
+      "input_image": null,
+      "application": null,
+      "surface": null,
+      "prompt": "Cinematic photorealistic vertical photograph, 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the vertical center of frame, safe for portrait phone screens. Absolutely no text, no letters, no numbers, no logos, no watermarks.\nThe animated characters, kept exactly on-model from the reference images. STARRY: a tall golden five-pointed star character with a friendly cartoon face on the star body — large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile — wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots. THE CRASHERS: three small toddler-sized creatures whose bodies are simple ROUND hooded onesies — soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats; the patterns are only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print. Each Crasher has a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood.\nTHE CLOUD: a fluffy glossy cotton-soft cartoon toy cloud the size of a small car, gently rounded and puffy like a designer vinyl toy, that the Crashers ride on, trailing fine golden sparkles and thin curling ribbon streamers in pink, purple and green.\nSubject: A third family's real covered back patio at night: adults in relaxed evening clothes raising glasses in a happy toast around an outdoor table under warm bistro string lights, an older couple slow-dancing at the edge, fairy sparkles drifting in the air. One little Crasher stands proudly on the table striking a triumphant pose, another rides the shoulders of a laughing guest, while Starry leans in from the side of frame photobombing the toast with a huge grin. Enchanted warm night celebration, deep blue night sky beyond the patio roof."
+    }
+  }
+]

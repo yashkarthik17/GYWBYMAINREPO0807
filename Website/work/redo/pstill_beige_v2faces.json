@@ -1,0 +1,30 @@
+[
+  {
+    "id": "9c8217f6-0fdc-4809-8f2b-181716dc7ec4",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260720_060739_9c8217f6-0fdc-4809-8f2b-181716dc7ec4.png",
+    "created_at": 1784527659.718093,
+    "params": {
+      "width": 1360,
+      "height": 2048,
+      "prompt": "Cinematic still from a Pixar-style 3D animated film. Soft warm cinematic lighting, gentle depth of field, rich glossy materials, storybook charm. A lush enchanted forest world under a bright candy-blue sky with puffy white clouds: giant friendly trees, mossy ground, winding stone paths, oversized mushrooms, drifting dandelion sparkles and tiny glowing fireflies. Cohesive color palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Highly detailed, absolutely no text, no letters, no numbers, no logos. Tall vertical portrait composition, focal subject centered, nothing important cropped at the edges.\nSubject: a wide magical establishing shot of the enchanted forest with a small cozy storybook cottage in a sunlit clearing at its center, seen from slightly above between the tall friendly trees, a winding stone path leading from the foreground down to its front door. The cottage is warm and inviting — honey-toned wooden walls, a simple shingled roof, a thin wisp of chimney smoke, flower boxes under the windows, a little fenced yard with a mailbox. Through its big warm-lit front window a small, quiet birthday party is just visible in miniature: a small Pixar-style boy with round cheeks and soft brown hair sitting at a table with a simple birthday cake and a couple of balloons, chin in hands, looking kinda bored, staring wistfully at a little golden star toy figure standing on the table beside the cake. Composition guides the eye from the treetops down the path to the glowing front window.",
+      "medias": [
+        {
+          "data": {
+            "id": "a59a1e68-5a8d-4487-aa48-a4bf88a86cc4",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/a59a1e68-5a8d-4487-aa48-a4bf88a86cc4_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "2:3",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]
