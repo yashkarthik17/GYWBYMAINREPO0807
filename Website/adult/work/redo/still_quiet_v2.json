@@ -1,0 +1,30 @@
+[
+  {
+    "id": "4ba4e78d-f0f8-4972-ad1c-a2985d2a4eb0",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_081713_4ba4e78d-f0f8-4972-ad1c-a2985d2a4eb0.png",
+    "created_at": 1784881033.769498,
+    "params": {
+      "width": 1520,
+      "height": 2688,
+      "prompt": "Cinematic photorealistic vertical photograph, 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Live-action family-film look. Focal subjects composed in the vertical center of frame, safe for portrait phone screens. Absolutely no text, no letters, no numbers, no logos, no watermarks. The scene: a modest, slightly boring backyard birthday party for a YOUNG FAMILY in late golden afternoon light — a mom and dad in their early thirties politely chatting near a picnic table with a plain white sheet cake and pastel paper cups, their young son in a paper party hat sitting at the table with his chin in his hands looking sweetly bored, a little daughter poking at a sagging pastel balloon, one other young couple of friends standing around making small talk. Everyone is young — no elderly people anywhere. A few tired streamers on the wooden fence, ordinary quiet suburban sky above the rooftops. The mood is pleasant but flat, a party missing its spark.",
+      "medias": [
+        {
+          "data": {
+            "id": "8d481464-4212-4aae-a921-6f31b56d55b8",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/8d481464-4212-4aae-a921-6f31b56d55b8_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "9:16",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

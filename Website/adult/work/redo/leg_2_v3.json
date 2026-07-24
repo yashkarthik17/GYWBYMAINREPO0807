@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1f5f124c-fd4b-497a-b171-0deb3754ac60",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_074904_1f5f124c-fd4b-497a-b171-0deb3754ac60.mp4",
+    "created_at": 1784879344.075634,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. The camera continues the exact same slow, steady, perfectly straight forward drift it was already in, gliding toward the evening sky, as the magical cloud clubhouse sweeps DOWN into view over the wooden fence like a parade float descending from the sky: a majestic fluffy glossy cotton-soft toy cloud the size of a small house carrying a golden star-shaped clubhouse with round brass porthole windows, a wooden balcony and a pink polka-dot party-hat spire, gift boxes and gold star balloons tucked into its folds, its gold surface plain and smooth with no writing on it. The sky warms from gold to pink-gold dusk, paper lanterns in pastel colors drift upward and warm string lights flicker on one by one as the party magic gathers. The tall golden star character with the friendly cartoon face and pink polka-dot party hat waves from the balcony rail, and the three little toddler-sized creatures in round hooded onesies — orange zigzag, blue diamond, green paint-splatter — ride happily into view on the front cloud deck waving down at the party, while the small purple confetti cannon on the deck fires a soft arc of colorful confetti over the lawn. The guests below remain STANDING on the lawn the whole time, pointing up and cheering with delight — nobody crouches, kneels or ducks — as the cloud settles to hover majestically above the backyard, its golden sparkle trail streaming beneath it, confetti and ribbon streamers raining gently down. All characters stay exactly on-model as they appear in the final reference frame. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift, holding on the majestic hovering arrival, ready to continue.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "0ede261a-4c8e-43f8-8946-927744b37f23",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/0ede261a-4c8e-43f8-8946-927744b37f23.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "9f8c57ae-6aa4-42df-8551-ab46ac0fff3b",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/9f8c57ae-6aa4-42df-8551-ab46ac0fff3b_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]
