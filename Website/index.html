@@ -56,7 +56,7 @@
   .ui{position:fixed;inset:0;z-index:3;pointer-events:none;}
 
   .title{
-    position:absolute;top:calc(56px + clamp(14px,3.5vh,34px));left:0;right:0;text-align:center;
+    position:absolute;top:clamp(24px,6vh,56px);left:0;right:0;text-align:center;
     margin:0;padding:0 24px;
     font-family:var(--font-display);
     font-weight:800;font-size:clamp(32px,5.8vw,58px);
@@ -113,8 +113,12 @@
     transform:translate(-50%,-50%) scale(var(--s,1));
     transform-origin:center center;
     opacity:0;pointer-events:none;
-    transition:opacity .45s ease;
+    transition:opacity .45s ease, visibility .45s;
   }
+  /* while the envelope is sealed, the invisible choices must swallow NOTHING —
+     visibility (not just opacity) also stops clicks landing through the paper */
+  .sheet-actions[aria-hidden="true"]{visibility:hidden;}
+  .sheet-actions[aria-hidden="true"] .sheet-btn{pointer-events:none;}
   .sheet-btn{
     pointer-events:auto;cursor:pointer;text-decoration:none;text-align:center;
     color:#fff;border:1px solid rgba(233,211,145,.7);
@@ -171,7 +175,6 @@
   <canvas id="confetti"></canvas>
   <div class="loading" id="loading">Folding the paper…</div>
 
-  <script src="nav.js?v=1"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
   (function () {
@@ -768,6 +771,9 @@
       if (open) fireConfetti();
     }
     btn.addEventListener("click", toggle);
+    // Watchdog: if rAF timestamps stall (throttled tabs, some headless/webviews),
+    // the envelope still lands — wall-clock timers keep advancing regardless.
+    setTimeout(() => { if (intro < 1) intro = 1; }, INTRO_MS + 900);
     if (/[?&]open/.test(location.search)) setTimeout(() => { intro = 1; toggle(); p = 0.985; }, 400);
 
     const easeOut = (x) => 1 - Math.pow(1 - x, 3);
