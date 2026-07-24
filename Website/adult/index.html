@@ -31,7 +31,7 @@
 <div id="top"></div>
 <div id="world">
   <section data-sw-seo>
-    <h1>Another quiet birthday.</h1>
+    <h1>A perfectly nice, perfectly quiet birthday.</h1>
     <p>Glad You Were Born Today — in real life. Starry and the Crashers crash real parties now.</p>
     <h2>The Crashers crash in.</h2>
     <p>One little cloud clears the fence and everything changes.</p>
@@ -40,18 +40,13 @@
     <h2>Yes, they crash 40ths.</h2>
     <p>Enchantment doesn't card.</p>
     <h2>Glad you were born today.</h2>
-    <p><a href="crew.html">Meet the crew</a> · <a href="../store.html">Visit the party store</a> · <a href="../">Visit the storybook world</a></p>
+    <p><a href="../hire.html">Hire the crew</a> · <a href="crew.html">Meet the crew</a> · <a href="../store.html">Visit the party store</a> · <a href="../mission.html">Our mission</a></p>
   </section>
 </div>
-<script src="scrub-engine.js?v=5"></script>
+<script src="../nav.js?v=1"></script>
+<script src="scrub-engine.js?v=6"></script>
 <script>
 mountScrollWorld(document.getElementById('world'), {
-  brand: { name: 'Glad You Were Born Today', href: '#top' },
-  tabs: [
-    { label: 'The Crew', href: 'crew.html' },
-    { label: 'Party Store', href: '../store.html' },
-    { label: 'Storybook', href: '../' },
-  ],
   hint: 'scroll to crash the party',
   diveScroll: 1.5,
   crossfade: 0.12,
@@ -65,17 +60,17 @@ mountScrollWorld(document.getElementById('world'), {
       still:'assets/quiet.webp?v=4', poster:'assets/quiet-poster.webp?v=4', posterMobile:'assets/quiet-poster-m.webp?v=4',
       clip:'assets/vid/quiet.mp4?v=4', clipMobile:'assets/vid/quiet-m.mp4?v=4',
       scroll:1.4,
-      accent:'#b9a27a', eyebrow:'Every year, somewhere…',
-      title:'Another quiet birthday.',
-      body:'Nice cake. No spark.',
-      tags:['Sagging balloons','Small talk'] },
+      accent:'#b9a27a', eyebrow:'It starts like they all do',
+      title:'A perfectly nice, perfectly quiet birthday.',
+      body:'Good cake. Kind people. Not a single surprise.',
+      tags:['Polite toasts','Early goodbyes'] },
     { id:'glowup', label:'The Crash',
       still:'assets/glowup.webp?v=4', poster:'assets/glowup-poster.webp?v=4', posterMobile:'assets/glowup-poster-m.webp?v=4',
       clip:'assets/vid/glowup.mp4?v=4', clipMobile:'assets/vid/glowup-m.mp4?v=4',
       scroll:1.6, linger:0.35,
       accent:'#E84A9B', eyebrow:'Then the sky RSVPs',
       title:'The Crashers crash in.',
-      body:'One little cloud changes everything.',
+      body:'One little cloud clears the fence — and the night changes its mind.',
       tags:['Confetti included'] },
     { id:'photo', label:'Say Cheese',
       still:'assets/photo.webp?v=4', poster:'assets/photo-poster.webp?v=4', posterMobile:'assets/photo-poster-m.webp?v=4',
@@ -83,13 +78,13 @@ mountScrollWorld(document.getElementById('world'), {
       scroll:1.8, linger:0.5,
       accent:'#8B5CF6', eyebrow:'Say cheese',
       title:'Photos worth fighting over.',
-      body:'Hugs from the little ones included.',
+      body:'The album nobody agrees on, because everyone wants every shot.',
       tags:[] },
     { id:'patio', label:'The Patio Party',
       still:'assets/patio.webp?v=4', poster:'assets/patio-poster.webp?v=4', posterMobile:'assets/patio-poster-m.webp?v=4',
       clip:'assets/vid/patio.mp4?v=4', clipMobile:'assets/vid/patio-m.mp4?v=4',
       scroll:1.6, linger:0.35,
-      accent:'#FFC93C', eyebrow:'Grown-ups too',
+      accent:'#FFC93C', eyebrow:'And 50ths. And 70ths.',
       title:'Yes, they crash 40ths.',
       body:'Enchantment doesn’t card.',
       tags:[] },
@@ -99,12 +94,12 @@ mountScrollWorld(document.getElementById('world'), {
       scroll:2, linger:0.45,
       accent:'#5BB8F0', eyebrow:'From Starry & the Crashers',
       title:'Glad you were born today.',
-      body:'Until next year.',
+      body:'Until next year. We know the way.',
       explore:{ label:'Explore', links:[
+        { label:'Hire the Crew', href:'../hire.html' },
         { label:'Meet the Crew', href:'crew.html' },
         { label:'The Party Store', href:'../store.html' },
-        { label:'The Mission', href:'../store.html#mission' },
-        { label:'The Storybook World', href:'../' },
+        { label:'Our Mission', href:'../mission.html' },
         { label:'Play it again', href:'#top' },
       ] } },
   ],

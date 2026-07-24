@@ -37,7 +37,7 @@
   <div id="world">
     <!-- Static SEO copy — the only crawlable text; the engine hides it on mount. -->
     <section data-sw-seo>
-      <h1>Another birthday. Another beige party.</h1>
+      <h1>A birthday with no sparkle.</h1>
       <p>Glad You Were Born Today is the world of Starry and the Crashers — the crew that crashes boring birthday parties and rebuilds them bigger, brighter, and better.</p>
       <h2>Meanwhile, above the clouds — Somebody call the Crashers.</h2>
       <p>From a star-shaped clubhouse in the clouds, Starry and the crew watch the party radar and gear up the confetti cannons.</p>
@@ -46,12 +46,13 @@
       <h2>Minutes later — Now THAT'S a birthday.</h2>
       <p>They don't just crash the party — they rebuild it: cake tower, balloon arches, dance floor.</p>
       <h2>From Starry &amp; the Crashers — Glad you were born today.</h2>
-      <p>Bring the Crashers to your next party.</p>
+      <p>Because every single birthday deserves a party like this.</p>
       <p><a href="crashers.html">Meet the Crashers</a> · <a href="games.html">Play the games</a> · <a href="cards.html">Make a birthday card</a> · <a href="#top">Play the story again</a></p>
     </section>
   </div>
 
-  <script src="scrub-engine.js?v=10"></script>
+  <script src="nav.js?v=1"></script>
+  <script src="scrub-engine.js?v=11"></script>
   <script src="music.js"></script>
   <script>
     // Desktop/tablet serve the landscape tier (re-rendered July 2026 from the
@@ -61,13 +62,6 @@
     var SW_PHONE = /[?&]swphone/.test(location.search) || Math.min(screen.width, screen.height) <= 600;
     function sw_still(name) { return SW_PHONE ? 'assets/' + name + '-p.webp?v=3' : 'assets/' + name + '.webp?v=4'; }
     mountScrollWorld(document.getElementById('world'), {
-      brand: { name: 'Glad You Were Born Today', href: '#top' },
-      // when the logo file lands: brand: { name: '…', href: '#top', logo: 'assets/logo.png' }
-      tabs: [
-        { label: 'Crashers', href: 'crashers.html' },
-        { label: 'Games', href: 'games.html' },
-        { label: 'Cards', href: 'cards.html' },
-      ],
       hint: 'scroll to crash the party',
       crossfade: 0.15,
       diveScroll: 1.3,
@@ -90,10 +84,10 @@
           posterMobile: 'assets/beige-poster-m.webp?v=3',
           accent: '#8B95A6',
           scroll: 1.5, linger: 0.3,
-          eyebrow: 'Every day, somewhere…',
-          title: 'Another birthday. Another beige party.',
-          body: 'Boring cake, quiet room, zero sparkle.',
-          tags: ['Deflated balloons', 'Store-bought cake'],
+          eyebrow: 'Somewhere out there…',
+          title: 'A birthday with no sparkle.',
+          body: 'The cake is fine. The room is quiet. Something is missing.',
+          tags: ['Droopy balloons', 'Polite clapping'],
         },
         {
           id: 'crashpad', label: 'The Crash Pad',
@@ -105,7 +99,7 @@
           accent: '#FFC93C',
           eyebrow: 'Meanwhile, above the clouds',
           title: 'Somebody call the Crashers.',
-          body: 'Starry and the crew spot the signal and gear up.',
+          body: 'Up in the Crash Pad, the radar blinks: a birthday needs saving.',
           tags: ['Party radar', 'Confetti cannons'],
         },
         {
@@ -118,7 +112,7 @@
           accent: '#E84A9B',
           eyebrow: '3… 2… 1…',
           title: 'This party is officially crashed.',
-          body: 'Color spreads from the moment they land.',
+          body: 'The Crashers burst in — and color floods the room.',
           tags: ['Confetti storm', 'Streamer trails'],
         },
         {
@@ -132,7 +126,7 @@
           scroll: 1.6, linger: 0.4,
           eyebrow: 'Minutes later',
           title: 'Now THAT’S a birthday.',
-          body: 'The Crashers don’t just crash — they rebuild the party bigger.',
+          body: 'Cake tower. Balloon arches. A dance floor where the quiet used to be.',
           tags: ['Cake tower', 'Balloon arch', 'Dance floor'],
         },
         {
@@ -146,14 +140,14 @@
           scroll: 1.8, linger: 0.5,
           eyebrow: 'From Starry & the Crashers',
           title: 'Glad you were born today.',
-          body: 'Bring the Crashers to your next party.',
+          body: 'Because every single birthday deserves a party like this.',
           tags: [],
           explore: { label: 'Explore the world', links: [
             { label: 'Meet the Crashers', href: 'crashers.html' },
             { label: 'Fun & Games', href: 'games.html' },
             { label: 'Card Studio', href: 'cards.html' },
             { label: 'Play it again', href: '#top' },
-            { label: 'For grown-ups', href: 'adult/' },
+            { label: 'In Real Life', href: 'adult/' },
           ] },
         },
       ],

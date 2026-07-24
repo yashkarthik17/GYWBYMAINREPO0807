@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Our Mission — Glad You Were Born Today</title>
+  <meta name="description" content="No birthday alone. Ever. The song is a promise — and we keep it with Compassion International. Sponsor a child's birthday: school, meals, and a letter tied to their day." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #1D2B50;
+      --bg-deep: #141E3A;
+      --cream: #FFF9EE;
+      --cream-soft: #c9c4d8;
+      --gold: #e6c46a;
+      --gold-deep: #b8862e;
+      --pink: #E84A9B;
+      --mint: #59C97B;
+      --font-display: "Baloo 2", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+      --font-royal: "Cormorant Garamond", Georgia, serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--cream); font-family: var(--font-body); }
+
+    .night { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(52% 40% at 76% 8%, color-mix(in srgb, var(--gold) 14%, transparent), transparent 70%),
+        radial-gradient(46% 38% at 18% 84%, color-mix(in srgb, var(--pink) 10%, transparent), transparent 72%),
+        linear-gradient(178deg, var(--bg) 0%, var(--bg-deep) 100%); }
+    .star { position: fixed; z-index: 0; width: 3px; height: 3px; border-radius: 50%;
+            background: #fff; opacity: .35; pointer-events: none; animation: twinkle 4.5s ease-in-out infinite; }
+    .star--a { left: 14vw; top: 22vh; } .star--b { left: 78vw; top: 16vh; animation-delay: -1.4s; }
+    .star--c { left: 62vw; top: 64vh; animation-delay: -2.6s; } .star--d { left: 30vw; top: 78vh; animation-delay: -3.4s; }
+    @keyframes twinkle { 0%, 100% { opacity: .18; } 50% { opacity: .55; } }
+    @media (prefers-reduced-motion: reduce) { .star { animation: none; } }
+
+    .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 48px); }
+    a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+    .hero { display: grid; grid-template-columns: minmax(280px, 460px) minmax(0, 1fr); align-items: center;
+            gap: clamp(22px, 5vw, 56px); padding: clamp(30px, 7vh, 84px) 0 clamp(22px, 4vh, 44px); }
+    @media (max-width: 780px) { .hero { grid-template-columns: 1fr; } }
+    .hero__pic { border-radius: 28px; overflow: hidden; border: 1px solid rgba(255,255,255,.14);
+                 box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+    .hero__pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: .8rem;
+                     letter-spacing: .22em; text-transform: uppercase; color: var(--mint); }
+    .hero h1 { font-family: var(--font-display); font-weight: 800; letter-spacing: -.01em;
+               font-size: clamp(2.6rem, 7vw, 4.4rem); line-height: .98; margin: 14px 0 0; }
+    .hero h1 em { font-style: normal;
+                  background: linear-gradient(165deg, #f4dd97 6%, var(--gold) 42%, var(--gold-deep) 92%);
+                  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { margin-top: 20px; font-size: clamp(1.02rem, 1.4vw, 1.2rem); line-height: 1.65;
+              color: color-mix(in srgb, var(--cream) 80%, var(--cream-soft)); max-width: 54ch; }
+    .cta { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px;
+           text-decoration: none; font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+           color: var(--bg); padding: 15px 28px; border-radius: 999px;
+           background: linear-gradient(165deg, #f4dd97 6%, var(--gold) 42%, var(--gold-deep) 92%);
+           box-shadow: 0 14px 34px rgba(230, 196, 106, .3); transition: transform .16s ease, filter .16s ease; }
+    .cta:hover { transform: translateY(-2px); filter: brightness(1.06); }
+    @media (prefers-reduced-motion: reduce) { .cta, .cta:hover { transform: none; transition: none; } }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 2.2vw, 22px);
+             padding: clamp(18px, 4vh, 44px) 0 10px; }
+    @media (max-width: 780px) { .cards { grid-template-columns: 1fr; } }
+    .mcard { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10);
+             border-radius: 22px; padding: 24px; }
+    .mcard b { display: block; font-family: var(--font-display); font-size: 1.1rem; color: var(--cream); }
+    .mcard span { display: block; font-family: var(--font-display); font-weight: 800; font-size: 2rem;
+                  color: var(--gold); margin-bottom: 6px; }
+    .mcard p { margin: 8px 0 0; color: var(--cream-soft); line-height: 1.55; font-size: .95rem; }
+
+    .band { margin: clamp(30px, 6vh, 64px) 0 0; background: rgba(255,255,255,.05);
+            border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+            border-radius: 26px; padding: clamp(24px, 4vw, 44px);
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+    .band h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); margin: 0; }
+    .band p { margin: 8px 0 0; color: var(--cream-soft); max-width: 48ch; }
+    .band__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .band a { text-decoration: none; font-weight: 600; color: var(--bg); background: var(--gold);
+              padding: 13px 24px; border-radius: 999px; white-space: nowrap; }
+    .band a.alt { color: var(--cream); background: transparent; border: 1px solid rgba(255,255,255,.3); }
+
+    footer { position: relative; z-index: 1; text-align: center; padding: clamp(30px, 6vh, 60px) 18px 34px;
+             color: color-mix(in srgb, var(--cream) 55%, transparent); font-size: .85rem; }
+    footer b { font-family: var(--font-display); }
+  </style>
+</head>
+<body>
+  <div class="night"></div>
+  <span class="star star--a"></span><span class="star star--b"></span>
+  <span class="star star--c"></span><span class="star star--d"></span>
+
+  <div class="wrap">
+    <header class="hero">
+      <div class="hero__pic">
+        <img src="assets/mission-compassion.webp" alt="A child celebrating a birthday" />
+      </div>
+      <div>
+        <span class="hero__eyebrow">The mission</span>
+        <h1>No birthday<br />alone. <em>Ever.</em></h1>
+        <p>The song is a promise — and we keep it with Compassion International.
+           About $43 a month sponsors a child: school, meals, and a letter tied to
+           their birthday. Crash one for someone who&rsquo;s never had a party.</p>
+        <a class="cta" href="https://www.compassion.com/" target="_blank" rel="noopener noreferrer">Sponsor a birthday &rarr;</a>
+      </div>
+    </header>
+
+    <section class="cards">
+      <div class="mcard"><span>$43</span><b>a month</b><p>Sponsors one child through Compassion International — school, meals, medical care.</p></div>
+      <div class="mcard"><span>1</span><b>birthday letter</b><p>Your sponsorship ties a letter to their day — so their birthday never passes unnoticed again.</p></div>
+      <div class="mcard"><span>0</span><b>birthdays alone</b><p>That&rsquo;s the whole mission. Every kit, every card, every crash points at this number.</p></div>
+    </section>
+
+    <section class="band">
+      <div>
+        <h2>The party is the promise.</h2>
+        <p>Everything else on this site — the story, the store, the crew — exists so more kids hear the song on their day.</p>
+      </div>
+      <div class="band__actions">
+        <a href="https://www.compassion.com/" target="_blank" rel="noopener noreferrer">Sponsor a birthday</a>
+        <a class="alt" href="hire.html">Hire the Crew</a>
+        <a class="alt" href="story.html">Watch the story</a>
+      </div>
+    </section>
+  </div>
+
+  <footer>&copy; 2026 <b>Glad You Were Born Today</b> &middot; No birthday alone. Ever.</footer>
+
+  <script src="nav.js?v=1"></script>
+</body>
+</html>

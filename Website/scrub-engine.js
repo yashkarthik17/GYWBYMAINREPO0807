@@ -215,17 +215,6 @@ function mountScrollWorld(container, config) {
     });
     topbar.appendChild(tb);
   }
-  // The topbar sleeps after a moment of stillness — the film owns the screen;
-  // the chrome returns the instant the viewer stirs (scroll, touch, mouse, key).
-  let tbTimer = 0;
-  function tbWake() {
-    topbar.classList.remove('is-asleep');
-    clearTimeout(tbTimer);
-    tbTimer = setTimeout(() => topbar.classList.add('is-asleep'), 3200);
-  }
-  ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(evName =>
-    window.addEventListener(evName, tbWake, { passive: true }));
-  tbWake();
 
   const stage = el('div', 'sw-stage');
   const copylayer = el('div', 'sw-copylayer');
@@ -791,11 +780,9 @@ function injectCSS() {
   .sw-pt--dot::before{background:radial-gradient(circle at 34% 30%,color-mix(in srgb,var(--sw-accent) 60%,#000),#000 82%);}
   .sw-pt--ring::before{background:transparent;border:2px solid color-mix(in srgb,var(--sw-accent) 55%,transparent);}
   @keyframes sw-drift{0%{opacity:0;transform:scale(var(--sw-sc)) translate(0,12vh) rotate(0)}12%{opacity:.5}88%{opacity:.45}100%{opacity:0;transform:scale(var(--sw-sc)) translate(4vw,-22vh) rotate(210deg)}}
-  .sw-scrollbar{position:fixed;top:0;left:0;right:0;height:3px;z-index:60;background:color-mix(in srgb,var(--sw-accent) 14%,transparent);}
+  .sw-scrollbar{position:fixed;top:56px;left:0;right:0;height:3px;z-index:60;background:color-mix(in srgb,var(--sw-accent) 14%,transparent);}
   .sw-scrollbar span{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--sw-accent);}
-  .sw-topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:clamp(14px,2.4vw,26px) clamp(18px,5vw,64px);transition:opacity .5s ease,transform .5s ease;}
-  .sw-topbar.is-asleep{opacity:0;transform:translateY(-10px);pointer-events:none;}
-  @media (prefers-reduced-motion: reduce){ .sw-topbar{transition:opacity .5s ease;transform:none;} .sw-topbar.is-asleep{transform:none;} }
+  .sw-topbar{position:fixed;top:56px;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:clamp(10px,1.8vw,18px) clamp(18px,5vw,64px);}
   .sw-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--sw-ink);}
   .sw-brand__mark{width:24px;height:28px;border-radius:7px 7px 10px 10px;background:linear-gradient(160deg,var(--sw-accent),color-mix(in srgb,var(--sw-accent) 60%,#000));box-shadow:0 6px 14px color-mix(in srgb,var(--sw-accent) 40%,transparent);}
   .sw-brand__logo{height:34px;width:auto;display:block;}

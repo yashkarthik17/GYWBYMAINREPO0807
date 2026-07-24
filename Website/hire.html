@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Hire the Crew — Glad You Were Born Today</title>
+  <meta name="description" content="Bring Starry &amp; the Crashers to a real birthday. Three ways to crash a party — from a confetti fly-by to the full glow-up. Booking opens soon." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #1D2B50;
+      --bg-deep: #141E3A;
+      --cream: #FFF9EE;
+      --cream-soft: #c9c4d8;
+      --gold: #e6c46a;
+      --gold-deep: #b8862e;
+      --pink: #E84A9B;
+      --ivory: #FFFDF6;
+      --font-display: "Baloo 2", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+      --font-royal: "Cormorant Garamond", Georgia, serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--cream); font-family: var(--font-body); }
+
+    .night { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(52% 40% at 76% 8%, color-mix(in srgb, var(--gold) 14%, transparent), transparent 70%),
+        radial-gradient(46% 38% at 18% 84%, color-mix(in srgb, var(--pink) 10%, transparent), transparent 72%),
+        linear-gradient(178deg, var(--bg) 0%, var(--bg-deep) 100%); }
+    .star { position: fixed; z-index: 0; width: 3px; height: 3px; border-radius: 50%;
+            background: #fff; opacity: .35; pointer-events: none; animation: twinkle 4.5s ease-in-out infinite; }
+    .star--a { left: 14vw; top: 22vh; } .star--b { left: 78vw; top: 16vh; animation-delay: -1.4s; }
+    .star--c { left: 62vw; top: 64vh; animation-delay: -2.6s; } .star--d { left: 30vw; top: 78vh; animation-delay: -3.4s; }
+    @keyframes twinkle { 0%, 100% { opacity: .18; } 50% { opacity: .55; } }
+    @media (prefers-reduced-motion: reduce) { .star { animation: none; } }
+
+    .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 48px); }
+    a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+    .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 300px); align-items: center;
+            gap: clamp(18px, 4vw, 44px); padding: clamp(30px, 7vh, 84px) 0 clamp(18px, 3vh, 36px); }
+    @media (max-width: 700px) { .hero { grid-template-columns: 1fr; } .hero__art { order: -1; max-width: 210px; margin: 0 auto; } }
+    .hero__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: .8rem;
+                     letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+    .hero h1 { font-family: var(--font-display); font-weight: 800; letter-spacing: -.01em;
+               font-size: clamp(2.4rem, 6.4vw, 4rem); line-height: 1; margin: 14px 0 0; }
+    .hero p { margin-top: 18px; font-size: clamp(1rem, 1.35vw, 1.18rem); line-height: 1.6;
+              color: color-mix(in srgb, var(--cream) 80%, var(--cream-soft)); max-width: 52ch; }
+    .hero__art img { width: 100%; height: auto; display: block; filter: drop-shadow(0 18px 34px rgba(0,0,0,.5)); }
+
+    .sect { display: flex; align-items: center; gap: 14px; margin: clamp(22px, 4vh, 44px) 0 8px; }
+    .sect h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin: 0; }
+    .sect::after { content: ""; flex: 1; height: 1px;
+                   background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 55%, transparent), transparent); }
+    .sect__note { margin: 0 0 10px; color: var(--cream-soft); font-size: .95rem; }
+
+    .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 2.2vw, 22px);
+             padding: clamp(10px, 2vh, 22px) 0 10px; }
+    @media (max-width: 860px) { .plans { grid-template-columns: 1fr; } }
+    .plan { position: relative; display: flex; flex-direction: column; border-radius: 22px; overflow: hidden;
+            background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); }
+    .plan--big { border-color: color-mix(in srgb, var(--gold) 55%, transparent);
+                 box-shadow: 0 18px 44px rgba(230,196,106,.12); }
+    .plan__flag { position: absolute; top: 16px; right: 16px; font-family: var(--font-display); font-weight: 700;
+                  font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+                  color: var(--bg); background: var(--gold); padding: 6px 12px; border-radius: 999px; }
+    .plan__pic { aspect-ratio: 16 / 10; overflow: hidden; }
+    .plan__pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .plan__body { display: flex; flex-direction: column; flex: 1; padding: 22px 24px 24px; }
+    .plan h3 { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; margin: 0; }
+    .plan__tag { font-family: var(--font-royal); font-style: italic; color: var(--gold); margin-top: 4px; }
+    .plan ul { margin: 14px 0 0; padding: 0; list-style: none; flex: 1; }
+    .plan li { padding: 7px 0 7px 26px; position: relative; color: var(--cream-soft); font-size: .94rem; line-height: 1.45;
+               border-bottom: 1px solid rgba(255,255,255,.06); }
+    .plan li:last-child { border-bottom: 0; }
+    .plan li::before { content: "★"; position: absolute; left: 2px; top: 7px; color: var(--gold); font-size: .8rem; }
+
+    .band { margin: clamp(30px, 6vh, 64px) 0 0; background: rgba(255,255,255,.05);
+            border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+            border-radius: 26px; padding: clamp(24px, 4vw, 44px);
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+    .band h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); margin: 0; }
+    .band p { margin: 8px 0 0; color: var(--cream-soft); max-width: 50ch; }
+    .band__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .band a { text-decoration: none; font-weight: 600; color: var(--bg); background: var(--gold);
+              padding: 13px 24px; border-radius: 999px; white-space: nowrap; }
+    .band a.alt { color: var(--cream); background: transparent; border: 1px solid rgba(255,255,255,.3); }
+    .soon { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: .74rem;
+            letter-spacing: .16em; text-transform: uppercase; color: var(--gold);
+            border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+            padding: 7px 14px; border-radius: 999px; margin-bottom: 12px; }
+
+    footer { position: relative; z-index: 1; text-align: center; padding: clamp(30px, 6vh, 60px) 18px 34px;
+             color: color-mix(in srgb, var(--cream) 55%, transparent); font-size: .85rem; }
+    footer b { font-family: var(--font-display); }
+  </style>
+</head>
+<body>
+  <div class="night"></div>
+  <span class="star star--a"></span><span class="star star--b"></span>
+  <span class="star star--c"></span><span class="star star--d"></span>
+
+  <div class="wrap">
+    <header class="hero">
+      <div>
+        <span class="hero__eyebrow">Hire the crew</span>
+        <h1>Somebody&rsquo;s birthday is coming.</h1>
+        <p>Starry &amp; the Crashers crash real parties now — backyards, patios, fortieths,
+           fifths. You pick the day and keep the secret. The crew handles the rest,
+           from the first confetti cannon to the last wave goodbye.</p>
+      </div>
+      <div class="hero__art">
+        <img src="assets/characters/starry.webp" alt="Starry — a golden star in a party hat, holding balloons and a gift" />
+      </div>
+    </header>
+
+    <div class="sect"><h2>Three ways to crash</h2></div>
+    <p class="sect__note">Every crash is planned with you, sized to the room, and always a surprise to exactly one person.</p>
+
+    <main class="plans">
+      <article class="plan">
+        <div class="plan__pic"><img src="adult/assets/glowup.webp" alt="The Crashers arriving at a backyard party" loading="lazy" /></div>
+        <div class="plan__body">
+          <h3>The Fly-By</h3>
+          <div class="plan__tag">for the quiet ones</div>
+          <ul>
+            <li>One Crasher, matched to the birthday month</li>
+            <li>Confetti moment + the song, sung loud</li>
+            <li>A birthday card from the whole crew</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="plan plan--big">
+        <span class="plan__flag">The classic</span>
+        <div class="plan__pic"><img src="adult/assets/photo.webp" alt="Party guests crowding into photos with the Crashers" loading="lazy" /></div>
+        <div class="plan__body">
+          <h3>The Full Crash</h3>
+          <div class="plan__tag">the one from the film</div>
+          <ul>
+            <li>Starry + three Crashers burst in mid-party</li>
+            <li>Confetti cannons, streamers, the anthem</li>
+            <li>Photo hour — the album nobody agrees on</li>
+            <li>Send-off wave from the lawn</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="plan">
+        <div class="plan__pic"><img src="adult/assets/patio.webp" alt="A patio party glowing after the crash" loading="lazy" /></div>
+        <div class="plan__body">
+          <h3>The Glow-Up</h3>
+          <div class="plan__tag">total transformation</div>
+          <ul>
+            <li>The crew arrives early and rebuilds the room</li>
+            <li>Cake tower, balloon arches, dance floor</li>
+            <li>The Full Crash, on top of all of it</li>
+          </ul>
+        </div>
+      </article>
+    </main>
+
+    <section class="band" id="book">
+      <div>
+        <span class="soon">Booking opens soon</span>
+        <h2>The cannons are almost loaded.</h2>
+        <p>We&rsquo;re taking our first crash requests very soon. Until then, see the crew in action — or meet them one by one.</p>
+      </div>
+      <div class="band__actions">
+        <a href="adult/">Watch a real crash</a>
+        <a class="alt" href="adult/crew.html">Meet the crew</a>
+        <a class="alt" href="mission.html">Our mission</a>
+      </div>
+    </section>
+  </div>
+
+  <footer>&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
+
+  <script src="nav.js?v=1"></script>
+</body>
+</html>
