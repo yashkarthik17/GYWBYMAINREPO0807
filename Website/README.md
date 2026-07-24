@@ -7,13 +7,16 @@ on to the next with no cuts. Scroll only drives time — like Apple's product pa
 ## Run it locally
 
 The page fetches its clips with `fetch()` (blob playback), so it needs any HTTP server —
-opening `index.html` directly from the file system won't work:
+opening the pages directly from the file system won't work:
 
 ```
 cd "Website"
 python -m http.server 8000
 # open http://localhost:8000
 ```
+
+Pages: `index.html` (envelope splash front door) → `story.html` (kids' scroll world)
+or `adult/` (grown-ups sub-site); `store.html` is the party store.
 
 ## The journey (scroll order)
 
@@ -25,8 +28,9 @@ python -m http.server 8000
 
 ## Files
 
-- `index.html` — copy, palette, section config, SEO block. Edit CTA links here
-  (both `Bring the Crashers` buttons currently point at `#`).
+- `story.html` — copy, palette, section config, SEO block for the scroll world.
+  Desktop/tablet serves the landscape tier (`assets/vid/<scene>.mp4`, `?v=4`);
+  phones serve the portrait tier (`-m` clips, `-p` stills, stitched journey).
 - `scrub-engine.js` — the portable scroll-scrub engine (vanilla JS, framework-agnostic).
 - `assets/` — everything the page serves (~97 MB):
   - `<scene>.webp` — stills (reduced-motion / fallback artwork)
@@ -51,11 +55,22 @@ Copy `index.html`, `scrub-engine.js`, and `assets/` to any static host. Byte-ran
 support is NOT required (clips load as blobs). The copy in the `data-sw-seo` block is
 what crawlers see — keep it in sync if you edit the section copy.
 
-## QA status (2026-07-15)
+## QA status
 
+2026-07-15 (original chain):
 - SSIM seam gate: 3 PASS / 5 WARN (confetti-level render drift, hidden by the 0.15
   crossfade), 0 FAIL after one connector re-roll + trim alignment
 - Browser QA: 8/8 seams continuous (pop-ratio metric), blob seeking OK, scroll→time
   tracking OK, no console errors
 - Fallbacks verified: reduced-motion → stills, data-saver → stills, phone → mobile
   encodes, tablet → 1080p masters
+
+2026-07-24 (landscape tier redo, `work/redo-landscape`):
+- All 9 landscape clips re-rendered at 1080p and wired into `story.html` (desktop
+  fields moved off the portrait stand-ins back to the landscape files, `?v=4`)
+- Raw adjacent-frame SSIM across the shipped chain reads low (0.38–0.70) — expected:
+  dives are tail-trimmed 0.15s so the runtime crossfade bridges the handoff, and the
+  known-good mobile chain scores the same range on this metric. Visual frame-pair
+  inspection of the worst seams: same scene/composition, confetti-level drift only
+- Every asset URL referenced by `story.html` (both tiers + dynamic still paths)
+  verified 200 against a local server; inline config and engine pass a JS syntax check
