@@ -1,0 +1,47 @@
+[
+  {
+    "id": "b90902d3-415c-40b1-bdbd-8095f283c504",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_075453_b90902d3-415c-40b1-bdbd-8095f283c504.mp4",
+    "created_at": 1784879693.098372,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. The camera continues the exact same slow, steady, perfectly straight forward drift it was already in, descending gently into the heart of the now-glowing backyard party, where the three little toddler-sized creatures in round hooded onesies — orange zigzag, blue diamond, green paint-splatter — RUN and tumble playfully across the lawn, chasing each other in circles around the laughing guests and diving through drifts of confetti, active and free — nobody holds or carries them — while the tall golden star character with the friendly cartoon face and pink polka-dot party hat dances behind the group with puffy white gloves spread wide, phone flashes popping softly as guests laugh and snap photos of the chaos, confetti still drifting down through the warm string-light glow. The camera eases back and carries on gliding forward across the lawn. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift toward the patio pergola ahead, where the magical cloud clubhouse floats parked above the roofline with ribbon streamers hanging down, ready to continue.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "36c9970e-b18f-410f-87b1-dbc5f46f046e",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/36c9970e-b18f-410f-87b1-dbc5f46f046e.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "3af97f23-4686-4491-8f5b-1367f9367da4",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/3af97f23-4686-4491-8f5b-1367f9367da4.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "df9e097b-0e3a-46a6-8dbe-2bb385889bf6",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_073221_df9e097b-0e3a-46a6-8dbe-2bb385889bf6.png",
+    "created_at": 1784878341.00238,
+    "params": {
+      "width": 1520,
+      "height": 2688,
+      "prompt": "Cinematic photorealistic vertical photograph, 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, natural film-like color grade, a real suburban backyard at night. A deep blue starry night sky fills almost the whole frame, soft glowing stars scattered across it, the dark rooflines and trees of the neighborhood just visible along the very bottom edge with a faint warm glow of string lights. High in the sky, small and distant, the magical cloud clubhouse from the reference image sails away: a fluffy glossy cotton-soft toy cloud carrying a golden star-shaped clubhouse with a pink polka-dot party-hat spire, its round porthole windows glowing warm from inside, wrapped gift boxes tucked into the cloud folds, a fine golden sparkle trail curling beneath it as it drifts toward the stars. The star clubhouse is plain smooth gold with absolutely no lettering, no writing, no name anywhere on it. Rendered as a glossy vinyl designer toy physically integrated into the photoreal night sky with matched moonlit lighting. Absolutely no text, no letters, no numbers, no logos, no watermarks.",
+      "medias": [
+        {
+          "data": {
+            "id": "245449de-8453-44ac-8161-6de044694d9e",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/245449de-8453-44ac-8161-6de044694d9e_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "9:16",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

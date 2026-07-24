@@ -1,0 +1,38 @@
+[
+  {
+    "id": "c626ecca-15f7-4d58-b4e2-3a24cf1cca2e",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_064037_c626ecca-15f7-4d58-b4e2-3a24cf1cca2e.png",
+    "created_at": 1784875237.289217,
+    "params": {
+      "width": 1520,
+      "height": 2688,
+      "prompt": "Cinematic photorealistic vertical photograph, 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the vertical center of frame, safe for portrait phone screens. Absolutely no text, no letters, no numbers, no logos, no watermarks.\nThe scene: a real suburban backyard birthday party at pink-gold dusk, guests mid-gasp turning and pointing toward the sky, warm string lights along a wooden fence, a pastel balloon arch at the edge of frame. Just clearing the fence line and filling the upper two thirds of the frame: THE CRASH PAD — a big fluffy glossy cotton-soft cartoon toy cloud island the size of a minivan, puffy like a designer vinyl toy, carrying a golden star-shaped clubhouse with round brass porthole windows, a small wooden balcony with a rope-and-post rail, and a pink polka-dot party-hat spire on its roof; wrapped gift boxes and gold star balloons tucked into the cloud folds. STARRY — a tall golden five-pointed star character with a friendly cartoon face, large cartoon eyes with blue irises, a pink polka-dot cone party hat, rainbow-checkered fabric arms and legs, puffy white gloves and round golden boots — stands at the balcony rail holding a small brass telescope and waving down. The three CRASHERS — small toddler-sized creatures in round hooded onesies, one orange with yellow zigzag print, one blue with purple diamond print, one green with multicolor paint-splatter print, each with a pale round face, big sparkly jewel eyes, rosy blush cheeks and a red-and-white striped cone party hat on the hood — ride the front deck of the cloud around a small purple confetti cannon mid-fire, an arc of colorful confetti raining down toward the lawn. Fine golden sparkles and thin curling ribbon streamers in pink, purple and green trail beneath the cloud. The characters and clubhouse are glossy vinyl toys physically integrated into the photoreal dusk scene with true contact shadows and matched warm lighting.",
+      "medias": [
+        {
+          "data": {
+            "id": "940ef5bf-ac55-4eeb-ba58-b0804fa16e63",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/940ef5bf-ac55-4eeb-ba58-b0804fa16e63_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "13645902-4e16-4422-92c3-34898d6c11e4",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/13645902-4e16-4422-92c3-34898d6c11e4.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "9:16",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "a18dc83c-156f-43e8-94af-f3107d20cefb",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_073838_a18dc83c-156f-43e8-94af-f3107d20cefb.mp4",
+    "created_at": 1784878718.482572,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. The camera continues the exact same slow, steady, perfectly straight forward drift it was already in, drifting over the quiet lawn as the party winds down into deep blue dusk. From high overhead, the magical cloud clubhouse glides gently into view — a majestic fluffy glossy toy cloud carrying a golden star-shaped clubhouse with a pink polka-dot party-hat spire and warm glowing porthole windows, its gold surface plain and smooth with no writing on it — and descends to hover low over the grass, while the birthday guests stroll in from the edges of the yard holding glowing sparklers to see their friends off. The three little toddler-sized creatures in round hooded onesies — orange zigzag, blue diamond, green paint-splatter — climb snugly into the soft cloud folds among the gift boxes, and the tall golden star character with the friendly cartoon face and pink polka-dot party hat waves goodbye from the clubhouse balcony with a puffy white glove, the guests below waving up with sparklers glowing. The cloud lifts off slowly past the string lights and rises into the darkening night sky, its golden sparkle trail and ribbon streamers streaming beneath it, the warm party glow shrinking below as gentle stars come out, the cloud growing small and distant among the stars. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight upward drift gazing at the distant glowing cloud among the stars, ready to continue.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "e764a835-f90e-4e74-b6be-854dd0cc3b35",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/e764a835-f90e-4e74-b6be-854dd0cc3b35.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "deeaf8f8-886e-463e-9cee-b5d89128a31f",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/deeaf8f8-886e-463e-9cee-b5d89128a31f_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

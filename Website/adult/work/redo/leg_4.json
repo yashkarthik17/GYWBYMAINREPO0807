@@ -1,0 +1,39 @@
+[
+  {
+    "id": "11fe5eec-64fb-4a8e-a30c-480244c8795b",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_072112_11fe5eec-64fb-4a8e-a30c-480244c8795b.mp4",
+    "created_at": 1784877672.645761,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos. The camera continues the exact same slow, steady, perfectly straight forward drift it was already in, gliding in under the pergola wrapped in warm string lights and paper lanterns as an elegant grown-up patio party gathers: adults in nice casual clothes stepping in from the sides carrying dishes and drinks, taking their seats and raising glasses in a toast around the long table with an elegant cake topped with lit sparklers, flowers and candles down the table, THE CRASH PAD cloud clubhouse floating parked above the pergola with its pink, purple and green ribbon streamers hanging down into the scene and golden sparkles drifting like fireflies. The camera tracks gently sideways along the table through the toast, the three CRASHERS mingling among the guests — one held up laughing by a guest, one peeking over the cake, one dancing on the lawn — and STARRY leaning in at the end of the table to admire the sparkler cake. The camera curves smoothly back to face forward across the open lawn. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift toward the open dusk sky beyond the yard, ready to continue.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "59ffbaa0-92d0-4867-a1e7-1dba57bdb448",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/59ffbaa0-92d0-4867-a1e7-1dba57bdb448.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

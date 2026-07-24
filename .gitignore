@@ -12,6 +12,10 @@ Website/work/redo/*.err
 Website/adult/work/*.png
 Website/adult/work/*.mp4
 Website/adult/work/*.err
+Website/adult/work/redo/*.png
+Website/adult/work/redo/*.mp4
+Website/adult/work/redo/*.err
+Website/adult/work/redo/out/*
 
 # OS noise
 Thumbs.db

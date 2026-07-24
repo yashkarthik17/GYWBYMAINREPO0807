@@ -1,0 +1,39 @@
+[
+  {
+    "id": "d2cceb96-8212-4108-b001-b7c3db6ae497",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_065622_d2cceb96-8212-4108-b001-b7c3db6ae497.mp4",
+    "created_at": 1784876182.428605,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos. The camera begins inside a modest, quiet real backyard birthday party in late golden afternoon light and glides gently forward past sagging pastel balloons and politely chatting adults, over the picnic table with its plain white sheet cake, past the sweetly bored birthday kid in a paper party hat sitting with chin in hands, then tilts softly upward toward the open sky beyond the rooftops, where far in the distance THE CRASH PAD approaches: a fluffy glossy toy cloud carrying a tiny golden star-shaped clubhouse with a party-hat spire, still small and far away, catching the last sunlight, a faint golden sparkle trail curling behind it. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift toward the distant cloud clubhouse, ready to continue. The scene stays photorealistic and ordinary except the magical cloud clubhouse.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "addde657-7503-4953-9ab9-d385a299b0a3",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/addde657-7503-4953-9ab9-d385a299b0a3_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

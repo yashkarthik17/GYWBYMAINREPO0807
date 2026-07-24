@@ -1,0 +1,39 @@
+[
+  {
+    "id": "9bed2e43-ae6e-4b16-b36f-2c0ea6929467",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_072633_9bed2e43-ae6e-4b16-b36f-2c0ea6929467.mp4",
+    "created_at": 1784877993.290712,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos. The camera continues the exact same slow, steady, perfectly straight forward drift it was already in, drifting over the quiet lawn as the party winds down into deep blue dusk. From high overhead, THE CRASH PAD glides gently into view — the majestic glossy toy cloud carrying its golden star-shaped clubhouse with the pink polka-dot party-hat spire — and descends to hover low over the grass, while the birthday guests stroll in from the edges of the yard holding glowing sparklers to see their friends off. The three CRASHERS in their round hooded onesies climb snugly into the soft cloud folds among the gift boxes, STARRY at the clubhouse balcony rail waving goodbye with a puffy white glove, the guests below waving up with sparklers glowing. The big glossy toy cloud lifts off slowly past the string lights and rises into the darkening sky, its golden sparkle trail and ribbon streamers streaming beneath it, the warm party glow shrinking below as gentle stars come out. The camera keeps drifting slowly upward and forward with the cloud as it sails ahead into the deep blue evening sky. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift among the first stars, the cloud clubhouse glowing warmly ahead, ready to continue.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "69c309d2-51ea-4bad-ae6d-5c623d19eaf6",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/69c309d2-51ea-4bad-ae6d-5c623d19eaf6.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

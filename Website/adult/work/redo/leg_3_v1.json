@@ -1,0 +1,39 @@
+[
+  {
+    "id": "4af81b82-edf5-4d8e-9972-5c6876e2be12",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_071552_4af81b82-edf5-4d8e-9972-5c6876e2be12.mp4",
+    "created_at": 1784877352.981203,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos. The camera continues the exact same slow, steady, perfectly straight forward drift it was already in, descending gently into the heart of the now-glowing backyard party, and pushes in close on a joyful group-photo scrum on the lawn: the birthday adult crouched down laughing and hugging the three CRASHERS in their round hooded onesies — orange zigzag, blue diamond, green paint-splatter — while happy kids pile in from the sides and STARRY, the tall golden star character, photobombs behind them with puffy white gloves spread wide, phone flashes popping softly, confetti still drifting down through the warm string-light glow. The camera eases back from the huddle and carries on gliding forward across the lawn. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift toward the patio pergola ahead, where THE CRASH PAD cloud clubhouse floats parked above the roofline with ribbon streamers hanging down, ready to continue.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "2f7a5c1e-d0e0-497f-930c-9a7d2648de8c",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/2f7a5c1e-d0e0-497f-930c-9a7d2648de8c.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]
