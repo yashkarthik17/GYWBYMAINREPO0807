@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Meet the Crashers — Glad You Were Born Today</title>
+  <meta name="description" content="Twelve Crashers — one for every month of birthdays, each with a birthstone for eyes. And Starry, the star who started it all. Meet the whole crew." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #5BB8F0;
+      --ink: #1D2B50;
+      --ink-soft: #3E5580;
+      --pink: #E84A9B;
+      --yellow: #FFC93C;
+      --purple: #8B5CF6;
+      --card: #FFFFFF;
+      --gold: #C9A227;
+      --gold-deep: #B8862E;
+      --ivory: #FFFDF6;
+      --font-display: "Baloo 2", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+      --font-royal: "Cormorant Garamond", Georgia, serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); }
+
+    .sky {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(60% 42% at 74% 12%, color-mix(in srgb, var(--yellow) 20%, transparent), transparent 70%),
+        radial-gradient(46% 34% at 22% 60%, color-mix(in srgb, #fff 40%, transparent), transparent 70%),
+        linear-gradient(178deg, color-mix(in srgb, var(--pink) 10%, var(--bg)) 0%, var(--bg) 55%, color-mix(in srgb, var(--purple) 10%, var(--bg)) 100%);
+    }
+    .cloud { position: fixed; z-index: 0; pointer-events: none; border-radius: 50%;
+             background: radial-gradient(closest-side, rgba(255,255,255,.8), rgba(255,255,255,0));
+             filter: blur(2px); animation: cloud-drift 48s linear infinite; }
+    .cloud--a { width: 42vw; height: 15vh; left: -6vw; top: 12vh; }
+    .cloud--b { width: 34vw; height: 12vh; left: 66vw; top: 44vh; animation-delay: -20s; animation-duration: 58s; }
+    .cloud--c { width: 28vw; height: 10vh; left: 24vw; top: 78vh; animation-delay: -36s; animation-duration: 66s; }
+    @keyframes cloud-drift { 0% { transform: translateX(0); } 50% { transform: translateX(5vw); } 100% { transform: translateX(0); } }
+    @media (prefers-reduced-motion: reduce) { .cloud { animation: none; } }
+
+    .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 48px); }
+
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+              padding: clamp(14px, 2.4vw, 26px) 0; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+    .brand__mark { width: 24px; height: 28px; border-radius: 7px 7px 10px 10px;
+                   background: linear-gradient(160deg, var(--pink), color-mix(in srgb, var(--pink) 60%, #000));
+                   box-shadow: 0 6px 14px color-mix(in srgb, var(--pink) 40%, transparent); }
+    .brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
+    .back { text-decoration: none; font-weight: 600; font-size: .9rem; color: #fff; background: var(--ink);
+            padding: 10px 20px; border-radius: 999px; white-space: nowrap; }
+    a:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+    /* ---- hero: Starry presents the crew ---- */
+    .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(200px, 340px); align-items: center;
+            gap: clamp(18px, 4vw, 44px); padding: clamp(24px, 5vh, 64px) 0 clamp(18px, 3vh, 36px); }
+    @media (max-width: 700px) { .hero { grid-template-columns: 1fr; } .hero__art { order: -1; max-width: 240px; margin: 0 auto; } }
+    .hero__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: .8rem;
+                     letter-spacing: .16em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 70%, var(--pink)); }
+    .hero__eyebrow::before { content: "♛"; display: inline-block; margin-right: 8px;
+                             background: linear-gradient(165deg, #f4dd97, var(--gold-deep));
+                             -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero h1 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em;
+               font-size: clamp(2.3rem, 6vw, 3.8rem); line-height: 1.02; margin: 12px 0 0; }
+    .hero__rule { width: 128px; height: 2px; margin: 18px 0 0; border: 0;
+                  background: linear-gradient(90deg, var(--gold), transparent); }
+    .hero p { margin-top: 16px; font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.55;
+              color: color-mix(in srgb, var(--ink) 80%, var(--ink-soft)); max-width: 48ch; }
+    .hero__quote { font-family: var(--font-royal); font-style: italic; font-size: 1.15rem; color: var(--ink-soft); }
+    .hero__art { position: relative; }
+    .hero__art img { width: 100%; height: auto; display: block;
+                     filter: drop-shadow(0 18px 30px color-mix(in srgb, var(--ink) 30%, transparent));
+                     animation: bob 5.5s ease-in-out infinite; }
+    .hero__art::after { content: "No. 00 — the first star"; position: absolute; left: 50%; bottom: -10px;
+                        transform: translateX(-50%); white-space: nowrap;
+                        font-family: var(--font-display); font-weight: 700; font-size: .75rem;
+                        letter-spacing: .14em; text-transform: uppercase; color: #fff;
+                        background: var(--ink); padding: 7px 16px; border-radius: 999px;
+                        border: 1px solid color-mix(in srgb, var(--gold) 60%, transparent); }
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    @media (prefers-reduced-motion: reduce) { .hero__art img { animation: none; } }
+
+    /* ---- the twelve ---- */
+    .sect { display: flex; align-items: center; gap: 14px; margin: clamp(22px, 4vh, 44px) 0 6px; }
+    .sect h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin: 0; }
+    .sect::after { content: ""; flex: 1; height: 2px;
+                   background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 60%, transparent), transparent); }
+    .sect__note { margin: 0 0 8px; color: var(--ink-soft); font-size: .95rem; }
+
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(14px, 2.2vw, 22px);
+            padding: clamp(10px, 2vh, 22px) 0 10px; }
+    @media (max-width: 980px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 430px) { .grid { grid-template-columns: 1fr; } }
+
+    .pcard { background: var(--card); border-radius: 22px; overflow: hidden; text-align: center;
+             box-shadow: 0 10px 30px color-mix(in srgb, var(--ink) 18%, transparent);
+             transition: transform .25s ease, box-shadow .25s ease; }
+    .pcard:hover { transform: translateY(-4px); box-shadow: 0 16px 38px color-mix(in srgb, var(--ink) 26%, transparent); }
+    @media (prefers-reduced-motion: reduce) { .pcard, .pcard:hover { transform: none; transition: none; } }
+    .pcard__stage { padding: 22px 22px 0;
+                    background: linear-gradient(180deg, color-mix(in srgb, var(--acc, var(--pink)) 26%, #fff), #fff); }
+    .pcard__pic { width: 74%; max-width: 190px; aspect-ratio: 1; margin: 0 auto; border-radius: 50%;
+                  overflow: hidden; position: relative;
+                  border: 3px solid color-mix(in srgb, var(--gold) 55%, #fff);
+                  box-shadow: 0 8px 20px color-mix(in srgb, var(--acc, var(--pink)) 38%, transparent),
+                              inset 0 0 0 3px #fff; background: #fff; }
+    .pcard__pic img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.09); }
+    .pcard__body { position: relative; padding: 14px 18px 18px;
+                   background: linear-gradient(180deg, var(--ivory), #F8F0DC); }
+    .pcard__body::before { content: ""; position: absolute; inset: 6px; border-radius: 12px;
+                           border: 1px solid color-mix(in srgb, var(--gold) 38%, transparent); pointer-events: none; }
+    .pcard h3 { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; margin: 2px 0 0; }
+    .pcard__month { display: inline-flex; align-items: center; gap: 7px; margin-top: 7px;
+                    font-family: var(--font-royal); font-weight: 600; font-size: .95rem; color: var(--ink-soft); }
+    .gem { width: 13px; height: 13px; border-radius: 50%; flex: none;
+           background: radial-gradient(circle at 34% 30%, rgba(255,255,255,.85) 0 16%, transparent 42%),
+                       radial-gradient(circle at 55% 62%, var(--stone, var(--gold)), color-mix(in srgb, var(--stone, var(--gold)) 48%, #000));
+           box-shadow: 0 0 7px color-mix(in srgb, var(--stone, var(--gold)) 65%, transparent),
+                       inset 0 0 2px rgba(255,255,255,.6); }
+    .pcard p { margin: 9px 0 0; font-size: .9rem; line-height: 1.45; color: var(--ink-soft); }
+
+    .band { margin: clamp(30px, 6vh, 64px) 0 0; background: color-mix(in srgb, #fff 72%, transparent);
+            border: 1px solid color-mix(in srgb, var(--pink) 16%, transparent); backdrop-filter: blur(8px);
+            border-radius: 26px; padding: clamp(24px, 4vw, 44px);
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+    .band h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); margin: 0; }
+    .band p { margin: 8px 0 0; color: var(--ink-soft); max-width: 46ch; }
+    .band__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .band a { text-decoration: none; font-weight: 600; color: #fff; background: var(--ink);
+              padding: 13px 24px; border-radius: 999px; white-space: nowrap; }
+    .band a.alt { background: var(--pink); }
+
+    footer { position: relative; z-index: 1; text-align: center; padding: clamp(30px, 6vh, 60px) 18px 34px;
+             color: color-mix(in srgb, var(--ink) 66%, var(--ink-soft)); font-size: .85rem; }
+    footer b { font-family: var(--font-display); }
+  </style>
+</head>
+<body>
+  <div class="sky"></div>
+  <span class="cloud cloud--a"></span><span class="cloud cloud--b"></span><span class="cloud cloud--c"></span>
+
+  <div class="wrap">
+    <nav class="topbar">
+      <a class="brand" href="index.html"><span class="brand__mark"></span><span class="brand__name">Glad You Were Born Today</span></a>
+      <a class="back" href="story.html">&larr; Back to the story</a>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <span class="hero__eyebrow">The cast of the crash</span>
+        <h1>Meet Starry &amp; the Crashers</h1>
+        <hr class="hero__rule" />
+        <p><b>Starry</b> threw the very first birthday party — and wrote the song when nobody came.
+           Now the whole crew watches the party radar from the Crash Pad: twelve Crashers,
+           one for every month of birthdays, each with a birthstone for eyes.</p>
+        <p class="hero__quote">&ldquo;Let&rsquo;s GO!&rdquo; — Starry, every single time</p>
+      </div>
+      <div class="hero__art">
+        <img src="assets/characters/starry.webp" alt="Starry — a smiling golden star in a party hat, holding balloons and a gift" />
+      </div>
+    </header>
+
+    <div class="sect"><h2>The Twelve</h2></div>
+    <p class="sect__note">Find your birthday month — that Crasher is <i>yours</i>.</p>
+
+    <main class="grid">
+      <article class="pcard" style="--acc:#E8801C; --stone:#9B2242">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/zig.webp" alt="Zig — the orange zigzag Crasher with garnet eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Zig</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>January &middot; Garnet</div>
+          <p>First through the door every year — even in the snow.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--acc:#7EA6E8; --stone:#7B5EA7">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/jewel.webp" alt="Jewel — the blue diamond-pattern Crasher with amethyst eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Jewel</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>February &middot; Amethyst</div>
+          <p>Soft heart. Loudest confetti cannon.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--acc:#D97E2F; --stone:#3AC5C9">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/stripes.webp" alt="Stripes — the tiger-stripe Crasher with aquamarine eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Stripes</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>March &middot; Aquamarine</div>
+          <p>Pounces on pi&ntilde;atas. Purrs at cake.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--acc:#E86A7E; --stone:#A7D8E8">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/minty.webp" alt="Minty — the candy-stripe Crasher with diamond eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Minty</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>April &middot; Diamond</div>
+          <p>The sharpest sparkle in any room.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--acc:#F09A2E; --stone:#2FAE66">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/checkers.webp" alt="Checkers — the orange checkered Crasher with emerald eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Checkers</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>May &middot; Emerald</div>
+          <p>Turns any floor into a dance floor.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--acc:#59C97B; --stone:#EFE7D6">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/splat.webp" alt="Splat — the green paint-splatter Crasher with pearl eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Splat</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>June &middot; Pearl</div>
+          <p>Looks loud, hugs quiet.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--acc:#D63B3B; --stone:#E0244B">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/dot.webp" alt="Dot — the red polka-dot Crasher with ruby eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Dot</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>July &middot; Ruby</div>
+          <p>Brings the fireworks. <i>Is</i> the fireworks.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--acc:#8CC63E; --stone:#9FC131">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/blossom.webp" alt="Blossom — the lime flower Crasher with peridot eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Blossom</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>August &middot; Peridot</div>
+          <p>Sunlight in a hoodie.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--acc:#2C3F9E; --stone:#2A4FB0">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/cosmo.webp" alt="Cosmo — the blue star-pattern Crasher with sapphire eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Cosmo</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>September &middot; Sapphire</div>
+          <p>Cool, deep, dependable — knows every star by name.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--acc:#62C4B8; --stone:#C77DBB">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/swirl.webp" alt="Swirl — the rainbow brushstroke Crasher with opal eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Swirl</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>October &middot; Opal</div>
+          <p>Every color at once, all the time.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--acc:#F2A0B5; --stone:#E8A13A">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/sprinkles.webp" alt="Sprinkles — the confetti-sprinkle Crasher with topaz eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Sprinkles</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>November &middot; Topaz</div>
+          <p>Warmth before the cold — with extra frosting.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--acc:#4A6CD4; --stone:#1FB8C4">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="assets/characters/wave.webp" alt="Wave — the yellow and blue wavy Crasher with turquoise eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <h3>Wave</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>December &middot; Turquoise</div>
+          <p>Closes the year out <b>LOUD</b>.</p>
+        </div>
+      </article>
+    </main>
+
+    <section class="band">
+      <div>
+        <h2>Spot them in the story.</h2>
+        <p>Some of the Twelve are in the big crash right now — scroll the story and see who you catch.</p>
+      </div>
+      <div class="band__actions">
+        <a href="story.html">Watch the crash</a>
+        <a class="alt" href="games.html">Play the games</a>
+        <a class="alt" href="cards.html">Make a birthday card</a>
+      </div>
+    </section>
+  </div>
+
+  <footer>&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
+
+  <script src="music.js"></script>
+</body>
+</html>

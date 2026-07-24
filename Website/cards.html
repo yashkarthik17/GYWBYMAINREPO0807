@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Card Studio — Glad You Were Born Today</title>
+  <meta name="description" content="Make a birthday card with Starry &amp; the Crashers — pick a Crasher, choose a background, write your wish, and download your card to share." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #5BB8F0;
+      --ink: #1D2B50;
+      --ink-soft: #3E5580;
+      --pink: #E84A9B;
+      --yellow: #FFC93C;
+      --purple: #8B5CF6;
+      --card: #FFFFFF;
+      --gold: #C9A227;
+      --gold-deep: #B8862E;
+      --ivory: #FFFDF6;
+      --font-display: "Baloo 2", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+      --font-royal: "Cormorant Garamond", Georgia, serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); }
+
+    .sky {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(60% 42% at 74% 12%, color-mix(in srgb, var(--yellow) 20%, transparent), transparent 70%),
+        radial-gradient(46% 34% at 22% 60%, color-mix(in srgb, #fff 40%, transparent), transparent 70%),
+        linear-gradient(178deg, color-mix(in srgb, var(--pink) 10%, var(--bg)) 0%, var(--bg) 55%, color-mix(in srgb, var(--purple) 10%, var(--bg)) 100%);
+    }
+    .dot { position: fixed; z-index: 0; width: 10px; height: 10px; border-radius: 50%; opacity: .35; pointer-events: none;
+           animation: drift 18s linear infinite; }
+    .dot--a { left: 12vw; top: 30vh; background: var(--yellow); animation-delay: -3s; }
+    .dot--b { left: 82vw; top: 22vh; background: var(--pink); animation-delay: -9s; }
+    .dot--c { left: 68vw; top: 70vh; background: var(--purple); animation-delay: -14s; }
+    @keyframes drift { 0% { transform: translateY(6vh); opacity: 0; } 15% { opacity: .35; }
+                       85% { opacity: .3; } 100% { transform: translateY(-14vh); opacity: 0; } }
+    .cloud { position: fixed; z-index: 0; pointer-events: none; border-radius: 50%;
+             background: radial-gradient(closest-side, rgba(255,255,255,.8), rgba(255,255,255,0));
+             filter: blur(2px); animation: cloud-drift 48s linear infinite; }
+    .cloud--a { width: 42vw; height: 15vh; left: -6vw; top: 12vh; }
+    .cloud--b { width: 34vw; height: 12vh; left: 66vw; top: 44vh; animation-delay: -20s; animation-duration: 58s; }
+    .cloud--c { width: 28vw; height: 10vh; left: 24vw; top: 78vh; animation-delay: -36s; animation-duration: 66s; }
+    @keyframes cloud-drift { 0% { transform: translateX(0); } 50% { transform: translateX(5vw); } 100% { transform: translateX(0); } }
+    @media (prefers-reduced-motion: reduce) { .dot { animation: none; opacity: .2; } .cloud { animation: none; } }
+
+    .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 48px); }
+
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+              padding: clamp(14px, 2.4vw, 26px) 0; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+    .brand__mark { width: 24px; height: 28px; border-radius: 7px 7px 10px 10px;
+                   background: linear-gradient(160deg, var(--pink), color-mix(in srgb, var(--pink) 60%, #000));
+                   box-shadow: 0 6px 14px color-mix(in srgb, var(--pink) 40%, transparent); }
+    .brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
+    .back { text-decoration: none; font-weight: 600; font-size: .9rem; color: #fff; background: var(--ink);
+            padding: 10px 20px; border-radius: 999px; white-space: nowrap; }
+    a:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+    .hero { padding: clamp(26px, 5vh, 64px) 0 clamp(18px, 3vh, 36px); max-width: 640px; }
+    .hero__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: .8rem;
+                     letter-spacing: .16em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 70%, var(--pink)); }
+    .hero__eyebrow::before { content: "♛"; display: inline-block; margin-right: 8px;
+                             background: linear-gradient(165deg, #f4dd97, var(--gold-deep));
+                             -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero h1 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em;
+               font-size: clamp(2.3rem, 6vw, 3.8rem); line-height: 1.02; margin: 12px 0 0; }
+    .hero__rule { width: 128px; height: 2px; margin: 18px 0 0; border: 0;
+                  background: linear-gradient(90deg, var(--gold), transparent); }
+    .hero p { margin-top: 16px; font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.55;
+              color: color-mix(in srgb, var(--ink) 80%, var(--ink-soft)); max-width: 48ch; }
+
+    /* ---- the studio ---- */
+    .studio { display: grid; grid-template-columns: minmax(0, 7fr) minmax(300px, 5fr); align-items: start;
+              gap: clamp(16px, 2.6vw, 28px); padding: clamp(10px, 2vh, 26px) 0 10px; }
+    @media (max-width: 900px) { .studio { grid-template-columns: minmax(0, 1fr); } }
+    .preview, .controls { min-width: 0; }
+
+    .preview { position: sticky; top: 16px; }
+    @media (max-width: 900px) { .preview { position: static; } }
+    .preview canvas { width: 100%; max-width: 100%; height: auto; display: block; border-radius: 20px; background: #fff;
+                      box-shadow: 0 18px 44px color-mix(in srgb, var(--ink) 30%, transparent); }
+    .preview__hint { margin: 10px 4px 0; text-align: center; font-size: .85rem;
+                     color: color-mix(in srgb, var(--ink) 66%, var(--ink-soft)); }
+
+    .controls { display: flex; flex-direction: column; gap: 14px; }
+    .panel { background: var(--card); border-radius: 22px; padding: 18px 20px 20px;
+             box-shadow: 0 10px 30px color-mix(in srgb, var(--ink) 18%, transparent); }
+    fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+    .step { display: flex; align-items: center; gap: 9px; margin: 0 0 12px; padding: 0;
+            font-family: var(--font-display); font-weight: 800; font-size: .78rem;
+            letter-spacing: .13em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 70%, var(--pink)); }
+    .step__num { flex: none; display: inline-flex; align-items: center; justify-content: center;
+                 width: 22px; height: 22px; border-radius: 50%; background: var(--yellow); color: var(--ink);
+                 font-size: .78rem; letter-spacing: 0; }
+
+    .chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 10px 6px; }
+    .chip { position: relative; text-align: center; cursor: pointer; padding: 2px 0 4px; }
+    .chip input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; margin: 0;
+                  cursor: pointer; z-index: 1; }
+    .chip__pic { display: block; width: 62px; height: 62px; margin: 0 auto; border-radius: 50%; overflow: hidden;
+                 background: #fff; border: 3px solid color-mix(in srgb, var(--ink) 14%, transparent);
+                 box-shadow: 0 3px 10px color-mix(in srgb, var(--ink) 16%, transparent);
+                 transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease; }
+    .chip__pic img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.09); }
+    .chip--starry .chip__pic { background: linear-gradient(160deg, #FFF6D8, #FFE08A); }
+    .chip--starry .chip__pic img { object-fit: contain; transform: none; padding: 7%; }
+    .chip__name { display: block; margin-top: 5px; font-family: var(--font-display); font-weight: 700;
+                  font-size: .72rem; color: var(--ink); }
+    .chip:hover .chip__pic { transform: translateY(-2px); }
+    @media (prefers-reduced-motion: reduce) { .chip__pic, .chip:hover .chip__pic { transform: none; transition: none; } }
+    .chip input:checked ~ .chip__pic { border-color: var(--pink);
+                                       box-shadow: 0 4px 14px color-mix(in srgb, var(--pink) 45%, transparent),
+                                                   inset 0 0 0 2px #fff; }
+    .chip input:checked ~ .chip__name { color: var(--pink); }
+    .chip input:focus-visible ~ .chip__pic { outline: 3px solid var(--purple); outline-offset: 2px; }
+
+    .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    @media (max-width: 380px) { .swatches { grid-template-columns: repeat(2, 1fr); } }
+    .swatch { position: relative; text-align: center; cursor: pointer; }
+    .swatch input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; margin: 0;
+                    cursor: pointer; z-index: 1; }
+    .swatch__pic { display: block; height: 58px; border-radius: 14px; border: 3px solid transparent;
+                   box-shadow: inset 0 0 0 1px rgba(29,43,80,.10), 0 3px 10px color-mix(in srgb, var(--ink) 14%, transparent);
+                   transition: transform .15s ease, border-color .15s ease; }
+    .swatch:hover .swatch__pic { transform: translateY(-2px); }
+    @media (prefers-reduced-motion: reduce) { .swatch__pic, .swatch:hover .swatch__pic { transform: none; transition: none; } }
+    .swatch__pic--sky { background:
+        radial-gradient(circle at 28% 38%, rgba(255,255,255,.95) 0 7px, transparent 8px),
+        radial-gradient(circle at 45% 32%, rgba(255,255,255,.9) 0 5px, transparent 6px),
+        radial-gradient(circle at 74% 62%, rgba(255,255,255,.85) 0 6px, transparent 7px),
+        linear-gradient(180deg, #C9E9FC, #5BB8F0); }
+    .swatch__pic--night { background:
+        radial-gradient(circle at 24% 40%, #fff 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 58% 24%, #fff 0 1px, transparent 2px),
+        radial-gradient(circle at 80% 58%, #fff 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 42% 72%, #fff 0 1px, transparent 2px),
+        linear-gradient(180deg, #3B4F8C, #16203F); }
+    .swatch__pic--candy { background:
+        radial-gradient(circle at 30% 40%, #FFC93C 0 3px, transparent 4px),
+        radial-gradient(circle at 68% 28%, #FFFDF6 0 2.5px, transparent 3.5px),
+        radial-gradient(circle at 54% 70%, #7FE3D2 0 2.5px, transparent 3.5px),
+        linear-gradient(135deg, #F06AB2, #8B5CF6); }
+    .swatch__pic--sun { background:
+        radial-gradient(circle at 50% 18%, rgba(255,255,255,.6) 0 6px, transparent 7px),
+        radial-gradient(circle at 22% 60%, rgba(255,255,255,.3) 0 5px, transparent 6px),
+        linear-gradient(180deg, #FFD95E, #F58A2E); }
+    .swatch__name { display: block; margin-top: 6px; font-family: var(--font-display); font-weight: 700;
+                    font-size: .72rem; color: var(--ink); }
+    .swatch input:checked ~ .swatch__pic { border-color: var(--pink); }
+    .swatch input:checked ~ .swatch__name { color: var(--pink); }
+    .swatch input:focus-visible ~ .swatch__pic { outline: 3px solid var(--purple); outline-offset: 2px; }
+
+    .field { margin-bottom: 12px; }
+    .field:last-child { margin-bottom: 0; }
+    .field label { display: block; margin-bottom: 6px; font-family: var(--font-display); font-weight: 700;
+                   font-size: .88rem; color: var(--ink); }
+    .field input { width: 100%; padding: 12px 14px; border-radius: 14px; font-family: var(--font-body);
+                   font-size: 1rem; color: var(--ink); background: var(--ivory);
+                   border: 2px solid color-mix(in srgb, var(--ink) 16%, transparent); }
+    .field input:focus-visible { outline: 3px solid var(--purple); outline-offset: 1px; border-color: transparent; }
+    .field__hint { display: block; margin-top: 5px; font-size: .76rem; color: var(--ink-soft); }
+
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { flex: 1 1 150px; min-height: 54px; padding: 12px 20px; border: 0; border-radius: 999px;
+           font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; cursor: pointer;
+           transition: transform .15s ease, box-shadow .15s ease; }
+    .btn--go { background: var(--pink); color: #fff;
+               box-shadow: 0 8px 20px color-mix(in srgb, var(--pink) 45%, transparent); }
+    .btn--reset { background: #fff; color: var(--ink); border: 2px solid color-mix(in srgb, var(--ink) 28%, transparent); }
+    .btn:hover { transform: translateY(-2px); }
+    @media (prefers-reduced-motion: reduce) { .btn, .btn:hover { transform: none; transition: none; } }
+    .btn:focus-visible { outline: 3px solid var(--purple); outline-offset: 2px; }
+
+    .band { margin: clamp(30px, 6vh, 64px) 0 0; background: color-mix(in srgb, #fff 72%, transparent);
+            border: 1px solid color-mix(in srgb, var(--pink) 16%, transparent); backdrop-filter: blur(8px);
+            border-radius: 26px; padding: clamp(24px, 4vw, 44px);
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+    .band h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); margin: 0; }
+    .band p { margin: 8px 0 0; color: var(--ink-soft); max-width: 46ch; }
+    .band__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .band a { text-decoration: none; font-weight: 600; color: #fff; background: var(--ink);
+              padding: 13px 24px; border-radius: 999px; white-space: nowrap; }
+    .band a.alt { background: var(--pink); }
+
+    footer { position: relative; z-index: 1; text-align: center; padding: clamp(30px, 6vh, 60px) 18px 34px;
+             color: color-mix(in srgb, var(--ink) 66%, var(--ink-soft)); font-size: .85rem; }
+    footer b { font-family: var(--font-display); }
+  </style>
+</head>
+<body>
+  <div class="sky"></div>
+  <span class="cloud cloud--a"></span><span class="cloud cloud--b"></span><span class="cloud cloud--c"></span>
+  <span class="dot dot--a"></span><span class="dot dot--b"></span><span class="dot dot--c"></span>
+
+  <div class="wrap">
+    <nav class="topbar">
+      <a class="brand" href="index.html"><span class="brand__mark"></span><span class="brand__name">Glad You Were Born Today</span></a>
+      <a class="back" href="story.html">&larr; Back to the story</a>
+    </nav>
+
+    <header class="hero">
+      <span class="hero__eyebrow">The card studio</span>
+      <h1>Make someone's birthday card</h1>
+      <hr class="hero__rule" />
+      <p>Pick a Crasher, write your wish, send the sparkle.</p>
+    </header>
+
+    <main class="studio">
+      <div class="preview">
+        <canvas id="card" width="1536" height="1024" role="img" aria-label="Live preview of your birthday card"></canvas>
+        <p class="preview__hint">Your card redraws while you play — download it when it sparkles.</p>
+      </div>
+
+      <div class="controls">
+        <div class="panel">
+          <fieldset>
+            <legend class="step"><span class="step__num" aria-hidden="true">1</span>Pick your Crasher</legend>
+            <div class="chips">
+              <label class="chip chip--starry" title="Starry — the star of the show">
+                <input type="radio" name="char" value="starry" checked aria-label="Starry — the star of the show" />
+                <span class="chip__pic"><img src="assets/characters/starry.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Starry</span>
+              </label>
+              <label class="chip" title="Zig — January">
+                <input type="radio" name="char" value="zig" aria-label="Zig — January" />
+                <span class="chip__pic"><img src="assets/characters/zig.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Zig</span>
+              </label>
+              <label class="chip" title="Jewel — February">
+                <input type="radio" name="char" value="jewel" aria-label="Jewel — February" />
+                <span class="chip__pic"><img src="assets/characters/jewel.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Jewel</span>
+              </label>
+              <label class="chip" title="Stripes — March">
+                <input type="radio" name="char" value="stripes" aria-label="Stripes — March" />
+                <span class="chip__pic"><img src="assets/characters/stripes.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Stripes</span>
+              </label>
+              <label class="chip" title="Minty — April">
+                <input type="radio" name="char" value="minty" aria-label="Minty — April" />
+                <span class="chip__pic"><img src="assets/characters/minty.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Minty</span>
+              </label>
+              <label class="chip" title="Checkers — May">
+                <input type="radio" name="char" value="checkers" aria-label="Checkers — May" />
+                <span class="chip__pic"><img src="assets/characters/checkers.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Checkers</span>
+              </label>
+              <label class="chip" title="Splat — June">
+                <input type="radio" name="char" value="splat" aria-label="Splat — June" />
+                <span class="chip__pic"><img src="assets/characters/splat.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Splat</span>
+              </label>
+              <label class="chip" title="Dot — July">
+                <input type="radio" name="char" value="dot" aria-label="Dot — July" />
+                <span class="chip__pic"><img src="assets/characters/dot.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Dot</span>
+              </label>
+              <label class="chip" title="Blossom — August">
+                <input type="radio" name="char" value="blossom" aria-label="Blossom — August" />
+                <span class="chip__pic"><img src="assets/characters/blossom.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Blossom</span>
+              </label>
+              <label class="chip" title="Cosmo — September">
+                <input type="radio" name="char" value="cosmo" aria-label="Cosmo — September" />
+                <span class="chip__pic"><img src="assets/characters/cosmo.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Cosmo</span>
+              </label>
+              <label class="chip" title="Swirl — October">
+                <input type="radio" name="char" value="swirl" aria-label="Swirl — October" />
+                <span class="chip__pic"><img src="assets/characters/swirl.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Swirl</span>
+              </label>
+              <label class="chip" title="Sprinkles — November">
+                <input type="radio" name="char" value="sprinkles" aria-label="Sprinkles — November" />
+                <span class="chip__pic"><img src="assets/characters/sprinkles.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Sprinkles</span>
+              </label>
+              <label class="chip" title="Wave — December">
+                <input type="radio" name="char" value="wave" aria-label="Wave — December" />
+                <span class="chip__pic"><img src="assets/characters/wave.webp" alt="" /></span>
+                <span class="chip__name" aria-hidden="true">Wave</span>
+              </label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="panel">
+          <fieldset>
+            <legend class="step"><span class="step__num" aria-hidden="true">2</span>Pick a background</legend>
+            <div class="swatches">
+              <label class="swatch">
+                <input type="radio" name="bg" value="sky" checked aria-label="Sky Party background" />
+                <span class="swatch__pic swatch__pic--sky"></span>
+                <span class="swatch__name" aria-hidden="true">Sky Party</span>
+              </label>
+              <label class="swatch">
+                <input type="radio" name="bg" value="night" aria-label="Royal Night background" />
+                <span class="swatch__pic swatch__pic--night"></span>
+                <span class="swatch__name" aria-hidden="true">Royal Night</span>
+              </label>
+              <label class="swatch">
+                <input type="radio" name="bg" value="candy" aria-label="Candy Pop background" />
+                <span class="swatch__pic swatch__pic--candy"></span>
+                <span class="swatch__name" aria-hidden="true">Candy Pop</span>
+              </label>
+              <label class="swatch">
+                <input type="radio" name="bg" value="sun" aria-label="Sunshine background" />
+                <span class="swatch__pic swatch__pic--sun"></span>
+                <span class="swatch__name" aria-hidden="true">Sunshine</span>
+              </label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="panel">
+          <fieldset>
+            <legend class="step"><span class="step__num" aria-hidden="true">3</span>Write your wish</legend>
+            <div class="field">
+              <label for="name-input">Who's the birthday kid?</label>
+              <input id="name-input" type="text" maxlength="14" placeholder="Their name" autocomplete="off" spellcheck="false" />
+            </div>
+            <div class="field">
+              <label for="msg-input">Your birthday wish</label>
+              <input id="msg-input" type="text" maxlength="60" value="Glad you were born today!" autocomplete="off" />
+              <span class="field__hint">Up to 60 letters — make it sparkle.</span>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn--go" id="download-btn">Download card</button>
+          <button type="button" class="btn btn--reset" id="reset-btn">Start over</button>
+        </div>
+      </div>
+    </main>
+
+    <section class="band">
+      <div>
+        <h2>Card done? Keep the party going.</h2>
+        <p>The whole crew is on the radar — go say hi, or turn the fun up even louder.</p>
+      </div>
+      <div class="band__actions">
+        <a href="crashers.html">Meet the Crashers</a>
+        <a class="alt" href="games.html">Play the games</a>
+      </div>
+    </section>
+  </div>
+
+  <footer>&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var W = 1536, H = 1024;
+    var canvas = document.getElementById('card');
+    var ctx = canvas.getContext('2d');
+
+    var INK = '#1D2B50', INK_SOFT = '#3E5580', PINK = '#E84A9B',
+        GOLD = '#C9A227', GOLD_DEEP = '#B8862E', IVORY = '#FFFDF6', IVORY_DEEP = '#F8F0DC';
+    var DISPLAY = '"Baloo 2", "Segoe UI", sans-serif';
+    var ROYAL = '"Cormorant Garamond", Georgia, serif';
+
+    var DEFAULT_MSG = 'Glad you were born today!';
+
+    var nameInput = document.getElementById('name-input');
+    var msgInput = document.getElementById('msg-input');
+
+    /* ---------- deterministic decorations (stable across redraws) ---------- */
+    function makeRng(seed) {
+      return function () {
+        seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+        var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    var NIGHT_STARS = (function () {
+      var r = makeRng(3), a = [], i;
+      for (i = 0; i < 120; i++) {
+        a.push({ x: r() * W, y: r() * H, rad: 0.8 + r() * 1.7, alpha: 0.35 + r() * 0.6 });
+      }
+      return a;
+    })();
+    var NIGHT_SPARKLES = (function () {
+      var r = makeRng(11), a = [], i;
+      for (i = 0; i < 8; i++) {
+        a.push({ x: r() * W, y: r() * H, s: 9 + r() * 9 });
+      }
+      return a;
+    })();
+    var CANDY_CONFETTI = (function () {
+      var r = makeRng(7), colors = ['#FFC93C', '#FFFDF6', '#7FE3D2', '#FF9ECB', '#CDB8FF'], a = [], i;
+      for (i = 0; i < 70; i++) {
+        a.push({ x: r() * W, y: r() * H, size: 5 + r() * 9,
+                 color: colors[Math.floor(r() * colors.length)],
+                 rect: r() < 0.45, rot: r() * Math.PI });
+      }
+      return a;
+    })();
+    var SKY_CLOUDS = [
+      { x: 250, y: 165, s: 1.15 }, { x: 1290, y: 150, s: 0.95 }, { x: 780, y: 70, s: 0.72 },
+      { x: 60, y: 560, s: 0.8 }, { x: 1480, y: 540, s: 0.85 },
+      { x: 170, y: 905, s: 1.0 }, { x: 1345, y: 915, s: 1.1 }, { x: 760, y: 985, s: 0.85 }
+    ];
+
+    /* ---------- helpers ---------- */
+    function rr(c, x, y, w, h, r) {
+      c.beginPath();
+      c.moveTo(x + r, y);
+      c.arcTo(x + w, y, x + w, y + h, r);
+      c.arcTo(x + w, y + h, x, y + h, r);
+      c.arcTo(x, y + h, x, y, r);
+      c.arcTo(x, y, x + w, y, r);
+      c.closePath();
+    }
+
+    function fontStr(italic, weight, size, family) {
+      return (italic ? 'italic ' : '') + weight + ' ' + size + 'px ' + family;
+    }
+
+    function fitSize(text, italic, weight, family, start, min, maxW) {
+      var size = start;
+      while (size > min) {
+        ctx.font = fontStr(italic, weight, size, family);
+        if (ctx.measureText(text).width <= maxW) break;
+        size -= 2;
+      }
+      return size;
+    }
+
+    function wrapLines(text, maxW) {
+      var words = text.split(/\s+/), lines = [], cur = '', i, test;
+      for (i = 0; i < words.length; i++) {
+        test = cur ? cur + ' ' + words[i] : words[i];
+        if (cur && ctx.measureText(test).width > maxW) { lines.push(cur); cur = words[i]; }
+        else { cur = test; }
+      }
+      if (cur) lines.push(cur);
+      return lines;
+    }
+
+    /* ---------- backgrounds ---------- */
+    function drawSkyParty() {
+      var g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, '#C9E9FC'); g.addColorStop(1, '#5BB8F0');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      var glow = ctx.createRadialGradient(1250, 110, 10, 1250, 110, 320);
+      glow.addColorStop(0, 'rgba(255,201,60,.4)'); glow.addColorStop(1, 'rgba(255,201,60,0)');
+      ctx.fillStyle = glow; ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = 'rgba(255,255,255,.9)';
+      var i, cl;
+      for (i = 0; i < SKY_CLOUDS.length; i++) {
+        cl = SKY_CLOUDS[i];
+        ctx.beginPath();
+        ctx.arc(cl.x, cl.y, 58 * cl.s, 0, Math.PI * 2);
+        ctx.arc(cl.x - 54 * cl.s, cl.y + 14 * cl.s, 42 * cl.s, 0, Math.PI * 2);
+        ctx.arc(cl.x + 58 * cl.s, cl.y + 12 * cl.s, 46 * cl.s, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawRoyalNight() {
+      var g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, '#3B4F8C'); g.addColorStop(0.55, '#1D2B50'); g.addColorStop(1, '#111A36');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      var i, s;
+      for (i = 0; i < NIGHT_STARS.length; i++) {
+        s = NIGHT_STARS[i];
+        ctx.globalAlpha = s.alpha;
+        ctx.fillStyle = '#FFFDF6';
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.rad, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 0.95;
+      ctx.fillStyle = '#F4DD97';
+      for (i = 0; i < NIGHT_SPARKLES.length; i++) {
+        s = NIGHT_SPARKLES[i];
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y - s.s);
+        ctx.quadraticCurveTo(s.x, s.y, s.x + s.s, s.y);
+        ctx.quadraticCurveTo(s.x, s.y, s.x, s.y + s.s);
+        ctx.quadraticCurveTo(s.x, s.y, s.x - s.s, s.y);
+        ctx.quadraticCurveTo(s.x, s.y, s.x, s.y - s.s);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawCandyPop() {
+      var g = ctx.createLinearGradient(0, 0, W, H);
+      g.addColorStop(0, '#F06AB2'); g.addColorStop(0.42, '#E84A9B'); g.addColorStop(1, '#8B5CF6');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      var i, p;
+      ctx.globalAlpha = 0.85;
+      for (i = 0; i < CANDY_CONFETTI.length; i++) {
+        p = CANDY_CONFETTI[i];
+        ctx.fillStyle = p.color;
+        if (p.rect) {
+          ctx.save();
+          ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+          ctx.fillRect(-p.size * 0.8, -p.size * 0.45, p.size * 1.6, p.size * 0.9);
+          ctx.restore();
+        } else {
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 0.55, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawSunshine() {
+      var g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, '#FFD95E'); g.addColorStop(0.55, '#FBB84A'); g.addColorStop(1, '#F58A2E');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      var rays = 14, R = 2000, i, a, half = (Math.PI * 2 / 14) * 0.28;
+      ctx.save();
+      ctx.translate(W / 2, H / 2);
+      ctx.fillStyle = 'rgba(255,255,255,.16)';
+      for (i = 0; i < rays; i++) {
+        a = i * (Math.PI * 2 / rays);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(Math.cos(a - half) * R, Math.sin(a - half) * R);
+        ctx.lineTo(Math.cos(a + half) * R, Math.sin(a + half) * R);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    var BG_DRAWERS = { sky: drawSkyParty, night: drawRoyalNight, candy: drawCandyPop, sun: drawSunshine };
+
+    /* ---------- the royal invitation panel ---------- */
+    var PANEL = { x: 100, y: 100, w: 1336, h: 824, r: 44 };
+    var FRAME = { x: 132, y: 132, w: 1272, h: 760, r: 28 };
+
+    function drawPanel() {
+      var g = ctx.createLinearGradient(0, PANEL.y, 0, PANEL.y + PANEL.h);
+      g.addColorStop(0, IVORY); g.addColorStop(1, IVORY_DEEP);
+      ctx.save();
+      ctx.shadowColor = 'rgba(29,43,80,.35)';
+      ctx.shadowBlur = 36;
+      ctx.shadowOffsetY = 14;
+      rr(ctx, PANEL.x, PANEL.y, PANEL.w, PANEL.h, PANEL.r);
+      ctx.fillStyle = g;
+      ctx.fill();
+      ctx.restore();
+      /* gold hairline inner frame */
+      rr(ctx, FRAME.x, FRAME.y, FRAME.w, FRAME.h, FRAME.r);
+      ctx.strokeStyle = 'rgba(201,162,39,.55)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      /* tiny crown breaking the top frame line, like the store cards */
+      ctx.fillStyle = IVORY;
+      ctx.fillRect(W / 2 - 36, FRAME.y - 15, 72, 30);
+      ctx.fillStyle = GOLD;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
+      ctx.font = '28px ' + DISPLAY;
+      ctx.fillText('♛', W / 2, FRAME.y + 10);
+    }
+
+    /* ---------- character medallion ---------- */
+    var CHAR_CX = 406, CHAR_CY = 505;
+
+    function drawCharacter(img, id) {
+      if (!img) return;
+      if (id === 'starry') {
+        var glow = ctx.createRadialGradient(CHAR_CX, CHAR_CY, 20, CHAR_CX, CHAR_CY, 265);
+        glow.addColorStop(0, 'rgba(255,217,94,.6)');
+        glow.addColorStop(1, 'rgba(255,217,94,0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath(); ctx.arc(CHAR_CX, CHAR_CY, 265, 0, Math.PI * 2); ctx.fill();
+        ctx.save();
+        ctx.shadowColor = 'rgba(29,43,80,.25)';
+        ctx.shadowBlur = 22;
+        ctx.shadowOffsetY = 12;
+        ctx.drawImage(img, CHAR_CX - 235, CHAR_CY - 242, 470, 470);
+        ctx.restore();
+        return;
+      }
+      /* white disc with soft shadow */
+      ctx.save();
+      ctx.shadowColor = 'rgba(29,43,80,.3)';
+      ctx.shadowBlur = 24;
+      ctx.shadowOffsetY = 10;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath(); ctx.arc(CHAR_CX, CHAR_CY, 204, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+      /* portrait, clipped to a circle so the studio background reads as a framed medallion */
+      ctx.save();
+      ctx.beginPath(); ctx.arc(CHAR_CX, CHAR_CY, 190, 0, Math.PI * 2); ctx.clip();
+      ctx.drawImage(img, CHAR_CX - 213, CHAR_CY - 213, 426, 426);
+      ctx.restore();
+      /* white hairline, then the gold ring */
+      ctx.beginPath(); ctx.arc(CHAR_CX, CHAR_CY, 190, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 4; ctx.stroke();
+      var ring = ctx.createLinearGradient(CHAR_CX, CHAR_CY - 200, CHAR_CX, CHAR_CY + 200);
+      ring.addColorStop(0, '#EACF7B'); ring.addColorStop(1, GOLD_DEEP);
+      ctx.beginPath(); ctx.arc(CHAR_CX, CHAR_CY, 198, 0, Math.PI * 2);
+      ctx.strokeStyle = ring; ctx.lineWidth = 11; ctx.stroke();
+    }
+
+    /* ---------- text ---------- */
+    var TX = 1010, TEXT_MAX_W = 700;
+
+    function drawDivider(y) {
+      var g = ctx.createLinearGradient(TX - 90, 0, TX + 90, 0);
+      g.addColorStop(0, 'rgba(201,162,39,0)');
+      g.addColorStop(0.5, 'rgba(201,162,39,.8)');
+      g.addColorStop(1, 'rgba(201,162,39,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(TX - 90, y, 180, 3);
+    }
+
+    function drawTexts(name, msg) {
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
+      var hasName = name.length > 0;
+      var msgStartY, maxMsgLines, dividerY, size;
+
+      if (hasName) {
+        size = fitSize('Happy Birthday,', false, 700, DISPLAY, 76, 50, TEXT_MAX_W);
+        ctx.font = fontStr(false, 700, size, DISPLAY);
+        ctx.fillStyle = INK;
+        ctx.fillText('Happy Birthday,', TX, 342);
+        var nameSize = fitSize(name + '!', false, 800, DISPLAY, 126, 60, TEXT_MAX_W);
+        ctx.font = fontStr(false, 800, nameSize, DISPLAY);
+        ctx.fillStyle = PINK;
+        var nameY = 342 + 26 + nameSize;
+        ctx.fillText(name + '!', TX, nameY);
+        dividerY = nameY + 46;
+        msgStartY = dividerY + 66;
+        maxMsgLines = 2;
+      } else {
+        size = fitSize('Happy Birthday!', false, 800, DISPLAY, 104, 64, TEXT_MAX_W);
+        ctx.font = fontStr(false, 800, size, DISPLAY);
+        ctx.fillStyle = INK;
+        ctx.fillText('Happy Birthday!', TX, 400);
+        dividerY = 452;
+        msgStartY = 522;
+        maxMsgLines = 3;
+      }
+      drawDivider(dividerY);
+
+      var sizes = [50, 44, 38, 33], lines = [msg], i, msgSize = 33;
+      for (i = 0; i < sizes.length; i++) {
+        ctx.font = fontStr(true, 500, sizes[i], ROYAL);
+        lines = wrapLines(msg, TEXT_MAX_W);
+        if (lines.length <= maxMsgLines) { msgSize = sizes[i]; break; }
+      }
+      ctx.font = fontStr(true, 500, msgSize, ROYAL);
+      ctx.fillStyle = INK_SOFT;
+      if (lines.length > maxMsgLines + 1) lines.length = maxMsgLines + 1;
+      for (i = 0; i < lines.length; i++) {
+        ctx.fillText(lines[i], TX, msgStartY + i * msgSize * 1.3);
+      }
+
+      /* small card footer */
+      ctx.font = fontStr(false, 700, 29, DISPLAY);
+      ctx.fillStyle = GOLD_DEEP;
+      ctx.fillText('From Starry & the Crashers ♛', W / 2, 876);
+    }
+
+    /* ---------- image cache + compose ---------- */
+    var imageCache = {};
+    function loadImage(src) {
+      if (!imageCache[src]) {
+        imageCache[src] = new Promise(function (resolve, reject) {
+          var im = new Image();
+          im.onload = function () { resolve(im); };
+          im.onerror = function () { reject(new Error('Could not load ' + src)); };
+          im.src = src;
+        });
+      }
+      return imageCache[src];
+    }
+
+    function readState() {
+      var charEl = document.querySelector('input[name="char"]:checked');
+      var bgEl = document.querySelector('input[name="bg"]:checked');
+      var name = nameInput.value.replace(/\s+/g, ' ').trim().slice(0, 14);
+      var msg = msgInput.value.replace(/\s+/g, ' ').trim().slice(0, 60);
+      return {
+        charId: charEl ? charEl.value : 'starry',
+        bg: bgEl ? bgEl.value : 'sky',
+        name: name,
+        msg: msg || DEFAULT_MSG
+      };
+    }
+
+    function compose(state, img) {
+      ctx.clearRect(0, 0, W, H);
+      (BG_DRAWERS[state.bg] || drawSkyParty)();
+      drawPanel();
+      drawCharacter(img, state.charId);
+      drawTexts(state.name, state.msg);
+    }
+
+    var drawSeq = 0;
+    function draw() {
+      var seq = ++drawSeq;
+      var state = readState();
+      loadImage('assets/characters/' + state.charId + '.webp').then(function (img) {
+        if (seq === drawSeq) compose(state, img);
+      }).catch(function () {
+        if (seq === drawSeq) compose(state, null);
+      });
+    }
+
+    /* ---------- events ---------- */
+    var radios = document.querySelectorAll('input[name="char"], input[name="bg"]'), i;
+    for (i = 0; i < radios.length; i++) radios[i].addEventListener('change', draw);
+    nameInput.addEventListener('input', draw);
+    msgInput.addEventListener('input', draw);
+
+    document.getElementById('download-btn').addEventListener('click', function () {
+      var a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'birthday-card.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', function () {
+      document.querySelector('input[name="char"][value="starry"]').checked = true;
+      document.querySelector('input[name="bg"][value="sky"]').checked = true;
+      nameInput.value = '';
+      msgInput.value = DEFAULT_MSG;
+      draw();
+    });
+
+    /* ---------- first paint: draw now, redraw once the webfonts land ---------- */
+    draw();
+    if (document.fonts && document.fonts.load) {
+      Promise.all([
+        document.fonts.load('700 40px "Baloo 2"'),
+        document.fonts.load('800 40px "Baloo 2"'),
+        document.fonts.load('italic 500 40px "Cormorant Garamond"')
+      ]).then(function () { return document.fonts.ready; })
+        .then(draw)
+        .catch(draw);
+    }
+  })();
+  </script>
+
+  <script src="music.js"></script>
+</body>
+</html>

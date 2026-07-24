@@ -84,12 +84,13 @@
   }
   .title.faded{opacity:0;transform:translateY(-8px);}
 
-  .dock{
-    position:absolute;left:0;right:0;bottom:max(clamp(26px,6vh,52px), env(safe-area-inset-bottom));
-    display:flex;justify-content:center;
-    transition:opacity .45s ease, transform .45s ease;
+  /* keyboard fallback for the tap-to-open envelope: invisible until focused */
+  .sr-open{
+    position:fixed;left:50%;bottom:max(clamp(26px,6vh,52px), env(safe-area-inset-bottom));
+    transform:translateX(-50%);
+    opacity:0;pointer-events:none;
   }
-  .dock.faded{opacity:0;transform:translateY(10px);pointer-events:none;}
+  .sr-open:focus-visible{opacity:1;pointer-events:auto;}
   .open-btn{
     pointer-events:auto;cursor:pointer;
     background:linear-gradient(180deg,var(--royal),var(--royal-deep));
@@ -143,7 +144,7 @@
   .loading.gone{opacity:0;pointer-events:none;}
 
   @media (prefers-reduced-motion: reduce){
-    .open-btn,.title,.dock,.sheet-actions{transition:none;}
+    .open-btn,.title,.sheet-actions{transition:none;}
   }
 </style>
 </head>
@@ -154,18 +155,16 @@
 
   <div class="ui">
     <h1 class="title">
-      <span class="title__eyebrow">A birthday invitation</span>
+      <span class="title__eyebrow">You&rsquo;re invited</span>
       Glad You Were <em>Born Today</em>
-      <span class="title__sub">One envelope, two celebrations — break the seal and pick your party.</span>
+      <span class="title__sub">One envelope. Two celebrations. Tap it to break the seal.</span>
     </h1>
-    <div class="dock" id="dock">
-      <button class="open-btn" id="toggle" aria-label="Open the envelope">Break the seal</button>
-    </div>
+    <button class="open-btn sr-open" id="toggle" aria-label="Open the envelope">Break the seal</button>
   </div>
 
   <!-- choices live on the letter; positioned by JS, revealed when the envelope opens -->
   <div class="sheet-actions" id="sheet" aria-hidden="true">
-    <a class="sheet-btn grown" href="adult/">Grown Ups<small>the grown-up celebration</small></a>
+    <a class="sheet-btn grown" href="adult/">Grown Ups<small>real parties, really crashed</small></a>
     <a class="sheet-btn kids" href="story.html">Kids Zone<small>fly through Starry&rsquo;s world</small></a>
   </div>
 
@@ -755,7 +754,6 @@
     let target = 0, p = 0;
     const FLAP_OPEN = 2.95;
     const titleEl = document.querySelector(".title");
-    const dockEl = document.getElementById("dock");
     const sheetEl = document.getElementById("sheet");
     const btn = document.getElementById("toggle");
     function toggle() {
@@ -764,7 +762,6 @@
       btn.textContent = open ? "Seal it back" : "Break the seal";
       btn.setAttribute("aria-label", open ? "Close the envelope" : "Open the envelope");
       titleEl.classList.toggle("faded", open);
-      dockEl.classList.toggle("faded", open);
       sheetEl.setAttribute("aria-hidden", open ? "false" : "true");
       if (open) fireConfetti();
     }

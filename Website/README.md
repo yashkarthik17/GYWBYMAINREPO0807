@@ -15,8 +15,12 @@ python -m http.server 8000
 # open http://localhost:8000
 ```
 
-Pages: `index.html` (envelope splash front door) → `story.html` (kids' scroll world)
-or `adult/` (grown-ups sub-site); `store.html` is the party store.
+Pages: `index.html` (envelope splash front door) splits the site in two.
+Kids side (no store): `story.html` (scroll world) → `crashers.html` (meet the
+characters), `games.html` (mini-games), `cards.html` (card studio).
+Grown-ups side: `adult/` (scroll story) → `adult/crew.html` (the crew) and
+`store.html` (the full shop: party boxes, Crash Kit merch, the music corner,
+and the Compassion mission band).
 
 ## The journey (scroll order)
 

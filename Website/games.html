@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Fun &amp; Games — Glad You Were Born Today</title>
+  <meta name="description" content="The Crashers' game room — match the twelve Crashers in a memory game and pop birthday balloons against the clock. Two mini-games from Starry &amp; the Crashers, made for kids and phones." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #5BB8F0;
+      --ink: #1D2B50;
+      --ink-soft: #3E5580;
+      --pink: #E84A9B;
+      --yellow: #FFC93C;
+      --purple: #8B5CF6;
+      --card: #FFFFFF;
+      --gold: #C9A227;
+      --gold-deep: #B8862E;
+      --ivory: #FFFDF6;
+      --royal: #2C3F9E;
+      --font-display: "Baloo 2", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+      --font-royal: "Cormorant Garamond", Georgia, serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); }
+
+    .sky {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(60% 42% at 74% 12%, color-mix(in srgb, var(--yellow) 20%, transparent), transparent 70%),
+        radial-gradient(46% 34% at 22% 60%, color-mix(in srgb, #fff 40%, transparent), transparent 70%),
+        linear-gradient(178deg, color-mix(in srgb, var(--pink) 10%, var(--bg)) 0%, var(--bg) 55%, color-mix(in srgb, var(--purple) 10%, var(--bg)) 100%);
+    }
+    .cloud { position: fixed; z-index: 0; pointer-events: none; border-radius: 50%;
+             background: radial-gradient(closest-side, rgba(255,255,255,.8), rgba(255,255,255,0));
+             filter: blur(2px); animation: cloud-drift 48s linear infinite; }
+    .cloud--a { width: 42vw; height: 15vh; left: -6vw; top: 12vh; }
+    .cloud--b { width: 34vw; height: 12vh; left: 66vw; top: 44vh; animation-delay: -20s; animation-duration: 58s; }
+    .cloud--c { width: 28vw; height: 10vh; left: 24vw; top: 78vh; animation-delay: -36s; animation-duration: 66s; }
+    @keyframes cloud-drift { 0% { transform: translateX(0); } 50% { transform: translateX(5vw); } 100% { transform: translateX(0); } }
+
+    .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 48px); }
+
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+              padding: clamp(14px, 2.4vw, 26px) 0; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+    .brand__mark { width: 24px; height: 28px; border-radius: 7px 7px 10px 10px;
+                   background: linear-gradient(160deg, var(--pink), color-mix(in srgb, var(--pink) 60%, #000));
+                   box-shadow: 0 6px 14px color-mix(in srgb, var(--pink) 40%, transparent); }
+    .brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
+    .back { text-decoration: none; font-weight: 600; font-size: .9rem; color: #fff; background: var(--ink);
+            padding: 10px 20px; border-radius: 999px; white-space: nowrap; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+    .hero { padding: clamp(28px, 6vh, 72px) 0 clamp(18px, 3vh, 36px); max-width: 640px; }
+    .hero__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: .8rem;
+                     letter-spacing: .16em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 70%, var(--pink)); }
+    .hero__eyebrow::before { content: "♛"; display: inline-block; margin-right: 8px;
+                             background: linear-gradient(165deg, #f4dd97, var(--gold-deep));
+                             -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero h1 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em;
+               font-size: clamp(2.4rem, 6.5vw, 4rem); line-height: 1.02; margin: 12px 0 0; }
+    .hero__rule { width: 128px; height: 2px; margin-top: 18px; border: 0;
+                  background: linear-gradient(90deg, var(--gold), transparent); }
+    .hero p { margin-top: 16px; font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.55;
+              color: color-mix(in srgb, var(--ink) 80%, var(--ink-soft)); max-width: 46ch; }
+
+    .sect { display: flex; align-items: center; gap: 14px; margin: clamp(22px, 4vh, 44px) 0 14px; }
+    .sect h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin: 0; }
+    .sect::after { content: ""; flex: 1; height: 2px;
+                   background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 60%, transparent), transparent); }
+
+    /* ---- game panels ---- */
+    .panel { background: var(--card); border-radius: 22px; overflow: hidden;
+             box-shadow: 0 10px 30px color-mix(in srgb, var(--ink) 18%, transparent); }
+    .panel__head { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+                   gap: 12px; padding: clamp(16px, 2.6vw, 24px) clamp(18px, 3vw, 28px);
+                   background: linear-gradient(180deg, var(--ivory), #F8F0DC);
+                   border-bottom: 1px solid color-mix(in srgb, var(--gold) 38%, transparent); }
+    .panel__head h2 { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.25rem, 2.4vw, 1.6rem); margin: 0; }
+    .panel__head .how { margin: 3px 0 0; font-family: var(--font-royal); font-style: italic; font-weight: 500;
+                        font-size: 1rem; color: var(--ink-soft); }
+    .panel__hud { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .pill { display: inline-flex; align-items: baseline; gap: 6px; font-family: var(--font-display); font-weight: 700;
+            font-size: .82rem; color: var(--ink-soft); background: #fff;
+            border: 1px solid color-mix(in srgb, var(--gold) 42%, transparent);
+            padding: 8px 14px; border-radius: 999px; white-space: nowrap; }
+    .pill b { font-weight: 800; font-size: 1rem; color: var(--ink); min-width: 1.2em; text-align: center; }
+    .chip { font-family: var(--font-display); font-weight: 700; font-size: .84rem; color: #fff; background: var(--ink);
+            border: 0; padding: 9px 18px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+    .chip--pink { background: var(--pink); }
+    .panel__stage { padding: clamp(14px, 2.6vw, 26px); }
+
+    /* ---- overlays (shared) ---- */
+    .overlay { position: absolute; inset: 0; z-index: 6; display: flex; flex-direction: column; align-items: center;
+               justify-content: center; text-align: center; gap: 6px; padding: 24px; border-radius: inherit;
+               background: color-mix(in srgb, var(--ivory) 90%, transparent); backdrop-filter: blur(5px); }
+    .overlay h3 { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.6rem, 4.4vw, 2.3rem); margin: 0; }
+    .overlay p { font-family: var(--font-royal); font-style: italic; font-weight: 500; font-size: 1.15rem;
+                 color: var(--ink-soft); margin: 0; max-width: 34ch; }
+    .bigbtn { margin-top: 14px; font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; color: #fff;
+              background: var(--pink); border: 0; padding: 14px 36px; border-radius: 999px; cursor: pointer;
+              box-shadow: 0 10px 24px color-mix(in srgb, var(--pink) 45%, transparent); }
+    .bigbtn:active { transform: translateY(1px); }
+    [hidden] { display: none !important; }
+    .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+               clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+    /* ---- game 1: crasher match ---- */
+    .mstage { position: relative; border-radius: 18px; }
+    .mgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(8px, 1.6vw, 14px);
+             max-width: 560px; margin: 0 auto; }
+    .mcard { position: relative; padding: 0; border: 0; background: transparent; cursor: pointer;
+             perspective: 700px; -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+             border-radius: 16px; }
+    .mcard__inner { position: relative; display: block; width: 100%; aspect-ratio: 1;
+                    transform-style: preserve-3d; transition: transform .45s cubic-bezier(.4, 1.4, .6, 1);
+                    border-radius: 16px; }
+    .mcard.is-flipped .mcard__inner, .mcard.is-matched .mcard__inner { transform: rotateY(180deg); }
+    .mcard__face { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+                   border-radius: 16px; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+                   overflow: hidden; box-shadow: 0 6px 16px color-mix(in srgb, var(--ink) 20%, transparent); }
+    .mcard__face--back { font-size: clamp(1.5rem, 4.6vw, 2.1rem); line-height: 1;
+                         background: radial-gradient(120% 120% at 26% 18%, color-mix(in srgb, #fff 26%, var(--royal)), var(--royal) 52%, color-mix(in srgb, var(--royal) 62%, #000));
+                         box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--gold) 62%, transparent),
+                                     inset 0 0 0 6px color-mix(in srgb, var(--gold) 18%, transparent),
+                                     0 6px 16px color-mix(in srgb, var(--ink) 22%, transparent); }
+    .mcard__face--back::before { content: "♛";
+                                 background: linear-gradient(165deg, #f4dd97, var(--gold-deep));
+                                 -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+                                 filter: drop-shadow(0 2px 3px rgba(0,0,0,.35)); }
+    .mcard__face--front { transform: rotateY(180deg); background: #fff; }
+    .mcard__face--front img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .mcard:hover .mcard__inner { box-shadow: 0 0 0 3px color-mix(in srgb, var(--yellow) 70%, transparent); }
+    .mcard.is-matched { cursor: default; }
+    .mcard.is-matched .mcard__inner { animation: match-pulse .55s ease .45s 1; }
+    .mcard.is-matched .mcard__face--front { box-shadow: inset 0 0 0 3px var(--gold),
+                                            0 6px 16px color-mix(in srgb, var(--gold) 40%, transparent); }
+    @keyframes match-pulse { 0% { transform: rotateY(180deg) scale(1); }
+                             50% { transform: rotateY(180deg) scale(1.09); }
+                             100% { transform: rotateY(180deg) scale(1); } }
+
+    /* ---- game 2: balloon pop ---- */
+    .bp__field { position: relative; overflow: hidden; border-radius: 18px;
+                 height: clamp(330px, 58vh, 520px);
+                 background:
+                   radial-gradient(52% 34% at 78% 16%, color-mix(in srgb, var(--yellow) 16%, transparent), transparent 70%),
+                   radial-gradient(44% 30% at 18% 64%, rgba(255,255,255,.5), transparent 70%),
+                   linear-gradient(180deg, #BCE3FA 0%, #E7F6FF 72%, #F7FCFF 100%);
+                 border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+                 touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+    .balloon { position: absolute; top: 0; left: 0; width: clamp(54px, 9vw, 74px); cursor: pointer;
+               will-change: transform; -webkit-tap-highlight-color: transparent; z-index: 2; }
+    .balloon--star { width: clamp(64px, 10.5vw, 86px); z-index: 3; }
+    .balloon__body { position: relative; width: 100%; aspect-ratio: 1 / 1.16;
+                     border-radius: 50% 50% 50% 50% / 46% 46% 54% 54%;
+                     background: radial-gradient(circle at 32% 26%, rgba(255,255,255,.9) 0 7%, rgba(255,255,255,.28) 24%, var(--b, var(--pink)) 58%, color-mix(in srgb, var(--b, var(--pink)) 58%, #000) 100%);
+                     box-shadow: 0 8px 18px color-mix(in srgb, var(--b, var(--pink)) 32%, transparent);
+                     display: flex; align-items: center; justify-content: center; }
+    .balloon__body::before { content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%);
+                             border-left: 6px solid transparent; border-right: 6px solid transparent;
+                             border-bottom: 8px solid color-mix(in srgb, var(--b, var(--pink)) 66%, #000); margin-top: -2px; }
+    .balloon__body::after { content: ""; position: absolute; left: 50%; top: calc(100% + 6px); width: 2px; height: 44px;
+                            background: color-mix(in srgb, var(--ink) 34%, transparent); border-radius: 2px; }
+    .balloon--star .balloon__body { --b: var(--yellow);
+                     box-shadow: 0 0 22px color-mix(in srgb, var(--gold) 70%, transparent),
+                                 0 8px 18px color-mix(in srgb, var(--gold) 40%, transparent); }
+    .balloon--star img { width: 72%; height: auto; pointer-events: none;
+                         filter: drop-shadow(0 2px 4px rgba(0,0,0,.25)); }
+    .balloon__body.is-pop { animation: pop .18s ease-out forwards; }
+    .balloon__body.is-pop::after, .balloon__body.is-pop::before { display: none; }
+    @keyframes pop { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.65); opacity: 0; } }
+    .balloon.is-out { transition: opacity .3s ease; opacity: 0; }
+
+    /* ---- confetti (shared) ---- */
+    .confetti { position: absolute; z-index: 8; width: 9px; height: 13px; pointer-events: none;
+                background: var(--clr, var(--pink)); border-radius: 2px;
+                animation: burst var(--dur, 900ms) cubic-bezier(.2, .7, .4, 1) forwards; }
+    .confetti--round { border-radius: 50%; width: 8px; height: 8px; }
+    @keyframes burst { 0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+                       100% { transform: translate(var(--dx, 0px), var(--dy, -80px)) rotate(var(--rot, 260deg)); opacity: 0; } }
+
+    /* ---- band + footer ---- */
+    .band { margin: clamp(30px, 6vh, 64px) 0 0; background: color-mix(in srgb, #fff 72%, transparent);
+            border: 1px solid color-mix(in srgb, var(--pink) 16%, transparent); backdrop-filter: blur(8px);
+            border-radius: 26px; padding: clamp(24px, 4vw, 44px);
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+    .band h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); margin: 0; }
+    .band p { margin: 8px 0 0; color: var(--ink-soft); max-width: 46ch; }
+    .band__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .band a { text-decoration: none; font-weight: 600; color: #fff; background: var(--ink);
+              padding: 13px 24px; border-radius: 999px; white-space: nowrap; }
+    .band a.alt { background: var(--pink); }
+
+    footer { position: relative; z-index: 1; text-align: center; padding: clamp(30px, 6vh, 60px) 18px 34px;
+             color: color-mix(in srgb, var(--ink) 66%, var(--ink-soft)); font-size: .85rem; }
+    footer b { font-family: var(--font-display); }
+
+    /* ---- reduced motion: everything stays playable, nothing spins ---- */
+    @media (prefers-reduced-motion: reduce) {
+      .cloud { animation: none; }
+      .mcard__inner { transition: none; }
+      .mcard.is-matched .mcard__inner { animation: none; }
+      .balloon__body.is-pop { animation: none; opacity: 0; }
+      .balloon.is-out { transition: none; }
+      .confetti { animation: none; display: none; }
+      .bigbtn:active { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky"></div>
+  <span class="cloud cloud--a"></span><span class="cloud cloud--b"></span><span class="cloud cloud--c"></span>
+
+  <div class="wrap">
+    <nav class="topbar">
+      <a class="brand" href="index.html"><span class="brand__mark"></span><span class="brand__name">Glad You Were Born Today</span></a>
+      <a class="back" href="story.html">&larr; Back to the story</a>
+    </nav>
+
+    <header class="hero">
+      <span class="hero__eyebrow">The game room</span>
+      <h1>Play with the Crashers</h1>
+      <hr class="hero__rule" />
+      <p>Two tiny games, zero boring bits. Find the matching Crashers, pop the birthday balloons, and see if you can beat your own best score.</p>
+    </header>
+
+    <div class="sect"><h2>Game No. 1 — Crasher Match</h2></div>
+
+    <section class="panel" aria-labelledby="match-title">
+      <div class="panel__head">
+        <div>
+          <h2 id="match-title">Crasher Match</h2>
+          <p class="how">Flip two cards. Find all eight matching pairs.</p>
+        </div>
+        <div class="panel__hud">
+          <span class="pill">Moves <b id="match-moves">0</b></span>
+          <button class="chip" type="button" id="match-restart">Shuffle &amp; restart</button>
+        </div>
+      </div>
+      <div class="panel__stage">
+        <div class="mstage">
+          <div class="mgrid" id="match-grid" aria-label="Memory card grid"></div>
+          <div class="overlay" id="match-overlay" hidden>
+            <h3>You found everyone!</h3>
+            <p id="match-overlay-text">The whole crew, together again.</p>
+            <button class="bigbtn" type="button" id="match-again">Play again</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sect"><h2>Game No. 2 — Balloon Pop</h2></div>
+
+    <section class="panel" aria-labelledby="bp-title">
+      <div class="panel__head">
+        <div>
+          <h2 id="bp-title">Balloon Pop</h2>
+          <p class="how">Pop everything for 30 seconds. Starry is worth +5!</p>
+        </div>
+        <div class="panel__hud">
+          <span class="pill">Score <b id="bp-score">0</b></span>
+          <span class="pill">Best <b id="bp-best">0</b></span>
+          <span class="pill">Time <b id="bp-time">30</b></span>
+          <button class="chip chip--pink" type="button" id="bp-pause" hidden>Pause</button>
+        </div>
+      </div>
+      <div class="panel__stage">
+        <div class="bp__field" id="bp-field">
+          <div class="overlay" id="bp-overlay">
+            <h3 id="bp-overlay-title">Ready to pop?</h3>
+            <p id="bp-overlay-text">Balloons float up — tap them before they escape. The golden Starry balloon is worth five!</p>
+            <button class="bigbtn" type="button" id="bp-start">Start</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div>
+        <h2>More fun this way.</h2>
+        <p>Meet the whole crew of party crashers — or make a card for somebody's big day.</p>
+      </div>
+      <div class="band__actions">
+        <a href="crashers.html">Meet the Crashers</a>
+        <a class="alt" href="cards.html">Make a birthday card</a>
+      </div>
+    </section>
+  </div>
+
+  <div class="sr-only" role="status" aria-live="polite" id="live"></div>
+
+  <footer>&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var REDUCED = window.matchMedia &&
+                  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var live = document.getElementById('live');
+    function announce(msg) { live.textContent = msg; }
+
+    function rand(min, max) { return min + Math.random() * (max - min); }
+    function shuffle(arr) {
+      for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+      }
+      return arr;
+    }
+
+    var CONFETTI_COLORS = ['#E84A9B', '#FFC93C', '#8B5CF6', '#C9A227', '#5BB8F0', '#FFFFFF'];
+
+    /* Spawn a confetti burst inside `container` at (x, y) px. No-op when reduced motion. */
+    function confettiBurst(container, x, y, count, spreadX, spreadY) {
+      if (REDUCED) return;
+      for (var i = 0; i < count; i++) {
+        var p = document.createElement('span');
+        p.className = 'confetti' + (Math.random() < 0.4 ? ' confetti--round' : '');
+        p.style.left = x + 'px';
+        p.style.top = y + 'px';
+        p.style.setProperty('--clr', CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)]);
+        p.style.setProperty('--dx', rand(-spreadX, spreadX).toFixed(0) + 'px');
+        p.style.setProperty('--dy', rand(-spreadY, spreadY * 0.6).toFixed(0) + 'px');
+        p.style.setProperty('--rot', rand(-420, 420).toFixed(0) + 'deg');
+        p.style.setProperty('--dur', rand(650, 1150).toFixed(0) + 'ms');
+        container.appendChild(p);
+        (function (el) { setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 1300); })(p);
+      }
+    }
+
+    /* ================= GAME 1 — CRASHER MATCH ================= */
+
+    var CRASHERS = [
+      { n: 'Zig',       f: 'zig.webp' },
+      { n: 'Jewel',     f: 'jewel.webp' },
+      { n: 'Stripes',   f: 'stripes.webp' },
+      { n: 'Minty',     f: 'minty.webp' },
+      { n: 'Checkers',  f: 'checkers.webp' },
+      { n: 'Splat',     f: 'splat.webp' },
+      { n: 'Dot',       f: 'dot.webp' },
+      { n: 'Blossom',   f: 'blossom.webp' },
+      { n: 'Cosmo',     f: 'cosmo.webp' },
+      { n: 'Swirl',     f: 'swirl.webp' },
+      { n: 'Sprinkles', f: 'sprinkles.webp' },
+      { n: 'Wave',      f: 'wave.webp' }
+    ];
+
+    var mGrid = document.getElementById('match-grid');
+    var mMoves = document.getElementById('match-moves');
+    var mOverlay = document.getElementById('match-overlay');
+    var mOverlayText = document.getElementById('match-overlay-text');
+    var mStage = mGrid.parentNode;
+
+    var m = { first: null, lock: false, moves: 0, matched: 0 };
+
+    function buildBoard() {
+      m.first = null; m.lock = false; m.moves = 0; m.matched = 0;
+      mMoves.textContent = '0';
+      mOverlay.hidden = true;
+      mGrid.innerHTML = '';
+
+      var picks = shuffle(CRASHERS.slice()).slice(0, 8);
+      var deck = shuffle(picks.concat(picks).slice());
+
+      deck.forEach(function (item) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'mcard';
+        btn.setAttribute('aria-label', 'Hidden card');
+        btn.dataset.key = item.n;
+        btn.innerHTML =
+          '<span class="mcard__inner">' +
+            '<span class="mcard__face mcard__face--back" aria-hidden="true"></span>' +
+            '<span class="mcard__face mcard__face--front">' +
+              '<img src="assets/characters/' + item.f + '" alt="" draggable="false" />' +
+            '</span>' +
+          '</span>';
+        btn.addEventListener('click', function () { onCardTap(btn, item); });
+        mGrid.appendChild(btn);
+      });
+    }
+
+    function onCardTap(btn, item) {
+      if (m.lock) return;
+      if (btn.classList.contains('is-flipped') || btn.classList.contains('is-matched')) return;
+
+      btn.classList.add('is-flipped');
+      btn.setAttribute('aria-label', item.n);
+
+      if (!m.first) { m.first = btn; return; }
+
+      var a = m.first, b = btn;
+      m.first = null;
+      m.moves++;
+      mMoves.textContent = String(m.moves);
+
+      if (a.dataset.key === b.dataset.key) {
+        a.classList.remove('is-flipped'); b.classList.remove('is-flipped');
+        a.classList.add('is-matched');    b.classList.add('is-matched');
+        m.matched++;
+        announce(item.n + ' matched! ' + (8 - m.matched) + ' pairs to go.');
+        if (m.matched === 8) {
+          m.lock = true;
+          setTimeout(winMatch, 650);
+        }
+      } else {
+        m.lock = true;
+        setTimeout(function () {
+          a.classList.remove('is-flipped'); b.classList.remove('is-flipped');
+          a.setAttribute('aria-label', 'Hidden card');
+          b.setAttribute('aria-label', 'Hidden card');
+          m.lock = false;
+        }, 800);
+      }
+    }
+
+    function winMatch() {
+      mOverlayText.textContent = 'The whole crew, found in ' + m.moves +
+        (m.moves === 1 ? ' move.' : ' moves.') + ' Starry is very proud.';
+      mOverlay.hidden = false;
+      announce('You found everyone in ' + m.moves + ' moves!');
+      var cx = mStage.offsetWidth / 2, cy = mStage.offsetHeight / 2;
+      confettiBurst(mStage, cx, cy, 46, 220, 260);
+      document.getElementById('match-again').focus();
+    }
+
+    document.getElementById('match-restart').addEventListener('click', buildBoard);
+    document.getElementById('match-again').addEventListener('click', buildBoard);
+    buildBoard();
+
+    /* ================= GAME 2 — BALLOON POP ================= */
+
+    var BALLOON_COLORS = ['#E84A9B', '#FFC93C', '#8B5CF6', '#5BB8F0', '#59C97B', '#D63B3B'];
+    var ROUND_SECONDS = 30;
+    var BEST_KEY = 'gywbt-balloon-best';
+
+    var field = document.getElementById('bp-field');
+    var scoreEl = document.getElementById('bp-score');
+    var bestEl = document.getElementById('bp-best');
+    var timeEl = document.getElementById('bp-time');
+    var pauseBtn = document.getElementById('bp-pause');
+    var bpOverlay = document.getElementById('bp-overlay');
+    var bpTitle = document.getElementById('bp-overlay-title');
+    var bpText = document.getElementById('bp-overlay-text');
+    var startBtn = document.getElementById('bp-start');
+
+    var bp = {
+      running: false, paused: false, score: 0, time: ROUND_SECONDS,
+      balloons: [], timerIv: null, spawnTO: null, rafId: null, stepIv: null, lastT: 0
+    };
+
+    function loadBest() {
+      try { return parseInt(localStorage.getItem(BEST_KEY), 10) || 0; }
+      catch (e) { return 0; }
+    }
+    function saveBest(v) {
+      try { localStorage.setItem(BEST_KEY, String(v)); } catch (e) { /* private mode etc. */ }
+    }
+    var best = loadBest();
+    bestEl.textContent = String(best);
+
+    function updateHUD() {
+      scoreEl.textContent = String(bp.score);
+      timeEl.textContent = String(bp.time);
+      bestEl.textContent = String(best);
+    }
+
+    function spawnBalloon() {
+      var fieldH = field.clientHeight;
+      var isStar = Math.random() < 0.12;
+
+      var el = document.createElement('div');
+      el.className = 'balloon' + (isStar ? ' balloon--star' : '');
+      el.setAttribute('aria-hidden', 'true');
+
+      var body = document.createElement('div');
+      body.className = 'balloon__body';
+      if (isStar) {
+        var img = document.createElement('img');
+        img.src = 'assets/characters/starry.webp';
+        img.alt = '';
+        img.draggable = false;
+        body.appendChild(img);
+      } else {
+        body.style.setProperty('--b', BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)]);
+      }
+      el.appendChild(body);
+      el.style.left = rand(3, 80).toFixed(1) + '%';
+
+      var b = {
+        el: el, body: body,
+        y: fieldH + 60,
+        speed: fieldH / (isStar ? rand(6.5, 9) : rand(5, 8)),   /* px per second */
+        phase: rand(0, 6.28),
+        value: isStar ? 5 : 1,
+        popped: false
+      };
+      el.style.transform = 'translate(0px, ' + b.y.toFixed(1) + 'px)';
+
+      el.addEventListener('pointerdown', function (ev) {
+        ev.preventDefault();
+        popBalloon(b);
+      });
+
+      field.appendChild(el);
+      bp.balloons.push(b);
+    }
+
+    function popBalloon(b) {
+      if (!bp.running || bp.paused || b.popped) return;
+      b.popped = true;
+      bp.score += b.value;
+      updateHUD();
+
+      var idx = bp.balloons.indexOf(b);
+      if (idx > -1) bp.balloons.splice(idx, 1);
+
+      b.body.classList.add('is-pop');
+      var r = b.el.getBoundingClientRect();
+      var f = field.getBoundingClientRect();
+      confettiBurst(field, (r.left - f.left) + r.width / 2, (r.top - f.top) + r.height / 2, 7, 80, 90);
+
+      setTimeout(function () { if (b.el.parentNode) b.el.parentNode.removeChild(b.el); }, 220);
+    }
+
+    function moveBalloons(dt) {
+      for (var i = bp.balloons.length - 1; i >= 0; i--) {
+        var b = bp.balloons[i];
+        b.y -= b.speed * dt;
+        if (b.y < -170) {
+          bp.balloons.splice(i, 1);
+          if (b.el.parentNode) b.el.parentNode.removeChild(b.el);
+          continue;
+        }
+        var wob = REDUCED ? 0 : Math.sin((b.y + b.phase * 100) / 46) * 9;
+        b.el.style.transform = 'translate(' + wob.toFixed(1) + 'px, ' + b.y.toFixed(1) + 'px)';
+      }
+    }
+
+    function frame(t) {
+      if (!bp.running || bp.paused) return;
+      var dt = Math.min((t - bp.lastT) / 1000, 0.05);
+      bp.lastT = t;
+      moveBalloons(dt);
+      bp.rafId = requestAnimationFrame(frame);
+    }
+
+    function startMotion() {
+      if (REDUCED) {
+        /* step-move: balloons hop upward in discrete jumps, no smooth animation */
+        bp.stepIv = setInterval(function () { moveBalloons(0.45); }, 450);
+      } else {
+        bp.lastT = performance.now();
+        bp.rafId = requestAnimationFrame(frame);
+      }
+    }
+    function stopMotion() {
+      if (bp.rafId) { cancelAnimationFrame(bp.rafId); bp.rafId = null; }
+      if (bp.stepIv) { clearInterval(bp.stepIv); bp.stepIv = null; }
+    }
+
+    function startTimer() {
+      bp.timerIv = setInterval(function () {
+        bp.time--;
+        updateHUD();
+        if (bp.time <= 0) endRound();
+      }, 1000);
+    }
+    function stopTimer() {
+      if (bp.timerIv) { clearInterval(bp.timerIv); bp.timerIv = null; }
+    }
+
+    function scheduleSpawn(delay) {
+      bp.spawnTO = setTimeout(function () {
+        if (!bp.running || bp.paused) return;
+        spawnBalloon();
+        scheduleSpawn(rand(480, 900));
+      }, delay);
+    }
+    function stopSpawning() {
+      if (bp.spawnTO) { clearTimeout(bp.spawnTO); bp.spawnTO = null; }
+    }
+
+    function clearBalloons(soft) {
+      bp.balloons.forEach(function (b) {
+        if (soft) {
+          b.el.classList.add('is-out');
+          (function (el) { setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 350); })(b.el);
+        } else if (b.el.parentNode) {
+          b.el.parentNode.removeChild(b.el);
+        }
+      });
+      bp.balloons = [];
+    }
+
+    function startRound() {
+      clearBalloons(false);
+      bp.score = 0;
+      bp.time = ROUND_SECONDS;
+      bp.running = true;
+      bp.paused = false;
+      updateHUD();
+      bpOverlay.hidden = true;
+      pauseBtn.hidden = false;
+      pauseBtn.textContent = 'Pause';
+      announce('Balloon Pop started. 30 seconds!');
+      startTimer();
+      scheduleSpawn(250);
+      startMotion();
+    }
+
+    function pauseRound() {
+      if (!bp.running || bp.paused) return;
+      bp.paused = true;
+      stopTimer(); stopSpawning(); stopMotion();
+      pauseBtn.textContent = 'Resume';
+      announce('Game paused.');
+    }
+
+    function resumeRound() {
+      if (!bp.running || !bp.paused) return;
+      bp.paused = false;
+      pauseBtn.textContent = 'Pause';
+      announce('Game resumed.');
+      startTimer();
+      scheduleSpawn(300);
+      startMotion();
+    }
+
+    function endRound() {
+      bp.running = false;
+      bp.paused = false;
+      stopTimer(); stopSpawning(); stopMotion();
+      clearBalloons(true);
+      pauseBtn.hidden = true;
+
+      var newBest = bp.score > best;
+      if (newBest) { best = bp.score; saveBest(best); }
+      updateHUD();
+
+      bpTitle.textContent = "Time's up!";
+      bpText.textContent = 'You popped your way to ' + bp.score +
+        (bp.score === 1 ? ' point.' : ' points.') +
+        (newBest ? ' That’s a new best!' : ' Best so far: ' + best + '.');
+      startBtn.textContent = 'Play again';
+      bpOverlay.hidden = false;
+      announce("Time's up! You scored " + bp.score + ' points.');
+      if (newBest) confettiBurst(field, field.clientWidth / 2, field.clientHeight / 2, 40, 240, 240);
+      startBtn.focus();
+    }
+
+    startBtn.addEventListener('click', startRound);
+    pauseBtn.addEventListener('click', function () {
+      if (bp.paused) resumeRound(); else pauseRound();
+    });
+
+    /* If the tab is hidden mid-round, pause so the clock never drains unseen. */
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden && bp.running && !bp.paused) pauseRound();
+    });
+  })();
+  </script>
+  <script src="music.js"></script>
+</body>
+</html>

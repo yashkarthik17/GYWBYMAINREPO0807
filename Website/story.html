@@ -22,6 +22,14 @@
     .sw-js [data-sw-seo] { display: none; }
     /* pre-mount canvas: page shows the sky colour, not white, while the engine loads */
     html, body { margin: 0; background: var(--sw-bg); }
+    /* Phones: the flight is full-bleed, so anything that peeks around the video
+       (crossfades, URL-bar resizes, a clip still priming) must read as cinema-dark,
+       not day-sky blue. Tablets/desktops keep the bright sky. */
+    @media (hover: none) and (pointer: coarse) and (max-width: 860px) {
+      html, body { background: #131F3E; }
+      :root, .sw-root { --sw-bg: #131F3E; }
+      .sw-sky__glow { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -39,7 +47,7 @@
       <p>They don't just crash the party — they rebuild it: cake tower, balloon arches, dance floor.</p>
       <h2>From Starry &amp; the Crashers — Glad you were born today.</h2>
       <p>Bring the Crashers to your next party.</p>
-      <p><a href="store.html">Shop the party store</a> · <a href="#top">Play the story again</a></p>
+      <p><a href="crashers.html">Meet the Crashers</a> · <a href="games.html">Play the games</a> · <a href="cards.html">Make a birthday card</a> · <a href="#top">Play the story again</a></p>
     </section>
   </div>
 
@@ -55,7 +63,7 @@
     mountScrollWorld(document.getElementById('world'), {
       brand: { name: 'Glad You Were Born Today', href: '#top' },
       // when the logo file lands: brand: { name: '…', href: '#top', logo: 'assets/logo.png' }
-      cta: { label: 'Shop the Party', href: 'store.html' },
+      cta: { label: 'Meet the Crashers', href: 'crashers.html' },
       hint: 'scroll to crash the party',
       crossfade: 0.15,
       diveScroll: 1.3,
@@ -136,7 +144,7 @@
           title: 'Glad you were born today.',
           body: 'Bring the Crashers to your next party.',
           tags: [],
-          cta: { primary: { label: 'Bring the Crashers', href: 'store.html' },
+          cta: { primary: { label: 'Meet the Crashers', href: 'crashers.html' },
                  secondary: { label: 'Play it again', href: '#top' } },
         },
       ],

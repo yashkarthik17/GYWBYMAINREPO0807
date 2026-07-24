@@ -40,13 +40,14 @@
     <h2>Yes, they crash 40ths.</h2>
     <p>Enchantment doesn't card.</p>
     <h2>Glad you were born today.</h2>
-    <p><a href="#book">Bring the Crashers</a> · <a href="../">Visit the storybook world</a></p>
+    <p><a href="crew.html">Meet the crew</a> · <a href="../store.html">Visit the party store</a> · <a href="../">Visit the storybook world</a></p>
   </section>
 </div>
 <script src="scrub-engine.js?v=3"></script>
 <script>
 mountScrollWorld(document.getElementById('world'), {
   brand: { name: 'Glad You Were Born Today', href: '#top' },
+  cta: { label: 'Meet the Crew', href: 'crew.html' },
   hint: 'scroll to crash the party',
   diveScroll: 1.5,
   crossfade: 0.12,
@@ -95,8 +96,8 @@ mountScrollWorld(document.getElementById('world'), {
       accent:'#5BB8F0', eyebrow:'From Starry & the Crashers',
       title:'Glad you were born today.',
       body:'Until next year.',
-      cta:{ primary:{label:'Bring the Crashers', href:'#book'},
-            secondary:{label:'Visit the storybook world', href:'../'} } },
+      cta:{ primary:{label:'Visit the party store', href:'../store.html'},
+            secondary:{label:'Meet the crew', href:'crew.html'} } },
   ],
   connectors: [],
 });

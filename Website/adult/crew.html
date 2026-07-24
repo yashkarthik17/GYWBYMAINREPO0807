@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>The Crew — Glad You Were Born Today</title>
+  <meta name="description" content="Starry founded it. Twelve Crashers run it — one for every month, each with a birthstone for eyes. Meet the crew that crashes real birthdays." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #1D2B50;
+      --bg-deep: #141E3A;
+      --cream: #FFF9EE;
+      --cream-soft: #c9c4d8;
+      --gold: #e6c46a;
+      --gold-deep: #b8862e;
+      --pink: #E84A9B;
+      --font-display: "Baloo 2", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+      --font-royal: "Cormorant Garamond", Georgia, serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--cream); font-family: var(--font-body); }
+
+    .night {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(52% 40% at 76% 8%, color-mix(in srgb, var(--gold) 14%, transparent), transparent 70%),
+        radial-gradient(46% 38% at 18% 84%, color-mix(in srgb, var(--pink) 10%, transparent), transparent 72%),
+        linear-gradient(178deg, var(--bg) 0%, var(--bg-deep) 100%);
+    }
+    .star { position: fixed; z-index: 0; width: 3px; height: 3px; border-radius: 50%;
+            background: #fff; opacity: .35; pointer-events: none; animation: twinkle 4.5s ease-in-out infinite; }
+    .star--a { left: 14vw; top: 22vh; } .star--b { left: 78vw; top: 16vh; animation-delay: -1.4s; }
+    .star--c { left: 62vw; top: 64vh; animation-delay: -2.6s; } .star--d { left: 30vw; top: 78vh; animation-delay: -3.4s; }
+    @keyframes twinkle { 0%, 100% { opacity: .18; } 50% { opacity: .55; } }
+    @media (prefers-reduced-motion: reduce) { .star { animation: none; } }
+
+    .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 48px); }
+
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+              padding: clamp(14px, 2.4vw, 26px) 0; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--cream); }
+    .brand__mark { width: 24px; height: 28px; border-radius: 7px 7px 10px 10px;
+                   background: linear-gradient(160deg, var(--gold), var(--gold-deep));
+                   box-shadow: 0 6px 14px color-mix(in srgb, var(--gold) 30%, transparent); }
+    .brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
+    .back { text-decoration: none; font-weight: 600; font-size: .9rem; color: var(--bg);
+            background: var(--gold); padding: 10px 20px; border-radius: 999px; white-space: nowrap; }
+    a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+    .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 300px); align-items: center;
+            gap: clamp(18px, 4vw, 44px); padding: clamp(24px, 5vh, 64px) 0 clamp(18px, 3vh, 36px); }
+    @media (max-width: 700px) { .hero { grid-template-columns: 1fr; } .hero__art { order: -1; max-width: 220px; margin: 0 auto; } }
+    .hero__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: .8rem;
+                     letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+    .hero h1 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em;
+               font-size: clamp(2.3rem, 6vw, 3.8rem); line-height: 1.02; margin: 12px 0 0; }
+    .hero__rule { width: 128px; height: 2px; margin: 18px 0 0; border: 0;
+                  background: linear-gradient(90deg, var(--gold), transparent); }
+    .hero p { margin-top: 16px; font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.6;
+              color: color-mix(in srgb, var(--cream) 78%, var(--cream-soft)); max-width: 52ch; }
+    .hero__role { font-family: var(--font-royal); font-style: italic; font-size: 1.1rem; color: var(--gold); }
+    .hero__art img { width: 100%; height: auto; display: block;
+                     filter: drop-shadow(0 18px 34px rgba(0,0,0,.5)); }
+
+    .sect { display: flex; align-items: center; gap: 14px; margin: clamp(22px, 4vh, 44px) 0 8px; }
+    .sect h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin: 0; }
+    .sect::after { content: ""; flex: 1; height: 1px;
+                   background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 55%, transparent), transparent); }
+    .sect__note { margin: 0 0 10px; color: var(--cream-soft); font-size: .95rem; }
+
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(14px, 2.2vw, 22px);
+            padding: clamp(10px, 2vh, 22px) 0 10px; }
+    @media (max-width: 980px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 430px) { .grid { grid-template-columns: 1fr; } }
+
+    .pcard { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10);
+             border-radius: 22px; overflow: hidden; text-align: center;
+             transition: transform .25s ease, border-color .25s ease, background .25s ease; }
+    .pcard:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--gold) 45%, transparent);
+                   background: rgba(255,255,255,.08); }
+    @media (prefers-reduced-motion: reduce) { .pcard, .pcard:hover { transform: none; transition: none; } }
+    .pcard__stage { padding: 22px 22px 0; }
+    .pcard__pic { width: 72%; max-width: 180px; aspect-ratio: 1; margin: 0 auto; border-radius: 50%;
+                  overflow: hidden; position: relative;
+                  border: 2px solid color-mix(in srgb, var(--gold) 65%, transparent);
+                  box-shadow: 0 10px 26px rgba(0,0,0,.45), 0 0 0 6px rgba(255,255,255,.04);
+                  background: #fff; }
+    .pcard__pic img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.09); }
+    .pcard__body { padding: 14px 18px 20px; }
+    .pcard__no { font-family: var(--font-display); font-weight: 700; font-size: .72rem;
+                 letter-spacing: .22em; color: var(--gold); }
+    .pcard h3 { font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; margin: 3px 0 0; color: var(--cream); }
+    .pcard__month { display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
+                    font-family: var(--font-royal); font-weight: 600; font-size: .95rem; color: var(--cream-soft); }
+    .gem { width: 12px; height: 12px; border-radius: 50%; flex: none;
+           background: radial-gradient(circle at 34% 30%, rgba(255,255,255,.9) 0 16%, transparent 42%),
+                       radial-gradient(circle at 55% 62%, var(--stone, var(--gold)), color-mix(in srgb, var(--stone, var(--gold)) 45%, #000));
+           box-shadow: 0 0 8px color-mix(in srgb, var(--stone, var(--gold)) 70%, transparent); }
+    .pcard p { margin: 9px 0 0; font-size: .88rem; line-height: 1.5; color: var(--cream-soft); }
+
+    .band { margin: clamp(30px, 6vh, 64px) 0 0; background: rgba(255,255,255,.05);
+            border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+            border-radius: 26px; padding: clamp(24px, 4vw, 44px);
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+    .band h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); margin: 0; }
+    .band p { margin: 8px 0 0; color: var(--cream-soft); max-width: 48ch; }
+    .band__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .band a { text-decoration: none; font-weight: 600; color: var(--bg); background: var(--gold);
+              padding: 13px 24px; border-radius: 999px; white-space: nowrap; }
+    .band a.alt { color: var(--cream); background: transparent; border: 1px solid rgba(255,255,255,.3); }
+
+    footer { position: relative; z-index: 1; text-align: center; padding: clamp(30px, 6vh, 60px) 18px 34px;
+             color: color-mix(in srgb, var(--cream) 55%, transparent); font-size: .85rem; }
+    footer b { font-family: var(--font-display); }
+  </style>
+</head>
+<body>
+  <div class="night"></div>
+  <span class="star star--a"></span><span class="star star--b"></span>
+  <span class="star star--c"></span><span class="star star--d"></span>
+
+  <div class="wrap">
+    <nav class="topbar">
+      <a class="brand" href="index.html"><span class="brand__mark"></span><span class="brand__name">Glad You Were Born Today</span></a>
+      <a class="back" href="index.html">&larr; Back to the night</a>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <span class="hero__eyebrow">The crew behind the crash</span>
+        <h1>Thirteen professionals. One job: your birthday.</h1>
+        <hr class="hero__rule" />
+        <p><b>Starry</b> founded the operation — threw the very first birthday, wrote the anthem when
+           nobody came, and hasn&rsquo;t missed one since. The twelve Crashers each hold a month of the
+           year, birthstone eyes and all. Whatever month you were born, one of them already has
+           your name on the list.</p>
+        <p class="hero__role">Starry — Founder, No. 00. First on every guest list.</p>
+      </div>
+      <div class="hero__art">
+        <img src="../assets/characters/starry.webp" alt="Starry — a golden star in a party hat, holding balloons and a gift" />
+      </div>
+    </header>
+
+    <div class="sect"><h2>The Twelve, by month</h2></div>
+    <p class="sect__note">Each Crasher works the birthdays of their own month. Find yours.</p>
+
+    <main class="grid">
+      <article class="pcard" style="--stone:#9B2242">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/zig.webp" alt="Zig — the orange zigzag Crasher with garnet eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 01</div>
+          <h3>Zig</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>January &middot; Garnet</div>
+          <p>Door-crash lead. Handles arrivals. Has never once RSVP&rsquo;d.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--stone:#7B5EA7">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/jewel.webp" alt="Jewel — the blue diamond-pattern Crasher with amethyst eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 02</div>
+          <h3>Jewel</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>February &middot; Amethyst</div>
+          <p>Heart of the crew. Personally assigned to every shy guest.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--stone:#3AC5C9">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/stripes.webp" alt="Stripes — the tiger-stripe Crasher with aquamarine eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 03</div>
+          <h3>Stripes</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>March &middot; Aquamarine</div>
+          <p>Games and organized chaos. Pi&ntilde;ata results guaranteed.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--stone:#A7D8E8">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/minty.webp" alt="Minty — the candy-stripe Crasher with diamond eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 04</div>
+          <h3>Minty</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>April &middot; Diamond</div>
+          <p>Table styling and sparkle logistics. Nothing leaves un-shined.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--stone:#2FAE66">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/checkers.webp" alt="Checkers — the orange checkered Crasher with emerald eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 05</div>
+          <h3>Checkers</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>May &middot; Emerald</div>
+          <p>Dance floor operations. Has never been off-beat.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--stone:#EFE7D6">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/splat.webp" alt="Splat — the green paint-splatter Crasher with pearl eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 06</div>
+          <h3>Splat</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>June &middot; Pearl</div>
+          <p>D&eacute;cor splash zone. Looks loud, hugs quiet.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--stone:#E0244B">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/dot.webp" alt="Dot — the red polka-dot Crasher with ruby eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 07</div>
+          <h3>Dot</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>July &middot; Ruby</div>
+          <p>Big moments: candles, countdowns, confetti storms.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--stone:#9FC131">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/blossom.webp" alt="Blossom — the lime flower Crasher with peridot eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 08</div>
+          <h3>Blossom</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>August &middot; Peridot</div>
+          <p>Keeps the little guests — and the grandmas — smiling.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--stone:#2A4FB0">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/cosmo.webp" alt="Cosmo — the blue star-pattern Crasher with sapphire eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 09</div>
+          <h3>Cosmo</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>September &middot; Sapphire</div>
+          <p>Evening parties and lighting. Calm under cake pressure.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--stone:#C77DBB">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/swirl.webp" alt="Swirl — the rainbow brushstroke Crasher with opal eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 10</div>
+          <h3>Swirl</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>October &middot; Opal</div>
+          <p>Photo moments. Impossible to photograph badly.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--stone:#E8A13A">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/sprinkles.webp" alt="Sprinkles — the confetti-sprinkle Crasher with topaz eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 11</div>
+          <h3>Sprinkles</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>November &middot; Topaz</div>
+          <p>Cake service. Cocoa-season specialist.</p>
+        </div>
+      </article>
+
+      <article class="pcard" style="--stone:#1FB8C4">
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/wave.webp" alt="Wave — the yellow and blue wavy Crasher with turquoise eyes" loading="lazy" /></div></div>
+        <div class="pcard__body">
+          <div class="pcard__no">No. 12</div>
+          <h3>Wave</h3>
+          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>December &middot; Turquoise</div>
+          <p>Grand finales and send-offs. Closes every year out loud.</p>
+        </div>
+      </article>
+    </main>
+
+    <section class="band">
+      <div>
+        <h2>See them work a room.</h2>
+        <p>Scroll the night they crashed — from the quiet backyard to the send-off. Booking opens soon.</p>
+      </div>
+      <div class="band__actions">
+        <a href="index.html">Watch the crash</a>
+        <a class="alt" href="../store.html">Visit the party store</a>
+      </div>
+    </section>
+  </div>
+
+  <footer>&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
+</body>
+</html>
