@@ -9,6 +9,9 @@ Website/work/*.err
 Website/work/redo/*.png
 Website/work/redo/*.mp4
 Website/work/redo/*.err
+Website/work/redo-landscape/*.png
+Website/work/redo-landscape/*.mp4
+Website/work/redo-landscape/*.err
 Website/adult/work/*.png
 Website/adult/work/*.mp4
 Website/adult/work/*.err

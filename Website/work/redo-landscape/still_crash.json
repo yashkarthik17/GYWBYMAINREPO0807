@@ -1,0 +1,30 @@
+[
+  {
+    "id": "c20a4d2c-0439-4618-b17c-bbe279c31dfb",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_091528_c20a4d2c-0439-4618-b17c-bbe279c31dfb.png",
+    "created_at": 1784884528.236373,
+    "params": {
+      "width": 2048,
+      "height": 1360,
+      "prompt": "Cinematic still from a Pixar-style 3D animated film. Soft warm cinematic lighting, gentle depth of field, rich glossy materials, storybook charm. A lush enchanted forest world under a bright candy-blue sky with puffy white clouds: giant leafy trees with plain natural bark and absolutely no faces on the trees, mossy ground, winding stone paths, oversized mushrooms, drifting dandelion sparkles and tiny glowing fireflies. Cohesive color palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Highly detailed, absolutely no text, no letters, no numbers, no logos. Wide cinematic landscape composition, focal subject centered, nothing important cropped at the edges.\nSubject: inside the cottage living room at the exact moment the party gets crashed — a deep, fully-built cozy room with wooden ceiling beams, a stone fireplace, layered furniture and a big window with the bright enchanted forest outside. The three Crasher characters — small round-hooded figures in orange zigzag, blue diamond and green paint-splatter onesies with red-and-white striped cone party hats — burst in through the window and front door riding rainbow streamer trails, confetti exploding around them, ribbons and streamers wrapping playfully around the furniture and ceiling beams. The small Pixar-style boy with round cheeks and soft brown hair leaps up from the cake table with wide amazed sparkling eyes, his birthday cake still on the table. Explosive joyful energy, confetti frozen mid-air.",
+      "medias": [
+        {
+          "data": {
+            "id": "9443c141-8c4b-42a1-a719-791079f36516",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/9443c141-8c4b-42a1-a719-791079f36516.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "3:2",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "3cd5f7e1-04c6-4c84-82b9-007029c62180",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_092531_3cd5f7e1-04c6-4c84-82b9-007029c62180.mp4",
+    "created_at": 1784885131.681894,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. The camera smoothly pulls up and back out of the cozy cottage room, rising away from the window, up over the clearing and the treetops of the enchanted forest, climbing higher and higher into the bright candy-blue sky, gliding forward through puffy white clouds, and arriving high in the sky approaching Starry's golden star-shaped cloud clubhouse, beginning to descend toward it. One connected storybook world, seamless flowing aerial transition. Pixar-style 3D animated film look, soft warm cinematic lighting, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth graceful slow motion. No text, no captions. Wide cinematic landscape framing throughout, the scene always fully composed within the wide frame.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "e7b9fa74-06e2-4140-be90-466f0793653c",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/e7b9fa74-06e2-4140-be90-466f0793653c.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "5a93e345-c01e-43db-a780-d3b304dbae13",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/5a93e345-c01e-43db-a780-d3b304dbae13.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

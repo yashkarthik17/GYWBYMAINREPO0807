@@ -1,0 +1,47 @@
+[
+  {
+    "id": "d48af79a-8be5-4d6b-ac8f-280f5d186326",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_093504_d48af79a-8be5-4d6b-ac8f-280f5d186326.mp4",
+    "created_at": 1784885704.003231,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. The view begins exactly as given: close on Starry the golden star character at his brass telescope on the clubhouse balcony. The camera sweeps smoothly past him over the balcony rail and dives down out of the bright candy-blue sky, descending past puffy white clouds toward the treetops, swooping lower along the winding stone path toward the cozy cottage in its clearing, approaching the glowing front of the cottage where flickers of colorful confetti light spill out, beginning to push inside toward the celebration. One connected storybook world, seamless flowing magical aerial transition. Pixar-style 3D animated film look, soft warm cinematic lighting, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth graceful slow motion. No text, no captions. Wide cinematic landscape framing throughout, the scene always fully composed within the wide frame.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "9043dc7b-bbcc-40fd-b0b8-ee62229c248a",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/9043dc7b-bbcc-40fd-b0b8-ee62229c248a.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "6f6df1aa-b719-4dcc-ad71-aa4dfc1b79f8",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/6f6df1aa-b719-4dcc-ad71-aa4dfc1b79f8.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "79d74bbe-c9c0-45d9-8264-26b384a8ecd6",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_093505_79d74bbe-c9c0-45d9-8264-26b384a8ecd6.mp4",
+    "created_at": 1784885705.262576,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. The view begins exactly as given: facing the cottage's wooden front door with its glowing golden heart-shaped window, bunting overhead and balloons beside it. The door swings gently open and the camera glides smoothly through the doorway out into the sunlit clearing, sweeping gently over the decorated yard with balloons on the fence and paper lanterns strung between the trees, confetti drifting through warm sunbeams, and settles descending toward the gathered group in front of the cottage, beginning to frame their joyful send-off. One connected storybook world, seamless flowing transition from inside to outside. Pixar-style 3D animated film look, soft warm golden cinematic lighting, bright candy-blue sky above the forest canopy, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth graceful slow motion. No text, no captions. Wide cinematic landscape framing throughout, the scene always fully composed within the wide frame.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "6a9e1ee9-2b74-4555-9508-8b8e52135e68",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/6a9e1ee9-2b74-4555-9508-8b8e52135e68.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "ab303fe0-64a1-4cba-9e61-da225803985d",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/ab303fe0-64a1-4cba-9e61-da225803985d.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

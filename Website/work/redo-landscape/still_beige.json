@@ -1,0 +1,30 @@
+[
+  {
+    "id": "fdf56f9a-3b5c-4c4a-b39d-763ee2b8637a",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_091134_fdf56f9a-3b5c-4c4a-b39d-763ee2b8637a.png",
+    "created_at": 1784884294.797944,
+    "params": {
+      "width": 2048,
+      "height": 1360,
+      "prompt": "Cinematic still from a Pixar-style 3D animated film. Soft warm cinematic lighting, gentle depth of field, rich glossy materials, storybook charm. A lush enchanted forest world under a bright candy-blue sky with puffy white clouds: giant leafy trees with plain natural bark and absolutely no faces on the trees, mossy ground, winding stone paths, oversized mushrooms, drifting dandelion sparkles and tiny glowing fireflies. Cohesive color palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Highly detailed, absolutely no text, no letters, no numbers, no logos. Wide cinematic landscape composition, focal subject centered, nothing important cropped at the edges.\nSubject: a wide magical establishing shot of the enchanted forest with a small cozy storybook cottage in a sunlit clearing at its center, seen from slightly above between the tall trees, a winding stone path leading from the foreground down to its front door. The cottage is warm and inviting — honey-toned wooden walls, a simple shingled roof, a thin wisp of chimney smoke, flower boxes under the windows, a little fenced yard with a mailbox. Through its big warm-lit front window a small, quiet birthday party is just visible in miniature: a small Pixar-style boy with round cheeks and soft brown hair sitting all alone at a table with a simple birthday cake and a couple of balloons, chin in hands, looking kinda bored, staring blankly at his cake. He is the only character in the entire scene — no star character, no toys, no other figures anywhere. Composition guides the eye from high in the treetops down the path to the glowing front window, made to be revealed by a camera panning down from the sky to the boy.",
+      "medias": [
+        {
+          "data": {
+            "id": "5a4551eb-eafb-40e8-beac-ac18af31ac6b",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/5a4551eb-eafb-40e8-beac-ac18af31ac6b.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "3:2",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

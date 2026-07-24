@@ -1,0 +1,39 @@
+[
+  {
+    "id": "941dd29d-9569-4a28-aa6b-234b953a2943",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260724_091933_941dd29d-9569-4a28-aa6b-234b953a2943.mp4",
+    "created_at": 1784884773.656261,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. Begin framing the whole sunlit clearing outside the decorated cottage, then push slowly and warmly forward toward the group: Starry front and center in a big open-armed hero pose, the three Crasher characters gathered playfully around him, and the happy young boy waving while hugging his little star plush, paper lanterns and pennant garlands swaying gently between the trees, confetti drifting through sunbeams. The camera cranes gently down to eye level as it approaches, ending settled on the heartfelt group send-off. In the final second the camera settles into a slow, steady forward drift, calm and warm. Pixar-style 3D animated film look, soft warm golden cinematic lighting, storybook enchanted forest clearing, bright candy-blue sky, palette of star gold #FFC93C, sky blue #5BB8F0, crash pink #E84A9B, party purple #8B5CF6, confetti green #4CC96B, cream #FFF4E0. Smooth, graceful, slow motion, subtle parallax. No text, no captions. Wide cinematic landscape framing throughout, the scene always fully composed within the wide frame.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "14d0f4b9-ade0-42ac-97f9-18ec3eca0894",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/14d0f4b9-ade0-42ac-97f9-18ec3eca0894.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]
