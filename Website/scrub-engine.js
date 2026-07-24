@@ -290,7 +290,8 @@ function mountScrollWorld(container, config) {
       (s.title ? `<h2 class="sw-copy__title">${esc(s.title)}</h2>` : '') +
       (s.body ? `<p class="sw-copy__body">${esc(s.body)}</p>` : '') +
       (s.tags && s.tags.length ? `<ul class="sw-copy__tags">${s.tags.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : '') +
-      (s.cta ? `<div class="sw-copy__cta">${ctaBtns(s.cta)}</div>` : '');
+      (s.cta ? `<div class="sw-copy__cta">${ctaBtns(s.cta)}</div>` : '') +
+      exploreNav(s.explore);
     copylayer.appendChild(c); copies.push(c);
 
     const dot = el('button', 'sw-route__dot'); dot.style.setProperty('--sw-accent', s.accent || '');
@@ -724,6 +725,15 @@ function mountScrollWorld(container, config) {
     if (cta.secondary) h += `<a class="sw-btn sw-btn--ghost" href="${esc(cta.secondary.href || '#')}">${esc(cta.secondary.label)}</a>`;
     return h;
   }
+  // Site nav for the final panel — `explore: {label, links:[{label,href}]}` on a
+  // section renders a labelled row of tab pills (the "proper website" footer-nav).
+  function exploreNav(x) {
+    if (!x || !x.links || !x.links.length) return '';
+    return `<nav class="sw-explore"><span class="sw-explore__label">${esc(x.label || 'Explore')}</span>` +
+           `<div class="sw-explore__tabs">` +
+           x.links.map(l => `<a href="${esc(l.href || '#')}">${esc(l.label)}</a>`).join('') +
+           `</div></nav>`;
+  }
 }
 
 function seedParticles(host, reduce) {
@@ -788,6 +798,13 @@ function injectCSS() {
   .sw-copy__tags{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0;padding:0;}
   .sw-copy__tags li{font-size:.82rem;font-weight:600;color:color-mix(in srgb,var(--sw-accent) 70%,#000);padding:7px 14px;border-radius:999px;background:color-mix(in srgb,var(--sw-accent) 14%,#fff);border:1px solid color-mix(in srgb,var(--sw-accent) 30%,transparent);}
   .sw-copy__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;pointer-events:auto;}
+  .sw-explore{display:block;margin-top:26px;pointer-events:auto;}
+  .sw-explore__label{display:block;font-family:var(--sw-font-display);font-weight:700;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--sw-ink-soft);margin-bottom:10px;}
+  .sw-explore__tabs{display:flex;flex-wrap:wrap;gap:8px;}
+  .sw-explore__tabs a{text-decoration:none;font-family:var(--sw-font-display);font-weight:600;font-size:.9rem;color:var(--sw-ink);background:color-mix(in srgb,#fff 74%,transparent);border:1px solid color-mix(in srgb,var(--sw-ink) 20%,transparent);padding:10px 18px;border-radius:999px;transition:transform .15s ease,background .15s ease;}
+  .sw-explore__tabs a:hover{transform:translateY(-2px);background:#fff;}
+  .sw-explore__tabs a:focus-visible{outline:2px solid var(--sw-accent);outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){ .sw-explore__tabs a,.sw-explore__tabs a:hover{transition:none;transform:none;} }
   .sw-btn{text-decoration:none;font-weight:600;font-size:.95rem;padding:13px 24px;border-radius:999px;transition:transform .2s;}
   .sw-btn--primary{color:#fff;background:var(--sw-ink);} .sw-btn--primary:hover{transform:translateY(-2px);}
   .sw-btn--ghost{color:var(--sw-ink);border:1.5px solid color-mix(in srgb,var(--sw-ink) 25%,transparent);} .sw-btn--ghost:hover{transform:translateY(-2px);}
@@ -830,6 +847,9 @@ function injectCSS() {
     /* the bottom strip belongs to the copy on phones: no tag pills competing for
        the same lines, no scroll hint layered through them */
     .sw-copy__tags{display:none;}
+    .sw-explore{margin-top:18px;}
+    .sw-explore__label{color:rgba(255,255,255,.78);text-shadow:0 1px 8px rgba(0,0,0,.5);}
+    .sw-explore__tabs a{color:#fff;background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.34);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);font-size:.86rem;padding:9px 15px;}
     .sw-hint{display:none;}
     .sw-brand__name{font-size:.95rem;max-width:44vw;line-height:1.15;}
     .sw-route{gap:16px;right:6px;} .sw-route__label{display:none;}
