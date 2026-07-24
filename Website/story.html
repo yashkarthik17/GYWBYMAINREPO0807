@@ -46,11 +46,10 @@
   <script src="scrub-engine.js?v=8"></script>
   <script src="music.js"></script>
   <script>
-    // Phone-class screens (same rule the engine uses for clip tiering) get the
-    // portrait stills, so stills-fallback mode (Low Power Mode, data-saver,
-    // reduced-motion) shows portrait art instead of cropped landscape.
-    var SW_PHONE = Math.min(screen.width, screen.height) <= 600;
-    function sw_still(name) { return 'assets/' + name + (SW_PHONE ? '-p' : '') + '.webp?v=2'; }
+    // Every tier serves the portrait (-p/-m) assets: only that tier carries the
+    // redone footage — the landscape tier is still the old renders. Point the
+    // desktop fields back at landscape files once those are re-rendered.
+    function sw_still(name) { return 'assets/' + name + '-p.webp?v=3'; }
     mountScrollWorld(document.getElementById('world'), {
       brand: { name: 'Glad You Were Born Today', href: '#top' },
       // when the logo file lands: brand: { name: '…', href: '#top', logo: 'assets/logo.png' }
@@ -64,17 +63,17 @@
       // work/stitch_journey.py — regenerate them if the clips are re-rolled.
       journeyMobile: {
         clip: 'assets/vid/journey-m.mp4?v=3',
-        poster: 'assets/beige-poster-m.webp?v=2',
+        poster: 'assets/beige-poster-m.webp?v=3',
         spans: [[0.0, 7.842], [7.842, 12.733], [12.733, 20.5], [20.5, 25.392], [25.392, 33.158], [33.158, 37.425], [37.425, 45.192], [45.192, 50.083], [50.083, 57.908]],
       },
       sections: [
         {
           id: 'beige', label: 'The Beige Party',
           still: sw_still('beige'),
-          poster: 'assets/beige-poster.webp?v=2',
-          clip: 'assets/vid/beige.mp4?v=2',
-          clipMobile: 'assets/vid/beige-m.mp4?v=2',
-          posterMobile: 'assets/beige-poster-m.webp?v=2',
+          poster: 'assets/beige-poster-m.webp?v=3',
+          clip: 'assets/vid/beige-m.mp4?v=3',
+          clipMobile: 'assets/vid/beige-m.mp4?v=3',
+          posterMobile: 'assets/beige-poster-m.webp?v=3',
           accent: '#8B95A6',
           scroll: 1.5, linger: 0.3,
           eyebrow: 'Every day, somewhere…',
@@ -85,10 +84,10 @@
         {
           id: 'crashpad', label: 'The Crash Pad',
           still: sw_still('crashpad'),
-          poster: 'assets/crashpad-poster.webp?v=2',
-          clip: 'assets/vid/crashpad.mp4?v=2',
-          clipMobile: 'assets/vid/crashpad-m.mp4?v=2',
-          posterMobile: 'assets/crashpad-poster-m.webp?v=2',
+          poster: 'assets/crashpad-poster-m.webp?v=3',
+          clip: 'assets/vid/crashpad-m.mp4?v=3',
+          clipMobile: 'assets/vid/crashpad-m.mp4?v=3',
+          posterMobile: 'assets/crashpad-poster-m.webp?v=3',
           accent: '#FFC93C',
           eyebrow: 'Meanwhile, above the clouds',
           title: 'Somebody call the Crashers.',
@@ -98,10 +97,10 @@
         {
           id: 'crash', label: 'The Crash',
           still: sw_still('crash'),
-          poster: 'assets/crash-poster.webp?v=2',
-          clip: 'assets/vid/crash.mp4?v=2',
-          clipMobile: 'assets/vid/crash-m.mp4?v=2',
-          posterMobile: 'assets/crash-poster-m.webp?v=2',
+          poster: 'assets/crash-poster-m.webp?v=3',
+          clip: 'assets/vid/crash-m.mp4?v=3',
+          clipMobile: 'assets/vid/crash-m.mp4?v=3',
+          posterMobile: 'assets/crash-poster-m.webp?v=3',
           accent: '#E84A9B',
           eyebrow: '3… 2… 1…',
           title: 'This party is officially crashed.',
@@ -111,10 +110,10 @@
         {
           id: 'glowup', label: 'The Glow-Up',
           still: sw_still('glowup'),
-          poster: 'assets/glowup-poster.webp?v=2',
-          clip: 'assets/vid/glowup.mp4?v=2',
-          clipMobile: 'assets/vid/glowup-m.mp4?v=2',
-          posterMobile: 'assets/glowup-poster-m.webp?v=2',
+          poster: 'assets/glowup-poster-m.webp?v=3',
+          clip: 'assets/vid/glowup-m.mp4?v=3',
+          clipMobile: 'assets/vid/glowup-m.mp4?v=3',
+          posterMobile: 'assets/glowup-poster-m.webp?v=3',
           accent: '#8B5CF6',
           scroll: 1.6, linger: 0.4,
           eyebrow: 'Minutes later',
@@ -125,10 +124,10 @@
         {
           id: 'finale', label: 'Starry’s Send-Off',
           still: sw_still('finale'),
-          poster: 'assets/finale-poster.webp?v=2',
-          clip: 'assets/vid/finale.mp4?v=2',
-          clipMobile: 'assets/vid/finale-m.mp4?v=2',
-          posterMobile: 'assets/finale-poster-m.webp?v=2',
+          poster: 'assets/finale-poster-m.webp?v=3',
+          clip: 'assets/vid/finale-m.mp4?v=3',
+          clipMobile: 'assets/vid/finale-m.mp4?v=3',
+          posterMobile: 'assets/finale-poster-m.webp?v=3',
           accent: '#FFC93C',
           scroll: 1.8, linger: 0.5,
           eyebrow: 'From Starry & the Crashers',
@@ -140,16 +139,16 @@
         },
       ],
       connectors: [
-        'assets/vid/conn1.mp4?v=2',
-        'assets/vid/conn2.mp4?v=2',
-        'assets/vid/conn3.mp4?v=2',
-        'assets/vid/conn4.mp4?v=2',
+        'assets/vid/conn1-m.mp4?v=3',
+        'assets/vid/conn2-m.mp4?v=3',
+        'assets/vid/conn3-m.mp4?v=3',
+        'assets/vid/conn4-m.mp4?v=3',
       ],
       connectorsMobile: [
-        'assets/vid/conn1-m.mp4?v=2',
-        'assets/vid/conn2-m.mp4?v=2',
-        'assets/vid/conn3-m.mp4?v=2',
-        'assets/vid/conn4-m.mp4?v=2',
+        'assets/vid/conn1-m.mp4?v=3',
+        'assets/vid/conn2-m.mp4?v=3',
+        'assets/vid/conn3-m.mp4?v=3',
+        'assets/vid/conn4-m.mp4?v=3',
       ],
     });
   </script>
