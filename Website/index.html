@@ -176,11 +176,11 @@
     const CFG = portrait ? {
       src: "assets/vid/envelope-m.mp4", poster: "assets/envelope-poster-m.webp",
       anchor: 0, frameW: 1080, frameH: 1920,
-      letter: { x: 0.50, y: 0.46, h: 0.42 }   // fractions; re-measured in Task 5
+      letter: { x: 0.50, y: 0.34, h: 0.45 }   // measured from last-frame stills, Task 5
     } : {
       src: "assets/vid/envelope.mp4", poster: "assets/envelope-poster.webp",
       anchor: 0, frameW: 1920, frameH: 1080,
-      letter: { x: 0.50, y: 0.44, h: 0.55 }
+      letter: { x: 0.50, y: 0.44, h: 0.50 }
     };
 
     const v = document.getElementById("scene-video");
@@ -212,9 +212,6 @@
       watchRAF = requestAnimationFrame(step);
     }
 
-    // TODO(Task 5): replaced with the real sheet-positioning/reveal logic.
-    function revealSheet() {}
-
     function onState() {
       const sealed = state === "sealed", open = state === "open";
       titleEl.classList.toggle("faded", !sealed);
@@ -232,6 +229,45 @@
       setState("sealed");
     }, { once: true });
     v.load();
+
+    // ---- Buttons on the letter: cover-crop mapping -----------------------
+    function revealSheet() {
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const scale = Math.max(vw / CFG.frameW, vh / CFG.frameH);
+      const dw = CFG.frameW * scale, dh = CFG.frameH * scale;
+      const ox = (dw - vw) / 2, oy = (dh - vh) / 2;
+      sheetEl.style.left = (CFG.letter.x * dw - ox) + "px";
+      sheetEl.style.top  = (CFG.letter.y * dh - oy) + "px";
+      const s = Math.min(1.18, Math.max(0.62, (CFG.letter.h * dh) / 440));
+      sheetEl.style.setProperty("--s", s.toFixed(3));
+      sheetEl.style.opacity = "1";
+      sheetEl.style.pointerEvents = "auto";      // ONLY here does the overlay become tappable
+    }
+
+    // ---- Open / close (let: the Task 6 static-poster fallback reassigns it) ----
+    let toggle = function () {
+      if (state === "sealed") {
+        setState("opening");
+        if (reduced) { v.currentTime = END(); setState("open"); fireConfetti(); return; }
+        playUntil(END(), () => { setState("open"); fireConfetti(); });
+      } else if (state === "open") {
+        setState("closing");
+        if (reduced) { v.currentTime = CFG.anchor; setState("sealed"); return; }
+        let last = performance.now();
+        const back = (now) => {
+          const dt = (now - last) / 1000; last = now;
+          v.currentTime = Math.max(CFG.anchor, v.currentTime - dt * 1.6);
+          if (v.currentTime <= CFG.anchor + EPS) { v.currentTime = CFG.anchor; setState("sealed"); return; }
+          requestAnimationFrame(back);
+        };
+        requestAnimationFrame(back);
+      }
+    };
+
+    tap.addEventListener("click", () => toggle());
+    btn.addEventListener("click", () => toggle());
+    if (/[?&]open/.test(location.search))        // QA shortcut, same as old page
+      v.addEventListener("loadeddata", () => setTimeout(() => { v.currentTime = CFG.anchor; setState("sealed"); toggle(); }, 300), { once: true });
 
     // ==== CONFETTI (verbatim from Assets/envelope/confetti-snippet.js) ====
     const isMobile = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
