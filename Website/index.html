@@ -195,6 +195,7 @@
 
     // ---- State machine ----
     let state = "loading";
+    let fallbackMode = false;   // true once the static-poster bail path takes over
     function setState(s) { state = s; onState(); }
 
     const EPS = 1 / 30;      // one frame at 30fps
@@ -205,10 +206,11 @@
     function playUntil(t, done) {
       cancelAnimationFrame(watchRAF);
       const step = () => {
+        if (v.paused) { v.currentTime = t; done(); return; }
         if (v.currentTime >= t - EPS) { v.pause(); v.currentTime = t; done(); return; }
         watchRAF = requestAnimationFrame(step);
       };
-      v.play().catch(() => { v.currentTime = CFG.anchor; setState("sealed"); });  // play only ever follows a user gesture; catch resets safely
+      v.play().catch(() => { cancelAnimationFrame(watchRAF); v.currentTime = CFG.anchor; setState("sealed"); });  // play only ever follows a user gesture; catch resets safely
       watchRAF = requestAnimationFrame(step);
     }
 
@@ -225,6 +227,7 @@
 
     // ---- Boot: no intro — the page waits on the sealed envelope (frame 0) ----
     v.addEventListener("loadeddata", () => {
+      if (state !== "loading") return;
       loading.classList.add("gone"); ph.classList.add("gone");
       setState("sealed");
     }, { once: true });
@@ -233,6 +236,7 @@
     // Video never arrives: static-poster fallback — the site must never dead-end
     const bail = setTimeout(() => {
       if (state !== "loading") return;
+      fallbackMode = true;
       v.remove();
       ph.src = CFG.poster; ph.classList.remove("gone"); ph.style.filter = "none"; ph.style.transform = "none";
       loading.classList.add("gone");
@@ -240,6 +244,7 @@
       // in fallback, "open" = reveal buttons over the poster, centered
       toggle = function () {
         if (state === "sealed") { setState("open"); sheetEl.style.left = "50%"; sheetEl.style.top = "58%"; sheetEl.style.opacity = "1"; sheetEl.style.pointerEvents = "auto"; fireConfetti(); }
+        else if (state === "open") { setState("sealed"); }
       };
       // Task 5's tap/btn listeners already delegate through this reassigned `toggle`
       // via arrow-wrapper closures — no extra listeners are added here. Note that
@@ -254,8 +259,14 @@
       const scale = Math.max(vw / CFG.frameW, vh / CFG.frameH);
       const dw = CFG.frameW * scale, dh = CFG.frameH * scale;
       const ox = (dw - vw) / 2, oy = (dh - vh) / 2;
-      sheetEl.style.left = (CFG.letter.x * dw - ox) + "px";
-      sheetEl.style.top  = (CFG.letter.y * dh - oy) + "px";
+      let left = CFG.letter.x * dw - ox;
+      let top  = CFG.letter.y * dh - oy;
+      // clamp so the buttons can never land offscreen (e.g. after rotating the
+      // phone while open)
+      left = Math.min(vw * 0.88, Math.max(vw * 0.12, left));
+      top  = Math.min(vh * 0.88, Math.max(vh * 0.12, top));
+      sheetEl.style.left = left + "px";
+      sheetEl.style.top  = top + "px";
       // floor raised from 0.62 to 0.8: at 0.62 the two-line .sheet-btn (padding
       // 13px*2 + border 2px + ~2 lines of 13px/9.5px text) renders under the
       // 44px min tap-target size; 0.8 keeps it comfortably above 44px. See task-6-report.md.
@@ -380,7 +391,7 @@
     }
     // ======================================================================
 
-    window.addEventListener("resize", () => { sizeConfetti(); if (state === "open") revealSheet(); });
+    window.addEventListener("resize", () => { sizeConfetti(); if (state === "open" && !fallbackMode) revealSheet(); });
   })();
   </script>
 </body>
