@@ -118,38 +118,37 @@ git commit -m "Envelope clips: raw Seedance intro/open, both orientations"
 **Interfaces:**
 - Produces: final videos; `anchor.txt` containing two lines `ANCHOR_M=<seconds>` and `ANCHOR_D=<seconds>` (exact intro durations) consumed by Task 4.
 
-- [ ] **Step 1: Measure intro durations (these are the ANCHOR values)**
+**AMENDED (user directive 2026-07-26): the fly-in intro is CUT. The video is the
+open clip only; the page loads directly on the sealed envelope (video frame 0).
+ANCHOR is dead — everywhere later tasks reference `CFG.anchor`, the value is 0.**
+
+- [ ] **Step 1: Encode portrait + landscape from the open clips only**
 
 ```bash
 cd "/c/Users/yashk/OneDrive/Desktop/Glad You Were Born Today (Repo)"
-AM=$(ffprobe -v error -show_entries format=duration -of csv=p=0 Assets/envelope/intro-m-raw.mp4)
-AD=$(ffprobe -v error -show_entries format=duration -of csv=p=0 Assets/envelope/intro-raw.mp4)
-printf "ANCHOR_M=%s\nANCHOR_D=%s\n" "$AM" "$AD" | tee Assets/envelope/anchor.txt
-```
-
-- [ ] **Step 2: Stitch + encode portrait**
-
-```bash
-ffmpeg -i Assets/envelope/intro-m-raw.mp4 -i Assets/envelope/open-m-raw.mp4 \
-  -filter_complex "[0:v][1:v]concat=n=2:v=1:a=0,scale=1080:1920:flags=lanczos,fps=30[v]" \
-  -map "[v]" -an -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 23 -preset slow \
+ffmpeg -y -i Assets/envelope/open-m-raw.mp4 \
+  -vf "scale=1080:1920:flags=lanczos,fps=30" \
+  -an -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 23 -preset slow \
   -g 12 -movflags +faststart Website/assets/vid/envelope-m.mp4
+ffmpeg -y -i Assets/envelope/open-raw.mp4 \
+  -vf "scale=1920:1080:flags=lanczos,fps=30" \
+  -an -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 23 -preset slow \
+  -g 12 -movflags +faststart Website/assets/vid/envelope.mp4
 ```
 
-Then landscape, same command with `intro-raw.mp4`/`open-raw.mp4`, `scale=1920:1080`, output `Website/assets/vid/envelope.mp4`.
-
-- [ ] **Step 3: Verify sizes and seam**
+- [ ] **Step 3: Verify sizes**
 
 Run: `ls -la Website/assets/vid/envelope*.mp4`
 Expected: `-m` ≤ 6 MB, landscape ≤ 12 MB. If over: bump `-crf` to 26 and re-encode.
-Seam check: extract 3 frames around ANCHOR_M (`ffmpeg -ss <ANCHOR_M-0.1> -i envelope-m.mp4 -frames:v 3 seamcheck-%d.png`) — no visible jump.
 
 - [ ] **Step 4: Posters + placeholder** (settled frame at ANCHOR)
 
+Posters are the videos' FIRST frame (the sealed envelope):
+
 ```bash
-ffmpeg -ss $AM -i Website/assets/vid/envelope-m.mp4 -frames:v 1 -update 1 -c:v libwebp -q:v 82 Website/assets/envelope-poster-m.webp
-ffmpeg -ss $AD -i Website/assets/vid/envelope.mp4 -frames:v 1 -update 1 -c:v libwebp -q:v 82 Website/assets/envelope-poster.webp
-ffmpeg -ss $AM -i Website/assets/vid/envelope-m.mp4 -frames:v 1 -vf "scale=40:-1,gblur=sigma=2" -update 1 -c:v libwebp -q:v 40 Website/assets/envelope-p.webp
+ffmpeg -y -i Website/assets/vid/envelope-m.mp4 -frames:v 1 -update 1 -c:v libwebp -q:v 82 Website/assets/envelope-poster-m.webp
+ffmpeg -y -i Website/assets/vid/envelope.mp4 -frames:v 1 -update 1 -c:v libwebp -q:v 82 Website/assets/envelope-poster.webp
+ffmpeg -y -i Website/assets/vid/envelope-m.mp4 -frames:v 1 -vf "scale=40:-1,gblur=sigma=2" -update 1 -c:v libwebp -q:v 40 Website/assets/envelope-p.webp
 ```
 
 - [ ] **Step 5: Commit**
@@ -204,14 +203,14 @@ git commit -m "Envelope: stitched mobile-first videos, posters, anchor times"
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const portrait = window.matchMedia("(orientation: portrait)").matches;
 
-  // ---- Config (values from Assets/envelope/anchor.txt — set the real numbers) ----
+  // ---- Config (anchor is 0: the video IS the open animation, frame 0 = sealed) ----
   const CFG = portrait ? {
     src: "assets/vid/envelope-m.mp4", poster: "assets/envelope-poster-m.webp",
-    anchor: /*ANCHOR_M*/ 3.50, frameW: 1080, frameH: 1920,
+    anchor: 0, frameW: 1080, frameH: 1920,
     letter: { x: 0.50, y: 0.46, h: 0.42 }   // fractions; re-measured in Task 5
   } : {
     src: "assets/vid/envelope.mp4", poster: "assets/envelope-poster.webp",
-    anchor: /*ANCHOR_D*/ 3.50, frameW: 1920, frameH: 1080,
+    anchor: 0, frameW: 1920, frameH: 1080,
     letter: { x: 0.50, y: 0.44, h: 0.55 }
   };
 
@@ -240,7 +239,7 @@ git commit -m "Envelope: stitched mobile-first videos, posters, anchor times"
       if (v.currentTime >= t - EPS) { v.pause(); v.currentTime = t; done(); return; }
       watchRAF = requestAnimationFrame(step);
     };
-    v.play().catch(() => { v.currentTime = CFG.anchor; setState("sealed"); });  // autoplay refusal: skip to settled frame
+    v.play().catch(() => { v.currentTime = CFG.anchor; setState("sealed"); });  // play only ever follows a user gesture; catch resets safely
     watchRAF = requestAnimationFrame(step);
   }
 
@@ -255,12 +254,10 @@ git commit -m "Envelope: stitched mobile-first videos, posters, anchor times"
     if (open) revealSheet();                     // defined in Task 5
   }
 
-  // ---- Boot: intro flythrough, pause on the settled frame ----
+  // ---- Boot: no intro — the page waits on the sealed envelope (frame 0) ----
   v.addEventListener("loadeddata", () => {
     loading.classList.add("gone"); ph.classList.add("gone");
-    if (reduced) { v.currentTime = CFG.anchor; setState("sealed"); return; }
-    setState("flying");
-    playUntil(CFG.anchor, () => setState("sealed"));
+    setState("sealed");
   }, { once: true });
   v.load();
 
@@ -273,12 +270,12 @@ git commit -m "Envelope: stitched mobile-first videos, posters, anchor times"
 </script>
 ```
 
-Set the two `anchor` values from `Assets/envelope/anchor.txt` (round DOWN to 2 decimals) and paste the confetti snippet at the marked slot. `revealSheet` is added in Task 5 — for this task only, add a temporary stub `function revealSheet(){}` directly above `onState` so the file runs.
+Paste the confetti snippet at the marked slot. `revealSheet` is added in Task 5 — for this task only, add a temporary stub `function revealSheet(){}` directly above `onState` so the file runs.
 
 - [ ] **Step 4: Verify in browser**
 
 Run: `npx serve "Website" -l 8123` then open `http://localhost:8123` in Chrome with DevTools device emulation (iPhone 14 Pro).
-Expected: blurred placeholder → intro auto-plays → freezes exactly on the settled envelope → title fades in, "Break the seal" appears. No console errors. Toggle emulation off and reload → landscape video plays instead.
+Expected: blurred placeholder → sealed envelope (video frame 0, NOT playing) → title fades in, "Break the seal" appears. Nothing auto-plays. No console errors. Toggle emulation off and reload → landscape asset loads instead.
 
 - [ ] **Step 5: Commit**
 
@@ -375,13 +372,9 @@ git commit -m "Envelope: tap open, reverse seal-back, gated letter buttons"
 **Interfaces:**
 - Consumes: everything from Tasks 4–5.
 
-- [ ] **Step 1: Autoplay-refusal + load-failure paths** (insert after the boot block):
+- [ ] **Step 1: Load-failure path** (insert after the boot block; there is no autoplay in this design, so no autoplay-refusal handling is needed):
 
 ```js
-  // Autoplay refused (iOS Low Power Mode): skip intro, wait sealed on poster
-  // (playUntil's catch already routes here via setState("sealed"); ensure frame:)
-  v.addEventListener("pause", () => { if (state === "flying") { v.currentTime = CFG.anchor; setState("sealed"); } });
-
   // Video never arrives: static-poster fallback — the site must never dead-end
   const bail = setTimeout(() => {
     if (state !== "loading") return;
