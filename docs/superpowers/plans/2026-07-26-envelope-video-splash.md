@@ -413,16 +413,13 @@ git commit -m "Envelope: autoplay/offline fallbacks + keyboard a11y"
 
 ### Task 7: Device QA + deploy
 
-- [ ] **Step 1: Preview deploy**
+**AMENDED (user directive 2026-07-26): no preview deploy and NO local browser
+verification — after Task 6's review passes, merge and deploy straight to
+production. The user tests on the live site.**
 
-```bash
-cd "/c/Users/yashk/OneDrive/Desktop/Glad You Were Born Today (Repo)/Website"
-vercel deploy
-```
-
-Expected: preview URL on the `born-today-world` project.
-
-- [ ] **Step 2: User tests on their phone** (primary gate): intro plays, pause frame crisp, tap-open smooth, buttons land on the letter, seal-back works, Low Power Mode shows sealed poster and still opens on tap. Fix and redeploy until the user signs off.
+- [ ] **Step 1: User tests on their phone against PRODUCTION** after Step 4:
+tap-open smooth, buttons land on the letter, seal-back works. Fix and
+redeploy until the user signs off.
 
 - [ ] **Step 3: Desktop pass** on the preview URL: landscape tier loads, window resize while open re-seats the buttons, rapid-tap console check from Task 5 Step 4 passes.
 
