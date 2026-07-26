@@ -38,8 +38,8 @@ mkdir -p Assets/envelope
 
 - [ ] **Step 2: Verify tooling exists**
 
-Run: `ffmpeg -version | head -1 && ffprobe -version | head -1 && cwebp -version`
-Expected: version strings. If any missing: `winget install Gyan.FFmpeg` and `winget install Google.Libwebp` (or download libwebp binaries), then re-verify.
+Run: `ffmpeg -version | head -1 && ffprobe -version | head -1 && ffmpeg -hide_banner -encoders | grep libwebp`
+Expected: version strings + libwebp encoder listed (ffmpeg's built-in webp encoder replaces cwebp; no separate install).
 
 ---
 
@@ -147,11 +147,9 @@ Seam check: extract 3 frames around ANCHOR_M (`ffmpeg -ss <ANCHOR_M-0.1> -i enve
 - [ ] **Step 4: Posters + placeholder** (settled frame at ANCHOR)
 
 ```bash
-ffmpeg -ss $AM -i Website/assets/vid/envelope-m.mp4 -frames:v 1 -update 1 /tmp/pm.png
-ffmpeg -ss $AD -i Website/assets/vid/envelope.mp4 -frames:v 1 -update 1 /tmp/pd.png
-cwebp -q 82 /tmp/pm.png -o Website/assets/envelope-poster-m.webp
-cwebp -q 82 /tmp/pd.png -o Website/assets/envelope-poster.webp
-ffmpeg -i /tmp/pm.png -vf "scale=40:-1,gblur=sigma=2" -update 1 /tmp/pp.png && cwebp -q 40 /tmp/pp.png -o Website/assets/envelope-p.webp
+ffmpeg -ss $AM -i Website/assets/vid/envelope-m.mp4 -frames:v 1 -update 1 -c:v libwebp -q:v 82 Website/assets/envelope-poster-m.webp
+ffmpeg -ss $AD -i Website/assets/vid/envelope.mp4 -frames:v 1 -update 1 -c:v libwebp -q:v 82 Website/assets/envelope-poster.webp
+ffmpeg -ss $AM -i Website/assets/vid/envelope-m.mp4 -frames:v 1 -vf "scale=40:-1,gblur=sigma=2" -update 1 -c:v libwebp -q:v 40 Website/assets/envelope-p.webp
 ```
 
 - [ ] **Step 5: Commit**
