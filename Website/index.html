@@ -242,7 +242,9 @@
         if (state === "sealed") { setState("open"); sheetEl.style.left = "50%"; sheetEl.style.top = "58%"; sheetEl.style.opacity = "1"; sheetEl.style.pointerEvents = "auto"; fireConfetti(); }
       };
       // Task 5's tap/btn listeners already delegate through this reassigned `toggle`
-      // via arrow-wrapper closures — no extra listeners are added here.
+      // via arrow-wrapper closures — no extra listeners are added here. Note that
+      // setState("open") still runs onState() → revealSheet(), whose scale clamp and
+      // focus-move apply in fallback mode too; only left/top are overridden below it.
     }, 8000);
     v.addEventListener("loadeddata", () => clearTimeout(bail), { once: true });
 
