@@ -7,6 +7,11 @@
 (function () {
   var SRC = 'assets/audio/theme.mp3';
   var KEY = 'sw-music-on';
+  // <script src="music.js" data-autostart> arms playback on the first tap of the
+  // visit (unless the visitor already muted) — used by pages that should have
+  // music without an explicit "start" moment, like the adult site.
+  var tag = document.currentScript;
+  var AUTO = !!(tag && tag.hasAttribute('data-autostart'));
 
   fetch(SRC, { method: 'HEAD' })
     .then(function (r) { if (r.ok) build(); })
@@ -58,10 +63,20 @@
 
     btn.addEventListener('click', function () { set(audio.paused); });
 
+    // Public hook: pages can start/stop the theme inside their own user-gesture
+    // handlers (the envelope page starts it the moment the seal is tapped).
+    // Respects an explicit mute from earlier in the visit.
+    window.swMusic = {
+      on: function () { var s = null; try { s = sessionStorage.getItem(KEY); } catch (e) {} if (s !== '0') set(true); },
+      off: function () { set(false); }
+    };
+
     // resume across pages within the visit — needs one tap anyway on strict
-    // browsers, so re-arm on the first gesture instead of trying to autoplay
-    var wanted = false;
-    try { wanted = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
+    // browsers, so re-arm on the first gesture instead of trying to autoplay.
+    // data-autostart pages also arm on a fresh visit (stored choice unset).
+    var stored = null;
+    try { stored = sessionStorage.getItem(KEY); } catch (e) {}
+    var wanted = stored === '1' || (AUTO && stored !== '0');
     if (wanted) {
       var once = function () { set(true); };
       window.addEventListener('pointerdown', once, { once: true });

@@ -142,6 +142,7 @@
   <canvas id="confetti"></canvas>
   <div class="loading" id="loading">Folding the paper…</div>
 
+  <script src="music.js?v=2"></script>
   <script>
   (function () {
     "use strict";
@@ -219,7 +220,7 @@
       setState("sealed");
       // in fallback, "open" = reveal buttons over the poster, centered
       toggle = function () {
-        if (state === "sealed") { setState("open"); sheetEl.style.left = "50%"; sheetEl.style.top = "58%"; sheetEl.style.opacity = "1"; sheetEl.style.pointerEvents = "auto"; fireConfetti(); }
+        if (state === "sealed") { if (window.swMusic) window.swMusic.on(); setState("open"); sheetEl.style.left = "50%"; sheetEl.style.top = "58%"; sheetEl.style.opacity = "1"; sheetEl.style.pointerEvents = "auto"; fireConfetti(); }
         else if (state === "open") { setState("sealed"); }
       };
       // Task 5's tap/btn listeners already delegate through this reassigned `toggle`
@@ -261,6 +262,7 @@
     // ---- Open / close (let: the Task 6 static-poster fallback reassigns it) ----
     let toggle = function () {
       if (state === "sealed") {
+        if (window.swMusic) window.swMusic.on();   // the tap is a user gesture: music may start
         setState("opening");
         if (reduced) { v.currentTime = END(); setState("open"); fireConfetti(); return; }
         playUntil(END(), () => { setState("open"); fireConfetti(); });
