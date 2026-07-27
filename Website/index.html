@@ -51,42 +51,16 @@
 
   .ui{position:fixed;inset:0;z-index:3;pointer-events:none;}
 
-  .title{
-    position:absolute;top:clamp(24px,6vh,56px);left:0;right:0;text-align:center;
-    margin:0;padding:0 24px;
-    font-family:var(--font-display);
-    font-weight:800;font-size:clamp(32px,5.8vw,58px);
-    line-height:1.04;letter-spacing:-.01em;color:var(--ink);
-    text-shadow:0 2px 24px rgba(255,255,255,.55);
-    transition:opacity .3s ease, transform .3s ease;
-  }
-  .title em{
-    display:block;font-style:normal;
-    background:linear-gradient(165deg,#f4dd97 6%,#e6c46a 42%,#b8862e 92%);
-    -webkit-background-clip:text;background-clip:text;
-    -webkit-text-fill-color:transparent;
-    text-shadow:none;
-  }
-  .title__eyebrow{
-    display:block;font-size:clamp(11px,1.3vw,13px);font-weight:700;
-    letter-spacing:.3em;text-transform:uppercase;
-    color:color-mix(in srgb,var(--ink) 62%,var(--pink));
-    margin-bottom:10px;
-  }
-  .title__sub{
-    display:block;font-family:var(--font-body);font-weight:500;
-    font-size:clamp(14px,1.6vw,17px);letter-spacing:.01em;line-height:1.5;
-    color:color-mix(in srgb,var(--ink) 82%,#fff);margin-top:12px;
-  }
-  .title.faded{opacity:0;transform:translateY(-8px);}
-
-  /* keyboard fallback for the tap-to-open envelope: invisible until focused */
-  .sr-open{
-    position:fixed;left:50%;bottom:max(clamp(26px,6vh,52px), env(safe-area-inset-bottom));
+  /* visible tap-to-open call to action pinned under the envelope */
+  .open-cta{
+    position:fixed;left:50%;bottom:max(clamp(28px,7vh,64px), env(safe-area-inset-bottom));
     transform:translateX(-50%);
-    opacity:0;pointer-events:none;
+    animation:cta-pulse 2.6s ease-in-out infinite;
   }
-  .sr-open:focus-visible{opacity:1;pointer-events:auto;}
+  @keyframes cta-pulse{
+    0%,100%{transform:translateX(-50%) scale(1);}
+    50%{transform:translateX(-50%) scale(1.05);}
+  }
   .open-btn{
     pointer-events:auto;cursor:pointer;
     background:linear-gradient(180deg,#FFFDF4,#F6E8C8);
@@ -141,7 +115,8 @@
   .loading.gone{opacity:0;pointer-events:none;}
 
   @media (prefers-reduced-motion: reduce){
-    .open-btn,.title,.sheet-actions{transition:none;}
+    .open-btn,.sheet-actions{transition:none;}
+    .open-cta{animation:none;}
     .stage.idle #scene-video,.stage.idle .stage__ph{animation:none;}
   }
 </style>
@@ -155,12 +130,7 @@
   </div>
 
   <div class="ui">
-    <h1 class="title faded">
-      <span class="title__eyebrow">A letter came for you</span>
-      Glad You Were <em>Born Today</em>
-      <span class="title__sub">Somebody remembered your birthday. Tap the seal and see who.</span>
-    </h1>
-    <button class="open-btn sr-open" id="toggle" aria-label="Open the envelope">Break the seal</button>
+    <button class="open-btn open-cta" id="toggle" aria-label="Open the envelope">Tap to Open</button>
   </div>
 
   <!-- choices live on the letter; positioned by JS, revealed when the envelope opens -->
@@ -193,7 +163,6 @@
     const ph = document.getElementById("ph");
     const tap = document.getElementById("taplayer");
     const btn = document.getElementById("toggle");
-    const titleEl = document.querySelector(".title");
     const sheetEl = document.getElementById("sheet");
     const loading = document.getElementById("loading");
     const stage = document.querySelector(".stage");
@@ -224,9 +193,8 @@
     function onState() {
       const sealed = state === "sealed", open = state === "open";
       stage.classList.toggle("idle", sealed);
-      titleEl.classList.toggle("faded", !sealed);
       btn.hidden = !(sealed || open);
-      btn.textContent = open ? "Seal it back" : "Break the seal";
+      btn.textContent = open ? "Seal it back" : "Tap to Open";
       btn.setAttribute("aria-label", open ? "Close the envelope" : "Open the envelope");
       sheetEl.setAttribute("aria-hidden", open ? "false" : "true");
       if (!open) { sheetEl.style.opacity = "0"; sheetEl.style.pointerEvents = "none"; }
