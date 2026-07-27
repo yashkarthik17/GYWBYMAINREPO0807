@@ -53,7 +53,7 @@
 
   /* visible tap-to-open call to action pinned under the envelope */
   .open-cta{
-    position:fixed;left:50%;bottom:max(clamp(28px,7vh,64px), env(safe-area-inset-bottom));
+    position:fixed;left:50%;bottom:max(clamp(44px,10vh,92px), env(safe-area-inset-bottom));
     transform:translateX(-50%);
     animation:cta-pulse 2.6s ease-in-out infinite;
   }
@@ -79,7 +79,7 @@
   .sheet-actions{
     position:fixed;left:50%;top:60%;z-index:6;
     display:flex;flex-direction:column;align-items:stretch;gap:11px;
-    width:min(80vw,340px);
+    width:min(72vw,306px);
     transform:translate(-50%,-50%) scale(var(--s,1));
     transform-origin:center center;
     opacity:0;pointer-events:none;
@@ -93,9 +93,9 @@
     pointer-events:auto;cursor:pointer;text-decoration:none;text-align:center;
     background:linear-gradient(180deg,#FFFDF6,#F8F0DA);
     color:#8E2233;border:1.2px solid rgba(184,134,46,.55);
-    font-family:var(--font-display);font-size:16px;font-weight:700;
+    font-family:var(--font-display);font-size:14.5px;font-weight:700;
     letter-spacing:.08em;text-transform:uppercase;line-height:1.35;
-    padding:19px 24px;border-radius:15px;
+    padding:17px 22px;border-radius:14px;
     box-shadow:0 4px 14px rgba(80,54,10,.16), inset 0 1px 0 rgba(255,255,255,.9);
     transition:transform .16s ease, filter .16s ease, box-shadow .16s ease;
   }
