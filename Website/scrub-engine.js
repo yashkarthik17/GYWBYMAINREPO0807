@@ -574,14 +574,14 @@ function mountScrollWorld(container, config) {
           const cur = jv.currentTime;
           const diff = tt - cur;
           jCur = tt;   // (kept for the debug readout)
-          if (diff > 6) {
-            // big forward jump (nav-dot, hard fling, slam to page bottom): land 1.6s
-            // SHORT and glide the rest in, so arrival keeps motion — a straight seek
-            // to the target was a hard cut to a parked frame, which read as the worst
-            // of the transition jerks. 1.6s at a gentle seeded rate reads as a
-            // cinematic approach rather than a skip-and-brake.
-            try { jv.currentTime = Math.max(0, tt - 1.6); } catch (e) {}
-            jRate = 2.2; jChasing = true;
+          if (diff > 10) {
+            // big forward jump (nav-dot, slam to page bottom): land 2.5s SHORT and
+            // glide the rest in, so arrival keeps motion — a straight seek to the
+            // target was a hard cut to a parked frame, which read as the worst of
+            // the transition jerks. Threshold sits at 10s (was 6) so ordinary fling
+            // momentum never hard-skips story beats — only deliberate long jumps do.
+            try { jv.currentTime = Math.max(0, tt - 2.5); } catch (e) {}
+            jRate = 1.8; jChasing = true;
             if (jv.paused && !jPlayPending) jPlay();
           } else if (diff < -0.1) {
             // backward: video can't decode in reverse, so scrub with GATED seeks —
@@ -610,7 +610,7 @@ function mountScrollWorld(container, config) {
             // FINALE GLIDE: the cap tapers with remaining flight time (inactive until
             // ~6s from the end), so the send-off lands near real time — the last
             // transition must never fast-forward past the viewer.
-            const maxR = Math.min(4, 1.05 + 0.5 * Math.max(0, jEnd - cur));
+            const maxR = Math.min(3.5, 1.05 + 0.5 * Math.max(0, jEnd - cur));
             const targetRate = Math.min(maxR, diff * 2.4);
             // decelerations ease at roughly half the accel speed — a slowdown should
             // glide out, while a speed-up still needs to react to the thumb.

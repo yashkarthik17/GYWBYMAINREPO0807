@@ -44,12 +44,15 @@
   </section>
 </div>
 <script src="../nav.js?v=1"></script>
-<script src="scrub-engine.js?v=6"></script>
+<script src="scrub-engine.js?v=7"></script>
 <script>
 mountScrollWorld(document.getElementById('world'), {
   hint: 'scroll to crash the party',
   diveScroll: 1.5,
   crossfade: 0.12,
+  // longer mobile track: same scroll speed demands ~30% less playback rate,
+  // so chase-play keeps up instead of racing/skipping (scroll-skip fix)
+  scrollMobileFactor: 2.6,
   journeyMobile: {
     clip: 'assets/vid/journey-m.mp4?v=4',
     poster: 'assets/quiet-poster-m.webp',

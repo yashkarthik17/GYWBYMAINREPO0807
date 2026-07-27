@@ -52,7 +52,7 @@
   </div>
 
   <script src="nav.js?v=1"></script>
-  <script src="scrub-engine.js?v=11"></script>
+  <script src="scrub-engine.js?v=12"></script>
   <script src="music.js"></script>
   <script>
     // Desktop/tablet serve the landscape tier (re-rendered July 2026 from the
@@ -64,6 +64,9 @@
     mountScrollWorld(document.getElementById('world'), {
       hint: 'scroll to crash the party',
       crossfade: 0.15,
+      // longer mobile track: same scroll speed demands ~30% less playback rate,
+      // so chase-play keeps up instead of racing/skipping (scroll-skip fix)
+      scrollMobileFactor: 2.6,
       diveScroll: 1.3,
       connScroll: 0.9,
       // Phones scrub ONE stitched clip (single decoder — iPhones cap concurrent video
