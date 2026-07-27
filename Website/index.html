@@ -105,7 +105,7 @@
   .sheet-actions{
     position:fixed;left:50%;top:60%;z-index:6;
     display:flex;flex-direction:column;align-items:stretch;gap:11px;
-    width:min(64vw,260px);
+    width:min(74vw,310px);
     transform:translate(-50%,-50%) scale(var(--s,1));
     transform-origin:center center;
     opacity:0;pointer-events:none;
@@ -119,9 +119,9 @@
     pointer-events:auto;cursor:pointer;text-decoration:none;text-align:center;
     background:linear-gradient(180deg,#FFFDF6,#F8F0DA);
     color:#8E2233;border:1.2px solid rgba(184,134,46,.55);
-    font-family:var(--font-display);font-size:12px;font-weight:700;
+    font-family:var(--font-display);font-size:14.5px;font-weight:700;
     letter-spacing:.08em;text-transform:uppercase;line-height:1.35;
-    padding:12px 18px;border-radius:12px;
+    padding:17px 22px;border-radius:14px;
     box-shadow:0 4px 14px rgba(80,54,10,.16), inset 0 1px 0 rgba(255,255,255,.9);
     transition:transform .16s ease, filter .16s ease, box-shadow .16s ease;
   }
@@ -131,11 +131,6 @@
   .sheet-btn:hover{box-shadow:0 7px 18px rgba(80,54,10,.24);}
   .sheet-btn.grown{color:#8E2233;}
   .sheet-btn.kids{color:#2E4396;}
-  .sheet-btn small{
-    display:block;margin-top:3px;
-    font-family:var(--font-body);font-size:9.5px;font-weight:500;
-    letter-spacing:.06em;text-transform:none;opacity:.72;
-  }
 
   .loading{
     position:fixed;inset:0;z-index:7;display:flex;align-items:center;justify-content:center;
@@ -170,8 +165,8 @@
 
   <!-- choices live on the letter; positioned by JS, revealed when the envelope opens -->
   <div class="sheet-actions" id="sheet" aria-hidden="true">
-    <a class="sheet-btn grown" href="adult/">Glad You Were Born Today<small>real parties, really crashed</small></a>
-    <a class="sheet-btn kids" href="story.html">Glad You Were Born Today (Kids)<small>fly through Starry&rsquo;s world</small></a>
+    <a class="sheet-btn grown" href="adult/">Glad You Were Born Today</a>
+    <a class="sheet-btn kids" href="story.html">Glad You Were Born Today (Kids)</a>
   </div>
 
   <canvas id="confetti"></canvas>
