@@ -5,7 +5,7 @@
    so no autoplay policy fights), loops, and the on/off choice sticks for the
    visit (sessionStorage). */
 (function () {
-  var SRC = 'assets/audio/theme.mp3';
+  var SRC = 'assets/audio/theme.mp3?v=3';
   var KEY = 'sw-music-on';
   // <script src="music.js" data-autostart> arms playback on the first tap of the
   // visit (unless the visitor already muted) — used by pages that should have
