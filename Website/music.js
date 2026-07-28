@@ -14,6 +14,10 @@
   var tag = document.currentScript;
   var AUTO = !!(tag && tag.hasAttribute('data-autostart'));
   var SRC = (tag && tag.getAttribute('data-src')) || 'assets/audio/theme.mp3?v=3';
+  // data-start="8" skips a dead-air intro: playback begins this many seconds in
+  // and every loop restarts there too, so the delay never plays. Pages without
+  // the attribute (the envelope's classical strings) play from 0:00 as before.
+  var START = parseFloat(tag && tag.getAttribute('data-start')) || 0;
 
   fetch(SRC, { method: 'HEAD' })
     .then(function (r) { if (r.ok) build(); })
@@ -21,8 +25,27 @@
 
   function build() {
     var audio = new Audio(SRC);
-    audio.loop = true;
     audio.preload = 'none';
+
+    // Seek past the intro. With an offset we can't use native looping (it always
+    // rewinds to 0), so loop by hand on 'ended'. preload='none' means metadata
+    // isn't ready until the first play() kicks off a load, so also seek on
+    // 'loadedmetadata' — that catches the very first start with no intro blip.
+    function seekIntoTrack() {
+      if (START > 0 && audio.currentTime < START - 0.05) {
+        try { audio.currentTime = START; } catch (e) {}
+      }
+    }
+    if (START > 0) {
+      audio.loop = false;
+      audio.addEventListener('loadedmetadata', seekIntoTrack);
+      audio.addEventListener('ended', function () {
+        seekIntoTrack();
+        audio.play().catch(function () {});
+      });
+    } else {
+      audio.loop = true;
+    }
 
     var btn = document.createElement('button');
     btn.type = 'button';
@@ -48,6 +71,7 @@
 
     function set(on) {
       if (on) {
+        seekIntoTrack();
         audio.play().then(function () {
           btn.classList.add('is-on');
           btn.setAttribute('aria-pressed', 'true');
