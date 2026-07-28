@@ -5,13 +5,15 @@
    so no autoplay policy fights), loops, and the on/off choice sticks for the
    visit (sessionStorage). */
 (function () {
-  var SRC = 'assets/audio/theme.mp3?v=3';
   var KEY = 'sw-music-on';
   // <script src="music.js" data-autostart> arms playback on the first tap of the
   // visit (unless the visitor already muted) — used by pages that should have
   // music without an explicit "start" moment, like the adult site.
+  // data-src overrides the track for that page (the envelope page plays the
+  // classical strings; everything else gets its site's theme).
   var tag = document.currentScript;
   var AUTO = !!(tag && tag.hasAttribute('data-autostart'));
+  var SRC = (tag && tag.getAttribute('data-src')) || 'assets/audio/theme.mp3?v=3';
 
   fetch(SRC, { method: 'HEAD' })
     .then(function (r) { if (r.ok) build(); })
