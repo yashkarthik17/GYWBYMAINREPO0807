@@ -114,9 +114,15 @@
   }
   .loading.gone{opacity:0;pointer-events:none;}
 
-  /* ---- cinematic intro lines: fade through over the sky, movie cold-open ---- */
+  /* ---- cinematic intro: blank sky + lines, then the envelope pops in ---- */
+  .stage.veil{opacity:0;}
+  .stage.pop{animation:stage-pop .8s cubic-bezier(.34,1.56,.64,1) both;}
+  @keyframes stage-pop{
+    0%{opacity:0;transform:scale(.86);}
+    100%{opacity:1;transform:scale(1);}
+  }
   .cine{
-    position:fixed;left:0;right:0;top:clamp(48px,9vh,96px);z-index:4;
+    position:fixed;left:0;right:0;top:40vh;z-index:4;
     text-align:center;padding:0 28px;pointer-events:none;
   }
   .cine__line{
@@ -137,7 +143,7 @@
 </style>
 </head>
 <body>
-  <div class="stage" aria-hidden="true">
+  <div class="stage veil" aria-hidden="true">
     <img class="stage__ph" id="ph" src="assets/envelope-p.webp" alt="" />
     <video id="scene-video" muted playsinline preload="auto"
            poster="assets/envelope-poster-m.webp"></video>
@@ -216,8 +222,8 @@
     function onState() {
       const sealed = state === "sealed", open = state === "open";
       stage.classList.toggle("idle", sealed);
-      if (sealed) playCine(); else stopCine();
-      btn.hidden = !(sealed || open);
+      if (sealed) playCine();
+      btn.hidden = !((sealed && introDone) || open);
       btn.textContent = open ? "Seal it back" : "Tap to Open";
       btn.setAttribute("aria-label", open ? "Close the envelope" : "Open the envelope");
       sheetEl.setAttribute("aria-hidden", open ? "false" : "true");
@@ -225,27 +231,38 @@
       if (open) revealSheet();                     // defined in Task 5
     }
 
-    // ---- Cinematic intro lines: fade through once, first time we land sealed.
-    // Any tap that opens the envelope cancels them instantly (state leaves
-    // "sealed" → hide). Reduced motion skips the sequence entirely.
+    // ---- Cinematic intro: blank sky, the lines fade through, THEN the
+    // envelope pops in. A tap during the text skips straight to the envelope
+    // (it does NOT open it sight-unseen). Reduced motion skips to the envelope.
     const cineEl = document.getElementById("cine");
     const cineLines = cineEl.querySelectorAll(".cine__line");
-    let cinePlayed = false, cineTimers = [];
+    let cinePlayed = false, introDone = false, cineTimers = [];
     function stopCine() {
       cineTimers.forEach(clearTimeout); cineTimers = [];
       cineLines.forEach(l => l.classList.remove("is-on"));
     }
+    function endIntro() {
+      if (introDone) return;
+      introDone = true;
+      stopCine();
+      cineEl.style.display = "none";
+      stage.classList.remove("veil");
+      stage.classList.add("pop");
+      onState();                      // reveal the Tap to Open button
+    }
     function playCine() {
-      if (cinePlayed || reduced) return;
+      if (cinePlayed) return;
       cinePlayed = true;
+      if (reduced) { endIntro(); return; }
       const HOLD = 2600, GAP = 350;
       cineLines.forEach((line, i) => {
         cineTimers.push(setTimeout(() => {
-          if (state !== "sealed") return;
+          if (introDone) return;
           line.classList.add("is-on");
           cineTimers.push(setTimeout(() => line.classList.remove("is-on"), HOLD));
         }, 400 + i * (HOLD + GAP)));
       });
+      cineTimers.push(setTimeout(endIntro, 400 + cineLines.length * (HOLD + GAP) + 300));
     }
 
     // ---- Boot: no intro video — the page waits on the sealed envelope (frame 0) ----
@@ -263,6 +280,7 @@
       v.remove();
       ph.src = CFG.poster; ph.classList.remove("gone"); ph.style.filter = "none"; ph.style.transform = "none";
       loading.classList.add("gone");
+      endIntro();                     // never strand the poster behind the intro veil
       setState("sealed");
       // in fallback, "open" = reveal buttons over the poster, centered
       toggle = function () {
@@ -307,6 +325,7 @@
 
     // ---- Open / close (let: the Task 6 static-poster fallback reassigns it) ----
     let toggle = function () {
+      if (!introDone) { endIntro(); return; }      // tap during the text: skip to the envelope
       if (state === "sealed") {
         if (window.swMusic) window.swMusic.on();   // the tap is a user gesture: music may start
         setState("opening");
