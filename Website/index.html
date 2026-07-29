@@ -114,6 +114,21 @@
   }
   .loading.gone{opacity:0;pointer-events:none;}
 
+  /* ---- cinematic intro lines: fade through over the sky, movie cold-open ---- */
+  .cine{
+    position:fixed;left:0;right:0;top:clamp(48px,9vh,96px);z-index:4;
+    text-align:center;padding:0 28px;pointer-events:none;
+  }
+  .cine__line{
+    position:absolute;left:0;right:0;margin:0 auto;max-width:560px;
+    font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-style:italic;
+    font-size:clamp(24px,6vw,40px);line-height:1.25;color:var(--ink);
+    text-shadow:0 2px 22px rgba(255,255,255,.85), 0 0 46px rgba(255,255,255,.55);
+    opacity:0;transform:translateY(10px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .cine__line.is-on{opacity:1;transform:translateY(0);}
+
   @media (prefers-reduced-motion: reduce){
     .open-btn,.sheet-actions{transition:none;}
     .open-cta{animation:none;}
@@ -131,6 +146,13 @@
 
   <div class="ui">
     <button class="open-btn open-cta" id="toggle" aria-label="Open the envelope">Tap to Open</button>
+  </div>
+
+  <div class="cine" id="cine" aria-hidden="true">
+    <p class="cine__line">Birthdays have had the same song for generations.</p>
+    <p class="cine__line">Now there&rsquo;s a new one.</p>
+    <p class="cine__line">Glad You Were Born Today</p>
+    <p class="cine__line">A joyful anthem built to turn every birthday into an event.</p>
   </div>
 
   <!-- choices live on the letter; positioned by JS, revealed when the envelope opens -->
@@ -194,6 +216,7 @@
     function onState() {
       const sealed = state === "sealed", open = state === "open";
       stage.classList.toggle("idle", sealed);
+      if (sealed) playCine(); else stopCine();
       btn.hidden = !(sealed || open);
       btn.textContent = open ? "Seal it back" : "Tap to Open";
       btn.setAttribute("aria-label", open ? "Close the envelope" : "Open the envelope");
@@ -202,7 +225,30 @@
       if (open) revealSheet();                     // defined in Task 5
     }
 
-    // ---- Boot: no intro — the page waits on the sealed envelope (frame 0) ----
+    // ---- Cinematic intro lines: fade through once, first time we land sealed.
+    // Any tap that opens the envelope cancels them instantly (state leaves
+    // "sealed" → hide). Reduced motion skips the sequence entirely.
+    const cineEl = document.getElementById("cine");
+    const cineLines = cineEl.querySelectorAll(".cine__line");
+    let cinePlayed = false, cineTimers = [];
+    function stopCine() {
+      cineTimers.forEach(clearTimeout); cineTimers = [];
+      cineLines.forEach(l => l.classList.remove("is-on"));
+    }
+    function playCine() {
+      if (cinePlayed || reduced) return;
+      cinePlayed = true;
+      const HOLD = 2600, GAP = 350;
+      cineLines.forEach((line, i) => {
+        cineTimers.push(setTimeout(() => {
+          if (state !== "sealed") return;
+          line.classList.add("is-on");
+          cineTimers.push(setTimeout(() => line.classList.remove("is-on"), HOLD));
+        }, 400 + i * (HOLD + GAP)));
+      });
+    }
+
+    // ---- Boot: no intro video — the page waits on the sealed envelope (frame 0) ----
     v.addEventListener("loadeddata", () => {
       if (state !== "loading") return;
       loading.classList.add("gone"); ph.classList.add("gone");
