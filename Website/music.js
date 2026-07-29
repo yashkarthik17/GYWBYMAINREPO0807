@@ -13,7 +13,7 @@
   // classical strings; everything else gets its site's theme).
   var tag = document.currentScript;
   var AUTO = !!(tag && tag.hasAttribute('data-autostart'));
-  var SRC = (tag && tag.getAttribute('data-src')) || 'assets/audio/theme.wav?v=1';
+  var SRC = (tag && tag.getAttribute('data-src')) || 'assets/audio/theme.wav?v=2';
   // data-start="8" skips a dead-air intro: playback begins this many seconds in
   // and every loop restarts there too, so the delay never plays. Pages without
   // the attribute (the envelope's classical strings) play from 0:00 as before.
