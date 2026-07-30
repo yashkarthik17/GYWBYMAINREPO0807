@@ -38,7 +38,7 @@
     ".gnav__brand{display:flex;align-items:center;gap:9px;color:#1D2B50;font-weight:700;font-size:1.02rem;white-space:nowrap;min-width:0;}",
     ".gnav--dark .gnav__brand{color:#FFF9EE;}",
     ".gnav__brand b{overflow:hidden;text-overflow:ellipsis;}",
-    ".gnav__mark{flex:none;width:30px;height:30px;object-fit:contain;",
+    ".gnav__mark{flex:none;width:33px;height:33px;object-fit:contain;",
     "  filter:drop-shadow(0 2px 6px rgba(29,43,80,.22));}",
     ".gnav--dark .gnav__mark{filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));}",
     ".gnav__links{display:flex;align-items:center;gap:2px;}",
@@ -93,14 +93,12 @@
 
     var brand = el("a", "gnav__brand");
     brand.href = root + "index.html";
+    brand.setAttribute("aria-label", "Glad You Were Born Today — home");
     var mark = document.createElement("img");
     mark.className = "gnav__mark";
     mark.src = "/assets/logo.webp?v=1";
     mark.alt = "";
     brand.appendChild(mark);
-    var bn = document.createElement("b");
-    bn.textContent = "Glad You Were Born Today";
-    brand.appendChild(bn);
     bar.appendChild(brand);
 
     var links = el("nav", "gnav__links");
