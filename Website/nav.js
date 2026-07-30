@@ -15,8 +15,6 @@
     { label: "Home",          href: root + "index.html",  match: !inAdult && file === "index.html" },
     { label: "Story",         href: root + "story.html",  match: file === "story.html" },
     { label: "Crashers",      href: root + "crashers.html", match: file === "crashers.html" },
-    { label: "Games",         href: root + "games.html",  match: file === "games.html" },
-    { label: "Cards",         href: root + "cards.html",  match: file === "cards.html" },
     { label: "Party Store",   href: root + "store.html",  match: file === "store.html" },
     { label: "Hire the Crew", href: root + "hire.html",   match: file === "hire.html" },
     { label: "Our Mission",   href: root + "mission.html", match: file === "mission.html" },
