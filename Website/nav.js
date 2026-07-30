@@ -38,9 +38,9 @@
     ".gnav__brand{display:flex;align-items:center;gap:9px;color:#1D2B50;font-weight:700;font-size:1.02rem;white-space:nowrap;min-width:0;}",
     ".gnav--dark .gnav__brand{color:#FFF9EE;}",
     ".gnav__brand b{overflow:hidden;text-overflow:ellipsis;}",
-    ".gnav__mark{flex:none;width:20px;height:24px;border-radius:6px 6px 9px 9px;",
-    "  background:linear-gradient(160deg,#E84A9B,#8e1d5b);box-shadow:0 4px 10px rgba(232,74,155,.4);}",
-    ".gnav--dark .gnav__mark{background:linear-gradient(160deg,#e6c46a,#b8862e);box-shadow:0 4px 10px rgba(230,196,106,.35);}",
+    ".gnav__mark{flex:none;width:30px;height:30px;object-fit:contain;",
+    "  filter:drop-shadow(0 2px 6px rgba(29,43,80,.22));}",
+    ".gnav--dark .gnav__mark{filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));}",
     ".gnav__links{display:flex;align-items:center;gap:2px;}",
     ".gnav__links a{color:#3E5580;font-weight:600;font-size:.88rem;padding:7px 11px;border-radius:999px;white-space:nowrap;}",
     ".gnav__links a:hover{background:rgba(29,43,80,.08);color:#1D2B50;}",
@@ -80,11 +80,24 @@
     style.textContent = css;
     document.head.appendChild(style);
 
+    // Site icon on every page that carries the nav (the envelope page sets
+    // its own <link> tags in markup — it doesn't load nav.js).
+    var fav = document.createElement("link");
+    fav.rel = "icon"; fav.type = "image/png"; fav.href = "/assets/favicon.png?v=1";
+    document.head.appendChild(fav);
+    var ati = document.createElement("link");
+    ati.rel = "apple-touch-icon"; ati.href = "/assets/apple-touch-icon.png?v=1";
+    document.head.appendChild(ati);
+
     var bar = el("header", "gnav" + (dark ? " gnav--dark" : ""));
 
     var brand = el("a", "gnav__brand");
     brand.href = root + "index.html";
-    brand.appendChild(el("span", "gnav__mark"));
+    var mark = document.createElement("img");
+    mark.className = "gnav__mark";
+    mark.src = "/assets/logo.webp?v=1";
+    mark.alt = "";
+    brand.appendChild(mark);
     var bn = document.createElement("b");
     bn.textContent = "Glad You Were Born Today";
     brand.appendChild(bn);
