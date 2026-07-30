@@ -22,7 +22,7 @@
     { label: "The Crew",      href: adult + "crew.html",  match: file === "crew.html" },
   ];
   // the bar shows the essentials inline; the menu always carries everything
-  var INLINE = ["Story", "Crashers", "Games", "Cards", "Party Store", "Hire the Crew", "Our Mission"];
+  var INLINE = ["Story", "Crashers", "Party Store", "Hire the Crew", "Our Mission"];
 
   var css = [
     "body{padding-top:56px;}",
