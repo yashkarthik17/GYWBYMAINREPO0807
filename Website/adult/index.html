@@ -23,7 +23,7 @@
   .sw-copylayer::before{display:none !important;}
   /* Desktop: letterbox the portrait flight centered; copy floats in the left margin. */
   @media (min-width:861px){
-    .sw-scene__video,.sw-scene__still{object-fit:contain !important;object-position:center !important;}
+    .sw-scene__video,.sw-scene__still,.tw video,.tw .tw-still{object-fit:contain !important;object-position:center !important;}
   }
 </style>
 </head>
@@ -45,9 +45,9 @@
 </div>
 <script src="../nav.js?v=4"></script>
 <script src="../music.js?v=8" data-autostart data-start="11"></script>
-<script src="scrub-engine.js?v=7"></script>
+<script src="tap-engine.js?v=1"></script>
 <script>
-mountScrollWorld(document.getElementById('world'), {
+mountTapWorld(document.getElementById('world'), {
   hint: 'scroll to crash the party',
   diveScroll: 1.5,
   crossfade: 0.12,

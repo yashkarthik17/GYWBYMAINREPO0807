@@ -52,7 +52,7 @@
   </div>
 
   <script src="nav.js?v=4"></script>
-  <script src="scrub-engine.js?v=12"></script>
+  <script src="tap-engine.js?v=1"></script>
   <script src="music.js?v=8" data-start="11"></script>
   <script>
     // Desktop/tablet serve the landscape tier (re-rendered July 2026 from the
@@ -61,7 +61,7 @@
     // Stills follow the same split (the engine has one `still` field, so pick here).
     var SW_PHONE = /[?&]swphone/.test(location.search) || Math.min(screen.width, screen.height) <= 600;
     function sw_still(name) { return SW_PHONE ? 'assets/' + name + '-p.webp?v=3' : 'assets/' + name + '.webp?v=4'; }
-    mountScrollWorld(document.getElementById('world'), {
+    mountTapWorld(document.getElementById('world'), {
       hint: 'scroll to crash the party',
       crossfade: 0.15,
       // longer mobile track: same scroll speed demands ~30% less playback rate,
