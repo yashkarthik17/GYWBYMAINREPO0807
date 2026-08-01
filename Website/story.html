@@ -52,7 +52,7 @@
   </div>
 
   <script src="nav.js?v=4"></script>
-  <script src="tap-engine.js?v=3"></script>
+  <script src="tap-engine.js?v=4"></script>
   <script src="music.js?v=8" data-start="11"></script>
   <script>
     // Desktop/tablet serve the landscape tier (re-rendered July 2026 from the
@@ -63,6 +63,7 @@
     function sw_still(name) { return SW_PHONE ? 'assets/' + name + '-p.webp?v=3' : 'assets/' + name + '.webp?v=4'; }
     mountTapWorld(document.getElementById('world'), {
       hint: 'scroll to crash the party',
+      playbackRate: 1.15,
       crossfade: 0.15,
       // longer mobile track: same scroll speed demands ~30% less playback rate,
       // so chase-play keeps up instead of racing/skipping (scroll-skip fix)

@@ -23,6 +23,9 @@ function mountTapWorld(container, config) {
   function clipOf(s)   { return (phone && s.clipMobile) ? s.clipMobile : s.clip; }
   function posterOf(s) { return (phone && s.posterMobile) ? s.posterMobile : (s.poster || s.still); }
 
+  // Optional pacing: config.playbackRate (e.g. 1.15) speeds every clip up.
+  var RATE = config.playbackRate || 1;
+
   // ---- playlist: scene, connector, scene, connector, … scene -------------
   var CONNS = (phone && config.connectorsMobile && config.connectorsMobile.length) ?
               config.connectorsMobile : (config.connectors || []);
@@ -101,6 +104,7 @@ function mountTapWorld(container, config) {
   vids.forEach(function (v) {
     v.muted = true; v.playsInline = true; v.setAttribute("playsinline", "");
     v.preload = "auto";
+    v.defaultPlaybackRate = RATE;
     stage.appendChild(v);
   });
   var still = el("img", "tw-still");
@@ -147,7 +151,8 @@ function mountTapWorld(container, config) {
   function hideCard() { card.classList.remove("is-on"); }
 
   function showExplore(s) {
-    explore.innerHTML = "";
+    hideCard();               // the card and the buttons share the bottom of
+    explore.innerHTML = "";   // the screen — never show both at once
     var ex = s.explore;
     if (!ex || !ex.links) return;
     ex.links.forEach(function (l) {
@@ -244,6 +249,7 @@ function mountTapWorld(container, config) {
       }, 700);
     }
 
+    try { nextV.playbackRate = RATE; } catch (e) {}
     var pr;
     try { pr = nextV.play(); } catch (e) { enterStillsMode(); go(p); return; }
     onFirstFrame(nextV, swap);
