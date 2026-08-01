@@ -1,13 +1,16 @@
 /* Tap-through cinema engine — replaces scroll-scrubbing on the story pages.
-   Scenes auto-play in sequence (muted), each crossfading into the next when its
-   clip ends. Tap anywhere skips to the next scene; "Skip to end" jumps to the
-   finale. The last scene holds its final frame and shows the explore links.
-   Reuses the exact section config shape the scrub engine used (clip/clipMobile/
-   poster/posterMobile/still + eyebrow/title/body/tags/accent/explore), so page
-   configs carry over unchanged; journey/scroll keys are simply ignored.
-   Phone-class devices (screen short side <= 600 CSS px) get the -m clip tier.
-   Autoplay refusal (iOS Low Power Mode) and prefers-reduced-motion fall back to
-   a tap-through stills slideshow — the page never dead-ends. */
+   Scenes auto-play in sequence and crossfade into each other; where the config
+   provides connector clips (the aerial flights that bridged scenes in the
+   scroll version) they play between scenes as wordless transitions, so every
+   cut lands on the frame-matched footage the world was built with. Tap skips
+   to the next scene (connectors are skipped, not replayed); "Skip to end"
+   jumps to the finale, which holds its last frame and shows the explore links.
+   Reuses the scrub engine's section config shape unchanged (clip/clipMobile/
+   poster/posterMobile/still + eyebrow/title/body/tags/accent/explore,
+   connectors/connectorsMobile); journey/scroll keys are ignored.
+   Phone-class devices (screen short side <= 600 CSS px) get the -m tier.
+   Autoplay refusal (iOS Low Power Mode) and prefers-reduced-motion fall back
+   to a tap-through stills slideshow — the page never dead-ends. */
 function mountTapWorld(container, config) {
   "use strict";
 
@@ -19,6 +22,21 @@ function mountTapWorld(container, config) {
 
   function clipOf(s)   { return (phone && s.clipMobile) ? s.clipMobile : s.clip; }
   function posterOf(s) { return (phone && s.posterMobile) ? s.posterMobile : (s.poster || s.still); }
+
+  // ---- playlist: scene, connector, scene, connector, … scene -------------
+  var CONNS = (phone && config.connectorsMobile && config.connectorsMobile.length) ?
+              config.connectorsMobile : (config.connectors || []);
+  var PL = [];
+  S.forEach(function (s, k) {
+    PL.push({ kind: "scene", si: k });
+    if (k < N - 1 && CONNS[k]) PL.push({ kind: "conn", src: CONNS[k] });
+  });
+  var LAST = PL.length - 1;   // always the finale scene
+
+  function nextSceneAt(p) { for (var q = p + 1; q < PL.length; q++) if (PL[q].kind === "scene") return q; return LAST; }
+  function prevSceneAt(p) { for (var q = p - 1; q >= 0; q--) if (PL[q].kind === "scene") return q; return -1; }
+  function srcOf(item)    { return item.kind === "scene" ? clipOf(S[item.si]) : item.src; }
+  function posterFor(item){ return item.kind === "scene" ? (posterOf(S[item.si]) || "") : ""; }
 
   // ---- CSS (self-contained, injected) -----------------------------------
   var css = [
@@ -79,14 +97,13 @@ function mountTapWorld(container, config) {
   container.innerHTML = "";
   container.appendChild(stage);
 
-  // Two stacked players so scene N+1 can load behind scene N and crossfade in.
   var vids = [document.createElement("video"), document.createElement("video")];
   vids.forEach(function (v) {
     v.muted = true; v.playsInline = true; v.setAttribute("playsinline", "");
     v.preload = "auto";
     stage.appendChild(v);
   });
-  var still = el("img", "tw-still");   // stills fallback (reduced motion / LPM)
+  var still = el("img", "tw-still");
   still.alt = "";
   stage.appendChild(still);
 
@@ -123,9 +140,11 @@ function mountTapWorld(container, config) {
     cBody.textContent = s.body || "";
     card.style.setProperty("--tw-accent", s.accent || "#FFC93C");
     card.classList.remove("is-on");
-    void card.offsetWidth;               // restart the entrance transition
+    void card.offsetWidth;
     card.classList.add("is-on");
   }
+
+  function hideCard() { card.classList.remove("is-on"); }
 
   function showExplore(s) {
     explore.innerHTML = "";
@@ -142,34 +161,39 @@ function mountTapWorld(container, config) {
     explore.classList.add("is-on");
   }
 
-  function markDot(i) {
-    dotEls.forEach(function (d, k) { d.className = k === i ? "is-here" : ""; });
+  function markDot(si) {
+    dotEls.forEach(function (d, k) { d.className = k === si ? "is-here" : ""; });
   }
 
   function enterStillsMode() {
     if (stillsMode) return;
     stillsMode = true;
     vids.forEach(function (v) { try { v.pause(); } catch (e) {} v.classList.remove("is-on"); });
-    if (idx >= 0) renderStill(S[idx]);
+    if (idx >= 0) {
+      var item = PL[idx];
+      renderStill(S[item.kind === "scene" ? item.si : nextSceneIdxOfConn(idx)]);
+    }
   }
+
+  function nextSceneIdxOfConn(p) { var q = nextSceneAt(p); return PL[q].si; }
 
   function renderStill(s) {
     still.src = s.still || posterOf(s);
     still.classList.add("is-on");
   }
 
-  // The inactive player buffers the NEXT scene while the current one plays, so
-  // a transition is: play the already-loaded clip, wait for its FIRST PAINTED
-  // FRAME, then crossfade. Fading on play()'s promise alone flashes poster/black
-  // because playback can begin before a frame is decoded.
+  // The inactive player buffers the NEXT playlist item while the current one
+  // plays; a transition is: play the already-loaded clip, wait for its FIRST
+  // PAINTED FRAME, then crossfade. (Fading on play()'s promise alone flashes
+  // poster/black — playback can begin before a frame is decoded.)
   var prepared = -1;
-  function prepare(i) {
-    if (stillsMode || i < 0 || i >= N || prepared === i) return;
+  function prepare(p) {
+    if (stillsMode || p < 0 || p > LAST || prepared === p) return;
     var v = vids[1 - active];
-    v.src = clipOf(S[i]);
-    v.poster = posterOf(S[i]) || "";
+    v.src = srcOf(PL[p]);
+    v.poster = posterFor(PL[p]);
     v.load();
-    prepared = i;
+    prepared = p;
   }
 
   function onFirstFrame(v, fn) {
@@ -177,67 +201,71 @@ function mountTapWorld(container, config) {
     else v.addEventListener("playing", fn, { once: true });
   }
 
-  function go(i) {
-    if (i < 0 || i >= N || i === idx) { if (i >= N) finish(); return; }
-    idx = i;
-    var s = S[i];
-    markDot(i);
+  function go(p) {
+    if (p < 0 || p > LAST || p === idx) { if (p > LAST) finish(); return; }
+    idx = p;
+    var item = PL[p];
+    var scene = item.kind === "scene" ? S[item.si] : null;
+
     explore.classList.remove("is-on");
-    showCard(s);
+    if (scene) { markDot(item.si); showCard(scene); }
+    else hideCard();
 
     if (stillsMode) {
-      renderStill(s);
-      if (i === N - 1) showExplore(s);
+      if (!scene) { go(nextSceneAt(p)); return; }   // stills skip connectors
+      renderStill(scene);
+      if (p === LAST) showExplore(scene);
       return;
     }
 
     var nextV = vids[1 - active], curV = vids[active];
-    if (prepared !== i) {
-      nextV.src = clipOf(s);
-      nextV.poster = posterOf(s) || "";
+    if (prepared !== p) {
+      nextV.src = srcOf(item);
+      nextV.poster = posterFor(item);
       nextV.load();
-      prepared = i;
+      prepared = p;
     }
     try { if (nextV.currentTime > 0.05) nextV.currentTime = 0; } catch (e) {}
 
     var swapped = false;
     function swap() {
-      if (swapped || idx !== i) return;
+      if (swapped || idx !== p) return;
       swapped = true;
       active = 1 - active;
       prepared = -1;
       nextV.classList.add("is-on");
       curV.classList.remove("is-on");
-      // let the 0.5s crossfade finish, then park the old player and hand it
-      // the following scene to buffer (setting src earlier would black out
-      // the outgoing side of the fade)
+      // let the crossfade finish before parking the old player and handing it
+      // the following item to buffer (setting src earlier would black out the
+      // outgoing side of the fade)
       setTimeout(function () {
         try { curV.pause(); } catch (e) {}
-        prepare(i + 1);
+        prepare(p + 1);
       }, 700);
     }
 
-    var p;
-    try { p = nextV.play(); } catch (e) { enterStillsMode(); go(i); return; }
+    var pr;
+    try { pr = nextV.play(); } catch (e) { enterStillsMode(); go(p); return; }
     onFirstFrame(nextV, swap);
-    if (p && p.then) {
-      p.catch(function () {
+    if (pr && pr.then) {
+      pr.catch(function () {
         // OS refused playback (Low Power Mode / policy): stills + tap-through.
-        enterStillsMode(); renderStill(s);
-        if (i === N - 1) showExplore(s);
+        enterStillsMode();
+        var s = scene || S[nextSceneIdxOfConn(p)];
+        renderStill(s);
+        if (p === LAST) showExplore(s);
         if (!started) startOverlay();
       });
     }
     nextV.onended = function () {
-      if (idx !== i) return;
-      if (i === N - 1) finish(); else go(i + 1);
+      if (idx !== p) return;
+      if (p === LAST) finish(); else go(p + 1);
     };
   }
 
   function finish() {
-    // hold the finale's last frame and put the explore links up
     var s = S[N - 1];
-    if (idx !== N - 1) { go(N - 1); return; }
+    if (idx !== LAST) { go(LAST); return; }
     showExplore(s);
   }
 
@@ -250,37 +278,33 @@ function mountTapWorld(container, config) {
     startBtn.textContent = config.startLabel || "Tap to play the story";
     startBtn.addEventListener("click", function () {
       startBtn.remove(); startBtn = null; started = true;
-      stillsMode = reduce;               // retry real playback unless reduced-motion
+      stillsMode = reduce;
       still.classList.remove("is-on");
       var at = idx < 0 ? 0 : idx;
-      idx = -1; go(at);
+      idx = -1; prepared = -1; go(at);
     });
     stage.appendChild(startBtn);
   }
 
-  // ---- input -------------------------------------------------------------
+  // ---- input: tap = next scene (connectors are skipped, not replayed) -----
   tap.addEventListener("click", function () {
     started = true;
-    if (idx >= N - 1) { finish(); return; }
-    go(idx + 1);
+    if (idx >= LAST) { finish(); return; }
+    go(nextSceneAt(idx));
   });
   skip.addEventListener("click", function () {
     started = true;
-    if (stillsMode) { go(N - 1); return; }
-    // jump straight into the finale clip
-    if (idx === N - 1) { finish(); return; }
-    go(N - 1);
+    if (idx === LAST) { finish(); return; }
+    go(LAST);
   });
   document.addEventListener("keydown", function (e) {
     if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); tap.click(); }
-    if (e.key === "ArrowLeft" && idx > 0) { e.preventDefault(); go(idx - 1); }
+    if (e.key === "ArrowLeft") {
+      var q = prevSceneAt(idx);
+      if (q >= 0) { e.preventDefault(); go(q); }
+    }
   });
 
   // ---- boot --------------------------------------------------------------
-  if (reduce) {
-    stillsMode = true;
-    go(0);
-    return;
-  }
   go(0);
 }
