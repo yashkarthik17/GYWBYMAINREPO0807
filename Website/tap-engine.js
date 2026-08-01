@@ -158,6 +158,25 @@ function mountTapWorld(container, config) {
     still.classList.add("is-on");
   }
 
+  // The inactive player buffers the NEXT scene while the current one plays, so
+  // a transition is: play the already-loaded clip, wait for its FIRST PAINTED
+  // FRAME, then crossfade. Fading on play()'s promise alone flashes poster/black
+  // because playback can begin before a frame is decoded.
+  var prepared = -1;
+  function prepare(i) {
+    if (stillsMode || i < 0 || i >= N || prepared === i) return;
+    var v = vids[1 - active];
+    v.src = clipOf(S[i]);
+    v.poster = posterOf(S[i]) || "";
+    v.load();
+    prepared = i;
+  }
+
+  function onFirstFrame(v, fn) {
+    if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(fn);
+    else v.addEventListener("playing", fn, { once: true });
+  }
+
   function go(i) {
     if (i < 0 || i >= N || i === idx) { if (i >= N) finish(); return; }
     idx = i;
@@ -165,7 +184,6 @@ function mountTapWorld(container, config) {
     markDot(i);
     explore.classList.remove("is-on");
     showCard(s);
-    if (i === N - 1) showExploreSoon = true; else showExploreSoon = false;
 
     if (stillsMode) {
       renderStill(s);
@@ -174,18 +192,36 @@ function mountTapWorld(container, config) {
     }
 
     var nextV = vids[1 - active], curV = vids[active];
-    nextV.src = clipOf(s);
-    nextV.poster = posterOf(s) || "";
-    try { nextV.currentTime = 0; } catch (e) {}
+    if (prepared !== i) {
+      nextV.src = clipOf(s);
+      nextV.poster = posterOf(s) || "";
+      nextV.load();
+      prepared = i;
+    }
+    try { if (nextV.currentTime > 0.05) nextV.currentTime = 0; } catch (e) {}
+
+    var swapped = false;
+    function swap() {
+      if (swapped || idx !== i) return;
+      swapped = true;
+      active = 1 - active;
+      prepared = -1;
+      nextV.classList.add("is-on");
+      curV.classList.remove("is-on");
+      // let the 0.5s crossfade finish, then park the old player and hand it
+      // the following scene to buffer (setting src earlier would black out
+      // the outgoing side of the fade)
+      setTimeout(function () {
+        try { curV.pause(); } catch (e) {}
+        prepare(i + 1);
+      }, 700);
+    }
+
     var p;
     try { p = nextV.play(); } catch (e) { enterStillsMode(); go(i); return; }
+    onFirstFrame(nextV, swap);
     if (p && p.then) {
-      p.then(function () {
-        active = 1 - active;
-        nextV.classList.add("is-on");
-        curV.classList.remove("is-on");
-        setTimeout(function () { try { curV.pause(); } catch (e) {} }, 600);
-      }).catch(function () {
+      p.catch(function () {
         // OS refused playback (Low Power Mode / policy): stills + tap-through.
         enterStillsMode(); renderStill(s);
         if (i === N - 1) showExplore(s);
@@ -204,8 +240,6 @@ function mountTapWorld(container, config) {
     if (idx !== N - 1) { go(N - 1); return; }
     showExplore(s);
   }
-
-  var showExploreSoon = false;
 
   // First-play overlay for the autoplay-refused path: one real user gesture.
   var startBtn = null;
