@@ -29,32 +29,25 @@
 
     // Seek past the intro. With an offset we can't use native looping (it always
     // rewinds to 0), so loop by hand on 'ended'. preload='none' means metadata
-    // isn't ready until the first play() kicks off a load, so also seek on
-    // 'loadedmetadata' — that catches the very first start with no intro blip.
+    // isn't ready until the first play() kicks off a load, so seek at every
+    // readiness stage — iOS ignores seeks issued before the stream can play,
+    // silently starting at 0:00; the timeupdate guard snaps it forward if
+    // playback still begins at the top. START is mutable (swMusic.swap changes
+    // track mid-page), so every handler re-reads it.
     function seekIntoTrack() {
       if (START > 0 && audio.currentTime < START - 0.05) {
         try { audio.currentTime = START; } catch (e) {}
       }
     }
-    if (START > 0) {
-      audio.loop = false;
-      // Seek at every readiness stage — iOS ignores seeks issued before the
-      // stream can actually play, silently starting at 0:00. The timeupdate
-      // guard is the belt-and-braces: if playback still begins at the top,
-      // the first tick snaps it forward (guarded, so it never fires again
-      // once past the intro).
-      audio.addEventListener('loadedmetadata', seekIntoTrack);
-      audio.addEventListener('canplay', seekIntoTrack);
-      audio.addEventListener('timeupdate', function () {
-        if (audio.currentTime < START - 0.5) seekIntoTrack();
-      });
-      audio.addEventListener('ended', function () {
-        seekIntoTrack();
-        audio.play().catch(function () {});
-      });
-    } else {
-      audio.loop = true;
-    }
+    audio.loop = (START === 0);
+    audio.addEventListener('loadedmetadata', seekIntoTrack);
+    audio.addEventListener('canplay', seekIntoTrack);
+    audio.addEventListener('timeupdate', function () {
+      if (START > 0 && audio.currentTime < START - 0.5) seekIntoTrack();
+    });
+    audio.addEventListener('ended', function () {
+      if (START > 0) { seekIntoTrack(); audio.play().catch(function () {}); }
+    });
 
     var btn = document.createElement('button');
     btn.type = 'button';
@@ -132,7 +125,18 @@
     // Respects an explicit mute from earlier in the visit.
     window.swMusic = {
       on: function () { var s = null; try { s = sessionStorage.getItem(KEY); } catch (e) {} if (s !== '0') set(true); },
-      off: function () { set(false); }
+      off: function () { set(false); },
+      // Switch tracks WITHOUT leaving the page (the audio element stays
+      // gesture-unlocked, so the new track plays instantly — this is how the
+      // in-page kids story keeps music from the envelope tap onward).
+      swap: function (src, start) {
+        START = start || 0;
+        audio.loop = (START === 0);
+        audio.src = src;
+        try { audio.load(); } catch (e) {}
+        var s = null; try { s = sessionStorage.getItem(KEY); } catch (e) {}
+        if (s !== '0') set(true);
+      }
     };
 
     // resume across pages within the visit — needs one tap anyway on strict

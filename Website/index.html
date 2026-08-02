@@ -137,6 +137,9 @@
   }
   .cine__line.is-on{opacity:1;transform:translateY(0);}
 
+  /* in-page kids story sits above every envelope layer */
+  .tw{z-index:40;}
+
   @media (prefers-reduced-motion: reduce){
     .open-btn,.sheet-actions{transition:none;}
     .open-cta{animation:none;}
@@ -170,7 +173,7 @@
   <canvas id="confetti"></canvas>
   <div class="loading" id="loading">Folding the paper…</div>
 
-  <script src="music.js?v=11" data-src="assets/audio/envelope.wav?v=1"></script>
+  <script src="music.js?v=12" data-src="assets/audio/envelope.wav?v=1"></script>
   <script>
   (function () {
     "use strict";
@@ -349,6 +352,28 @@
     btn.addEventListener("click", () => toggle());
     if (/[?&]open/.test(location.search))        // QA shortcut, same as old page
       v.addEventListener("loadeddata", () => setTimeout(() => { v.currentTime = CFG.anchor; setState("sealed"); toggle(); }, 300), { once: true });
+
+    // ---- In-page kids story: launching on the SAME page keeps the audio
+    // element gesture-unlocked, so the music switches to the kids track and
+    // plays through the story with zero extra taps (a navigation would let
+    // the browser re-mute everything).
+    document.querySelector(".sheet-btn.kids").addEventListener("click", function (e) {
+      if (!window.mountTapWorld || !window.GYWBT_KIDS_CONFIG) return;  // fall back to story.html
+      e.preventDefault();
+      if (window.swMusic && window.swMusic.swap) window.swMusic.swap("assets/audio/theme.wav?v=2", 11);
+      try { history.pushState({ kids: 1 }, "", "#kids"); } catch (err) {}
+      stage.style.display = "none";
+      document.querySelector(".ui").style.display = "none";
+      sheetEl.style.display = "none";
+      cineEl.style.display = "none";
+      document.getElementById("confetti").style.display = "none";
+      try { v.pause(); } catch (err) {}
+      var world = document.createElement("div");
+      world.id = "world";
+      document.body.appendChild(world);
+      mountTapWorld(world, GYWBT_KIDS_CONFIG());
+    });
+    window.addEventListener("popstate", function () { location.reload(); });
 
     // ==== CONFETTI (verbatim from Assets/envelope/confetti-snippet.js) ====
     const isMobile = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
