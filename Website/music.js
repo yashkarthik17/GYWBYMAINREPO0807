@@ -38,7 +38,16 @@
     }
     if (START > 0) {
       audio.loop = false;
+      // Seek at every readiness stage — iOS ignores seeks issued before the
+      // stream can actually play, silently starting at 0:00. The timeupdate
+      // guard is the belt-and-braces: if playback still begins at the top,
+      // the first tick snaps it forward (guarded, so it never fires again
+      // once past the intro).
       audio.addEventListener('loadedmetadata', seekIntoTrack);
+      audio.addEventListener('canplay', seekIntoTrack);
+      audio.addEventListener('timeupdate', function () {
+        if (audio.currentTime < START - 0.5) seekIntoTrack();
+      });
       audio.addEventListener('ended', function () {
         seekIntoTrack();
         audio.play().catch(function () {});
