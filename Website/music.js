@@ -78,10 +78,39 @@
     document.head.appendChild(css);
     document.body.appendChild(btn);
 
+    // "Tap anywhere for sound" cue — iOS refuses audio on a fresh page until
+    // it gets one tap, and the auto-playing story pages no longer force one.
+    // The cue turns that hidden rule into an obvious, one-tap invitation.
+    var cue = null;
+    function showCue() {
+      if (cue) return;
+      cue = document.createElement('button');
+      cue.type = 'button';
+      cue.id = 'sw-soundcue';
+      cue.textContent = '🔊 Tap anywhere for sound';
+      var c = document.createElement('style');
+      c.textContent =
+        '#sw-soundcue{position:fixed;left:50%;top:calc(56px + 54px);transform:translateX(-50%);z-index:1001;' +
+        'border:1px solid rgba(255,255,255,.5);background:rgba(18,27,52,.82);color:#FFF9EE;cursor:pointer;' +
+        "font-family:'Baloo 2',ui-rounded,system-ui,sans-serif;font-weight:700;font-size:13px;" +
+        'letter-spacing:.05em;padding:10px 18px;border-radius:999px;' +
+        '-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);' +
+        'box-shadow:0 8px 22px rgba(0,0,0,.35);animation:sw-cue 2s ease-in-out infinite;}' +
+        '@keyframes sw-cue{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.06)}}' +
+        '@media (prefers-reduced-motion:reduce){#sw-soundcue{animation:none;}}';
+      document.head.appendChild(c);
+      cue.addEventListener('click', function () { set(true); });
+      document.body.appendChild(cue);
+    }
+    function hideCue() {
+      if (cue) { cue.remove(); cue = null; }
+    }
+
     function set(on) {
       if (on) {
         seekIntoTrack();
         audio.play().then(function () {
+          hideCue();
           btn.classList.add('is-on');
           btn.setAttribute('aria-pressed', 'true');
           btn.setAttribute('aria-label', 'Pause the theme song');
@@ -122,6 +151,8 @@
       var once = function () { set(true); };
       window.addEventListener('pointerdown', once, { once: true });
       window.addEventListener('touchend', once, { once: true, passive: true });
+      // If the browser blocked the immediate attempt, surface the one-tap cue.
+      setTimeout(function () { if (audio.paused) showCue(); }, 700);
     }
   }
 })();
