@@ -104,6 +104,12 @@
     try { stored = sessionStorage.getItem(KEY); } catch (e) {}
     var wanted = stored === '1' || (AUTO && stored !== '0');
     if (wanted) {
+      // Try immediately — browsers permit it once the visitor has interacted
+      // with the site (e.g. tapping open the envelope a page ago). The story
+      // pages auto-play with no guaranteed tap, so waiting for a gesture
+      // alone left the music silent. If blocked, set() fails quietly and the
+      // first-gesture listeners below pick it up.
+      set(true);
       var once = function () { set(true); };
       window.addEventListener('pointerdown', once, { once: true });
       window.addEventListener('touchend', once, { once: true, passive: true });

@@ -157,10 +157,8 @@
   </div>
 
   <div class="cine" id="cine" aria-hidden="true">
-    <p class="cine__line">Birthdays have had the same song for generations.</p>
-    <p class="cine__line">Now there&rsquo;s a new one.</p>
-    <p class="cine__line">Glad You Were Born Today</p>
-    <p class="cine__line">A joyful anthem built to turn every birthday into an event.</p>
+    <p class="cine__line">A hundred years of the same birthday song.</p>
+    <p class="cine__line">Yours just got a new one.</p>
   </div>
 
   <!-- choices live on the letter; positioned by JS, revealed when the envelope opens -->
@@ -172,7 +170,7 @@
   <canvas id="confetti"></canvas>
   <div class="loading" id="loading">Folding the paper…</div>
 
-  <script src="music.js?v=8" data-src="assets/audio/envelope.wav?v=1"></script>
+  <script src="music.js?v=9" data-src="assets/audio/envelope.wav?v=1"></script>
   <script>
   (function () {
     "use strict";
@@ -256,7 +254,7 @@
       if (cinePlayed) return;
       cinePlayed = true;
       if (reduced) { endIntro(); return; }
-      const HOLD = 2600, GAP = 350;
+      const HOLD = 2400, GAP = 300;
       cineLines.forEach((line, i) => {
         cineTimers.push(setTimeout(() => {
           if (introDone) return;
