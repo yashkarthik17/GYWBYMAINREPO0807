@@ -13,7 +13,7 @@
 ## Global Constraints
 
 - Work only in `C:\Users\yashk\gywbt-site` on branch `adult-overhaul`. Never push `main`. Pushing the branch creates a Vercel PREVIEW deployment only.
-- Scenes 1–2 portrait clips (`quiet-m`, `glowup-m`, their portrait masters and the first two journey spans' content) are frozen — do not regenerate portrait 1–2.
+- Scene 1 portrait (`quiet`) is frozen — do not regenerate it. Portrait scenes 2–5 (`glowup`, `photo`, `patio`, `sendoff`) ALL regenerate (scope expanded 2026-08-03 with user approval: the Task 1 audit found children in glowup t4–t8 and photo t0–t3, not just patio/sendoff).
 - Every new generation prompt MUST end with the adults-only guard sentence defined in Task 3 (verbatim). Every generated clip/still MUST pass the child-audit (Task 1 procedure) before it is accepted.
 - Encode settings are fixed (from `Website/adult/work/encode.sh`): desktop master H.264 CRF 20 GOP 8 `-sc_threshold 0 -movflags +faststart`, mobile 720-wide CRF 23 GOP 4, posters = first frame of the ENCODED clip.
 - Asset URL cache-busting: all rewired asset references in `adult/index.html` bump to `?v=6`.
@@ -228,9 +228,9 @@ Every human being in the scene is a grown adult in their 30s, 40s, 60s or 70s �
 
 Why: the previous redo failed because "toddler-sized creatures … hooded onesies" pulls the model toward rendering real human toddlers (the live patio scene shows one wearing a Crasher-print hoodie). The guard names that failure mode explicitly.
 
-- [ ] **Step 2: Portrait legs 3–5**
+- [ ] **Step 2: Portrait legs 2–5**
 
-For each of `redo/leg_3.txt`, `redo/leg_4.txt`, `redo/leg_5.txt`: copy into `redo2/leg_N.txt`, then (a) replace cast phrases that imply families with explicitly adult casting — e.g. leg_3's "laughing guests" → "laughing adult friends in their 30s and 40s"; scan legs 4–5 for "family", "grandparents arm in arm with…", or any wording implying children and recast per the on-screen copy ("Yes, they crash 40ths", "Enchantment doesn't card") — grandparents themselves are fine; (b) append `\n` + the GUARD sentence. Keep all camera-language and Crasher/cloud descriptions byte-identical otherwise.
+For each of `redo/leg_2.txt`, `redo/leg_3.txt`, `redo/leg_4.txt`, `redo/leg_5.txt`: copy into `redo2/leg_N.txt`, then (a) replace cast phrases that imply families with explicitly adult casting — e.g. leg_3's "laughing guests" → "laughing adult friends in their 30s and 40s"; scan legs 4–5 for "family", "grandparents arm in arm with…", or any wording implying children and recast per the on-screen copy ("Yes, they crash 40ths", "Enchantment doesn't card") — grandparents themselves are fine; (b) append `\n` + the GUARD sentence. Keep all camera-language and Crasher/cloud descriptions byte-identical otherwise.
 
 - [ ] **Step 3: Landscape stills 1–5**
 
@@ -244,7 +244,7 @@ Write `redo2/lleg_N.txt`: copy the corresponding portrait leg prompt (`redo/leg_
 
 ```bash
 cd Website/adult/work/redo2
-for f in leg_3.txt leg_4.txt leg_5.txt lleg_*.txt lstill_*.txt; do grep -q "no human children" "$f" || echo "MISSING GUARD: $f"; done
+for f in leg_2.txt leg_3.txt leg_4.txt leg_5.txt lleg_*.txt lstill_*.txt; do grep -q "no human children" "$f" || echo "MISSING GUARD: $f"; done
 ```
 Expected: no output. Then:
 
@@ -259,7 +259,7 @@ git commit -m "Adults-only hardened prompts for portrait 3-5 and landscape tier"
 
 **Files:**
 - Create: `Website/adult/work/redo2/refs/` (character reference images)
-- Create: `Website/adult/work/redo2/start_leg3.png` (portrait chain restart point)
+- Create: `Website/adult/work/redo2/start_leg2.png` (portrait chain restart point)
 - Create: `Website/adult/work/redo2/fetch_refs.py`
 
 **Interfaces:**
@@ -292,13 +292,13 @@ print(f"{n} refs")
 Run: `cd Website/adult/work/redo2 && python fetch_refs.py`
 Expected: ≥1 `refs/ref_*.png` downloaded. **If the CloudFront URLs are dead (403/404):** extract character reference crops instead — Starry and the Crashers are sharply visible in `../../assets/vid/sendoff.mp4` around t=1s and in `Assets/` character art at repo root; save equivalent PNGs into `refs/` and note the substitution in the commit message.
 
-- [ ] **Step 2: Extract the leg-3 start frame (scene 2's final frame)**
+- [ ] **Step 2: Extract the leg-2 start frame (scene 1's final frame)**
 
 ```bash
 cd Website/adult/work/redo2
-ffmpeg -y -v error -sseof -0.06 -i ../../assets/vid/glowup.mp4 -frames:v 1 start_leg3.png
+ffmpeg -y -v error -sseof -0.06 -i ../../assets/vid/quiet.mp4 -frames:v 1 start_leg2.png
 ```
-View `start_leg3.png` to confirm it's the end of the cloud/crash scene (glowing backyard, cloud heading toward pergola).
+View `start_leg2.png` to confirm it's the end of the quiet-party scene (scene 1 is CLEAN and frozen; the regenerated chain starts from its final frame).
 
 - [ ] **Step 3: Commit (scripts only, not media)**
 
@@ -309,15 +309,15 @@ git commit -m "Add reference-image fetcher for the regen pipeline"
 
 ---
 
-### Task 5: Generate portrait legs 3–5 (chained, audited)
+### Task 5: Generate portrait legs 2–5 (chained, audited)
 
 **Files:**
 - Create: `Website/adult/work/redo2/gen_leg.sh`
-- Create: `Website/adult/work/redo2/leg_{3,4,5}.mp4` (raw, gitignored via existing rules)
+- Create: `Website/adult/work/redo2/leg_{2,3,4,5}.mp4` (raw, gitignored via existing rules)
 
 **Interfaces:**
-- Consumes: `redo2/leg_N.txt` (Task 3), `redo2/refs/*.png` + `redo2/start_leg3.png` (Task 4), `audit_frames.py` (Task 1).
-- Produces: accepted raw clips `redo2/leg_3.mp4`, `leg_4.mp4`, `leg_5.mp4` for Task 8's encode. Chain rule: `start_leg4.png` = last frame of accepted `leg_3.mp4`; `start_leg5.png` = last frame of accepted `leg_4.mp4`.
+- Consumes: `redo2/leg_N.txt` (Task 3), `redo2/refs/*.png` + `redo2/start_leg2.png` (Task 4), `audit_frames.py` (Task 1).
+- Produces: accepted raw clips `redo2/leg_2.mp4` … `leg_5.mp4` for Task 8's encode. Chain rule: each `start_legN+1.png` = last frame of the accepted `leg_N.mp4`.
 
 - [ ] **Step 1: Write the generator (mirrors the recorded job params)**
 
@@ -344,30 +344,30 @@ except Exception: print('')")
 
 First run `higgsfield generate create --help`; if the reference-image flag is not `--image`, adjust the `REFS` line to the actual flag (the recorded job attaches them as `media_input` alongside `start_image`).
 
-- [ ] **Step 2: Generate + audit leg 3 (this costs credits)**
+- [ ] **Step 2: Generate + audit leg 2 (this costs credits)**
 
 ```bash
-cd Website/adult/work/redo2 && ./gen_leg.sh leg_3 leg_3.txt start_leg3.png 9:16
-python ../audit_frames.py leg_3.mp4 audit/leg_3
+cd Website/adult/work/redo2 && ./gen_leg.sh leg_2 leg_2.txt start_leg2.png 9:16
+python ../audit_frames.py leg_2.mp4 audit/leg_2
 ```
-Inspect every `audit/leg_3/*.jpg`: (a) zero human children (GUARD held), (b) first frame visually continues from `start_leg3.png`, (c) characters on-model. Re-roll on failure (max 3 attempts, keep `leg_3_vN.mp4` history like the previous redo did). If 3 attempts all fail → STOP, show the user the best frames, get direction.
+Inspect every `audit/leg_2/*.jpg`: (a) zero human children (GUARD held), (b) first frame visually continues from `start_leg2.png`, (c) characters on-model. Re-roll on failure (max 3 attempts, keep `leg_2_vN.mp4` history like the previous redo did). If 3 attempts all fail → STOP, show the user the best frames, get direction.
 
-- [ ] **Step 3: Chain and repeat for legs 4 and 5**
+- [ ] **Step 3: Chain and repeat for legs 3, 4 and 5**
 
 ```bash
-ffmpeg -y -v error -sseof -0.06 -i leg_3.mp4 -frames:v 1 start_leg4.png
-./gen_leg.sh leg_4 leg_4.txt start_leg4.png 9:16
-python ../audit_frames.py leg_4.mp4 audit/leg_4     # inspect, re-roll ladder as above
-ffmpeg -y -v error -sseof -0.06 -i leg_4.mp4 -frames:v 1 start_leg5.png
-./gen_leg.sh leg_5 leg_5.txt start_leg5.png 9:16
-python ../audit_frames.py leg_5.mp4 audit/leg_5     # inspect
+for n in 3 4 5; do
+  ffmpeg -y -v error -sseof -0.06 -i leg_$((n-1)).mp4 -frames:v 1 start_leg$n.png
+  ./gen_leg.sh leg_$n leg_$n.txt start_leg$n.png 9:16
+  python ../audit_frames.py leg_$n.mp4 audit/leg_$n
+  # STOP each iteration: inspect audit frames (children/continuity/on-model) before chaining on; re-roll ladder as above
+done
 ```
 
 - [ ] **Step 4: Commit pipeline artifacts (scripts + job JSONs, no video)**
 
 ```bash
 git add Website/adult/work/redo2/gen_leg.sh Website/adult/work/redo2/leg_*.json
-git commit -m "Generate adults-only portrait legs 3-5 (audited, chained)"
+git commit -m "Generate adults-only portrait legs 2-5 (audited, chained)"
 ```
 
 ---
@@ -464,14 +464,14 @@ git commit -m "Landscape legs 1-5 generated as one chained flight (audited)"
 - Create: `Website/adult/work/redo2/out/` (staged encodes — NOT yet copied into `assets/`)
 
 **Interfaces:**
-- Consumes: raw `leg_{3,4,5}.mp4` (Task 5), `lleg_{1..5}.mp4` (Task 7), frozen originals `../redo/leg_1.mp4`+`leg_2.mp4` — **fallback if absent in this clone:** the raw legs 1–2 also live in the OneDrive copy `.../Website/adult/work/redo/leg_{1,2}.mp4` (read-only; copy them in, never modify there). If neither exists, re-derive from the committed encoded masters `../../assets/vid/{quiet,glowup}.mp4` (already CRF-20 encodes — acceptable as stitch sources since the mobile tier re-encodes to CRF 23 anyway).
-- Produces: `out/` containing — portrait: `photo.mp4`, `patio.mp4`, `sendoff.mp4` are NOT produced (portrait masters retire; see Task 9), `photo-m.mp4`, `patio-m.mp4`, `sendoff-m.mp4`, `journey-m.mp4`, portrait posters/stills for 3–5; landscape: `quiet.mp4` … `sendoff.mp4` (1920×1080 masters) + `<scene>-poster.webp`; plus `spans.json` (the five `[start,end]` pairs). Consumed by Task 9.
+- Consumes: raw `leg_{2,3,4,5}.mp4` (Task 5), `lleg_{1..5}.mp4` (Task 7), frozen original `../redo/leg_1.mp4` — **fallback if absent in this clone:** the raw leg 1 also lives in the OneDrive copy `.../Website/adult/work/redo/leg_1.mp4` (read-only; copy it in, never modify there). If neither exists, re-derive from the committed encoded master `../../assets/vid/quiet.mp4` (already a CRF-20 encode — acceptable as a stitch source since the mobile tier re-encodes to CRF 23 anyway).
+- Produces: `out/` containing — portrait: `glowup-m.mp4`, `photo-m.mp4`, `patio-m.mp4`, `sendoff-m.mp4`, `journey-m.mp4`, portrait posters/stills for 2–5 (portrait masters for 2–5 are NOT produced — they retire; see Task 9); landscape: `quiet.mp4` … `sendoff.mp4` (1920×1080 masters) + `<scene>-poster.webp`; plus `spans.json` (the five `[start,end]` pairs). Consumed by Task 9.
 
 - [ ] **Step 1: Adapt the finisher**
 
 Copy `../redo/finish_adult_redo.py` to `redo2/finish.py` and change ONLY:
 1. `RD = r"C:\Users\yashk\gywbt-site\Website\adult\work\redo2"`.
-2. Its five-leg portrait input list: legs 1–2 point at the frozen raw files (resolved per Interfaces above), legs 3–5 at this round's `leg_{3,4,5}.mp4`.
+2. Its five-leg portrait input list: leg 1 points at the frozen raw file (resolved per Interfaces above), legs 2–5 at this round's `leg_{2,3,4,5}.mp4`.
 3. Add a landscape pass reusing its `sh()` helpers — for each `lleg_N.mp4` → scene name (`quiet glowup photo patio sendoff`):
 
 ```python
@@ -523,15 +523,15 @@ git commit -m "Add two-tier finisher: encode, stitch, spans, seam gate"
 ```bash
 cd Website/adult
 cp work/redo2/out/journey-m.mp4 assets/vid/
-cp work/redo2/out/{photo,patio,sendoff}-m.mp4 assets/vid/
+cp work/redo2/out/{glowup,photo,patio,sendoff}-m.mp4 assets/vid/
 cp work/redo2/out/{quiet,glowup,photo,patio,sendoff}.mp4 assets/vid/     # landscape masters REPLACE the portrait stand-ins
-cp work/redo2/out/*.webp assets/    # posters + stills produced by finish.py (portrait 3-5 + landscape)
+cp work/redo2/out/*.webp assets/    # posters + stills produced by finish.py (portrait 2-5 + landscape)
 ```
-Note: the old portrait 1080×1920 "masters" for 3–5 are intentionally overwritten by landscape files of the same name — desktop was the only consumer.
+Note: the old portrait 1080×1920 "masters" for 2–5 are intentionally overwritten by landscape files of the same name — desktop was the only consumer.
 
 - [ ] **Step 2: Update the inline config**
 
-In `adult/index.html`: bump every touched asset ref to `?v=6` (all five `clip`, the 3–5 `clipMobile`/`still`/`poster`/`posterMobile`, `journeyMobile.clip`, `journeyMobile.poster`); paste the five `spans.json` pairs into `journeyMobile.spans`.
+In `adult/index.html`: bump every touched asset ref to `?v=6` (all five `clip`, the 2–5 `clipMobile`/`still`/`poster`/`posterMobile`, `journeyMobile.clip`, `journeyMobile.poster`); paste the five `spans.json` pairs into `journeyMobile.spans`.
 
 - [ ] **Step 3: Delete the letterbox hack**
 
