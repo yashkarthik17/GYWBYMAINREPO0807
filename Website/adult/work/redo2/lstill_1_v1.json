@@ -1,0 +1,30 @@
+[
+  {
+    "id": "7cb28c58-bbe6-4208-84ca-5ff2bfe2f493",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_150926_7cb28c58-bbe6-4208-84ca-5ff2bfe2f493.png",
+    "created_at": 1785769766.080394,
+    "params": {
+      "width": 2688,
+      "height": 1520,
+      "prompt": "Cinematic photorealistic wide photograph, 16:9 landscape framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the central two-thirds, generous lateral headroom for widescreen. Absolutely no text, no letters, no numbers, no logos, no watermarks. The scene: a modest, slightly boring backyard birthday dinner for a GROWN ADULT in late golden afternoon light — a small circle of adult friends in their 30s and 40s and a couple of older relatives in their 60s and 70s standing near a picnic table with a plain white sheet cake and pastel paper cups, making polite conversation, one guest checking their watch, a lone half-deflated pastel balloon tied to the fence post nearby. A few tired streamers on the wooden fence, ordinary quiet suburban sky above the rooftops. The mood is pleasant but flat, a party missing its spark.\nEvery human being in the scene is a grown adult in their 30s, 40s, 60s or 70s — absolutely no human children, no babies, no toddlers, no minors, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "medias": [
+        {
+          "data": {
+            "id": "24d9835c-5aee-4531-b2e0-12c75def38cf",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/24d9835c-5aee-4531-b2e0-12c75def38cf.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "16:9",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]
