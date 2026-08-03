@@ -192,7 +192,7 @@ Record each row's result in `Website/adult/work/music-qa.md`:
 |---|---|---|
 | 1 | Open `/adult/` directly, touch nothing, wait | Music blocked; ♪ shows OFF (never lies "on") |
 | 2 | From row 1, click anywhere on the page | Music starts at 0:11; ♪ ON |
-| 3 | From row 1, click ♪ FIRST | Music stays off, ♪ OFF, sessionStorage `sw-music-on=0`; later page clicks do not start it |
+| 3 | From row 1, click ♪ FIRST | The generic first-gesture listener does NOT hijack the tap; the ♪ click acts as a normal toggle (music starts, ♪ ON). Clicking ♪ again pauses it, sets `sw-music-on=0`, and later page clicks do NOT restart it. (While music is PLAYING, a first tap on ♪ mutes and sticks.) |
 | 4 | Let the song play to the end | Playback stops (no loop), ♪ flips OFF |
 | 5 | After row 4, click ♪ | Song replays from 0:11 |
 | 6 | Open `/` (envelope), tap open, choose grown-ups | Music carries into `/adult/` and starts without a new tap |
