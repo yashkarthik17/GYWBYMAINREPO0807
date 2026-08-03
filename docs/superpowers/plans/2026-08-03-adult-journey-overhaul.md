@@ -12,6 +12,8 @@
 
 ## Global Constraints
 
+> **2026-08-03 mid-execution design pivot (user-directed), supersedes any conflicting task text below:** the one-continuous-flight doctrine is replaced for scenes 2–5. New shot structure — scene 2 is a standalone SKY shot (cloud + clubhouse + Crasherz flying at dusk; no party, no crowd, no ground clutter); scene 3 opens with a TRANSITION (camera descends from sky through soft golden sparkle) and lands in the ground-level photo moment; scenes 3→4→5 are ground-level party scenes that flow via last-frame chaining; the cloud/clubhouse is OUT OF FRAME in all ground scenes. Prompt doctrine: LEAN — one scene idea per prompt, minimal element lists; the round-1 failure was overloaded prompts rendering wispy clouds and cluttered frames. Chaining: leg 2 does not chain from scene 1 (the runtime 0.15s crossfade bridges quiet→sky); leg 3 does not chain from leg 2 (the in-clip transition IS the bridge); legs 4 and 5 chain from their predecessors' last frames as before. The same structure applies to the landscape tier (lleg/lstill 2–5); scene 1 prompts are unaffected.
+
 - Work only in `C:\Users\yashk\gywbt-site` on branch `adult-overhaul`. Never push `main`. Pushing the branch creates a Vercel PREVIEW deployment only.
 - Scene 1 portrait (`quiet`) is frozen — do not regenerate it. Portrait scenes 2–5 (`glowup`, `photo`, `patio`, `sendoff`) ALL regenerate (scope expanded 2026-08-03 with user approval: the Task 1 audit found children in glowup t4–t8 and photo t0–t3, not just patio/sendoff).
 - Every new generation prompt MUST end with the adults-only guard sentence defined in Task 3 (verbatim). Every generated clip/still MUST pass the child-audit (Task 1 procedure) before it is accepted.
