@@ -414,9 +414,9 @@ for n in 1 2 3 4 5; do python ../audit_frames.py lstill_$n.png audit/lstill; don
 ```
 Inspect: no children anywhere; scenes 1–2 match the portrait originals' content and mood (compare against `../../assets/quiet.webp`, `../../assets/glowup.webp`); characters on-model. Re-roll individual failures (≤3 attempts each).
 
-- [ ] **Step 3: USER CHECKPOINT — present the stills**
+- [ ] **Step 3: Post the stills (checkpoint waived by user 2026-08-03)**
 
-Show the user all five landscape stills (plus the portrait leg 3–5 first-frames from Task 5). Do not proceed to Task 7 until the user approves. Record approval in the task notes / conversation.
+Show the user all five landscape stills for visibility, but do NOT block on approval — Task 7 starts immediately once the stills pass self-audit. (The user explicitly waived the blocking gate: "no user checkpoint just post them".)
 
 - [ ] **Step 4: Commit job records**
 
