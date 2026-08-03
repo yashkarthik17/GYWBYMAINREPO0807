@@ -13,6 +13,7 @@
   // classical strings; everything else gets its site's theme).
   var tag = document.currentScript;
   var AUTO = !!(tag && tag.hasAttribute('data-autostart'));
+  var ONCE = !!(tag && tag.hasAttribute('data-once'));
   var SRC = (tag && tag.getAttribute('data-src')) || 'assets/audio/theme.wav?v=3';
   // data-start="8" skips a dead-air intro: playback begins this many seconds in
   // and every loop restarts there too, so the delay never plays. Pages without
@@ -39,13 +40,14 @@
         try { audio.currentTime = START; } catch (e) {}
       }
     }
-    audio.loop = (START === 0);
+    audio.loop = (START === 0) && !ONCE;
     audio.addEventListener('loadedmetadata', seekIntoTrack);
     audio.addEventListener('canplay', seekIntoTrack);
     audio.addEventListener('timeupdate', function () {
       if (START > 0 && audio.currentTime < START - 0.5) seekIntoTrack();
     });
     audio.addEventListener('ended', function () {
+      if (ONCE) { setUi(false); try { audio.currentTime = START; } catch (e) {} return; }
       if (START > 0) { seekIntoTrack(); audio.play().catch(function () {}); }
     });
 
@@ -71,20 +73,22 @@
     document.head.appendChild(css);
     document.body.appendChild(btn);
 
+    function setUi(on) {
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.setAttribute('aria-label', on ? 'Pause the theme song' : 'Play the theme song');
+    }
+
     function set(on) {
       if (on) {
         seekIntoTrack();
         audio.play().then(function () {
-          btn.classList.add('is-on');
-          btn.setAttribute('aria-pressed', 'true');
-          btn.setAttribute('aria-label', 'Pause the theme song');
+          setUi(true);
           try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
-        }).catch(function () { /* blocked: stay off, next tap retries */ });
+        }).catch(function () { setUi(false); /* blocked: stay off, next tap retries */ });
       } else {
         audio.pause();
-        btn.classList.remove('is-on');
-        btn.setAttribute('aria-pressed', 'false');
-        btn.setAttribute('aria-label', 'Play the theme song');
+        setUi(false);
         try { sessionStorage.setItem(KEY, '0'); } catch (e) {}
       }
     }
@@ -102,7 +106,7 @@
       // in-page kids story keeps music from the envelope tap onward).
       swap: function (src, start) {
         START = start || 0;
-        audio.loop = (START === 0);
+        audio.loop = (START === 0) && !ONCE;
         audio.src = src;
         try { audio.load(); } catch (e) {}
         var s = null; try { s = sessionStorage.getItem(KEY); } catch (e) {}
@@ -122,10 +126,15 @@
       // pages auto-play with no guaranteed tap, so waiting for a gesture
       // alone left the music silent. If blocked, set() fails quietly and the
       // first-gesture listeners below pick it up.
-      set(true);
-      var once = function () { set(true); };
-      window.addEventListener('pointerdown', once, { once: true });
-      window.addEventListener('touchend', once, { once: true, passive: true });
+      set(true);   // real autoplay attempt at load; works when the visit already had a gesture
+      var once = function (e) {
+        window.removeEventListener('pointerdown', once);
+        window.removeEventListener('touchend', once);
+        if (e && e.target && e.target.closest && e.target.closest('#sw-music')) return; // their first tap IS the mute button — respect it
+        if (audio.paused) set(true);
+      };
+      window.addEventListener('pointerdown', once);
+      window.addEventListener('touchend', once, { passive: true });
     }
   }
 })();
