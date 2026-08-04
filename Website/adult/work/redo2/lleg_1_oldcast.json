@@ -1,0 +1,39 @@
+[
+  {
+    "id": "de85058a-d179-484f-a9b2-f2e4d3949a3b",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_155521_de85058a-d179-484f-a9b2-f2e4d3949a3b.mp4",
+    "created_at": 1785772521.817125,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, wide 16:9 landscape, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. The camera begins inside a modest, quiet backyard birthday dinner for a GROWN ADULT in late golden afternoon light — a small circle of adult friends in their 30s and 40s and a couple of older relatives in their 60s and 70s making polite conversation around the picnic table with its plain white sheet cake, one guest checking their watch, a lone half-deflated pastel balloon tied to the fence post. Ordinary real humans only — absolutely no cartoon characters, no mascots, no costumed figures, no toys, no animated creatures of any kind anywhere in the scene. The camera glides gently forward through the flat little party and drifts slowly among the guests as the quiet dinner winds down, conversation trailing off, the golden light softening toward dusk. Nothing in the sky above the rooftops for most of the shot — only ordinary dusk clouds and darkening blue. In the final second, all motion eases into a slow, steady, perfectly level drift, and a faint warm golden shimmer quietly begins to glow low in the dusk sky above the rooftops — subtle, distant, and unexplained: a soft diffuse glow only, no characters, no cloud shape, no clubhouse, no object or figure of any kind in the sky beyond that gentle glow.\nEvery human being in the scene is a grown adult in their 30s, 40s, 60s or 70s — absolutely no human children, no babies, no toddlers, no minors, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "12cd9aed-ec46-48ff-b7cd-5905e4d3e9e9",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/12cd9aed-ec46-48ff-b7cd-5905e4d3e9e9_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

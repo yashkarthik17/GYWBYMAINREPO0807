@@ -1,28 +1,36 @@
 [
   {
-    "id": "540fcfa6-a88f-4e46-bb09-601cea78306d",
+    "id": "323eec24-fc98-4539-8143-c2fbe498e344",
     "status": "completed",
     "display_name": "GPT Image 2",
     "job_set_type": "gpt_image_2",
-    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_153141_540fcfa6-a88f-4e46-bb09-601cea78306d.png",
-    "created_at": 1785771101.05498,
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260804_001934_323eec24-fc98-4539-8143-c2fbe498e344.png",
+    "created_at": 1785802774.568315,
     "params": {
       "width": 2688,
       "height": 1520,
-      "prompt": "Cinematic photorealistic wide photograph, 16:9 landscape framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the central two-thirds, generous lateral headroom for widescreen. Absolutely no text, no letters, no numbers, no logos, no watermarks. The scene: ground level in a real suburban backyard at dusk, a last few golden sparkles still drifting down from above. Adult friends in their 30s and 40s and grandparents in their 60s and 70s stand shoulder to shoulder around the picnic table for a group photo, phone flashes popping. The three CRASHERS — small toddler-sized creatures whose bodies are simple ROUND hooded onesies, soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats, the patterns only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print, each with a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood — squeeze in among the group at knee height. STARRY — a tall golden five-pointed star character with a friendly cartoon face on the star body, large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile, wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots — spreads his arms wide behind the group. No cloud or clubhouse is in frame.\nEvery human being in the scene is a grown adult in their 30s, 40s, 60s or 70s — absolutely no human children, no babies, no toddlers, no minors, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "prompt": "Cinematic photorealistic wide photograph, 16:9 landscape framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the central two-thirds, generous lateral headroom for widescreen. Absolutely no text, no letters, no numbers, no logos, no watermarks. The scene: ground level in a real suburban backyard at dusk, a last few golden sparkles still drifting down from above. A lively circle of young adult friends in their 20s and 30s stand shoulder to shoulder around the picnic table for a group photo, phone flashes popping. The three CRASHERS — small toddler-sized creatures whose bodies are simple ROUND hooded onesies, soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats, the patterns only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print, each with a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood — squeeze in among the group at knee height. STARRY — a tall golden five-pointed star character with a friendly cartoon face on the star body, large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile, wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots — spreads his arms wide behind the group. No cloud or clubhouse is in frame.\nEvery human being in the scene is a young adult in their 20s or 30s — absolutely no human children, no babies, no toddlers, no minors, no middle-aged people, no elderly people, nobody with gray hair, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
       "medias": [
         {
           "data": {
-            "id": "40499332-b6e8-49ec-b463-49e80af12ed5",
-            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/40499332-b6e8-49ec-b463-49e80af12ed5.png",
+            "id": "f9c2ea73-a74a-4fae-9b95-6c85dd73cd2a",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/f9c2ea73-a74a-4fae-9b95-6c85dd73cd2a.png",
             "type": "media_input"
           },
           "role": "image"
         },
         {
           "data": {
-            "id": "47b5ed59-8718-44b0-a1d9-95dc509f9fb4",
-            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/47b5ed59-8718-44b0-a1d9-95dc509f9fb4.png",
+            "id": "f5ab8fca-a8ae-403e-abb9-475d6235aafc",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/f5ab8fca-a8ae-403e-abb9-475d6235aafc.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "cfc69fc9-9116-4e66-b105-ebd4b2b1bf01",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/cfc69fc9-9116-4e66-b105-ebd4b2b1bf01.png",
             "type": "media_input"
           },
           "role": "image"
@@ -36,4 +44,3 @@
     }
   }
 ]
-

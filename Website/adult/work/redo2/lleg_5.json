@@ -1,24 +1,32 @@
 [
   {
-    "id": "c1b24c24-809c-47a2-9363-9d7095e60421",
+    "id": "64ffecf8-41ff-4f72-a480-26eab8433d3a",
     "status": "completed",
     "display_name": "Seedance 2.0",
     "job_set_type": "seedance_2_0",
-    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_160822_c1b24c24-809c-47a2-9363-9d7095e60421.mp4",
-    "created_at": 1785773302.417501,
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260804_043934_64ffecf8-41ff-4f72-a480-26eab8433d3a.mp4",
+    "created_at": 1785818374.52417,
     "params": {
       "width": 1920,
       "height": 1080,
-      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, wide 16:9 landscape, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. The camera continues the exact same slow, steady, perfectly straight forward drift it was already in, drifting over the lawn as the party winds down into deep blue dusk, where STARRY — a tall golden five-pointed star character with a friendly cartoon face on the star body, large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile, wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots — waves goodbye with a puffy white glove, and the three CRASHERS — small toddler-sized creatures whose bodies are simple ROUND hooded onesies, soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats, the patterns only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print, each with a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood — wave with both hands beside him on the grass. Facing them, adult friends in their 30s and 40s and grandparents in their 60s and 70s stand together on the lawn waving back, a faint golden sparkle trail rising off the group into the night sky behind Starry and the Crashers. No cloud or clubhouse is in frame. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight upward drift gazing at the faint sparkle trail rising into the starry sky, ready to continue.\nEvery human being in the scene is a grown adult in their 30s, 40s, 60s or 70s — absolutely no human children, no babies, no toddlers, no minors, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, wide 16:9 landscape, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. The camera continues the exact same slow, steady, perfectly straight forward drift it was already in, drifting over the lawn as the party winds down into deep blue dusk, where STARRY — a tall golden five-pointed star character with a friendly cartoon face on the star body, large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile, wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots — waves goodbye with a puffy white glove, and the three CRASHERS — small toddler-sized creatures whose bodies are simple ROUND hooded onesies, soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats, the patterns only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print, each with a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood — wave with both hands beside him on the grass. Facing them, a lively circle of young adult friends in their 20s and 30s stand together on the lawn waving back, a faint golden sparkle trail rising off the group into the night sky behind Starry and the Crashers. No cloud or clubhouse is in frame. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight upward drift gazing at the faint sparkle trail rising into the starry sky, ready to continue.\r\nThroughout the ENTIRE shot there are EXACTLY three Crasher mascots in total (one orange zigzag, one blue diamond, one green paint-splatter) and EXACTLY one star mascot in total — the same four characters from the first frame to the last; no additional, duplicate, background, distant or partial mascots ever appear anywhere in the frame at any moment. Every human being in the scene is a young adult in their 20s or 30s — absolutely no human children, no babies, no toddlers, no minors, no middle-aged people, no elderly people, nobody with gray hair, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
       "genre": "auto",
       "medias": [
         {
           "data": {
-            "id": "95926e2c-91b7-4e59-b237-311fc54bac0d",
-            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/95926e2c-91b7-4e59-b237-311fc54bac0d.png",
+            "id": "b3da9d43-c340-4592-aa1d-8b3b2ee5d747",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/b3da9d43-c340-4592-aa1d-8b3b2ee5d747.png",
             "type": "media_input"
           },
           "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "b1e2bfcd-d7e9-41b9-8607-e6d60aae2313",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/b1e2bfcd-d7e9-41b9-8607-e6d60aae2313_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "end_image"
         }
       ],
       "duration": 8,
