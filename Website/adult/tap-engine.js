@@ -23,7 +23,11 @@ function mountTapWorld(container, config) {
   function clipOf(s)   { return (phone && s.clipMobile) ? s.clipMobile : s.clip; }
   function posterOf(s) { return (phone && s.posterMobile) ? s.posterMobile : (s.poster || s.still); }
 
-  // Optional pacing: config.playbackRate (e.g. 1.15) speeds every clip up.
+  // Optional pacing: config.playbackRate (e.g. 1.15) is the base rate every
+  // clip plays at. Individual scenes can further multiply it via `rate`
+  // (e.g. rate:1.3 on a scene plays that clip at RATE*1.3); connectors
+  // always use the plain base RATE. go() computes and applies the effective
+  // per-item rate on every play() — see `effRate` there.
   var RATE = config.playbackRate || 1;
 
   // ---- playlist: scene, connector, scene, connector, … scene -------------
@@ -128,7 +132,9 @@ function mountTapWorld(container, config) {
     v.muted = true; v.setAttribute("muted", "");
     v.playsInline = true; v.setAttribute("playsinline", "");
     v.preload = "auto";
-    v.defaultPlaybackRate = RATE;
+    v.defaultPlaybackRate = RATE;   // base rate only; go() sets the actual
+                                     // per-item rate (RATE * (scene.rate||1))
+                                     // on nextV.playbackRate before each play()
     stage.appendChild(v);
   });
   var still = el("img", "tw-still");
@@ -290,6 +296,14 @@ function mountTapWorld(container, config) {
       prepared = -1;
       nextV.classList.add("is-on");
       curV.classList.remove("is-on");
+      if (startBtn) {
+        // A recovery retry (silent canplay/visibilitychange OR a gesture
+        // that raced ahead of its own synchronous cleanup) just produced a
+        // real playing frame: the autoplay-refusal dead end is over.
+        startBtn.remove(); startBtn = null;
+        started = true;
+        removeRecoveryListeners();
+      }
       // let the crossfade finish before parking the old player and handing it
       // the following item to buffer (setting src earlier would black out the
       // outgoing side of the fade)
@@ -299,20 +313,60 @@ function mountTapWorld(container, config) {
       }, 700);
     }
 
-    try { nextV.playbackRate = RATE; } catch (e) {}
+    // Effective playback rate: scenes may carry a `rate` multiplier (e.g.
+    // rate:1.3) on top of the config-wide base RATE; connectors always play
+    // at the plain base RATE.
+    var effRate = scene ? RATE * (scene.rate || 1) : RATE;
+    try { nextV.playbackRate = effRate; } catch (e) {}
     var pr;
     try { pr = nextV.play(); } catch (e) { enterStillsMode(); go(p); return; }
     onFirstFrame(nextV, swap);
     if (pr && pr.then) {
       pr.catch(function () {
-        // OS refused playback (Low Power Mode / policy): stills + tap-through.
+        // OS refused playback (Low Power Mode / policy / cold-load Data
+        // Saver): stills + tap-through, same as before. A rejection at
+        // mount (idx 0, nothing has happened yet) additionally arms silent
+        // + gesture recovery so the journey can resume without the visitor
+        // specifically hunting down the overlay button.
         enterStillsMode();
         var s = scene || S[nextSceneIdxOfConn(p)];
         renderStill(s);
         if (p === LAST) showExplore(s);
-        if (!started) startOverlay();
+        if (!started) {
+          startOverlay();
+          if (p === 0) armRecoveryListeners(nextV);
+        }
       });
     }
+
+    // Early-handoff crossfade: begin the transition to the NEXT item ~0.55s
+    // of WALL-CLOCK time before this clip's natural end, instead of waiting
+    // for `ended`. That trailing gap (decode/settle + the `ended` event's
+    // own latency) is what reads as a dead pause between chained scenes.
+    // `duration - currentTime` is media time; at effRate the wall-clock
+    // remaining is that divided by effRate, so a rate:1.1 clip (which burns
+    // through media-seconds faster than real time) doesn't fade early by an
+    // inflated wall-clock margin. Guards: only the still-current item, only
+    // when actually in video mode, only before the finale (p===LAST must
+    // still reach a real `ended` to unlock the explore grid), a finite
+    // duration (guards NaN/Infinity mid-load), and the `advanced` flag so a
+    // ~4Hz timeupdate stream can't fire this twice for one play.
+    var advanced = false;
+    nextV.ontimeupdate = function () {
+      if (advanced || idx !== p || stillsMode || p >= LAST) return;
+      var d = nextV.duration, ct = nextV.currentTime;
+      if (!isFinite(d)) return;
+      if ((d - ct) / effRate <= 0.55) {
+        advanced = true;
+        nextV.ontimeupdate = null;
+        go(p + 1);
+      }
+    };
+
+    // Fallback: if the early handoff above didn't fire (e.g. duration never
+    // resolved), `ended` still advances. Once early-handoff HAS fired, idx
+    // has already moved to p+1 by the time `ended` would arrive, so the
+    // `idx !== p` guard makes this a no-op — it never double-advances.
     nextV.onended = function () {
       if (idx !== p) return;
       if (p === LAST) finish(); else go(p + 1);
@@ -325,22 +379,76 @@ function mountTapWorld(container, config) {
     showExplore(s);
   }
 
-  // First-play overlay for the autoplay-refused path: one real user gesture.
+  // First-play overlay for the autoplay-refused path: still the visible
+  // affordance, but no longer the ONLY way out — see restart() below.
   var startBtn = null;
   function startOverlay() {
     if (startBtn) return;
     startBtn = el("button", "tw-start");
     startBtn.type = "button";
     startBtn.textContent = config.startLabel || "Tap to play the story";
-    startBtn.addEventListener("click", function () {
-      startBtn.remove(); startBtn = null; started = true;
-      startMusicOnGesture();   // this tap IS the visitor's first real gesture
-      stillsMode = reduce;
-      still.classList.remove("is-on");
-      var at = idx < 0 ? 0 : idx;
-      idx = -1; prepared = -1; go(at);
-    });
+    startBtn.addEventListener("click", function () { restart(true); });
     stage.appendChild(startBtn);
+  }
+
+  // Shared recovery path: the overlay button, a real window gesture
+  // (pointerdown/touchend), and the silent canplay/visibilitychange retries
+  // all funnel through here — one restart flow instead of three copies.
+  // `gesture` is true only for genuine user activation. Gesture-triggered
+  // restarts are trusted to succeed (autoplay policy essentially guarantees
+  // a play() called from a real activation), exactly like the original
+  // overlay tap always was, so they drop the overlay / declare `started`
+  // immediately and nudge the site music. Silent retries have no such
+  // guarantee — they attempt play() without touching the overlay/`started`
+  // up front; swap() (in go()) only tears the overlay down once a first
+  // frame has actually painted, so a silent retry that fails leaves the
+  // overlay exactly where it was, with the other recovery listeners still
+  // armed (each is one-shot for ITSELF, not for the whole recovery system).
+  function restart(gesture) {
+    if (started) return;
+    if (gesture) {
+      removeRecoveryListeners();
+      if (startBtn) { startBtn.remove(); startBtn = null; }
+      started = true;
+      startMusicOnGesture();   // this gesture IS the visitor's first real one
+    }
+    stillsMode = reduce;
+    still.classList.remove("is-on");
+    var at = idx < 0 ? 0 : idx;
+    idx = -1; prepared = -1;
+    go(at);
+  }
+
+  // Arms the one-shot recovery listeners after the initial (mount-time)
+  // autoplay rejection. `failedV` is the video element whose play() was
+  // just refused — canplay is watched on that same element. Each listener
+  // fires at most once (native `once:true`, or a manual self-removal for
+  // visibilitychange since only the -> visible transition should count);
+  // if a silent retry fails, go()'s pr.catch re-arms a fresh set for the
+  // next attempt.
+  var recoveryOff = null;
+  function removeRecoveryListeners() {
+    if (recoveryOff) { recoveryOff(); recoveryOff = null; }
+  }
+  function armRecoveryListeners(failedV) {
+    removeRecoveryListeners();
+    var onGesture = function () { restart(true); };
+    var onCanplay = function () { restart(false); };
+    var onVisible = function () {
+      if (document.visibilityState !== "visible") return;
+      document.removeEventListener("visibilitychange", onVisible);
+      restart(false);
+    };
+    window.addEventListener("pointerdown", onGesture, { once: true });
+    window.addEventListener("touchend", onGesture, { once: true });
+    failedV.addEventListener("canplay", onCanplay, { once: true });
+    document.addEventListener("visibilitychange", onVisible);
+    recoveryOff = function () {
+      window.removeEventListener("pointerdown", onGesture);
+      window.removeEventListener("touchend", onGesture);
+      failedV.removeEventListener("canplay", onCanplay);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
   }
 
   // Start the site music on the first real journey gesture (mirrors the
