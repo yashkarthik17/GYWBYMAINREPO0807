@@ -176,6 +176,7 @@
   <script src="music.js?v=13" data-once data-src="assets/audio/envelope.wav?v=1"></script>
   <script src="tap-engine.js?v=7"></script>
   <script src="story-config.js?v=1"></script>
+  <script src="adult-config.js?v=1"></script>
   <script>
   (function () {
     "use strict";
@@ -374,6 +375,33 @@
       world.id = "world";
       document.body.appendChild(world);
       mountTapWorld(world, GYWBT_KIDS_CONFIG());
+    });
+
+    // ---- In-page adult journey: same trick as the kids story above — launch
+    // on the SAME page so the envelope tap's audio unlock carries into the
+    // journey. The adult engine (adult/tap-engine.js) isn't loaded by default
+    // (it's a different, heavier engine than the kids one already on this
+    // page), so it's fetched here, in-gesture, and only mounted once it
+    // arrives; a load failure falls back to a normal navigation.
+    document.querySelector(".sheet-btn.grown").addEventListener("click", function (e) {
+      if (!window.GYWBT_ADULT_CONFIG) return;  // fall back to adult/
+      e.preventDefault();
+      if (window.swMusic && window.swMusic.swap) window.swMusic.swap("assets/audio/theme.wav?v=2", 11);
+      try { history.pushState({ adult: 1 }, "", "#adult"); } catch (err) {}
+      stage.style.display = "none";
+      document.querySelector(".ui").style.display = "none";
+      sheetEl.style.display = "none";
+      cineEl.style.display = "none";
+      document.getElementById("confetti").style.display = "none";
+      try { v.pause(); } catch (err) {}
+      var world = document.createElement("div");
+      world.id = "world";
+      document.body.appendChild(world);
+      var engine = document.createElement("script");
+      engine.src = "adult/tap-engine.js?v=9";
+      engine.onload = function () { mountTapWorld(world, GYWBT_ADULT_CONFIG()); };
+      engine.onerror = function () { location.href = "adult/"; };
+      document.body.appendChild(engine);
     });
     window.addEventListener("popstate", function () { location.reload(); });
 
