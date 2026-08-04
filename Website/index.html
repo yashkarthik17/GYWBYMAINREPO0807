@@ -355,21 +355,6 @@
     if (/[?&]open/.test(location.search))        // QA shortcut, same as old page
       v.addEventListener("loadeddata", () => setTimeout(() => { v.currentTime = CFG.anchor; setState("sealed"); toggle(); }, 300), { once: true });
 
-    // Kids config tweaks kept here (not in the shared story-config.js): a
-    // per-scene playback-rate bump by position (1st scene untouched, 2nd/3rd
-    // +10%, 4th/5th +15%) and dropping the "in real life" link from the
-    // finale's explore menu — the kids journey ends without it.
-    function kidsConfigTweaked() {
-      var cfg = GYWBT_KIDS_CONFIG();
-      var RATE_BY_POS = [null, 1.10, 1.10, 1.15, 1.15];
-      (cfg.sections || []).forEach(function (s, i) { if (RATE_BY_POS[i]) s.rate = RATE_BY_POS[i]; });
-      var finale = cfg.sections && cfg.sections[cfg.sections.length - 1];
-      if (finale && finale.explore && finale.explore.links) {
-        finale.explore.links = finale.explore.links.filter(function (l) { return !/real life/i.test(l.label || ""); });
-      }
-      return cfg;
-    }
-
     // ---- In-page kids story: launching on the SAME page keeps the audio
     // element gesture-unlocked, so the music switches to the kids track and
     // plays through the story with zero extra taps (a navigation would let
@@ -388,7 +373,7 @@
       var world = document.createElement("div");
       world.id = "world";
       document.body.appendChild(world);
-      mountTapWorld(world, kidsConfigTweaked());
+      mountTapWorld(world, GYWBT_KIDS_CONFIG());
     });
     window.addEventListener("popstate", function () { location.reload(); });
 
