@@ -24,6 +24,8 @@ function mountTapWorld(container, config) {
   function posterOf(s) { return (phone && s.posterMobile) ? s.posterMobile : (s.poster || s.still); }
 
   // Optional pacing: config.playbackRate (e.g. 1.15) speeds every clip up.
+  // Optional per-scene pacing: section.rate (e.g. 1.10) multiplies RATE for
+  // that scene only — connectors always play at the plain RATE.
   var RATE = config.playbackRate || 1;
 
   // ---- playlist: scene, connector, scene, connector, … scene -------------
@@ -249,7 +251,7 @@ function mountTapWorld(container, config) {
       }, 700);
     }
 
-    try { nextV.playbackRate = RATE; } catch (e) {}
+    try { nextV.playbackRate = RATE * ((scene && scene.rate) || 1); } catch (e) {}
     var pr;
     try { pr = nextV.play(); } catch (e) { enterStillsMode(); go(p); return; }
     onFirstFrame(nextV, swap);

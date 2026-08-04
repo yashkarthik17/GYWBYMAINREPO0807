@@ -53,8 +53,24 @@
 
   <script src="nav.js?v=4"></script>
   <script src="music.js?v=13" data-autostart data-start="11"></script>
-  <script src="tap-engine.js?v=6"></script>
+  <script src="tap-engine.js?v=7"></script>
   <script src="story-config.js?v=1"></script>
-  <script>mountTapWorld(document.getElementById('world'), GYWBT_KIDS_CONFIG());</script>
+  <script>
+  (function () {
+    "use strict";
+    // Kids config tweaks kept here (not in the shared story-config.js): a
+    // per-scene playback-rate bump by position (1st scene untouched, 2nd/3rd
+    // +10%, 4th/5th +15%) and dropping the "in real life" link from the
+    // finale's explore menu — the kids journey ends without it.
+    var cfg = GYWBT_KIDS_CONFIG();
+    var RATE_BY_POS = [null, 1.10, 1.10, 1.15, 1.15];
+    (cfg.sections || []).forEach(function (s, i) { if (RATE_BY_POS[i]) s.rate = RATE_BY_POS[i]; });
+    var finale = cfg.sections && cfg.sections[cfg.sections.length - 1];
+    if (finale && finale.explore && finale.explore.links) {
+      finale.explore.links = finale.explore.links.filter(function (l) { return !/real life/i.test(l.label || ""); });
+    }
+    mountTapWorld(document.getElementById('world'), cfg);
+  })();
+  </script>
 </body>
 </html>
