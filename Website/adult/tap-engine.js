@@ -289,6 +289,7 @@ function mountTapWorld(container, config) {
     startBtn.textContent = config.startLabel || "Tap to play the story";
     startBtn.addEventListener("click", function () {
       startBtn.remove(); startBtn = null; started = true;
+      startMusicOnGesture();   // this tap IS the visitor's first real gesture
       stillsMode = reduce;
       still.classList.remove("is-on");
       var at = idx < 0 ? 0 : idx;
@@ -302,7 +303,20 @@ function mountTapWorld(container, config) {
   // explicit earlier mute (same sessionStorage key music.js writes), never
   // restarts/seeks a track that's already playing, and no-ops on pages where
   // music.js hasn't loaded (tap-engine is shared by index.html/story.html).
+  // Latched to at most one attempt per page load: the adult page's music
+  // loads with data-once, and music.js's own 'ended' handler for a
+  // data-once track clears #sw-music.is-on WITHOUT writing the mute key
+  // (see music.js:49-52) — so once the track finishes naturally, the
+  // is-on/mute checks above alone can't distinguish "played once, done" from
+  // "never started," and every later tap/skip would resurrect a track that
+  // was designed to play once. The latch closes that hole while still
+  // covering the original goal (nudge music going if load-time autoplay was
+  // blocked). The music toggle button remains the only replay path, by
+  // design — this function never fires again after its one attempt.
+  var musicNudged = false;
   function startMusicOnGesture() {
+    if (musicNudged) return;
+    musicNudged = true;
     try {
       if (!window.swMusic) return;
       var muted = null;
