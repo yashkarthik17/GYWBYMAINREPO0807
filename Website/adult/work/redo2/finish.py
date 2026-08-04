@@ -183,6 +183,8 @@ def classify(i, s):
         return "EXPECTED (designed transition, not gated)"
     if BAND_LO <= s <= BAND_HI:
         return "PASS (within shipped-chain band)"
+    # Above BAND_HI is flagged too, not just below BAND_LO: near-1.0 SSIM on a
+    # seam usually means a frozen/duplicate-frame stitch, not a great match.
     return "CHECK (outside band -- needs visual frame-pair review)"
 
 A, B = os.path.join(OUT, "_ga.png"), os.path.join(OUT, "_gb.png")

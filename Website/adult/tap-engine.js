@@ -183,7 +183,11 @@ function mountTapWorld(container, config) {
   function nextSceneIdxOfConn(p) { var q = nextSceneAt(p); return PL[q].si; }
 
   function renderStill(s) {
-    still.src = s.still || posterOf(s);
+    // Phones keep the portrait `still` (falling back to a poster only if one
+    // is missing); everyone else prefers the landscape-appropriate poster so
+    // a portrait still is never cover-cropped on a wide viewport — falling
+    // back to `still` only if no poster exists at all.
+    still.src = phone ? (s.still || posterOf(s)) : (posterOf(s) || s.still);
     still.classList.add("is-on");
   }
 

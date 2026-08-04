@@ -24,6 +24,12 @@ Website/adult/work/redo2/*.mp4
 Website/adult/work/redo2/*.err
 Website/adult/work/redo2/refs/*
 Website/adult/work/redo2/out/*
+Website/adult/work/redo2/audit/
+Website/adult/work/redo2/*.out
+Website/adult/work/redo2/*.runlog
+Website/adult/work/redo2/*.runerr
+Website/adult/work/redo2/*_gen.log
+Website/adult/work/redo2/*_run.log
 Website/adult/work/audit/
 
 # OS noise

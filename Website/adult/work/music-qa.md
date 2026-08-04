@@ -15,7 +15,7 @@ Live Chrome QA per the task brief's Step 6 was attempted first, as instructed:
 
 Per the task's fallback instructions, **no row below was verified in a live
 browser**. Every row is instead justified by a static code walkthrough of
-`Website/music.js` (post-Task-2 edit) and `Website/adult/index.html` line 47,
+`Website/music.js` (post-Task-2 edit) and `Website/adult/index.html` line 43,
 citing the exact lines that implement the expected behavior. All rows are
 marked **PENDING live QA (Task 10 preview)** and must be re-verified by hand
 in a real Chrome profile before ship.
@@ -31,7 +31,7 @@ profile(s), not just automation, even at Task 10.
 
 ## Config under test
 
-`Website/adult/index.html:47`
+`Website/adult/index.html:43`
 ```html
 <script src="../music.js?v=14" data-autostart data-once data-start="11"></script>
 ```
@@ -65,12 +65,12 @@ profile(s), not just automation, even at Task 10.
   `audio.loop` and the `ended` handler behave exactly as before Task 2 for
   both the native-loop classical strings and the hand-looped, `swap()`-ed
   kids-story track.
-- Verified via grep: `Website/adult/index.html:47` is the only HTML file
+- Verified via grep: `Website/adult/index.html:43` is the only HTML file
   under `Website/` with `data-once` — see command below.
 
 ```
 $ grep -rn "data-once" Website/ --include=*.html
-Website/adult/index.html:47:<script src="../music.js?v=14" data-autostart data-once data-start="11"></script>
+Website/adult/index.html:43:<script src="../music.js?v=14" data-autostart data-once data-start="11"></script>
 ```
 
 ## Environment note
