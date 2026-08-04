@@ -1,18 +1,23 @@
-"""Adult-chain redo post-processing (two-tier: portrait mobile scrub + landscape desktop).
+"""Adult-chain redo post-processing (two-tier: portrait mobile + landscape desktop).
 
 Encodes the 5 raw legs into two tiers:
-  - portrait mobile scrub tier (720x1280, CRF 23) from this round's portrait
-    leg_{1..5}.mp4 raws -- stitched into the single scroll-scrubbed journey-m.mp4.
+  - portrait mobile tier (720x1280, CRF 23, -g 48 -keyint_min 24 -- 2s
+    keyframes @24fps, retuned for tap-engine's straight sequential playback;
+    the old -g 4 grid only paid for the retired scrub-engine's chase-play
+    seeks) from this round's portrait leg_{1..5}.mp4 raws -- also stitched
+    into journey-m.mp4 (shipped for parity; unused by the live tap-engine).
   - landscape desktop master tier (1920x1080, CRF 20, GOP 8) from this round's
     lleg_{1..5}.mp4 raws -- five standalone full-bleed scene clips, no stitching.
 
 Portrait desktop-quality masters (the old unscaled-portrait CRF-20 tier) RETIRE
 for all five scenes: desktop is now served exclusively by the landscape
 footage, so there is no more portrait "d" tier to produce. Posters/stills are
-extracted from ENCODED clips only (seam-zero doctrine): landscape posters for
-all five scenes, portrait posters+stills for scenes 2-5 only. Scene 1
-("quiet") is the frozen original leg -- its already-committed poster/still
-assets already reflect that footage, so nothing new is extracted for it here.
+extracted from ENCODED clips only (seam-zero doctrine): landscape posters and
+portrait posters+stills for all five scenes. Scene 1 ("quiet") was UNFROZEN at
+the round-2 preview gate -- a new native-9:16 leg_1.mp4 is generated directly
+into redo2/ this round, so it now gets the same full portrait treatment
+(quiet-m.mp4 + poster + still) as scenes 2-5 instead of reusing its old
+committed assets.
 
 SEAM-GATE PIVOT (mid-plan design change, recorded in the plan's progress log):
 the journey is no longer one continuous flight. Scene 1->2 is bridged by a
@@ -75,28 +80,22 @@ def webp_from(video, t, out, w):
     sh(["ffmpeg", "-v", "error", "-y", "-ss", f"{t:.3f}", "-i", video, "-frames:v", "1",
         "-vf", f"scale={w}:-2", "-c:v", "libwebp", "-quality", "88", out])
 
-# 0) Resolve the frozen raw portrait leg 1 (NOT regenerated this round).
+# 0) Resolve portrait leg 1 raw footage. Scene 1 was unfrozen at the round-2
+#    preview gate -- a new native-9:16 leg_1.mp4 is generated directly into
+#    redo2/ this round, so it's expected to already be here. Simplified from
+#    the prior frozen-leg version: no OneDrive/committed-master fallback,
+#    since those pointed at the OLD frozen footage and would silently ship
+#    stale scene 1 content if this round's raw is missing.
 def resolve_leg1():
     local = os.path.join(RD, "leg_1.mp4")
     if os.path.exists(local):
         return local
-    onedrive = (r"C:\Users\yashk\OneDrive\Desktop\Glad You Were Born Today (Repo)"
-                r"\Website\adult\work\redo\leg_1.mp4")
-    if os.path.exists(onedrive):
-        shutil.copy2(onedrive, local)
-        print(f"resolved leg_1: copied frozen raw from OneDrive -> {local}")
-        return local
-    committed_master = os.path.join(RD, "..", "..", "assets", "vid", "quiet.mp4")
-    if os.path.exists(committed_master):
-        shutil.copy2(committed_master, local)
-        print(f"resolved leg_1: no raw found anywhere, re-derived from committed "
-              f"encoded master -> {local}")
-        return local
-    raise RuntimeError("leg_1.mp4 unresolved: not local, not on OneDrive, no committed master")
+    raise RuntimeError("leg_1.mp4 unresolved: expected the round-2 regenerated "
+                        "native-9:16 raw at redo2/leg_1.mp4")
 
 resolve_leg1()
 
-# 1) Encode portrait mobile scrub tier (720x1280, CRF 23) for all five legs.
+# 1) Encode portrait mobile tier (720x1280, CRF 23) for all five legs.
 for leg, name in LEGS:
     src = f"{leg}.mp4"
     m = os.path.join(OUT, f"{name}-m.mp4")
@@ -104,7 +103,10 @@ for leg, name in LEGS:
         sh(["ffmpeg", "-v", "error", "-y", "-i", src, "-an",
             "-vf", "scale=720:1280,unsharp=5:5:0.8:5:5:0.0",
             "-c:v", "libx264", "-preset", "slow", "-crf", "23", "-pix_fmt", "yuv420p",
-            "-g", "4", "-keyint_min", "4", "-sc_threshold", "0",
+            # 2s keyframes @24fps -- tap-engine plays clips straight through and
+            # never seeks, so the old -g 4 chase-play seek grid just burned
+            # ~6.5 Mbps of extra bitrate for nothing (see investigation-engine.md).
+            "-g", "48", "-keyint_min", "24", "-sc_threshold", "0",
             "-movflags", "+faststart", m])
     print(f"encoded {name}-m: mobile {os.path.getsize(m)//1024}K")
 
@@ -126,18 +128,16 @@ for n, scene in enumerate(LSCENES, start=1):
     print(f"encoded {scene}: landscape {os.path.getsize(d)//1024}K")
 print("landscape masters + posters extracted")
 
-# 3) Portrait posters + stills for scenes 2-5 only (scene 1/"quiet" is the
-#    frozen original -- its committed poster/still assets already reflect
-#    this exact footage, and there is no portrait desktop tier left to pull
-#    a "quiet" still from).
+# 3) Portrait posters + stills for all five scenes. Scene 1 ("quiet") was
+#    unfrozen at the round-2 preview gate, so it now gets the same
+#    encoded-clip extraction as scenes 2-5 instead of reusing its old
+#    committed poster/still assets.
 for _, name in LEGS:
-    if name == "quiet":
-        continue
     webp_from(os.path.join(OUT, f"{name}-m.mp4"), 0.0,
               os.path.join(OUT, f"{name}-poster-m.webp"), 720)
     webp_from(os.path.join(OUT, f"{name}-m.mp4"), 4.0,
               os.path.join(OUT, f"{name}.webp"), 720)
-print("portrait posters + stills extracted (scenes 2-5)")
+print("portrait posters + stills extracted (all 5 scenes)")
 
 # 4) Stitch mobile journey, trimming the duplicated handoff frame at each joint
 mob = [os.path.join(OUT, f"{n}-m.mp4") for _, n in LEGS]
@@ -160,7 +160,9 @@ fc = ";".join(filts) + ";" + "".join(f"[v{i}]" for i in range(len(parts))) + \
 j = os.path.join(OUT, "journey-m.mp4")
 sh(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", fc, "-map", "[out]",
     "-c:v", "libx264", "-preset", "slow", "-crf", "23", "-pix_fmt", "yuv420p",
-    "-g", "4", "-keyint_min", "4", "-sc_threshold", "0", "-movflags", "+faststart", j])
+    # kept consistent with the per-scene -m tier above even though journey-m
+    # is unused by the live tap-engine today (it still ships).
+    "-g", "48", "-keyint_min", "24", "-sc_threshold", "0", "-movflags", "+faststart", j])
 webp_from(j, 0.0, os.path.join(OUT, "journey-poster-m.webp"), 720)
 print(f"journey stitched: {dur(j):.3f}s @ {f:.3f}fps")
 print("SPANS:", json.dumps(spans))

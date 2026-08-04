@@ -45,7 +45,7 @@ function mountTapWorld(container, config) {
   var css = [
     ".tw{position:fixed;inset:0;overflow:hidden;background:var(--sw-bg,#1D2B50);}",
     ".tw video,.tw .tw-still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;",
-    "  opacity:0;transition:opacity .5s ease;}",
+    "  opacity:0;transition:opacity .5s ease;will-change:opacity;}",
     ".tw video.is-on,.tw .tw-still.is-on{opacity:1;}",
     ".tw-tap{position:absolute;inset:0;z-index:4;background:none;border:0;padding:0;cursor:pointer;",
     "  -webkit-tap-highlight-color:transparent;}",
@@ -102,7 +102,8 @@ function mountTapWorld(container, config) {
 
   var vids = [document.createElement("video"), document.createElement("video")];
   vids.forEach(function (v) {
-    v.muted = true; v.playsInline = true; v.setAttribute("playsinline", "");
+    v.muted = true; v.setAttribute("muted", "");
+    v.playsInline = true; v.setAttribute("playsinline", "");
     v.preload = "auto";
     v.defaultPlaybackRate = RATE;
     stage.appendChild(v);
@@ -296,14 +297,32 @@ function mountTapWorld(container, config) {
     stage.appendChild(startBtn);
   }
 
+  // Start the site music on the first real journey gesture (mirrors the
+  // envelope page's window.swMusic.on() pattern). Guarded so it: respects an
+  // explicit earlier mute (same sessionStorage key music.js writes), never
+  // restarts/seeks a track that's already playing, and no-ops on pages where
+  // music.js hasn't loaded (tap-engine is shared by index.html/story.html).
+  function startMusicOnGesture() {
+    try {
+      if (!window.swMusic) return;
+      var muted = null;
+      try { muted = sessionStorage.getItem("sw-music-on"); } catch (e) {}
+      if (muted === "0") return;
+      if (document.querySelector("#sw-music.is-on")) return;
+      window.swMusic.on();
+    } catch (e) {}
+  }
+
   // ---- input: tap = next scene (connectors are skipped, not replayed) -----
   tap.addEventListener("click", function () {
     started = true;
+    startMusicOnGesture();
     if (idx >= LAST) { finish(); return; }
     go(nextSceneAt(idx));
   });
   skip.addEventListener("click", function () {
     started = true;
+    startMusicOnGesture();
     if (idx === LAST) { finish(); return; }
     go(LAST);
   });
