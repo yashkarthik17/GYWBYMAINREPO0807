@@ -253,6 +253,13 @@ function mountTapWorld(container, config) {
     var v = vids[1 - active];
     v.src = srcOf(PL[p]);
     v.poster = posterFor(PL[p]);
+    // Both <video> elements already get preload="auto" once at creation
+    // (see vids.forEach above) and that attribute is never touched again —
+    // src reassignment + load() doesn't reset it — so this is a no-op today.
+    // Set explicitly anyway so eager buffering is a property of prepare()
+    // itself, not an inherited side effect that a future edit near element
+    // creation could silently drop.
+    v.preload = "auto";
     v.load();
     prepared = p;
   }
@@ -339,7 +346,7 @@ function mountTapWorld(container, config) {
       });
     }
 
-    // Early-handoff crossfade: begin the transition to the NEXT item ~0.55s
+    // Early-handoff crossfade: begin the transition to the NEXT item ~0.8s
     // of WALL-CLOCK time before this clip's natural end, instead of waiting
     // for `ended`. That trailing gap (decode/settle + the `ended` event's
     // own latency) is what reads as a dead pause between chained scenes.
@@ -351,24 +358,62 @@ function mountTapWorld(container, config) {
     // still reach a real `ended` to unlock the explore grid), a finite
     // duration (guards NaN/Infinity mid-load), and the `advanced` flag so a
     // ~4Hz timeupdate stream can't fire this twice for one play.
+    //
+    // Readiness gate: firing the crossfade only moves the STALL, it doesn't
+    // remove it, if the next item hasn't actually buffered — the fade would
+    // still land on a starved video and hitch. So at the 0.8s mark we also
+    // require `prepared === p + 1` (prepare() targeted the right item) and
+    // the prepared, still-inactive element's readyState >= HAVE_FUTURE_DATA
+    // (3) — enough buffered to play forward without immediately stalling.
+    // If that's not true yet, don't advance: arm a one-shot
+    // canplaythrough/canplay listener on the prepared element and advance
+    // the instant readiness arrives, instead of waiting out the full ~0.8s
+    // gap to `ended`. `advanced` is shared by both paths (timeupdate poll
+    // and the armed listener) so whichever gets there first wins and the
+    // other is inert; `readinessListener` tracks the armed listener so it
+    // can be torn down the moment the transition happens by ANY path
+    // (early-ready poll, armed-listener fire, or the `ended` fallback)
+    // instead of lingering on an element that gets reused for later items.
     var advanced = false;
+    var readinessListener = null;
+    function clearReadinessListener() {
+      if (!readinessListener) return;
+      var v = vids[1 - active];
+      v.removeEventListener("canplaythrough", readinessListener);
+      v.removeEventListener("canplay", readinessListener);
+      readinessListener = null;
+    }
+    function tryAdvance() {
+      if (advanced || idx !== p || stillsMode || p >= LAST) return;
+      advanced = true;
+      nextV.ontimeupdate = null;
+      clearReadinessListener();
+      go(p + 1);
+    }
     nextV.ontimeupdate = function () {
       if (advanced || idx !== p || stillsMode || p >= LAST) return;
       var d = nextV.duration, ct = nextV.currentTime;
       if (!isFinite(d)) return;
-      if ((d - ct) / effRate <= 0.55) {
-        advanced = true;
-        nextV.ontimeupdate = null;
-        go(p + 1);
-      }
+      if ((d - ct) / effRate > 0.8) return;
+      var prepV = vids[1 - active];
+      if (prepared === p + 1 && prepV.readyState >= 3) { tryAdvance(); return; }
+      if (readinessListener) return;   // already armed, waiting on it
+      readinessListener = function () { clearReadinessListener(); tryAdvance(); };
+      prepV.addEventListener("canplaythrough", readinessListener, { once: true });
+      prepV.addEventListener("canplay", readinessListener, { once: true });
     };
 
-    // Fallback: if the early handoff above didn't fire (e.g. duration never
-    // resolved), `ended` still advances. Once early-handoff HAS fired, idx
-    // has already moved to p+1 by the time `ended` would arrive, so the
-    // `idx !== p` guard makes this a no-op — it never double-advances.
+    // Fallback: if the early handoff above never gets a ready next item
+    // (e.g. duration never resolved, or the connection never buffers ahead
+    // in time), `ended` still advances — this is the final safety net, same
+    // as before. Once early-handoff HAS fired (either path), idx has
+    // already moved to p+1 by the time `ended` would arrive, so the
+    // `idx !== p` guard makes this a no-op — it never double-advances. It
+    // also tears down any still-armed readiness listener so a canplay-class
+    // event on a later-repurposed element can't fire a stale advance.
     nextV.onended = function () {
       if (idx !== p) return;
+      clearReadinessListener();
       if (p === LAST) finish(); else go(p + 1);
     };
   }
