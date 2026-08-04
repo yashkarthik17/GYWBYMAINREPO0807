@@ -21,10 +21,6 @@
   html,body{margin:0;background:var(--sw-bg);}
   /* No gradient wash — the portrait footage is the show. */
   .sw-copylayer::before{display:none !important;}
-  /* Desktop: letterbox the portrait flight centered; copy floats in the left margin. */
-  @media (min-width:861px){
-    .sw-scene__video,.sw-scene__still,.tw video,.tw .tw-still{object-fit:contain !important;object-position:center !important;}
-  }
 </style>
 </head>
 <body>
@@ -36,8 +32,8 @@
     <h2>The Crashers crash in.</h2>
     <p>One little cloud clears the fence and everything changes.</p>
     <h2>Photos worth fighting over.</h2>
-    <p>Hugs from the little ones included.</p>
-    <h2>Yes, they crash 40ths.</h2>
+    <p>Hugs from your favorite people included.</p>
+    <h2>Yes, they crash 20ths.</h2>
     <p>Enchantment doesn't card.</p>
     <h2>Glad you were born today.</h2>
     <p><a href="../hire.html">Hire the crew</a> · <a href="crew.html">Meet the crew</a> · <a href="../store.html">Visit the party store</a> · <a href="../mission.html">Our mission</a></p>
@@ -55,46 +51,46 @@ mountTapWorld(document.getElementById('world'), {
   // so chase-play keeps up instead of racing/skipping (scroll-skip fix)
   scrollMobileFactor: 2.6,
   journeyMobile: {
-    clip: 'assets/vid/journey-m.mp4?v=5',
-    poster: 'assets/quiet-poster-m.webp?v=5',
-    spans: [[0.0, 7.958], [7.958, 15.833], [15.833, 23.708], [23.708, 31.583], [31.583, 39.542]],
+    clip: 'assets/vid/journey-m.mp4?v=6',
+    poster: 'assets/journey-poster-m.webp?v=6',
+    spans: [[0.0, 8.042], [8.042, 16.042], [16.042, 24.042], [24.042, 32.042], [32.042, 40.042]],
   },
   sections: [
     { id:'quiet', label:'The Quiet Party',
-      still:'assets/quiet.webp?v=5', poster:'assets/quiet-poster.webp?v=5', posterMobile:'assets/quiet-poster-m.webp?v=5',
-      clip:'assets/vid/quiet.mp4?v=5', clipMobile:'assets/vid/quiet-m.mp4?v=5',
+      still:'assets/quiet.webp?v=5', poster:'assets/quiet-poster.webp?v=6', posterMobile:'assets/quiet-poster-m.webp?v=5',
+      clip:'assets/vid/quiet.mp4?v=6', clipMobile:'assets/vid/quiet-m.mp4?v=5',
       scroll:1.4,
       accent:'#b9a27a', eyebrow:'Be honest',
       title:'Birthdays got smaller, didn’t they.',
       body:'Somewhere between ten and forty, the parties turned into polite dinners that end by nine.',
       tags:['Polite toasts','Early goodbyes'] },
     { id:'glowup', label:'The Crash',
-      still:'assets/glowup.webp?v=4', poster:'assets/glowup-poster.webp?v=4', posterMobile:'assets/glowup-poster-m.webp?v=4',
-      clip:'assets/vid/glowup.mp4?v=4', clipMobile:'assets/vid/glowup-m.mp4?v=4',
+      still:'assets/glowup.webp?v=6', poster:'assets/glowup-poster.webp?v=6', posterMobile:'assets/glowup-poster-m.webp?v=6',
+      clip:'assets/vid/glowup.mp4?v=6', clipMobile:'assets/vid/glowup-m.mp4?v=6',
       scroll:1.6, linger:0.35,
       accent:'#E84A9B', eyebrow:'Then the sky RSVPs',
       title:'The Crashers crash in.',
       body:'One little cloud clears the fence. Nobody checks their phone again all night.',
       tags:['Confetti included'] },
     { id:'photo', label:'Say Cheese',
-      still:'assets/photo.webp?v=4', poster:'assets/photo-poster.webp?v=4', posterMobile:'assets/photo-poster-m.webp?v=4',
-      clip:'assets/vid/photo.mp4?v=4', clipMobile:'assets/vid/photo-m.mp4?v=4',
+      still:'assets/photo.webp?v=6', poster:'assets/photo-poster.webp?v=6', posterMobile:'assets/photo-poster-m.webp?v=6',
+      clip:'assets/vid/photo.mp4?v=6', clipMobile:'assets/vid/photo-m.mp4?v=6',
       scroll:1.8, linger:0.5,
       accent:'#8B5CF6', eyebrow:'Say cheese',
       title:'Photos worth fighting over.',
-      body:'Your mother is laughing in every single frame.',
+      body:'Your friends are laughing in every single frame.',
       tags:[] },
     { id:'patio', label:'The Patio Party',
-      still:'assets/patio.webp?v=4', poster:'assets/patio-poster.webp?v=4', posterMobile:'assets/patio-poster-m.webp?v=4',
-      clip:'assets/vid/patio.mp4?v=4', clipMobile:'assets/vid/patio-m.mp4?v=4',
+      still:'assets/patio.webp?v=6', poster:'assets/patio-poster.webp?v=6', posterMobile:'assets/patio-poster-m.webp?v=6',
+      clip:'assets/vid/patio.mp4?v=6', clipMobile:'assets/vid/patio-m.mp4?v=6',
       scroll:1.6, linger:0.35,
-      accent:'#FFC93C', eyebrow:'And 50ths. And 70ths.',
-      title:'Yes, they crash 40ths.',
+      accent:'#FFC93C', eyebrow:'And 25ths. And 30ths.',
+      title:'Yes, they crash 20ths.',
       body:'Enchantment doesn’t card.',
       tags:[] },
     { id:'sendoff', label:'The Send-Off',
-      still:'assets/sendoff.webp?v=4', poster:'assets/sendoff-poster.webp?v=4', posterMobile:'assets/sendoff-poster-m.webp?v=4',
-      clip:'assets/vid/sendoff.mp4?v=4', clipMobile:'assets/vid/sendoff-m.mp4?v=4',
+      still:'assets/sendoff.webp?v=6', poster:'assets/sendoff-poster.webp?v=6', posterMobile:'assets/sendoff-poster-m.webp?v=6',
+      clip:'assets/vid/sendoff.mp4?v=6', clipMobile:'assets/vid/sendoff-m.mp4?v=6',
       scroll:2, linger:0.45,
       accent:'#5BB8F0', eyebrow:'From Starry & the Crashers',
       title:'Glad you were born today.',
