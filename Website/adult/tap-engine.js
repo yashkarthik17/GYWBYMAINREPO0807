@@ -171,6 +171,17 @@ function mountTapWorld(container, config) {
   // ---- state -------------------------------------------------------------
   var idx = -1, active = 0, stillsMode = reduce, started = false;
 
+  // Module-scope handle for tearing down a still-armed readiness listener
+  // (see go()'s early-handoff block below) from OUTSIDE the go(p) closure
+  // that armed it. Per-closure guards (`advanced`, `idx !== p`) neutralize
+  // the listener for the two paths that stay inside that closure (it firing
+  // normally, or `onended` winning first) — but tap/skip/ArrowLeft call
+  // go() directly from outside, never touching the old closure at all, so
+  // they can't run its local cleanup. Set whenever a listener is armed;
+  // invoked and nulled unconditionally at the top of every go(p) call so a
+  // superseded listener never survives to see a later, unrelated go() call.
+  var clearArmedReadiness = null;
+
   function showCard(s) {
     cEyebrow.textContent = s.eyebrow || "";
     cTitle.textContent = s.title || "";
@@ -272,6 +283,14 @@ function mountTapWorld(container, config) {
   function go(p) {
     if (p < 0 || p > LAST || p === idx) { if (p > LAST) finish(); return; }
     idx = p;
+    // Unconditionally neutralize any readiness listener armed by a PRIOR
+    // go() call that never got to clean up after itself — the tap/skip/
+    // ArrowLeft paths call go() straight from an event handler, bypassing
+    // the old closure's own tryAdvance()/onended cleanup entirely. Doing
+    // this before anything else in every go() means the fourth path is
+    // covered right alongside the other three (see the readiness-gate
+    // comment lower down). No-op when nothing is armed.
+    if (clearArmedReadiness) { var priorClear = clearArmedReadiness; clearArmedReadiness = null; priorClear(); }
     var item = PL[p];
     var scene = item.kind === "scene" ? S[item.si] : null;
 
@@ -371,9 +390,17 @@ function mountTapWorld(container, config) {
     // gap to `ended`. `advanced` is shared by both paths (timeupdate poll
     // and the armed listener) so whichever gets there first wins and the
     // other is inert; `readinessListener` tracks the armed listener so it
-    // can be torn down the moment the transition happens by ANY path
-    // (early-ready poll, armed-listener fire, or the `ended` fallback)
-    // instead of lingering on an element that gets reused for later items.
+    // can be torn down the moment the transition happens by ANY of four
+    // paths: (1) the early-ready poll advancing directly, (2) the armed
+    // listener firing on its own, (3) the `ended` fallback winning first,
+    // or (4) the visitor navigating away (tap/skip/ArrowLeft) before either
+    // fires — that fourth path calls go() directly from an event handler,
+    // outside this closure entirely, so it can't reach this local
+    // clearReadinessListener() itself; go()'s own top-of-function
+    // `clearArmedReadiness` teardown (module scope, see the `idx = p`
+    // block above) is what covers it — assigned below wherever the
+    // listener is armed, so a superseded listener never survives to fire
+    // against a later, unrelated go() call on the same reused element.
     var advanced = false;
     var readinessListener = null;
     function clearReadinessListener() {
@@ -382,6 +409,7 @@ function mountTapWorld(container, config) {
       v.removeEventListener("canplaythrough", readinessListener);
       v.removeEventListener("canplay", readinessListener);
       readinessListener = null;
+      if (clearArmedReadiness === clearReadinessListener) clearArmedReadiness = null;
     }
     function tryAdvance() {
       if (advanced || idx !== p || stillsMode || p >= LAST) return;
@@ -401,6 +429,7 @@ function mountTapWorld(container, config) {
       readinessListener = function () { clearReadinessListener(); tryAdvance(); };
       prepV.addEventListener("canplaythrough", readinessListener, { once: true });
       prepV.addEventListener("canplay", readinessListener, { once: true });
+      clearArmedReadiness = clearReadinessListener;
     };
 
     // Fallback: if the early handoff above never gets a ready next item
