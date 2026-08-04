@@ -1,11 +1,11 @@
 [
   {
-    "id": "07ac1ada-6cc6-4d53-a6de-94d1fdfeb519",
+    "id": "47a378a9-71e6-4ec0-af9b-0cf27dfda95d",
     "status": "completed",
     "display_name": "GPT Image 2",
     "job_set_type": "gpt_image_2",
-    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_153144_07ac1ada-6cc6-4d53-a6de-94d1fdfeb519.png",
-    "created_at": 1785771104.117039,
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_151520_47a378a9-71e6-4ec0-af9b-0cf27dfda95d.png",
+    "created_at": 1785770120.631466,
     "params": {
       "width": 2688,
       "height": 1520,
@@ -13,16 +13,8 @@
       "medias": [
         {
           "data": {
-            "id": "a62a1bbf-d730-416a-9c79-83980328eb49",
-            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/a62a1bbf-d730-416a-9c79-83980328eb49.png",
-            "type": "media_input"
-          },
-          "role": "image"
-        },
-        {
-          "data": {
-            "id": "01c9f12e-00a5-431e-9c59-9e63b085bdbd",
-            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/01c9f12e-00a5-431e-9c59-9e63b085bdbd.png",
+            "id": "0d44d7b8-2cd2-46d1-9144-1bcd784e6fdc",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/0d44d7b8-2cd2-46d1-9144-1bcd784e6fdc.png",
             "type": "media_input"
           },
           "role": "image"

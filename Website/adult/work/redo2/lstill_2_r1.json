@@ -1,11 +1,11 @@
 [
   {
-    "id": "3233d71c-a56b-4e35-a2fa-ee7e599d5638",
+    "id": "17bc2f4a-3c65-44da-9225-385b220577fa",
     "status": "completed",
     "display_name": "GPT Image 2",
     "job_set_type": "gpt_image_2",
-    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_153140_3233d71c-a56b-4e35-a2fa-ee7e599d5638.png",
-    "created_at": 1785771100.270302,
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_150926_17bc2f4a-3c65-44da-9225-385b220577fa.png",
+    "created_at": 1785769766.538061,
     "params": {
       "width": 2688,
       "height": 1520,
@@ -13,24 +13,8 @@
       "medias": [
         {
           "data": {
-            "id": "d627f59b-fce0-4176-bf8e-788d97c6305b",
-            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/d627f59b-fce0-4176-bf8e-788d97c6305b.png",
-            "type": "media_input"
-          },
-          "role": "image"
-        },
-        {
-          "data": {
-            "id": "bcb5665e-a128-4475-bd99-e3f541aa82ca",
-            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/bcb5665e-a128-4475-bd99-e3f541aa82ca.png",
-            "type": "media_input"
-          },
-          "role": "image"
-        },
-        {
-          "data": {
-            "id": "0f2b01bb-27ea-41f5-a446-ec87cb55aa6c",
-            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/0f2b01bb-27ea-41f5-a446-ec87cb55aa6c.png",
+            "id": "7c9873f2-bceb-40ff-9806-059e29317eab",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/7c9873f2-bceb-40ff-9806-059e29317eab.png",
             "type": "media_input"
           },
           "role": "image"

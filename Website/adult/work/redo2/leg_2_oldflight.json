@@ -1,0 +1,39 @@
+[
+  {
+    "id": "2c5ed2e8-0fd1-4ffb-8eec-d2f2ff48d604",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_094345_2c5ed2e8-0fd1-4ffb-8eec-d2f2ff48d604.mp4",
+    "created_at": 1785750225.666476,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. The camera continues the exact same slow, steady forward drift it was already in, floating level beside the magical cloud clubhouse high above the neighborhood, and glides over the front edge of the cloud deck so we see the VIEW FROM THE CLOUD: past the three little hooded-onesie creatures — orange zigzag, blue diamond, green paint-splatter — leaning over the fluffy cloud edge, the world drops away to tiny rooftops and one small backyard party far below. Then the cloud begins its descent and the camera rides DOWN with it, the little backyard growing steadily closer beneath the cloud's fluffy edge, the sky warming from gold to pink-gold dusk, paper lanterns drifting up past the camera and warm string lights flickering on below as the party magic gathers, until the cloud sweeps in over the wooden fence like a parade float and settles into a majestic hover above the backyard — the tall golden star character with the friendly cartoon face waving from the balcony rail, the three little creatures riding the front deck waving down, the small purple confetti cannon firing a soft arc of colorful confetti, the crowd of milestone-birthday guests below — adult friends in their 30s and 40s, couples, and grandparents in their 60s and 70s — standing on the lawn pointing up and cheering — nobody crouches or kneels — confetti and ribbon streamers raining gently down, its golden sparkle trail streaming beneath it. The gold clubhouse is plain and smooth with no writing on it. All characters stay exactly on-model as they appear in the final reference frame. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift, holding on the majestic hovering arrival, ready to continue.\nEvery human being in the scene is a grown adult in their 30s, 40s, 60s or 70s — absolutely no human children, no babies, no toddlers, no minors, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "629bb8f4-8bd5-43b1-9330-c485ecbbc301",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/629bb8f4-8bd5-43b1-9330-c485ecbbc301.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]
