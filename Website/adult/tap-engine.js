@@ -75,16 +75,39 @@ function mountTapWorld(container, config) {
     "  background:rgba(18,27,52,.35);border:0;cursor:pointer;color:#FFF9EE;",
     "  font-family:'Baloo 2',ui-rounded,system-ui,sans-serif;font-weight:800;font-size:clamp(18px,3vw,24px);",
     "  letter-spacing:.06em;text-shadow:0 2px 14px rgba(0,0,0,.6);}",
+    // Scrim: sits behind the explore stack (above the video, below the links)
+    // so the finale's busy night-sky frame doesn't fight the buttons for
+    // contrast. Non-interactive; only shown while .tw-explore is shown.
+    ".tw-scrim{position:absolute;inset:0;z-index:5;pointer-events:none;",
+    "  background:linear-gradient(180deg,transparent,rgba(18,27,52,.78) 55%);",
+    "  opacity:0;transition:opacity .6s ease;}",
+    ".tw-scrim.is-on{opacity:1;}",
+    ".tw-skip.is-hidden{display:none;}",
     ".tw-explore{position:absolute;left:50%;bottom:max(7vh,env(safe-area-inset-bottom));z-index:6;",
-    "  transform:translateX(-50%);width:min(88vw,420px);display:none;flex-direction:column;gap:10px;}",
+    "  transform:translateX(-50%);width:min(92vw,560px);display:none;flex-direction:column;",
+    "  align-items:center;gap:14px;}",
     ".tw-explore.is-on{display:flex;}",
-    ".tw-explore a{display:block;text-align:center;text-decoration:none;color:#1D2B50;",
+    // The 4 nav links (Hire/Meet/Store/Mission) sit in a 2x2 grid — same
+    // cream-gradient card style as before, just half-width now.
+    ".tw-explore__grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;}",
+    ".tw-explore__grid a{display:flex;align-items:center;justify-content:center;text-align:center;",
+    "  text-decoration:none;color:#1D2B50;line-height:1.25;",
     "  background:linear-gradient(180deg,#FFFDF6,#F1E3BE);border:1px solid rgba(184,134,46,.55);",
-    "  font-family:'Baloo 2',ui-rounded,system-ui,sans-serif;font-weight:700;font-size:15px;",
-    "  letter-spacing:.06em;padding:14px 18px;border-radius:13px;",
+    "  font-family:'Baloo 2',ui-rounded,system-ui,sans-serif;font-weight:700;font-size:14px;",
+    "  letter-spacing:.04em;padding:13px 10px;border-radius:13px;",
     "  box-shadow:0 6px 18px rgba(0,0,0,.3);}",
-    ".tw-explore a:active{transform:translateY(1px);}",
-    "@media (prefers-reduced-motion:reduce){.tw video,.tw .tw-still,.tw-card{transition:none;}}"
+    ".tw-explore__grid a:active{transform:translateY(1px);}",
+    // "Play it again" reads as a lighter, secondary action below the grid —
+    // mirrors .tw-skip's ghost-pill recipe (dark translucent + blur) instead
+    // of the nav links' solid cream cards.
+    ".tw-explore__replay{display:inline-block;text-align:center;text-decoration:none;color:#FFF9EE;",
+    "  background:rgba(18,27,52,.45);border:1px solid rgba(255,255,255,.4);cursor:pointer;",
+    "  font-family:'Baloo 2',ui-rounded,system-ui,sans-serif;font-weight:700;font-size:13px;",
+    "  letter-spacing:.12em;text-transform:uppercase;padding:10px 22px;border-radius:999px;",
+    "  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}",
+    ".tw-explore__replay:hover{background:rgba(18,27,52,.7);}",
+    ".tw-explore__replay:active{transform:translateY(1px);}",
+    "@media (prefers-reduced-motion:reduce){.tw video,.tw .tw-still,.tw-card,.tw-scrim{transition:none;}}"
   ].join("\n");
   var style = document.createElement("style");
   style.textContent = css;
@@ -133,6 +156,9 @@ function mountTapWorld(container, config) {
   skip.textContent = config.skipLabel || "Skip to end »";
   stage.appendChild(skip);
 
+  var scrim = el("div", "tw-scrim");
+  stage.appendChild(scrim);
+
   var explore = el("nav", "tw-explore");
   stage.appendChild(explore);
 
@@ -151,20 +177,39 @@ function mountTapWorld(container, config) {
 
   function hideCard() { card.classList.remove("is-on"); }
 
+  // Clears the explore stack + its scrim and restores the skip control.
+  // Called on every go() (a no-op unless the finale was showing) and from
+  // the "Play it again" handler before it replays.
+  function hideExplore() {
+    explore.classList.remove("is-on");
+    scrim.classList.remove("is-on");
+    skip.classList.remove("is-hidden");
+  }
+
   function showExplore(s) {
     hideCard();               // the card and the buttons share the bottom of
     explore.innerHTML = "";   // the screen — never show both at once
     var ex = s.explore;
     if (!ex || !ex.links) return;
+    // 4 nav links render in a 2x2 grid; "Play it again" (href #top) renders
+    // as a lighter ghost pill below it — generalized so any non-#top link
+    // lands in the grid regardless of position/count in config.
+    var grid = el("div", "tw-explore__grid");
+    explore.appendChild(grid);
     ex.links.forEach(function (l) {
       var a = document.createElement("a");
       a.href = l.href; a.textContent = l.label;
       if (l.href === "#top") {
-        a.addEventListener("click", function (e) { e.preventDefault(); explore.classList.remove("is-on"); go(0); });
+        a.className = "tw-explore__replay";
+        a.addEventListener("click", function (e) { e.preventDefault(); hideExplore(); go(0); });
+        explore.appendChild(a);
+      } else {
+        grid.appendChild(a);
       }
-      explore.appendChild(a);
     });
     explore.classList.add("is-on");
+    scrim.classList.add("is-on");
+    skip.classList.add("is-hidden");
   }
 
   function markDot(si) {
@@ -217,7 +262,7 @@ function mountTapWorld(container, config) {
     var item = PL[p];
     var scene = item.kind === "scene" ? S[item.si] : null;
 
-    explore.classList.remove("is-on");
+    hideExplore();
     if (scene) { markDot(item.si); showCard(scene); }
     else hideCard();
 
