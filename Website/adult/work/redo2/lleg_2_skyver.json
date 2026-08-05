@@ -1,0 +1,39 @@
+[
+  {
+    "id": "75a161d2-74ce-4db4-a1e6-5d69a7f45a74",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_153508_75a161d2-74ce-4db4-a1e6-5d69a7f45a74.mp4",
+    "created_at": 1785771308.350106,
+    "params": {
+      "width": 1920,
+      "height": 1080,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, wide 16:9 landscape, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. High above a suburban neighborhood at pink-gold dusk, rooftops small and distant below, the camera drifts slowly forward toward THE CRASH PAD: a majestic dense, opaque, crisp bright-white, fluffy glossy cotton-soft cartoon toy cloud island the size of a small house, grand and imposing yet gently rounded and puffy like a designer vinyl toy, carrying a golden star-shaped clubhouse with round brass porthole windows, a small wooden balcony with a rope-and-post rail, and a pink polka-dot party-hat spire on its roof; wrapped gift boxes and gold star balloons are tucked into the cloud folds, and fine golden sparkles with thin curling ribbon streamers in pink, purple and green trail beneath it. STARRY — a tall golden five-pointed star character with a friendly cartoon face on the star body, large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile, wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots — stands at the balcony rail holding a small brass telescope. The three CRASHERS — small toddler-sized creatures whose bodies are simple ROUND hooded onesies, soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats, the patterns only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print, each with a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood — ride the front deck of the cloud, leaning over the edge and waving. Nothing else is in frame: no backyard, no party, no crowd below, no lanterns, no balloon arch. The gold clubhouse is plain and smooth with no writing on it. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift, holding level beside the cloud.\nEvery human being in the scene is a grown adult in their 30s, 40s, 60s or 70s — absolutely no human children, no babies, no toddlers, no minors, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "58d6ea91-3a7a-4a88-93e9-7d431f7d2ac1",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/58d6ea91-3a7a-4a88-93e9-7d431f7d2ac1_resize.jpg",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]
