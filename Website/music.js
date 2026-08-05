@@ -111,6 +111,25 @@
         try { audio.load(); } catch (e) {}
         var s = null; try { s = sessionStorage.getItem(KEY); } catch (e) {}
         if (s !== '0') set(true);
+      },
+      // Public replay hook: restarts the CURRENT track from its configured
+      // start offset (START — whatever swap() last set, or the page's own
+      // data-start if swap was never called) and plays it through the same
+      // honest path as on()/set(true): the UI (♪ button + aria-pressed) only
+      // flips once the play() promise actually resolves, and a successful
+      // play stores '1' in sessionStorage exactly like a normal on(). Works
+      // from any state — mid-play (seeks back without stopping), ended/
+      // stopped (data-once tracks land here after their natural 'ended'),
+      // or never-started. Doesn't touch audio.loop, so a data-once track
+      // still plays once and stops after this replay, same as before.
+      // This is a raw "restart from the top" primitive like set(true) — it
+      // does not itself consult the mute key, matching set(true)'s
+      // contract; callers that want to respect an explicit earlier mute
+      // (see adult/tap-engine.js and tap-engine.js's "Play it again"
+      // handlers) check sessionStorage themselves before calling this.
+      replay: function () {
+        try { audio.currentTime = START; } catch (e) {}
+        set(true);
       }
     };
 

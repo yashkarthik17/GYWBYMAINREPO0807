@@ -161,7 +161,25 @@ function mountTapWorld(container, config) {
       var a = document.createElement("a");
       a.href = l.href; a.textContent = l.label;
       if (l.href === "#top") {
-        a.addEventListener("click", function (e) { e.preventDefault(); explore.classList.remove("is-on"); go(0); });
+        a.addEventListener("click", function (e) {
+          e.preventDefault();
+          explore.classList.remove("is-on");
+          // Restart the theme in sync with the journey restart below. This
+          // engine otherwise has no music coupling at all — kept minimal and
+          // self-contained: no-ops if music.js never loaded (window.swMusic
+          // absent), if a cached music.js pre-dates replay(), or if the
+          // visitor explicitly muted earlier (same sessionStorage key
+          // music.js writes) — mirrors the guard used in
+          // adult/tap-engine.js's "Play it again" handler.
+          try {
+            if (window.swMusic && typeof window.swMusic.replay === "function") {
+              var muted = null;
+              try { muted = sessionStorage.getItem("sw-music-on"); } catch (e2) {}
+              if (muted !== "0") window.swMusic.replay();
+            }
+          } catch (err) {}
+          go(0);
+        });
       }
       explore.appendChild(a);
     });

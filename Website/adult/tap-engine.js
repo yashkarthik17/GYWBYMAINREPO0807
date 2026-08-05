@@ -218,7 +218,7 @@ function mountTapWorld(container, config) {
       a.href = l.href; a.textContent = l.label;
       if (l.href === "#top") {
         a.className = "tw-explore__replay";
-        a.addEventListener("click", function (e) { e.preventDefault(); hideExplore(); go(0); });
+        a.addEventListener("click", function (e) { e.preventDefault(); hideExplore(); replayMusicOnPlayAgain(); go(0); });
         explore.appendChild(a);
       } else {
         grid.appendChild(a);
@@ -551,6 +551,28 @@ function mountTapWorld(container, config) {
       if (muted === "0") return;
       if (document.querySelector("#sw-music.is-on")) return;
       window.swMusic.on();
+    } catch (e) {}
+  }
+
+  // "Play it again" music restart: intentionally separate from
+  // startMusicOnGesture()/musicNudged above. That latch exists so an
+  // unrelated later tap/skip can never resurrect a data-once track that
+  // already finished playing (see the big comment on startMusicOnGesture) —
+  // but "Play it again" restarting the journey from scratch is exactly the
+  // one moment a fresh play-through DOES need the music to restart too, in
+  // sync with go(0). This never reads or writes musicNudged, so it can't
+  // consume or short-circuit that latch's one-shot behavior.
+  // Guards: swMusic must exist, replay() must exist (an older cached
+  // music.js — pre-dating this feature — won't have it), and an explicit
+  // earlier mute (the same sessionStorage key music.js itself writes) is
+  // respected: a visitor who muted stays muted through a replay.
+  function replayMusicOnPlayAgain() {
+    try {
+      if (!window.swMusic || typeof window.swMusic.replay !== "function") return;
+      var muted = null;
+      try { muted = sessionStorage.getItem("sw-music-on"); } catch (e) {}
+      if (muted === "0") return;
+      window.swMusic.replay();
     } catch (e) {}
   }
 

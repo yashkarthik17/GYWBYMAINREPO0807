@@ -173,8 +173,8 @@
   <canvas id="confetti"></canvas>
   <div class="loading" id="loading">Folding the paper…</div>
 
-  <script src="music.js?v=13" data-once data-src="assets/audio/envelope.wav?v=1"></script>
-  <script src="tap-engine.js?v=7"></script>
+  <script src="music.js?v=15" data-once data-src="assets/audio/envelope.wav?v=1"></script>
+  <script src="tap-engine.js?v=8"></script>
   <script src="story-config.js?v=1"></script>
   <script src="adult-config.js?v=1"></script>
   <script>
@@ -402,7 +402,7 @@
       world.id = "world";
       document.body.appendChild(world);
       var engine = document.createElement("script");
-      engine.src = "adult/tap-engine.js?v=9";
+      engine.src = "adult/tap-engine.js?v=10";
       engine.onload = function () { mountTapWorld(world, GYWBT_ADULT_CONFIG()); };
       engine.onerror = function () { location.href = "adult/"; };
       document.body.appendChild(engine);
