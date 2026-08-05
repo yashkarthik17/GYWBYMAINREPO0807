@@ -24,6 +24,8 @@ function mountTapWorld(container, config) {
   function posterOf(s) { return (phone && s.posterMobile) ? s.posterMobile : (s.poster || s.still); }
 
   // Optional pacing: config.playbackRate (e.g. 1.15) speeds every clip up.
+  // Optional per-scene pacing: section.rate (e.g. 1.10) multiplies RATE for
+  // that scene only — connectors always play at the plain RATE.
   var RATE = config.playbackRate || 1;
 
   // ---- playlist: scene, connector, scene, connector, … scene -------------
@@ -159,7 +161,25 @@ function mountTapWorld(container, config) {
       var a = document.createElement("a");
       a.href = l.href; a.textContent = l.label;
       if (l.href === "#top") {
-        a.addEventListener("click", function (e) { e.preventDefault(); explore.classList.remove("is-on"); go(0); });
+        a.addEventListener("click", function (e) {
+          e.preventDefault();
+          explore.classList.remove("is-on");
+          // Restart the theme in sync with the journey restart below. This
+          // engine otherwise has no music coupling at all — kept minimal and
+          // self-contained: no-ops if music.js never loaded (window.swMusic
+          // absent), if a cached music.js pre-dates replay(), or if the
+          // visitor explicitly muted earlier (same sessionStorage key
+          // music.js writes) — mirrors the guard used in
+          // adult/tap-engine.js's "Play it again" handler.
+          try {
+            if (window.swMusic && typeof window.swMusic.replay === "function") {
+              var muted = null;
+              try { muted = sessionStorage.getItem("sw-music-on"); } catch (e2) {}
+              if (muted !== "0") window.swMusic.replay();
+            }
+          } catch (err) {}
+          go(0);
+        });
       }
       explore.appendChild(a);
     });
@@ -249,7 +269,7 @@ function mountTapWorld(container, config) {
       }, 700);
     }
 
-    try { nextV.playbackRate = RATE; } catch (e) {}
+    try { nextV.playbackRate = RATE * ((scene && scene.rate) || 1); } catch (e) {}
     var pr;
     try { pr = nextV.play(); } catch (e) { enterStillsMode(); go(p); return; }
     onFirstFrame(nextV, swap);

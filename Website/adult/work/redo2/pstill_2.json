@@ -1,0 +1,46 @@
+[
+  {
+    "id": "25795b8f-0fb3-4edb-869e-15538e3a851d",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_154850_25795b8f-0fb3-4edb-869e-15538e3a851d.png",
+    "created_at": 1785772130.558958,
+    "params": {
+      "width": 1520,
+      "height": 2688,
+      "prompt": "Cinematic photorealistic photograph, vertical 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic textures. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed centrally with generous headroom above and below for the vertical frame. Absolutely no text, no letters, no numbers, no logos, no watermarks. The scene: high above a suburban neighborhood at pink-gold dusk, rooftops small and distant below. THE CRASH PAD — a majestic dense, opaque, crisp bright-white, fluffy glossy cotton-soft cartoon toy cloud island the size of a small house, grand and imposing yet gently rounded and puffy like a designer vinyl toy, carrying a golden star-shaped clubhouse with round brass porthole windows, a small wooden balcony with a rope-and-post rail, and a pink polka-dot party-hat spire on its roof; wrapped gift boxes and gold star balloons are tucked into the cloud folds, and fine golden sparkles with thin curling ribbon streamers in pink, purple and green trail beneath it — fills the frame. STARRY — a tall golden five-pointed star character with a friendly cartoon face on the star body, large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile, wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots — stands at the balcony rail holding a small brass telescope. The three CRASHERS — small toddler-sized creatures whose bodies are simple ROUND hooded onesies, soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats, the patterns only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print, each with a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood — ride the front deck of the cloud, leaning over the edge and waving. Nothing else is in frame: no backyard, no party, no crowd, no lanterns, no balloon arch. The gold clubhouse is plain and smooth with no writing on it.\nEvery human being in the scene is a grown adult in their 30s, 40s, 60s or 70s — absolutely no human children, no babies, no toddlers, no minors, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "medias": [
+        {
+          "data": {
+            "id": "02b7e88a-c8e2-4567-a8c1-e9b2a186e6a6",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/02b7e88a-c8e2-4567-a8c1-e9b2a186e6a6.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "5be769b2-a907-499e-9b2e-0c8e48e5d883",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/5be769b2-a907-499e-9b2e-0c8e48e5d883.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "6ecce267-6d46-4472-9d22-3d78b515efdb",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/6ecce267-6d46-4472-9d22-3d78b515efdb.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "9:16",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

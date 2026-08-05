@@ -1,0 +1,38 @@
+[
+  {
+    "id": "acbe19f3-1842-4cc0-8ce6-ba10cdf9ecff",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_155150_acbe19f3-1842-4cc0-8ce6-ba10cdf9ecff.png",
+    "created_at": 1785772310.204057,
+    "params": {
+      "width": 1520,
+      "height": 2688,
+      "prompt": "Cinematic photorealistic photograph, vertical 9:16 portrait framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed centrally with generous headroom above and below for the vertical frame. Absolutely no text, no letters, no numbers, no logos, no watermarks. The scene: ground level in a real suburban backyard at dusk, a last few golden sparkles still drifting down and clearing from above. Adult friends in their 30s and 40s and grandparents in their 60s and 70s stand shoulder to shoulder around the picnic table for a group photo, phone flashes popping. The three CRASHERS — small toddler-sized creatures whose bodies are simple ROUND hooded onesies, soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats, the patterns only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print, each with a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood — squeeze in among the group at knee height. STARRY — a tall golden five-pointed star character with a friendly cartoon face on the star body, large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile, wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots — spreads his arms wide behind the group, mid-frame. No cloud or clubhouse is in frame.\nEvery human being in the scene is a grown adult in their 30s, 40s, 60s or 70s — absolutely no human children, no babies, no toddlers, no minors, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "medias": [
+        {
+          "data": {
+            "id": "cbdd7aeb-3f28-49ec-bcff-66d16ea8f5ce",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/cbdd7aeb-3f28-49ec-bcff-66d16ea8f5ce.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "07201340-4368-4482-9f2e-db02c854733a",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/07201340-4368-4482-9f2e-db02c854733a.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "9:16",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

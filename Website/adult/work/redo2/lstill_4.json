@@ -1,0 +1,46 @@
+[
+  {
+    "id": "3635bc18-6a27-4c01-b0b7-eab1ff3536b5",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260804_001937_3635bc18-6a27-4c01-b0b7-eab1ff3536b5.png",
+    "created_at": 1785802777.340467,
+    "params": {
+      "width": 2688,
+      "height": 1520,
+      "prompt": "Cinematic photorealistic wide photograph, 16:9 landscape framing, shot on a full-frame camera with a 35mm lens, shallow depth of field, natural film-like color grade, realistic skin, fabric, grass and wood textures, a real suburban backyard. Any animated characters present are rendered as glossy vinyl designer toys with smooth shiny plastic shading, physically integrated into the live-action scene with matched lighting, soft reflections and true contact shadows, live-action hybrid family-film look. Focal subjects composed in the central two-thirds, generous lateral headroom for widescreen. Absolutely no text, no letters, no numbers, no logos, no watermarks. The scene: under a pergola wrapped in warm string lights at dusk, a young adult host in his 20s holds a big birthday cake topped with lit sparklers at the long table while a lively circle of young adult friends in their 20s and 30s around the table cheer and clap. The three CRASHERS — small toddler-sized creatures whose bodies are simple ROUND hooded onesies, soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats, the patterns only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print, each with a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood — bounce at the table edge, one proudly holding up a stack of paper plates. No cloud or clubhouse is in frame.\nEvery human being in the scene is a young adult in their 20s or 30s — absolutely no human children, no babies, no toddlers, no minors, no middle-aged people, no elderly people, nobody with gray hair, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "medias": [
+        {
+          "data": {
+            "id": "5cb4046d-f577-42d6-9430-a03fb48897f4",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/5cb4046d-f577-42d6-9430-a03fb48897f4.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "ae3be8df-ce50-478d-9a12-8ace291389a1",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/ae3be8df-ce50-478d-9a12-8ace291389a1.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        },
+        {
+          "data": {
+            "id": "07381b23-ac11-4dfa-8d61-558be1a2141b",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/07381b23-ac11-4dfa-8d61-558be1a2141b.png",
+            "type": "media_input"
+          },
+          "role": "image"
+        }
+      ],
+      "aspect_ratio": "16:9",
+      "quality": "high",
+      "resolution": "2k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

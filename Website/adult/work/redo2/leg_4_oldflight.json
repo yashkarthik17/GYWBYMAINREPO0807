@@ -1,0 +1,39 @@
+[
+  {
+    "id": "fd712886-a1c2-4d55-b937-d8a8cb619ad6",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260803_101739_fd712886-a1c2-4d55-b937-d8a8cb619ad6.mp4",
+    "created_at": 1785752259.997236,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. The camera continues the exact same slow, steady, perfectly straight forward drift it was already in, gliding in under the pergola wrapped in warm string lights and paper lanterns, where a lively milestone birthday-cake moment is happening: an adult host in his 40s carries a big birthday cake topped with lit sparklers to the long table while adult friends in their 30s and 40s and grandparents in their 60s and 70s around the table cheer and clap, the three little toddler-sized creatures in round hooded onesies — orange zigzag, blue diamond, green paint-splatter — bouncing excitedly among the adult guests at the table edge and one proudly holding up a stack of paper plates, and the tall golden star character with the friendly cartoon face leaning in over the far end of the table to admire the sparkler cake, everyone laughing, the magical cloud clubhouse parked above the pergola roof with its pink, purple and green ribbon streamers hanging down into the warm light and golden sparkles drifting like fireflies. The camera tracks gently sideways along the table through the cheering, then curves smoothly back to face forward across the open lawn as the party settles. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift toward the open dusk sky beyond the quiet lawn, ready to continue.\nEvery human being in the scene is a grown adult in their 30s, 40s, 60s or 70s — absolutely no human children, no babies, no toddlers, no minors, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "a51ca6ca-a65c-4608-a866-be391549534f",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/a51ca6ca-a65c-4608-a866-be391549534f.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]
