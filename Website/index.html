@@ -190,7 +190,7 @@
   <div class="loading" id="loading">Folding the paper…</div>
 
   <script src="music.js?v=16" data-once data-src="assets/audio/envelope.wav?v=1"></script>
-  <script src="tap-engine.js?v=9"></script>
+  <script src="tap-engine.js?v=10"></script>
   <script src="story-config.js?v=2"></script>
   <script src="adult-config.js?v=2"></script>
   <script>
@@ -451,7 +451,7 @@
       world.id = "world";
       document.body.appendChild(world);
       var engine = document.createElement("script");
-      engine.src = "adult/tap-engine.js?v=11";
+      engine.src = "adult/tap-engine.js?v=12";
       engine.onload = function () { mountTapWorld(world, GYWBT_ADULT_CONFIG(lang)); };
       engine.onerror = function () { location.href = "adult/"; };
       document.body.appendChild(engine);

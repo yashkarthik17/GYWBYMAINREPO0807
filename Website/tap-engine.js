@@ -2,9 +2,14 @@
    Scenes auto-play in sequence and crossfade into each other; where the config
    provides connector clips (the aerial flights that bridged scenes in the
    scroll version) they play between scenes as wordless transitions, so every
-   cut lands on the frame-matched footage the world was built with. Tap skips
-   to the next scene (connectors are skipped, not replayed); "Skip to end"
-   jumps to the finale, which holds its last frame and shows the explore links.
+   cut lands on the frame-matched footage the world was built with. In video
+   mode scenes advance on their own via crossfade — ArrowRight/Space step
+   forward a scene at a time, and "Skip to end" jumps to the finale — while a
+   stage tap is a passive gesture surface only, since accidental taps
+   mid-video caused jittery skips. In the tap-through stills fallback
+   (below), tapping the stage IS how you advance (connectors are skipped,
+   not replayed); "Skip to end" always jumps to the finale, which holds its
+   last frame and shows the explore links.
    Reuses the scrub engine's section config shape unchanged (clip/clipMobile/
    poster/posterMobile/still + eyebrow/title/body/tags/accent/explore,
    connectors/connectorsMobile); journey/scroll keys are ignored.
@@ -114,7 +119,6 @@ function mountTapWorld(container, config) {
   stage.appendChild(still);
 
   var tap = el("button", "tw-tap");
-  tap.setAttribute("aria-label", config.nextLabel || "Next scene");
   stage.appendChild(tap);
 
   var card = el("div", "tw-card");
@@ -139,6 +143,28 @@ function mountTapWorld(container, config) {
 
   // ---- state -------------------------------------------------------------
   var idx = -1, active = 0, stillsMode = reduce, started = false;
+
+  // Accessibility: the tap catcher's nextLabel only means something in
+  // stills mode, where tapping the stage is the sole way through the
+  // slideshow (see the tap click handler near the bottom of this file). In
+  // video mode the catcher is a passive gesture surface with no advance
+  // action, so it's hidden from assistive tech and pulled out of the tab
+  // order instead of announcing a "Next scene" affordance that no longer
+  // does anything. Called once at init (covers reduce:true booting straight
+  // into stills mode) and on every stillsMode transition — enterStillsMode()
+  // and the start overlay's `stillsMode = reduce` reset.
+  function updateTapA11y() {
+    if (stillsMode) {
+      tap.setAttribute("aria-label", config.nextLabel || "Next scene");
+      tap.removeAttribute("aria-hidden");
+      tap.removeAttribute("tabindex");
+    } else {
+      tap.removeAttribute("aria-label");
+      tap.setAttribute("aria-hidden", "true");
+      tap.setAttribute("tabindex", "-1");
+    }
+  }
+  updateTapA11y();
 
   function showCard(s) {
     cEyebrow.textContent = s.eyebrow || "";
@@ -193,6 +219,7 @@ function mountTapWorld(container, config) {
   function enterStillsMode() {
     if (stillsMode) return;
     stillsMode = true;
+    updateTapA11y();
     vids.forEach(function (v) { try { v.pause(); } catch (e) {} v.classList.remove("is-on"); });
     if (idx >= 0) {
       var item = PL[idx];
@@ -305,6 +332,7 @@ function mountTapWorld(container, config) {
     startBtn.addEventListener("click", function () {
       startBtn.remove(); startBtn = null; started = true;
       stillsMode = reduce;
+      updateTapA11y();
       still.classList.remove("is-on");
       var at = idx < 0 ? 0 : idx;
       idx = -1; prepared = -1; go(at);
@@ -312,11 +340,25 @@ function mountTapWorld(container, config) {
     stage.appendChild(startBtn);
   }
 
-  // ---- input: tap = next scene (connectors are skipped, not replayed) -----
-  tap.addEventListener("click", function () {
-    started = true;
+  // Advance to the next scene (connectors are skipped, not replayed), or
+  // finish() at the finale. Shared by stills-mode tap and ArrowRight/Space —
+  // extracted so keyboard can drive it directly instead of proxying through
+  // tap.click(), since tap.click() no longer advances in video mode (see
+  // below) but deliberate keypresses should still step scenes there.
+  function advance() {
     if (idx >= LAST) { finish(); return; }
     go(nextSceneAt(idx));
+  }
+
+  // ---- input ---------------------------------------------------------------
+  // Tap only advances in stills mode (the autoplay-refused / reduced-motion
+  // fallback, where it's the sole way through the slideshow — "the page
+  // never dead-ends"). In video mode the full-stage tap catcher stays in the
+  // DOM as a passive gesture surface but no longer advances scenes —
+  // accidental taps during video playback were causing jittery skips/pauses.
+  tap.addEventListener("click", function () {
+    started = true;
+    if (stillsMode) advance();
   });
   skip.addEventListener("click", function () {
     started = true;
@@ -324,7 +366,7 @@ function mountTapWorld(container, config) {
     go(LAST);
   });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); tap.click(); }
+    if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); advance(); }
     if (e.key === "ArrowLeft") {
       var q = prevSceneAt(idx);
       if (q >= 0) { e.preventDefault(); go(q); }
