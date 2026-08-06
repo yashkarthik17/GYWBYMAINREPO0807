@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Hire the Crew — Glad You Were Born Today</title>
   <meta name="description" content="Bring Starry &amp; the Crashers to a real birthday. Three ways to crash a party — from a confetti fly-by to the full glow-up. Booking opens soon." />
+  <!-- i18n guard: runs before body parses. Only touches the document when a
+       Spanish visitor is detected (?lang=es or stored gywbt-lang='es'); EN
+       visitors never get this class, so EN rendering/behavior is unchanged. -->
+  <script>
+  (function () {
+    function gywbtLang() {
+      var m = /[?&]lang=(en|es)/.exec(location.search);
+      if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
+      var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
+      return s === 'es' ? 'es' : 'en';
+    }
+    if (gywbtLang() === 'es') document.documentElement.classList.add('sw-i18n-pending');
+  })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
@@ -24,6 +38,10 @@
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; background: var(--bg); color: var(--cream); font-family: var(--font-body); }
+    /* i18n: hides only the elements being swapped (visibility, not display,
+       so nothing reflows) for the instant between paint and the swap script
+       running at the end of body — EN visitors never carry this class. */
+    .sw-i18n-pending [data-i18n] { visibility: hidden; }
 
     .night { position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background:
@@ -106,59 +124,59 @@
   <div class="wrap">
     <header class="hero">
       <div>
-        <span class="hero__eyebrow">Hire the crew</span>
-        <h1>Somebody&rsquo;s birthday is coming.</h1>
-        <p>You know exactly whose. The one who plans everyone else&rsquo;s cake and never
+        <span class="hero__eyebrow" data-i18n="hero_eyebrow">Hire the crew</span>
+        <h1 data-i18n="hero_h1">Somebody&rsquo;s birthday is coming.</h1>
+        <p data-i18n="hero_p">You know exactly whose. The one who plans everyone else&rsquo;s cake and never
            gets a candle of their own. Pick the date, keep the secret, and let the
            crew come over the fence. They&rsquo;ll handle everything between the first
            cannon and the last wave goodbye.</p>
       </div>
       <div class="hero__art">
-        <img src="assets/characters/starry.webp" alt="Starry — a golden star in a party hat, holding balloons and a gift" />
+        <img src="assets/characters/starry.webp" alt="Starry — a golden star in a party hat, holding balloons and a gift" data-i18n-alt="hero_art_alt" />
       </div>
     </header>
 
-    <div class="sect"><h2>Three ways to crash</h2></div>
-    <p class="sect__note">Every crash is planned with you, sized to the room, and always a surprise to exactly one person.</p>
+    <div class="sect"><h2 data-i18n="sect_h2">Three ways to crash</h2></div>
+    <p class="sect__note" data-i18n="sect_note">Every crash is planned with you, sized to the room, and always a surprise to exactly one person.</p>
 
     <main class="plans">
       <article class="plan">
-        <div class="plan__pic"><img src="adult/assets/glowup.webp" alt="The Crashers arriving at a backyard party" loading="lazy" /></div>
+        <div class="plan__pic"><img src="adult/assets/glowup.webp" alt="The Crashers arriving at a backyard party" data-i18n-alt="plan1_alt" loading="lazy" /></div>
         <div class="plan__body">
-          <h3>The Fly-By</h3>
-          <div class="plan__tag">for the quiet ones</div>
+          <h3 data-i18n="plan1_h3">The Fly-By</h3>
+          <div class="plan__tag" data-i18n="plan1_tag">for the quiet ones</div>
           <ul>
-            <li>One Crasher, matched to the birthday month</li>
-            <li>Confetti moment + the song, sung loud</li>
-            <li>A birthday card from the whole crew</li>
+            <li data-i18n="plan1_li1">One Crasher, matched to the birthday month</li>
+            <li data-i18n="plan1_li2">Confetti moment + the song, sung loud</li>
+            <li data-i18n="plan1_li3">A birthday card from the whole crew</li>
           </ul>
         </div>
       </article>
 
       <article class="plan plan--big">
-        <span class="plan__flag">The classic</span>
-        <div class="plan__pic"><img src="adult/assets/photo.webp" alt="Party guests crowding into photos with the Crashers" loading="lazy" /></div>
+        <span class="plan__flag" data-i18n="plan2_flag">The classic</span>
+        <div class="plan__pic"><img src="adult/assets/photo.webp" alt="Party guests crowding into photos with the Crashers" data-i18n-alt="plan2_alt" loading="lazy" /></div>
         <div class="plan__body">
-          <h3>The Full Crash</h3>
-          <div class="plan__tag">the one from the film</div>
+          <h3 data-i18n="plan2_h3">The Full Crash</h3>
+          <div class="plan__tag" data-i18n="plan2_tag">the one from the film</div>
           <ul>
-            <li>Starry + three Crashers burst in mid-party</li>
-            <li>Confetti cannons, streamers, the anthem</li>
-            <li>Photo hour — the album nobody agrees on</li>
-            <li>Send-off wave from the lawn</li>
+            <li data-i18n="plan2_li1">Starry + three Crashers burst in mid-party</li>
+            <li data-i18n="plan2_li2">Confetti cannons, streamers, the anthem</li>
+            <li data-i18n="plan2_li3">Photo hour — the album nobody agrees on</li>
+            <li data-i18n="plan2_li4">Send-off wave from the lawn</li>
           </ul>
         </div>
       </article>
 
       <article class="plan">
-        <div class="plan__pic"><img src="adult/assets/patio.webp" alt="A patio party glowing after the crash" loading="lazy" /></div>
+        <div class="plan__pic"><img src="adult/assets/patio.webp" alt="A patio party glowing after the crash" data-i18n-alt="plan3_alt" loading="lazy" /></div>
         <div class="plan__body">
-          <h3>The Glow-Up</h3>
-          <div class="plan__tag">total transformation</div>
+          <h3 data-i18n="plan3_h3">The Glow-Up</h3>
+          <div class="plan__tag" data-i18n="plan3_tag">total transformation</div>
           <ul>
-            <li>The crew arrives early and rebuilds the room</li>
-            <li>Cake tower, balloon arches, dance floor</li>
-            <li>The Full Crash, on top of all of it</li>
+            <li data-i18n="plan3_li1">The crew arrives early and rebuilds the room</li>
+            <li data-i18n="plan3_li2">Cake tower, balloon arches, dance floor</li>
+            <li data-i18n="plan3_li3">The Full Crash, on top of all of it</li>
           </ul>
         </div>
       </article>
@@ -166,20 +184,81 @@
 
     <section class="band" id="book">
       <div>
-        <span class="soon">Booking opens soon</span>
-        <h2>The cannons are almost loaded.</h2>
-        <p>We&rsquo;re taking our first crash requests very soon. Until then, see the crew in action — or meet them one by one.</p>
+        <span class="soon" data-i18n="soon_badge">Booking opens soon</span>
+        <h2 data-i18n="band_h2">The cannons are almost loaded.</h2>
+        <p data-i18n="band_p">We&rsquo;re taking our first crash requests very soon. Until then, see the crew in action — or meet them one by one.</p>
       </div>
       <div class="band__actions">
-        <a href="adult/">Watch a real crash</a>
-        <a class="alt" href="adult/crew.html">Meet the crew</a>
-        <a class="alt" href="mission.html">Our mission</a>
+        <a href="adult/" data-i18n="band_link1">Watch a real crash</a>
+        <a class="alt" href="adult/crew.html" data-i18n="band_link2">Meet the crew</a>
+        <a class="alt" href="mission.html" data-i18n="band_link3">Our mission</a>
       </div>
     </section>
   </div>
 
-  <footer>&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
+  <footer data-i18n="footer">&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
 
-  <script src="nav.js?v=4"></script>
+  <script src="nav.js?v=5"></script>
+  <script>
+  (function () {
+    function gywbtLang() {
+      var m = /[?&]lang=(en|es)/.exec(location.search);
+      if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
+      var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
+      return s === 'es' ? 'es' : 'en';
+    }
+    if (gywbtLang() !== 'es') { document.documentElement.classList.remove('sw-i18n-pending'); return; }
+
+    var ES = {
+      title: "Contrata a la Tripulación — Glad You Were Born Today",
+      hero_eyebrow: "Contrata a la tripulación",
+      hero_h1: "Se acerca el cumpleaños de alguien.",
+      hero_p: "Y sabes exactamente de quién. Esa persona que siempre organiza el pastel de los demás y nunca tiene una vela propia. Elige la fecha, guarda el secreto, y deja que la tripulación salte la cerca. Ellos se encargan de todo, desde el primer cañonazo hasta la última despedida con la mano.",
+      hero_art_alt: "Starry — una estrella dorada con gorro de fiesta, sosteniendo globos y un regalo",
+      sect_h2: "Tres formas de colarse",
+      sect_note: "Cada colado se planea contigo, se ajusta al espacio, y siempre es una sorpresa para una sola persona.",
+      plan1_alt: "Los Crashers llegando a una fiesta en el patio trasero",
+      plan1_h3: "El Sobrevuelo",
+      plan1_tag: "para los más discretos",
+      plan1_li1: "Un Crasher, elegido según el mes de cumpleaños",
+      plan1_li2: "Un momento de confeti + la canción, cantada a todo volumen",
+      plan1_li3: "Una tarjeta de cumpleaños de parte de toda la tripulación",
+      plan2_flag: "El clásico",
+      plan2_alt: "Invitados de la fiesta amontonándose para tomarse fotos con los Crashers",
+      plan2_h3: "El Colado Completo",
+      plan2_tag: "el de la película",
+      plan2_li1: "Starry + tres Crashers irrumpen a mitad de la fiesta",
+      plan2_li2: "Cañones de confeti, serpentinas, el himno",
+      plan2_li3: "La hora de las fotos — el álbum en el que nadie se pone de acuerdo",
+      plan2_li4: "Despedida con la mano desde el jardín",
+      plan3_alt: "Una fiesta de patio resplandeciente después del colado",
+      plan3_h3: "La Transformación",
+      plan3_tag: "transformación total",
+      plan3_li1: "La tripulación llega temprano y reconstruye el salón",
+      plan3_li2: "Torre de pastel, arcos de globos, pista de baile",
+      plan3_li3: "El Colado Completo, además de todo esto",
+      soon_badge: "Las reservas abren pronto",
+      band_h2: "Los cañones ya casi están cargados.",
+      band_p: "Muy pronto empezaremos a recibir las primeras solicitudes de colado. Mientras tanto, mira a la tripulación en acción — o conócelos uno por uno.",
+      band_link1: "Mira un colado real",
+      band_link2: "Conoce a la tripulación",
+      band_link3: "Nuestra misión",
+      footer: "&copy; 2026 <b>Glad You Were Born Today</b> &middot; De parte de Starry y los Crashers"
+    };
+
+    document.title = ES.title;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      if (!(key in ES)) return;
+      var attr = el.getAttribute('data-i18n-attr');
+      if (attr) el.setAttribute(attr, ES[key]); else el.innerHTML = ES[key];
+    });
+    document.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-alt');
+      if (key in ES) el.setAttribute('alt', ES[key]);
+    });
+    document.documentElement.classList.remove('sw-i18n-pending');
+  })();
+  </script>
 </body>
 </html>

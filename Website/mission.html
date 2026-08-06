@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Our Mission — Glad You Were Born Today</title>
   <meta name="description" content="No birthday alone. Ever. The song is a promise — and we keep it with Compassion International. Sponsor a child's birthday: school, meals, and a letter tied to their day." />
+  <!-- i18n guard: runs before body parses. Only touches the document when a
+       Spanish visitor is detected (?lang=es or stored gywbt-lang='es'); EN
+       visitors never get this class, so EN rendering/behavior is unchanged. -->
+  <script>
+  (function () {
+    function gywbtLang() {
+      var m = /[?&]lang=(en|es)/.exec(location.search);
+      if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
+      var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
+      return s === 'es' ? 'es' : 'en';
+    }
+    if (gywbtLang() === 'es') document.documentElement.classList.add('sw-i18n-pending');
+  })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
@@ -24,6 +38,10 @@
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; background: var(--bg); color: var(--cream); font-family: var(--font-body); }
+    /* i18n: hides only the elements being swapped (visibility, not display,
+       so nothing reflows) for the instant between paint and the swap script
+       running at the end of body — EN visitors never carry this class. */
+    .sw-i18n-pending [data-i18n] { visibility: hidden; }
 
     .night { position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background:
@@ -97,39 +115,84 @@
   <div class="wrap">
     <header class="hero">
       <div class="hero__pic">
-        <img src="assets/mission-compassion.webp" alt="A child celebrating a birthday" />
+        <img src="assets/mission-compassion.webp" alt="A child celebrating a birthday" data-i18n-alt="hero_pic_alt" />
       </div>
       <div>
-        <span class="hero__eyebrow">The mission</span>
-        <h1>No birthday<br />alone. <em>Ever.</em></h1>
-        <p>The song is a promise — and we keep it with Compassion International.
+        <span class="hero__eyebrow" data-i18n="hero_eyebrow">The mission</span>
+        <h1 data-i18n="hero_h1">No birthday<br />alone. <em>Ever.</em></h1>
+        <p data-i18n="hero_p">The song is a promise — and we keep it with Compassion International.
            About $43 a month sponsors a child: school, meals, and a letter tied to
            their birthday. Crash one for someone who&rsquo;s never had a party.</p>
-        <a class="cta" href="https://www.compassion.com/" target="_blank" rel="noopener noreferrer">Sponsor a birthday &rarr;</a>
+        <a class="cta" href="https://www.compassion.com/" target="_blank" rel="noopener noreferrer" data-i18n="hero_cta">Sponsor a birthday &rarr;</a>
       </div>
     </header>
 
     <section class="cards">
-      <div class="mcard"><span>$43</span><b>a month</b><p>Sponsors one child through Compassion International — school, meals, medical care.</p></div>
-      <div class="mcard"><span>1</span><b>birthday letter</b><p>Your sponsorship ties a letter to their day — so their birthday never passes unnoticed again.</p></div>
-      <div class="mcard"><span>0</span><b>birthdays alone</b><p>That&rsquo;s the whole mission. Every kit, every card, every crash points at this number.</p></div>
+      <div class="mcard"><span>$43</span><b data-i18n="card1_b">a month</b><p data-i18n="card1_p">Sponsors one child through Compassion International — school, meals, medical care.</p></div>
+      <div class="mcard"><span>1</span><b data-i18n="card2_b">birthday letter</b><p data-i18n="card2_p">Your sponsorship ties a letter to their day — so their birthday never passes unnoticed again.</p></div>
+      <div class="mcard"><span>0</span><b data-i18n="card3_b">birthdays alone</b><p data-i18n="card3_p">That&rsquo;s the whole mission. Every kit, every card, every crash points at this number.</p></div>
     </section>
 
     <section class="band">
       <div>
-        <h2>The party is the promise.</h2>
-        <p>Everything else on this site — the story, the store, the crew — exists so more kids hear the song on their day.</p>
+        <h2 data-i18n="band_h2">The party is the promise.</h2>
+        <p data-i18n="band_p">Everything else on this site — the story, the store, the crew — exists so more kids hear the song on their day.</p>
       </div>
       <div class="band__actions">
-        <a href="https://www.compassion.com/" target="_blank" rel="noopener noreferrer">Sponsor a birthday</a>
-        <a class="alt" href="hire.html">Hire the Crew</a>
-        <a class="alt" href="story.html">Watch the story</a>
+        <a href="https://www.compassion.com/" target="_blank" rel="noopener noreferrer" data-i18n="band_link1">Sponsor a birthday</a>
+        <a class="alt" href="hire.html" data-i18n="band_link2">Hire the Crew</a>
+        <a class="alt" href="story.html" data-i18n="band_link3">Watch the story</a>
       </div>
     </section>
   </div>
 
-  <footer>&copy; 2026 <b>Glad You Were Born Today</b> &middot; No birthday alone. Ever.</footer>
+  <footer data-i18n="footer">&copy; 2026 <b>Glad You Were Born Today</b> &middot; No birthday alone. Ever.</footer>
 
-  <script src="nav.js?v=4"></script>
+  <script src="nav.js?v=5"></script>
+  <script>
+  (function () {
+    function gywbtLang() {
+      var m = /[?&]lang=(en|es)/.exec(location.search);
+      if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
+      var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
+      return s === 'es' ? 'es' : 'en';
+    }
+    if (gywbtLang() !== 'es') { document.documentElement.classList.remove('sw-i18n-pending'); return; }
+
+    var ES = {
+      title: "Nuestra Misión — Glad You Were Born Today",
+      hero_pic_alt: "Un niño celebrando un cumpleaños",
+      hero_eyebrow: "La misión",
+      hero_h1: "Ningún cumpleaños<br />solo. <em>Jamás.</em>",
+      hero_p: "La canción es una promesa — y la cumplimos junto con Compassion International.\n           Cerca de $43 al mes patrocina a un niño: escuela, comida, y una carta ligada a\n           su cumpleaños. Cuélate en uno para alguien que nunca ha tenido una fiesta.",
+      hero_cta: "Patrocina un cumpleaños &rarr;",
+      card1_b: "al mes",
+      card1_p: "Patrocina a un niño a través de Compassion International — escuela, comida, atención médica.",
+      card2_b: "carta de cumpleaños",
+      card2_p: "Tu patrocinio vincula una carta a su día — para que su cumpleaños nunca vuelva a pasar desapercibido.",
+      card3_b: "cumpleaños solos",
+      card3_p: "Esa es toda la misión. Cada kit, cada tarjeta, cada colado apunta a este número.",
+      band_h2: "La fiesta es la promesa.",
+      band_p: "Todo lo demás en este sitio — la historia, la tienda, la tripulación — existe para que más niños escuchen la canción en su día.",
+      band_link1: "Patrocina un cumpleaños",
+      band_link2: "Contrata a la Tripulación",
+      band_link3: "Mira la historia",
+      footer: "&copy; 2026 <b>Glad You Were Born Today</b> &middot; Ningún cumpleaños solo. Jamás."
+    };
+
+    document.title = ES.title;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      if (!(key in ES)) return;
+      var attr = el.getAttribute('data-i18n-attr');
+      if (attr) el.setAttribute(attr, ES[key]); else el.innerHTML = ES[key];
+    });
+    document.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-alt');
+      if (key in ES) el.setAttribute('alt', ES[key]);
+    });
+    document.documentElement.classList.remove('sw-i18n-pending');
+  })();
+  </script>
 </body>
 </html>

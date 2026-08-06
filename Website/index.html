@@ -413,7 +413,7 @@
       if (!window.mountTapWorld || !window.GYWBT_KIDS_CONFIG) return;  // fall back to story.html
       e.preventDefault();
       if (window.swMusic && window.swMusic.swap) {
-        if (lang === "es") window.swMusic.swap("assets/audio/theme-es.wav?v=1", 0);
+        if (lang === "es") window.swMusic.swap("assets/audio/theme-es.wav?v=1", 20);
         else window.swMusic.swap("assets/audio/theme.wav?v=2", 11);
       }
       try { history.pushState({ kids: 1 }, "", "#kids"); } catch (err) {}
@@ -443,7 +443,7 @@
       // resolves to /adult/assets/audio/theme.wav?v=3, so swap to that exact URL
       // here too, or a direct /adult/ visit and this in-page launch play different songs.
       if (window.swMusic && window.swMusic.swap) {
-        if (lang === "es") window.swMusic.swap("/adult/assets/audio/theme-es.wav?v=1", 0);
+        if (lang === "es") window.swMusic.swap("/adult/assets/audio/theme-es.wav?v=1", 20);
         else window.swMusic.swap("/adult/assets/audio/theme.wav?v=3", 11);
       }
       try { history.pushState({ adult: 1 }, "", "#adult"); } catch (err) {}

@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>The Crew — Glad You Were Born Today</title>
   <meta name="description" content="Starry founded it. Twelve Crashers run it — one for every month, each with a birthstone for eyes. Meet the crew that crashes real birthdays." />
+  <!-- i18n guard: runs before body parses. Only touches the document when a
+       Spanish visitor is detected (?lang=es or stored gywbt-lang='es'); EN
+       visitors never get this class, so EN rendering/behavior is unchanged. -->
+  <script>
+  (function () {
+    function gywbtLang() {
+      var m = /[?&]lang=(en|es)/.exec(location.search);
+      if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
+      var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
+      return s === 'es' ? 'es' : 'en';
+    }
+    if (gywbtLang() === 'es') document.documentElement.classList.add('sw-i18n-pending');
+  })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
@@ -23,6 +37,10 @@
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; background: var(--bg); color: var(--cream); font-family: var(--font-body); }
+    /* i18n: hides only the elements being swapped (visibility, not display,
+       so nothing reflows) for the instant between paint and the swap script
+       running at the end of body — EN visitors never carry this class. */
+    .sw-i18n-pending [data-i18n] { visibility: hidden; }
 
     .night {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -137,160 +155,237 @@
 
     <header class="hero">
       <div>
-        <span class="hero__eyebrow">The crew behind the crash</span>
-        <h1>Thirteen professionals. One job: your birthday.</h1>
+        <span class="hero__eyebrow" data-i18n="hero_eyebrow">The crew behind the crash</span>
+        <h1 data-i18n="hero_h1">Thirteen professionals. One job: your birthday.</h1>
         <hr class="hero__rule" />
-        <p><b>Starry</b> founded the operation — threw the very first birthday, wrote the anthem when
+        <p data-i18n="hero_p"><b>Starry</b> founded the operation — threw the very first birthday, wrote the anthem when
            nobody came, and hasn&rsquo;t missed one since. The twelve Crashers each hold a month of the
            year, birthstone eyes and all. Whatever month you were born, one of them already has
            your name on the list.</p>
-        <p class="hero__role">Starry — Founder, No. 00. First on every guest list.</p>
+        <p class="hero__role" data-i18n="hero_role">Starry — Founder, No. 00. First on every guest list.</p>
       </div>
       <div class="hero__art">
-        <img src="../assets/characters/starry.webp" alt="Starry — a golden star in a party hat, holding balloons and a gift" />
+        <img src="../assets/characters/starry.webp" alt="Starry — a golden star in a party hat, holding balloons and a gift" data-i18n-alt="hero_art_alt" />
       </div>
     </header>
 
-    <div class="sect"><h2>The Twelve, by month</h2></div>
-    <p class="sect__note">Each Crasher works the birthdays of their own month. Find yours.</p>
+    <div class="sect"><h2 data-i18n="twelve_h2">The Twelve, by month</h2></div>
+    <p class="sect__note" data-i18n="twelve_note">Each Crasher works the birthdays of their own month. Find yours.</p>
 
     <main class="grid">
       <article class="pcard" style="--stone:#9B2242">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/zig.webp" alt="Zig — the orange zigzag Crasher with garnet eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/zig.webp" alt="Zig — the orange zigzag Crasher with garnet eyes" data-i18n-alt="zig_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 01</div>
           <h3>Zig</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>January &middot; Garnet</div>
-          <p>Door-crash lead. Handles arrivals. Has never once RSVP&rsquo;d.</p>
+          <div class="pcard__month" data-i18n="zig_month"><span class="gem" aria-hidden="true"></span>January &middot; Garnet</div>
+          <p data-i18n="zig_p">Door-crash lead. Handles arrivals. Has never once RSVP&rsquo;d.</p>
         </div>
       </article>
 
       <article class="pcard" style="--stone:#7B5EA7">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/jewel.webp" alt="Jewel — the blue diamond-pattern Crasher with amethyst eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/jewel.webp" alt="Jewel — the blue diamond-pattern Crasher with amethyst eyes" data-i18n-alt="jewel_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 02</div>
           <h3>Jewel</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>February &middot; Amethyst</div>
-          <p>Heart of the crew. Personally assigned to every shy guest.</p>
+          <div class="pcard__month" data-i18n="jewel_month"><span class="gem" aria-hidden="true"></span>February &middot; Amethyst</div>
+          <p data-i18n="jewel_p">Heart of the crew. Personally assigned to every shy guest.</p>
         </div>
       </article>
 
       <article class="pcard" style="--stone:#3AC5C9">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/stripes.webp" alt="Stripes — the tiger-stripe Crasher with aquamarine eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/stripes.webp" alt="Stripes — the tiger-stripe Crasher with aquamarine eyes" data-i18n-alt="stripes_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 03</div>
           <h3>Stripes</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>March &middot; Aquamarine</div>
-          <p>Games and organized chaos. Pi&ntilde;ata results guaranteed.</p>
+          <div class="pcard__month" data-i18n="stripes_month"><span class="gem" aria-hidden="true"></span>March &middot; Aquamarine</div>
+          <p data-i18n="stripes_p">Games and organized chaos. Pi&ntilde;ata results guaranteed.</p>
         </div>
       </article>
 
       <article class="pcard" style="--stone:#A7D8E8">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/minty.webp" alt="Minty — the candy-stripe Crasher with diamond eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/minty.webp" alt="Minty — the candy-stripe Crasher with diamond eyes" data-i18n-alt="minty_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 04</div>
           <h3>Minty</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>April &middot; Diamond</div>
-          <p>Table styling and sparkle logistics. Nothing leaves un-shined.</p>
+          <div class="pcard__month" data-i18n="minty_month"><span class="gem" aria-hidden="true"></span>April &middot; Diamond</div>
+          <p data-i18n="minty_p">Table styling and sparkle logistics. Nothing leaves un-shined.</p>
         </div>
       </article>
 
       <article class="pcard" style="--stone:#2FAE66">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/checkers.webp" alt="Checkers — the orange checkered Crasher with emerald eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/checkers.webp" alt="Checkers — the orange checkered Crasher with emerald eyes" data-i18n-alt="checkers_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 05</div>
           <h3>Checkers</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>May &middot; Emerald</div>
-          <p>Dance floor operations. Has never been off-beat.</p>
+          <div class="pcard__month" data-i18n="checkers_month"><span class="gem" aria-hidden="true"></span>May &middot; Emerald</div>
+          <p data-i18n="checkers_p">Dance floor operations. Has never been off-beat.</p>
         </div>
       </article>
 
       <article class="pcard" style="--stone:#EFE7D6">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/splat.webp" alt="Splat — the green paint-splatter Crasher with pearl eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/splat.webp" alt="Splat — the green paint-splatter Crasher with pearl eyes" data-i18n-alt="splat_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 06</div>
           <h3>Splat</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>June &middot; Pearl</div>
-          <p>D&eacute;cor splash zone. Looks loud, hugs quiet.</p>
+          <div class="pcard__month" data-i18n="splat_month"><span class="gem" aria-hidden="true"></span>June &middot; Pearl</div>
+          <p data-i18n="splat_p">D&eacute;cor splash zone. Looks loud, hugs quiet.</p>
         </div>
       </article>
 
       <article class="pcard" style="--stone:#E0244B">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/dot.webp" alt="Dot — the red polka-dot Crasher with ruby eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/dot.webp" alt="Dot — the red polka-dot Crasher with ruby eyes" data-i18n-alt="dot_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 07</div>
           <h3>Dot</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>July &middot; Ruby</div>
-          <p>Big moments: candles, countdowns, confetti storms.</p>
+          <div class="pcard__month" data-i18n="dot_month"><span class="gem" aria-hidden="true"></span>July &middot; Ruby</div>
+          <p data-i18n="dot_p">Big moments: candles, countdowns, confetti storms.</p>
         </div>
       </article>
 
       <article class="pcard" style="--stone:#9FC131">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/blossom.webp" alt="Blossom — the lime flower Crasher with peridot eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/blossom.webp" alt="Blossom — the lime flower Crasher with peridot eyes" data-i18n-alt="blossom_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 08</div>
           <h3>Blossom</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>August &middot; Peridot</div>
-          <p>Keeps the little guests — and the grandmas — smiling.</p>
+          <div class="pcard__month" data-i18n="blossom_month"><span class="gem" aria-hidden="true"></span>August &middot; Peridot</div>
+          <p data-i18n="blossom_p">Keeps the little guests — and the grandmas — smiling.</p>
         </div>
       </article>
 
       <article class="pcard" style="--stone:#2A4FB0">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/cosmo.webp" alt="Cosmo — the blue star-pattern Crasher with sapphire eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/cosmo.webp" alt="Cosmo — the blue star-pattern Crasher with sapphire eyes" data-i18n-alt="cosmo_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 09</div>
           <h3>Cosmo</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>September &middot; Sapphire</div>
-          <p>Evening parties and lighting. Calm under cake pressure.</p>
+          <div class="pcard__month" data-i18n="cosmo_month"><span class="gem" aria-hidden="true"></span>September &middot; Sapphire</div>
+          <p data-i18n="cosmo_p">Evening parties and lighting. Calm under cake pressure.</p>
         </div>
       </article>
 
       <article class="pcard" style="--stone:#C77DBB">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/swirl.webp" alt="Swirl — the rainbow brushstroke Crasher with opal eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/swirl.webp" alt="Swirl — the rainbow brushstroke Crasher with opal eyes" data-i18n-alt="swirl_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 10</div>
           <h3>Swirl</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>October &middot; Opal</div>
-          <p>Photo moments. Impossible to photograph badly.</p>
+          <div class="pcard__month" data-i18n="swirl_month"><span class="gem" aria-hidden="true"></span>October &middot; Opal</div>
+          <p data-i18n="swirl_p">Photo moments. Impossible to photograph badly.</p>
         </div>
       </article>
 
       <article class="pcard" style="--stone:#E8A13A">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/sprinkles.webp" alt="Sprinkles — the confetti-sprinkle Crasher with topaz eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/sprinkles.webp" alt="Sprinkles — the confetti-sprinkle Crasher with topaz eyes" data-i18n-alt="sprinkles_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 11</div>
           <h3>Sprinkles</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>November &middot; Topaz</div>
-          <p>Cake service. Cocoa-season specialist.</p>
+          <div class="pcard__month" data-i18n="sprinkles_month"><span class="gem" aria-hidden="true"></span>November &middot; Topaz</div>
+          <p data-i18n="sprinkles_p">Cake service. Cocoa-season specialist.</p>
         </div>
       </article>
 
       <article class="pcard" style="--stone:#1FB8C4">
-        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/wave.webp" alt="Wave — the yellow and blue wavy Crasher with turquoise eyes" loading="lazy" /></div></div>
+        <div class="pcard__stage"><div class="pcard__pic"><img src="../assets/characters/wave.webp" alt="Wave — the yellow and blue wavy Crasher with turquoise eyes" data-i18n-alt="wave_alt" loading="lazy" /></div></div>
         <div class="pcard__body">
           <div class="pcard__no">No. 12</div>
           <h3>Wave</h3>
-          <div class="pcard__month"><span class="gem" aria-hidden="true"></span>December &middot; Turquoise</div>
-          <p>Grand finales and send-offs. Closes every year out loud.</p>
+          <div class="pcard__month" data-i18n="wave_month"><span class="gem" aria-hidden="true"></span>December &middot; Turquoise</div>
+          <p data-i18n="wave_p">Grand finales and send-offs. Closes every year out loud.</p>
         </div>
       </article>
     </main>
 
     <section class="band">
       <div>
-        <h2>See them work a room.</h2>
-        <p>Scroll the night they crashed — from the quiet backyard to the send-off. Then put them on your calendar.</p>
+        <h2 data-i18n="band_h2">See them work a room.</h2>
+        <p data-i18n="band_p">Scroll the night they crashed — from the quiet backyard to the send-off. Then put them on your calendar.</p>
       </div>
       <div class="band__actions">
-        <a href="../hire.html">Hire the Crew</a>
-        <a class="alt" href="index.html">Watch the crash</a>
-        <a class="alt" href="../store.html">Visit the party store</a>
+        <a href="../hire.html" data-i18n="band_link_hire">Hire the Crew</a>
+        <a class="alt" href="index.html" data-i18n="band_link_watch">Watch the crash</a>
+        <a class="alt" href="../store.html" data-i18n="band_link_store">Visit the party store</a>
       </div>
     </section>
   </div>
 
-  <footer>&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
-  <script src="../nav.js?v=4"></script>
+  <footer data-i18n="footer">&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
+  <script src="../nav.js?v=5"></script>
   <script src="../music.js?v=17" data-autostart data-start="11"></script>
+  <script>
+  (function () {
+    function gywbtLang() {
+      var m = /[?&]lang=(en|es)/.exec(location.search);
+      if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
+      var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
+      return s === 'es' ? 'es' : 'en';
+    }
+    if (gywbtLang() !== 'es') { document.documentElement.classList.remove('sw-i18n-pending'); return; }
+
+    var ES = {
+      title: "La Tripulación — Glad You Were Born Today",
+      hero_eyebrow: "La tripulación detrás del colado",
+      hero_h1: "Trece profesionales. Un solo trabajo: tu cumpleaños.",
+      hero_p: "<b>Starry</b> fundó la operación — organizó el primerísimo cumpleaños, escribió el himno cuando nadie llegó, y no se ha perdido ni uno desde entonces. Los doce Crashers tienen a su cargo un mes del año cada uno, con ojos de piedra de nacimiento y todo. Sin importar en qué mes naciste, uno de ellos ya tiene tu nombre en la lista.",
+      hero_role: "Starry — Fundador, No. 00. El primero en cada lista de invitados.",
+      hero_art_alt: "Starry — una estrella dorada con gorro de fiesta, sosteniendo globos y un regalo",
+      twelve_h2: "Los Doce, por mes",
+      twelve_note: "Cada Crasher trabaja los cumpleaños de su propio mes. Encuentra el tuyo.",
+      zig_alt: "Zig — el Crasher naranja de zigzag con ojos de granate",
+      zig_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Enero &middot; Granate",
+      zig_p: "Líder de la entrada. Se encarga de las llegadas. Jamás ha confirmado asistencia.",
+      jewel_alt: "Jewel — el Crasher azul de rombos con ojos de amatista",
+      jewel_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Febrero &middot; Amatista",
+      jewel_p: "El corazón de la tripulación. Asignada personalmente a cada invitado tímido.",
+      stripes_alt: "Stripes — el Crasher de rayas de tigre con ojos de aguamarina",
+      stripes_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Marzo &middot; Aguamarina",
+      stripes_p: "Juegos y caos organizado. Resultados de piñata garantizados.",
+      minty_alt: "Minty — el Crasher de rayas de caramelo con ojos de diamante",
+      minty_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Abril &middot; Diamante",
+      minty_p: "Estilismo de mesas y logística de brillo. Nada se queda sin brillar.",
+      checkers_alt: "Checkers — el Crasher naranja a cuadros con ojos de esmeralda",
+      checkers_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Mayo &middot; Esmeralda",
+      checkers_p: "Operaciones de pista de baile. Jamás ha perdido el ritmo.",
+      splat_alt: "Splat — el Crasher verde de salpicaduras de pintura con ojos de perla",
+      splat_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Junio &middot; Perla",
+      splat_p: "Zona de salpicaduras decorativas. Se ve ruidoso, abraza calladito.",
+      dot_alt: "Dot — el Crasher rojo de lunares con ojos de rubí",
+      dot_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Julio &middot; Rubí",
+      dot_p: "Los grandes momentos: velas, cuentas regresivas, tormentas de confeti.",
+      blossom_alt: "Blossom — el Crasher verde lima con flor con ojos de peridoto",
+      blossom_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Agosto &middot; Peridoto",
+      blossom_p: "Mantiene sonriendo a los invitados pequeños — y a las abuelas.",
+      cosmo_alt: "Cosmo — el Crasher azul con patrón de estrellas y ojos de zafiro",
+      cosmo_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Septiembre &middot; Zafiro",
+      cosmo_p: "Fiestas nocturnas e iluminación. Tranquilo bajo la presión del pastel.",
+      swirl_alt: "Swirl — el Crasher de pinceladas arcoíris con ojos de ópalo",
+      swirl_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Octubre &middot; Ópalo",
+      swirl_p: "Momentos fotográficos. Imposible salir mal en una foto.",
+      sprinkles_alt: "Sprinkles — el Crasher de chispas de confeti con ojos de topacio",
+      sprinkles_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Noviembre &middot; Topacio",
+      sprinkles_p: "Servicio de pastel. Especialista en temporada de chocolate caliente.",
+      wave_alt: "Wave — el Crasher ondulado amarillo y azul con ojos de turquesa",
+      wave_month: "<span class=\"gem\" aria-hidden=\"true\"></span>Diciembre &middot; Turquesa",
+      wave_p: "Grandes finales y despedidas. Cierra cada año a todo volumen.",
+      band_h2: "Míralos trabajar un salón.",
+      band_p: "Desliza la noche en que se colaron — desde el patio silencioso hasta la despedida. Luego resérvalos en tu calendario.",
+      band_link_hire: "Contrata a la Tripulación",
+      band_link_watch: "Ver la fiesta colada",
+      band_link_store: "Visita la Tienda de Fiestas",
+      footer: "&copy; 2026 <b>Glad You Were Born Today</b> &middot; De parte de Starry y los Crashers"
+    };
+
+    document.title = ES.title;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      if (!(key in ES)) return;
+      var attr = el.getAttribute('data-i18n-attr');
+      if (attr) el.setAttribute(attr, ES[key]); else el.innerHTML = ES[key];
+    });
+    document.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-alt');
+      if (key in ES) el.setAttribute('alt', ES[key]);
+    });
+    document.documentElement.classList.remove('sw-i18n-pending');
+  })();
+  </script>
 </body>
 </html>

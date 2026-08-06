@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>The Party Store — Glad You Were Born Today</title>
   <meta name="description" content="Party kits, plush, balloon arches, and confetti cannons from Starry &amp; the Crashers — everything they bring through the door, packed up and shipped to yours." />
+  <!-- i18n guard: runs before body parses. Only touches the document when a
+       Spanish visitor is detected (?lang=es or stored gywbt-lang='es'); EN
+       visitors never get this class, so EN rendering/behavior is unchanged. -->
+  <script>
+  (function () {
+    function gywbtLang() {
+      var m = /[?&]lang=(en|es)/.exec(location.search);
+      if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
+      var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
+      return s === 'es' ? 'es' : 'en';
+    }
+    if (gywbtLang() === 'es') document.documentElement.classList.add('sw-i18n-pending');
+  })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
@@ -26,6 +40,10 @@
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); }
+    /* i18n: hides only the elements being swapped (visibility, not display,
+       so nothing reflows) for the instant between paint and the swap script
+       running at the end of body — EN visitors never carry this class. */
+    .sw-i18n-pending [data-i18n] { visibility: hidden; }
 
     .sky {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -200,95 +218,95 @@
   <div class="wrap">
 
     <header class="hero">
-      <span class="hero__eyebrow">The party store</span>
-      <h1>The party, boxed.</h1>
+      <span class="hero__eyebrow" data-i18n="hero_eyebrow">The party store</span>
+      <h1 data-i18n="hero_h1">The party, boxed.</h1>
       <hr class="hero__rule" />
-      <p>Every trick the Crashers pull — the cannons, the arches, the cake tower that stops conversations — packed flat and shipped to your door. You bring the someone worth celebrating.</p>
+      <p data-i18n="hero_p">Every trick the Crashers pull — the cannons, the arches, the cake tower that stops conversations — packed flat and shipped to your door. You bring the someone worth celebrating.</p>
     </header>
 
-    <div class="sect"><h2>The party, boxed</h2></div>
-    <p class="sect__note">The supplies. Everything a glow-up needs.</p>
+    <div class="sect"><h2 data-i18n="sect1_h2">The party, boxed</h2></div>
+    <p class="sect__note" data-i18n="sect1_note">The supplies. Everything a glow-up needs.</p>
 
     <main class="grid">
       <article class="card" style="--acc:#E84A9B">
-        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/crash-p.webp" alt="The Crashers bursting into a party on streamer trails" loading="lazy" /></div>
+        <div class="card__imgbox"><span class="ribbon" data-i18n="soon1">Coming soon</span><img src="assets/crash-p.webp" alt="The Crashers bursting into a party on streamer trails" data-i18n-alt="p1_alt" loading="lazy" /></div>
         <div class="card__body">
-          <h2>Party Crash Kit</h2>
-          <p>The full crash: confetti cannons, streamer trails, and a door-kicking playlist.</p>
-          <div class="card__row"><span class="price">$49</span><span class="tag">Crowd favorite</span></div>
+          <h2 data-i18n="p1_h2">Party Crash Kit</h2>
+          <p data-i18n="p1_p">The full crash: confetti cannons, streamer trails, and a door-kicking playlist.</p>
+          <div class="card__row"><span class="price">$49</span><span class="tag" data-i18n="p1_tag">Crowd favorite</span></div>
         </div>
       </article>
 
       <article class="card" style="--acc:#FFC93C">
-        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/finale-p.webp" alt="Starry taking a bow at the send-off" loading="lazy" /></div>
+        <div class="card__imgbox"><span class="ribbon" data-i18n="soon2">Coming soon</span><img src="assets/finale-p.webp" alt="Starry taking a bow at the send-off" data-i18n-alt="p2_alt" loading="lazy" /></div>
         <div class="card__body">
-          <h2>Starry Plush</h2>
-          <p>The star of the show, hug-sized. Glows softly after lights-out.</p>
-          <div class="card__row"><span class="price">$29</span><span class="tag">Hug-sized</span></div>
+          <h2 data-i18n="p2_h2">Starry Plush</h2>
+          <p data-i18n="p2_p">The star of the show, hug-sized. Glows softly after lights-out.</p>
+          <div class="card__row"><span class="price">$29</span><span class="tag" data-i18n="p2_tag">Hug-sized</span></div>
         </div>
       </article>
 
       <article class="card" style="--acc:#8B5CF6">
-        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/glowup-p.webp" alt="The rebuilt party with balloon arches and a cake tower" loading="lazy" /></div>
+        <div class="card__imgbox"><span class="ribbon" data-i18n="soon3">Coming soon</span><img src="assets/glowup-p.webp" alt="The rebuilt party with balloon arches and a cake tower" data-i18n-alt="p3_alt" loading="lazy" /></div>
         <div class="card__body">
-          <h2>Balloon Arch Kit</h2>
-          <p>Sixty balloons, one arch, zero sad corners.</p>
-          <div class="card__row"><span class="price">$39</span><span class="tag">Room-sized</span></div>
+          <h2 data-i18n="p3_h2">Balloon Arch Kit</h2>
+          <p data-i18n="p3_p">Sixty balloons, one arch, zero sad corners.</p>
+          <div class="card__row"><span class="price">$39</span><span class="tag" data-i18n="p3_tag">Room-sized</span></div>
         </div>
       </article>
 
       <article class="card" style="--acc:#E84A9B">
-        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/crash.webp" alt="Confetti storm filling the room" loading="lazy" /></div>
+        <div class="card__imgbox"><span class="ribbon" data-i18n="soon4">Coming soon</span><img src="assets/crash.webp" alt="Confetti storm filling the room" data-i18n-alt="p4_alt" loading="lazy" /></div>
         <div class="card__body">
-          <h2>Confetti Cannons — 2-pack</h2>
-          <p>Safe for indoors. Unsafe for boring.</p>
-          <div class="card__row"><span class="price">$19</span><span class="tag">2-pack</span></div>
+          <h2 data-i18n="p4_h2">Confetti Cannons — 2-pack</h2>
+          <p data-i18n="p4_p">Safe for indoors. Unsafe for boring.</p>
+          <div class="card__row"><span class="price">$19</span><span class="tag" data-i18n="p4_tag">2-pack</span></div>
         </div>
       </article>
 
       <article class="card" style="--acc:#8B5CF6">
-        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/glowup.webp" alt="Cake tower centerpiece at the glow-up" loading="lazy" /></div>
+        <div class="card__imgbox"><span class="ribbon" data-i18n="soon5">Coming soon</span><img src="assets/glowup.webp" alt="Cake tower centerpiece at the glow-up" data-i18n-alt="p5_alt" loading="lazy" /></div>
         <div class="card__body">
-          <h2>Cake Tower Topper Set</h2>
-          <p>Turns a store-bought cake into the centerpiece.</p>
-          <div class="card__row"><span class="price">$15</span><span class="tag">Oven-free</span></div>
+          <h2 data-i18n="p5_h2">Cake Tower Topper Set</h2>
+          <p data-i18n="p5_p">Turns a store-bought cake into the centerpiece.</p>
+          <div class="card__row"><span class="price">$15</span><span class="tag" data-i18n="p5_tag">Oven-free</span></div>
         </div>
       </article>
 
       <article class="card" style="--acc:#FFC93C">
-        <div class="card__imgbox"><span class="ribbon">Coming soon</span><img src="assets/crashpad-p.webp" alt="The Crash Pad radar spotting a boring party" loading="lazy" /></div>
+        <div class="card__imgbox"><span class="ribbon" data-i18n="soon6">Coming soon</span><img src="assets/crashpad-p.webp" alt="The Crash Pad radar spotting a boring party" data-i18n-alt="p6_alt" loading="lazy" /></div>
         <div class="card__body">
-          <h2>Digital Invitations</h2>
-          <p>Send the signal. The radar does the rest.</p>
-          <div class="card__row"><span class="price">Free</span><span class="tag">Printable too</span></div>
+          <h2 data-i18n="p6_h2">Digital Invitations</h2>
+          <p data-i18n="p6_p">Send the signal. The radar does the rest.</p>
+          <div class="card__row"><span class="price" data-i18n="p6_price">Free</span><span class="tag" data-i18n="p6_tag">Printable too</span></div>
         </div>
       </article>
     </main>
 
-    <div class="sect"><h2>The Crash Kit</h2></div>
-    <p class="sect__note">Wearables, keepsakes, and the song itself — for the friend who shows up uninvited.</p>
+    <div class="sect"><h2 data-i18n="sect2_h2">The Crash Kit</h2></div>
+    <p class="sect__note" data-i18n="sect2_note">Wearables, keepsakes, and the song itself — for the friend who shows up uninvited.</p>
 
     <section class="grid">
       <article class="card" style="--acc:#E84A9B">
-        <div class="plate"><span class="ribbon">Coming soon</span><div class="medal" aria-hidden="true">🎁</div></div>
+        <div class="plate"><span class="ribbon" data-i18n="soon7">Coming soon</span><div class="medal" aria-hidden="true">🎁</div></div>
         <div class="card__body">
-          <h2>The Crasher Kit</h2>
-          <p>A small kit for the friend who shows up uninvited. Candle, cards, stickers — boxed.</p>
-          <div class="card__row"><span class="price">$35</span><span class="tag">Gift-ready</span></div>
+          <h2 data-i18n="p7_h2">The Crasher Kit</h2>
+          <p data-i18n="p7_p">A small kit for the friend who shows up uninvited. Candle, cards, stickers — boxed.</p>
+          <div class="card__row"><span class="price">$35</span><span class="tag" data-i18n="p7_tag">Gift-ready</span></div>
         </div>
       </article>
 
       <article class="card" style="--acc:#FFC93C">
-        <div class="plate"><span class="ribbon">Coming soon</span><div class="medal" aria-hidden="true">🕯️</div></div>
+        <div class="plate"><span class="ribbon" data-i18n="soon8">Coming soon</span><div class="medal" aria-hidden="true">🕯️</div></div>
         <div class="card__body">
-          <h2>Birthday Candle</h2>
-          <p>Light it, make the wish, crash the quiet.</p>
-          <div class="card__row"><span class="price">$12</span><span class="tag">Slow burn</span></div>
+          <h2 data-i18n="p8_h2">Birthday Candle</h2>
+          <p data-i18n="p8_p">Light it, make the wish, crash the quiet.</p>
+          <div class="card__row"><span class="price">$12</span><span class="tag" data-i18n="p8_tag">Slow burn</span></div>
         </div>
       </article>
 
       <article class="card" style="--acc:#8B5CF6">
-        <div class="plate plate--ring"><span class="ribbon">Coming soon</span>
+        <div class="plate plate--ring"><span class="ribbon" data-i18n="soon9">Coming soon</span>
           <div class="ring" aria-hidden="true">
             <i style="--a:0deg;   --st:#9B2242"></i><i style="--a:30deg;  --st:#7B5EA7"></i>
             <i style="--a:60deg;  --st:#3AC5C9"></i><i style="--a:90deg;  --st:#A7D8E8"></i>
@@ -300,75 +318,171 @@
           <div class="medal" aria-hidden="true">✉️</div>
         </div>
         <div class="card__body">
-          <h2>Card Pack — The Twelve</h2>
-          <p>One card for every month, one Crasher on each. Send one early.</p>
-          <div class="card__row"><span class="price">$18</span><span class="tag">12 cards</span></div>
+          <h2 data-i18n="p9_h2">Card Pack — The Twelve</h2>
+          <p data-i18n="p9_p">One card for every month, one Crasher on each. Send one early.</p>
+          <div class="card__row"><span class="price">$18</span><span class="tag" data-i18n="p9_tag">12 cards</span></div>
         </div>
       </article>
 
       <article class="card" style="--acc:#2C3F9E">
-        <div class="plate"><span class="ribbon">Coming soon</span><div class="medal" aria-hidden="true">💿</div></div>
+        <div class="plate"><span class="ribbon" data-i18n="soon10">Coming soon</span><div class="medal" aria-hidden="true">💿</div></div>
         <div class="card__body">
-          <h2>The Song on Vinyl</h2>
-          <p>Three minutes, pressed to wax.</p>
+          <h2 data-i18n="p10_h2">The Song on Vinyl</h2>
+          <p data-i18n="p10_p">Three minutes, pressed to wax.</p>
           <div class="card__row"><span class="price">$24</span><span class="tag">45 RPM</span></div>
         </div>
       </article>
 
       <article class="card" style="--acc:#E8801C">
-        <div class="plate"><span class="ribbon">Coming soon</span><div class="medal" aria-hidden="true">👕</div></div>
+        <div class="plate"><span class="ribbon" data-i18n="soon11">Coming soon</span><div class="medal" aria-hidden="true">👕</div></div>
         <div class="card__body">
-          <h2>Crashers Tee</h2>
-          <p>Wear the anthem. Crash in style.</p>
-          <div class="card__row"><span class="price">$25</span><span class="tag">Kids + grown-up sizes</span></div>
+          <h2 data-i18n="p11_h2">Crashers Tee</h2>
+          <p data-i18n="p11_p">Wear the anthem. Crash in style.</p>
+          <div class="card__row"><span class="price">$25</span><span class="tag" data-i18n="p11_tag">Kids + grown-up sizes</span></div>
         </div>
       </article>
 
       <article class="card" style="--acc:#62C4B8">
-        <div class="plate"><span class="ribbon">Coming soon</span><div class="medal" aria-hidden="true">⭐</div></div>
+        <div class="plate"><span class="ribbon" data-i18n="soon12">Coming soon</span><div class="medal" aria-hidden="true">⭐</div></div>
         <div class="card__body">
-          <h2>Sticker Sheet</h2>
-          <p>All twelve Crashers, plus Starry. Stick one on everything.</p>
-          <div class="card__row"><span class="price">$8</span><span class="tag">Sheet of 20</span></div>
+          <h2 data-i18n="p12_h2">Sticker Sheet</h2>
+          <p data-i18n="p12_p">All twelve Crashers, plus Starry. Stick one on everything.</p>
+          <div class="card__row"><span class="price">$8</span><span class="tag" data-i18n="p12_tag">Sheet of 20</span></div>
         </div>
       </article>
     </section>
 
     <section class="music">
-      <div class="music__eyebrow">The music store</div>
-      <h2>Press play.</h2>
-      <p>The 130-year-old birthday song had its turn. Hear the anthem once, then send it to someone who needs a better birthday song.</p>
+      <div class="music__eyebrow" data-i18n="music_eyebrow">The music store</div>
+      <h2 data-i18n="music_h2">Press play.</h2>
+      <p data-i18n="music_p">The 130-year-old birthday song had its turn. Hear the anthem once, then send it to someone who needs a better birthday song.</p>
       <div class="pills" role="list">
-        <span role="listitem" title="Link coming soon">Spotify<small>soon</small></span>
-        <span role="listitem" title="Link coming soon">Apple Music<small>soon</small></span>
-        <span role="listitem" title="Link coming soon">YouTube<small>soon</small></span>
+        <span role="listitem" title="Link coming soon" data-i18n="pill1_title" data-i18n-attr="title">Spotify<small data-i18n="pill_soon1">soon</small></span>
+        <span role="listitem" title="Link coming soon" data-i18n="pill2_title" data-i18n-attr="title">Apple Music<small data-i18n="pill_soon2">soon</small></span>
+        <span role="listitem" title="Link coming soon" data-i18n="pill3_title" data-i18n-attr="title">YouTube<small data-i18n="pill_soon3">soon</small></span>
       </div>
     </section>
 
     <section class="band band--mission" id="mission">
       <div>
-        <span class="mission__eyebrow">The mission</span>
-        <h2>No birthday alone. Ever.</h2>
-        <p>The song is a promise — and we keep it with Compassion International. About $43 a month sponsors a child: school, meals, and a letter tied to their birthday. Crash one for someone who's never had a party.</p>
+        <span class="mission__eyebrow" data-i18n="mission_eyebrow">The mission</span>
+        <h2 data-i18n="mission_h2">No birthday alone. Ever.</h2>
+        <p data-i18n="mission_p">The song is a promise — and we keep it with Compassion International. About $43 a month sponsors a child: school, meals, and a letter tied to their birthday. Crash one for someone who's never had a party.</p>
       </div>
-      <a href="https://www.compassion.com/" target="_blank" rel="noopener noreferrer">Sponsor a birthday &rarr;</a>
+      <a href="https://www.compassion.com/" target="_blank" rel="noopener noreferrer" data-i18n="mission_cta">Sponsor a birthday &rarr;</a>
     </section>
 
     <section class="band">
       <div>
-        <h2>The registers open soon.</h2>
-        <p>We're packing the first boxes now. Watch the crash again while you wait — or go meet the crew behind it.</p>
+        <h2 data-i18n="close_h2">The registers open soon.</h2>
+        <p data-i18n="close_p">We're packing the first boxes now. Watch the crash again while you wait — or go meet the crew behind it.</p>
       </div>
       <div style="display:flex; gap:12px; flex-wrap:wrap;">
-        <a href="adult/">Watch the crash</a>
-        <a href="adult/crew.html">Meet the crew</a>
+        <a href="adult/" data-i18n="close_link1">Watch the crash</a>
+        <a href="adult/crew.html" data-i18n="close_link2">Meet the crew</a>
       </div>
     </section>
   </div>
 
-  <footer>&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
+  <footer data-i18n="footer">&copy; 2026 <b>Glad You Were Born Today</b> &middot; From Starry &amp; the Crashers</footer>
 
   <script src="music.js?v=17" data-start="11"></script>
-  <script src="nav.js?v=4"></script>
+  <script src="nav.js?v=5"></script>
+  <script>
+  (function () {
+    function gywbtLang() {
+      var m = /[?&]lang=(en|es)/.exec(location.search);
+      if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
+      var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
+      return s === 'es' ? 'es' : 'en';
+    }
+    if (gywbtLang() !== 'es') { document.documentElement.classList.remove('sw-i18n-pending'); return; }
+
+    var ES = {
+      title: "La Tienda de Fiestas — Glad You Were Born Today",
+      hero_eyebrow: "La tienda de fiestas",
+      hero_h1: "La fiesta, en una caja.",
+      hero_p: "Cada truco que hacen los Crashers — los cañones, los arcos, la torre de pastel que detiene conversaciones — empacado y enviado hasta tu puerta. Tú pones a la persona que vale la pena celebrar.",
+      sect1_h2: "La fiesta, en una caja",
+      sect1_note: "Los suministros. Todo lo que necesita una transformación.",
+      soon1: "Muy pronto", soon2: "Muy pronto", soon3: "Muy pronto", soon4: "Muy pronto",
+      soon5: "Muy pronto", soon6: "Muy pronto", soon7: "Muy pronto", soon8: "Muy pronto",
+      soon9: "Muy pronto", soon10: "Muy pronto", soon11: "Muy pronto", soon12: "Muy pronto",
+      p1_alt: "Los Crashers irrumpiendo en una fiesta sobre estelas de serpentinas",
+      p1_h2: "Kit de Fiesta Colada",
+      p1_p: "El colado completo: cañones de confeti, estelas de serpentinas, y una playlist que tumba la puerta.",
+      p1_tag: "Favorito del público",
+      p2_alt: "Starry haciendo una reverencia en la despedida",
+      p2_h2: "Peluche de Starry",
+      p2_p: "La estrella del espectáculo, en tamaño abrazable. Brilla suavemente cuando se apagan las luces.",
+      p2_tag: "Tamaño abrazable",
+      p3_alt: "La fiesta transformada con arcos de globos y una torre de pastel",
+      p3_h2: "Kit de Arco de Globos",
+      p3_p: "Sesenta globos, un arco, cero rincones tristes.",
+      p3_tag: "Tamaño de salón",
+      p4_alt: "Tormenta de confeti llenando el salón",
+      p4_h2: "Cañones de Confeti — paquete de 2",
+      p4_p: "Seguros para interiores. Inseguros para el aburrimiento.",
+      p4_tag: "Paquete de 2",
+      p5_alt: "Torre de pastel como pieza central de la transformación",
+      p5_h2: "Set de Adornos para Torre de Pastel",
+      p5_p: "Convierte un pastel comprado en la pieza central.",
+      p5_tag: "Sin horno",
+      p6_alt: "El radar del Crash Pad detectando una fiesta aburrida",
+      p6_h2: "Invitaciones Digitales",
+      p6_p: "Envía la señal. El radar hace el resto.",
+      p6_price: "Gratis",
+      p6_tag: "También imprimible",
+      sect2_h2: "El Kit del Colado",
+      sect2_note: "Ropa, recuerdos, y la canción misma — para el amigo que llega sin invitación.",
+      p7_h2: "El Kit del Crasher",
+      p7_p: "Un pequeño kit para el amigo que llega sin invitación. Vela, tarjetas, stickers — todo en una caja.",
+      p7_tag: "Listo para regalar",
+      p8_h2: "Vela de Cumpleaños",
+      p8_p: "Enciéndela, pide el deseo, cuélate en el silencio.",
+      p8_tag: "Combustión lenta",
+      p9_h2: "Paquete de Tarjetas — Los Doce",
+      p9_p: "Una tarjeta para cada mes, un Crasher en cada una. Envía una con anticipación.",
+      p9_tag: "12 tarjetas",
+      p10_h2: "La Canción en Vinilo",
+      p10_p: "Tres minutos, prensados en vinilo.",
+      p11_h2: "Camiseta de los Crashers",
+      p11_p: "Lleva puesto el himno. Cuélate con estilo.",
+      p11_tag: "Tallas para niños y adultos",
+      p12_h2: "Hoja de Stickers",
+      p12_p: "Los doce Crashers, más Starry. Pega uno en todo.",
+      p12_tag: "Hoja de 20",
+      music_eyebrow: "La tienda de música",
+      music_h2: "Presiona play.",
+      music_p: "La canción de cumpleaños de 130 años ya tuvo su oportunidad. Escucha el himno una vez, y luego envíaselo a alguien que necesite una mejor canción de cumpleaños.",
+      pill1_title: "Enlace disponible pronto",
+      pill2_title: "Enlace disponible pronto",
+      pill3_title: "Enlace disponible pronto",
+      pill_soon1: "pronto", pill_soon2: "pronto", pill_soon3: "pronto",
+      mission_eyebrow: "La misión",
+      mission_h2: "Ningún cumpleaños solo. Jamás.",
+      mission_p: "La canción es una promesa — y la cumplimos junto con Compassion International. Cerca de $43 al mes patrocina a un niño: escuela, comida, y una carta ligada a su cumpleaños. Cuélate en uno para alguien que nunca ha tenido una fiesta.",
+      mission_cta: "Patrocina un cumpleaños &rarr;",
+      close_h2: "Las cajas registradoras abren pronto.",
+      close_p: "Estamos empacando las primeras cajas ahora. Vuelve a ver la fiesta colada mientras esperas — o ve a conocer a la tripulación detrás de todo.",
+      close_link1: "Ver la fiesta colada",
+      close_link2: "Conoce a la Tripulación",
+      footer: "&copy; 2026 <b>Glad You Were Born Today</b> &middot; De parte de Starry y los Crashers"
+    };
+
+    document.title = ES.title;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      if (!(key in ES)) return;
+      var attr = el.getAttribute('data-i18n-attr');
+      if (attr) el.setAttribute(attr, ES[key]); else el.innerHTML = ES[key];
+    });
+    document.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-alt');
+      if (key in ES) el.setAttribute('alt', ES[key]);
+    });
+    document.documentElement.classList.remove('sw-i18n-pending');
+  })();
+  </script>
 </body>
 </html>
