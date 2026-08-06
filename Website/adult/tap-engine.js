@@ -142,7 +142,7 @@ function mountTapWorld(container, config) {
   stage.appendChild(still);
 
   var tap = el("button", "tw-tap");
-  tap.setAttribute("aria-label", "Next scene");
+  tap.setAttribute("aria-label", config.nextLabel || "Next scene");
   stage.appendChild(tap);
 
   var card = el("div", "tw-card");

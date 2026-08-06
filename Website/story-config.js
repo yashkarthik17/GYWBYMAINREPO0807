@@ -2,12 +2,104 @@
    standalone page) AND by index.html, which mounts the story in-page when the
    kids letter button is tapped — same page means the envelope tap's audio
    unlock carries into the story, so the music never drops.
-   Asset paths are root-relative so the config works from any page. */
-function GYWBT_KIDS_CONFIG() {
+   Asset paths are root-relative so the config works from any page.
+
+   i18n: every user-facing string forks EN/ES via GYWBT_KIDS_STRINGS below;
+   asset paths, rates, and ids stay single-sourced — only strings fork.
+   GYWBT_KIDS_CONFIG(lang) takes an optional explicit lang ('en'|'es'); the
+   envelope's in-page launch passes the letter toggle's current choice. With
+   no argument, it falls back to gywbtLang() — the stored localStorage pick,
+   or a ?lang= URL override — for the standalone story.html mount. */
+function gywbtLang() {
+  var m = /[?&]lang=(en|es)/.exec(location.search);
+  if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
+  var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
+  return s === 'es' ? 'es' : 'en';
+}
+
+var GYWBT_KIDS_STRINGS = {
+  en: {
+    chrome: { startLabel: 'Tap to play the story', skipLabel: 'Skip to end »', nextLabel: 'Next scene' },
+    beige: {
+      eyebrow: 'Right now, somewhere',
+      title: 'A birthday nobody noticed.',
+      body: 'The candles are lit. The cake is ready. And the room is quiet as a Tuesday.',
+      tags: ['Droopy balloons', 'Polite clapping'],
+    },
+    crashpad: {
+      eyebrow: 'But way up in the clouds',
+      title: 'Somebody noticed.',
+      body: 'The party radar goes off in the Crash Pad, and Starry gives the only order there is: LET’S GO.',
+      tags: ['Party radar', 'Confetti cannons'],
+    },
+    crash: {
+      eyebrow: '3… 2… 1…',
+      title: 'This party is officially crashed.',
+      body: 'Doors fly open. Color pours in. The quiet doesn’t stand a chance.',
+      tags: ['Confetti storm', 'Streamer trails'],
+    },
+    glowup: {
+      eyebrow: 'Minutes later',
+      title: 'Now THAT’S a birthday.',
+      body: 'Cake tower. Balloon arches. And right in the middle, one kid who can’t stop grinning.',
+      tags: ['Cake tower', 'Balloon arch', 'Dance floor'],
+    },
+    finale: {
+      eyebrow: 'From Starry & the Crashers',
+      title: 'Glad you were born today.',
+      body: 'Not the cake. Not the presents. You. That’s the whole party.',
+      exploreLabel: 'Explore the world',
+      crashers: 'Meet the Crashers',
+      again: 'Play it again',
+    },
+  },
+  es: {
+    chrome: { startLabel: 'Toca para reproducir la historia', skipLabel: 'Saltar al final »', nextLabel: 'Siguiente escena' },
+    beige: {
+      eyebrow: 'Ahora mismo, en algún lugar',
+      title: 'Un cumpleaños que nadie notó.',
+      body: 'Las velas están encendidas. El pastel está listo. Y el salón está tan callado como un martes cualquiera.',
+      tags: ['Globos desinflados', 'Aplausos de cortesía'],
+    },
+    crashpad: {
+      eyebrow: 'Pero allá arriba, en las nubes',
+      title: 'Alguien sí lo notó.',
+      body: 'El radar de fiestas se activa en el Crash Pad, y Starry da la única orden que existe: ¡VAMOS!',
+      tags: ['Radar de fiestas', 'Cañones de confeti'],
+    },
+    crash: {
+      eyebrow: '3… 2… 1…',
+      title: 'Esta fiesta acaba de ser invadida. ¡Oficialmente!',
+      body: 'Las puertas se abren de golpe. El color se desborda. El silencio no tiene ninguna oportunidad.',
+      tags: ['Tormenta de confeti', 'Estelas de serpentinas'],
+    },
+    glowup: {
+      eyebrow: 'Minutos después',
+      title: 'Eso sí es un cumpleaños.',
+      body: 'Torre de pasteles. Arcos de globos. Y justo en el centro, un niño que no puede dejar de sonreír.',
+      tags: ['Torre de pastel', 'Arco de globos', 'Pista de baile'],
+    },
+    finale: {
+      eyebrow: 'De parte de Starry y los Crashers',
+      title: 'Qué bueno que naciste.',
+      body: 'No es el pastel. No son los regalos. Eres tú. Esa es toda la fiesta.',
+      exploreLabel: 'Explora el mundo',
+      crashers: 'Conoce a los Crashers',
+      again: 'Verlo de nuevo',
+    },
+  },
+};
+
+function GYWBT_KIDS_CONFIG(lang) {
+  lang = (lang === 'es' || lang === 'en') ? lang : gywbtLang();
+  var T = GYWBT_KIDS_STRINGS[lang];
   var phone = /[?&]swphone/.test(location.search) || Math.min(screen.width, screen.height) <= 600;
   function still(name) { return phone ? '/assets/' + name + '-p.webp?v=3' : '/assets/' + name + '.webp?v=4'; }
   return {
     playbackRate: 1.15,
+    startLabel: T.chrome.startLabel,
+    skipLabel: T.chrome.skipLabel,
+    nextLabel: T.chrome.nextLabel,
     sections: [
       {
         id: 'beige', label: 'The Beige Party',
@@ -17,10 +109,10 @@ function GYWBT_KIDS_CONFIG() {
         clipMobile: '/assets/vid/beige-m.mp4?v=3',
         posterMobile: '/assets/beige-poster-m.webp?v=3',
         accent: '#8B95A6',
-        eyebrow: 'Right now, somewhere',
-        title: 'A birthday nobody noticed.',
-        body: 'The candles are lit. The cake is ready. And the room is quiet as a Tuesday.',
-        tags: ['Droopy balloons', 'Polite clapping'],
+        eyebrow: T.beige.eyebrow,
+        title: T.beige.title,
+        body: T.beige.body,
+        tags: T.beige.tags,
       },
       {
         id: 'crashpad', label: 'The Crash Pad',
@@ -31,10 +123,10 @@ function GYWBT_KIDS_CONFIG() {
         posterMobile: '/assets/crashpad-poster-m.webp?v=3',
         rate: 1.10,
         accent: '#FFC93C',
-        eyebrow: 'But way up in the clouds',
-        title: 'Somebody noticed.',
-        body: 'The party radar goes off in the Crash Pad, and Starry gives the only order there is: LET’S GO.',
-        tags: ['Party radar', 'Confetti cannons'],
+        eyebrow: T.crashpad.eyebrow,
+        title: T.crashpad.title,
+        body: T.crashpad.body,
+        tags: T.crashpad.tags,
       },
       {
         id: 'crash', label: 'The Crash',
@@ -45,10 +137,10 @@ function GYWBT_KIDS_CONFIG() {
         posterMobile: '/assets/crash-poster-m.webp?v=3',
         rate: 1.10,
         accent: '#E84A9B',
-        eyebrow: '3… 2… 1…',
-        title: 'This party is officially crashed.',
-        body: 'Doors fly open. Color pours in. The quiet doesn’t stand a chance.',
-        tags: ['Confetti storm', 'Streamer trails'],
+        eyebrow: T.crash.eyebrow,
+        title: T.crash.title,
+        body: T.crash.body,
+        tags: T.crash.tags,
       },
       {
         id: 'glowup', label: 'The Glow-Up',
@@ -59,10 +151,10 @@ function GYWBT_KIDS_CONFIG() {
         posterMobile: '/assets/glowup-poster-m.webp?v=3',
         rate: 1.15,
         accent: '#8B5CF6',
-        eyebrow: 'Minutes later',
-        title: 'Now THAT’S a birthday.',
-        body: 'Cake tower. Balloon arches. And right in the middle, one kid who can’t stop grinning.',
-        tags: ['Cake tower', 'Balloon arch', 'Dance floor'],
+        eyebrow: T.glowup.eyebrow,
+        title: T.glowup.title,
+        body: T.glowup.body,
+        tags: T.glowup.tags,
       },
       {
         id: 'finale', label: 'Starry’s Send-Off',
@@ -73,13 +165,13 @@ function GYWBT_KIDS_CONFIG() {
         posterMobile: '/assets/finale-poster-m.webp?v=3',
         rate: 1.15,
         accent: '#FFC93C',
-        eyebrow: 'From Starry & the Crashers',
-        title: 'Glad you were born today.',
-        body: 'Not the cake. Not the presents. You. That’s the whole party.',
+        eyebrow: T.finale.eyebrow,
+        title: T.finale.title,
+        body: T.finale.body,
         tags: [],
-        explore: { label: 'Explore the world', links: [
-          { label: 'Meet the Crashers', href: '/crashers.html' },
-          { label: 'Play it again', href: '#top' },
+        explore: { label: T.finale.exploreLabel, links: [
+          { label: T.finale.crashers, href: '/crashers.html' },
+          { label: T.finale.again, href: '#top' },
         ] },
       },
     ],

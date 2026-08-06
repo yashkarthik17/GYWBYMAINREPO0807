@@ -28,6 +28,20 @@
     var audio = new Audio(SRC);
     audio.preload = 'none';
 
+    // i18n: aria-label text only, read once at build time from the same
+    // ?lang= URL / localStorage['gywbt-lang'] the letter toggle writes.
+    // Static, not live — this button can exist before the toggle's own
+    // script runs, and re-wiring it to react to a later toggle click isn't
+    // "trivial," so it's out of scope here (see task-spanish-report.md).
+    var mLang = 'en';
+    try {
+      var qm = /[?&]lang=(en|es)/.exec(location.search);
+      mLang = qm ? qm[1] : (localStorage.getItem('gywbt-lang') === 'es' ? 'es' : 'en');
+    } catch (e) {}
+    var M = mLang === 'es'
+      ? { play: 'Reproducir la canción', pause: 'Pausar la canción' }
+      : { play: 'Play the theme song', pause: 'Pause the theme song' };
+
     // Seek past the intro. With an offset we can't use native looping (it always
     // rewinds to 0), so loop by hand on 'ended'. preload='none' means metadata
     // isn't ready until the first play() kicks off a load, so seek at every
@@ -54,7 +68,7 @@
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.id = 'sw-music';
-    btn.setAttribute('aria-label', 'Play the theme song');
+    btn.setAttribute('aria-label', M.play);
     btn.setAttribute('aria-pressed', 'false');
     btn.textContent = '♪';
 
@@ -76,7 +90,7 @@
     function setUi(on) {
       btn.classList.toggle('is-on', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      btn.setAttribute('aria-label', on ? 'Pause the theme song' : 'Play the theme song');
+      btn.setAttribute('aria-label', on ? M.pause : M.play);
     }
 
     function set(on) {

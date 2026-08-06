@@ -90,7 +90,8 @@
   /* while the envelope is sealed, the invisible choices must swallow NOTHING —
      visibility (not just opacity) also stops clicks landing through the paper */
   .sheet-actions[aria-hidden="true"]{visibility:hidden;}
-  .sheet-actions[aria-hidden="true"] .sheet-btn{pointer-events:none;}
+  .sheet-actions[aria-hidden="true"] .sheet-btn,
+  .sheet-actions[aria-hidden="true"] .sheet-lang{pointer-events:none;}
   .sheet-btn{
     pointer-events:auto;cursor:pointer;text-decoration:none;text-align:center;
     background:linear-gradient(180deg,#FFFDF6,#F8F0DA);
@@ -107,6 +108,20 @@
   .sheet-btn:hover{box-shadow:0 7px 18px rgba(80,54,10,.24);}
   .sheet-btn.grown{color:#8E2233;}
   .sheet-btn.kids{color:#2E4396;}
+
+  /* small, unobtrusive language switch below the two choices — shows the
+     OTHER language as the clickable option (Español while reading English,
+     English while reading Spanish) */
+  .sheet-lang{
+    pointer-events:auto;cursor:pointer;text-decoration:none;
+    background:transparent;border:0;color:#8E2233;opacity:.68;
+    font-family:var(--font-display);font-size:11px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;
+    padding:6px 10px;margin-top:-2px;
+    transition:opacity .16s ease;
+  }
+  .sheet-lang:hover{opacity:1;}
+  .sheet-lang:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
 
   .loading{
     position:fixed;inset:0;z-index:7;display:flex;align-items:center;justify-content:center;
@@ -168,15 +183,16 @@
   <div class="sheet-actions" id="sheet" aria-hidden="true">
     <a class="sheet-btn grown" href="adult/">Glad You Were Born Today</a>
     <a class="sheet-btn kids" href="story.html">Glad You Were Born Today (Kids)</a>
+    <button type="button" class="sheet-lang" id="langToggle">Español</button>
   </div>
 
   <canvas id="confetti"></canvas>
   <div class="loading" id="loading">Folding the paper…</div>
 
-  <script src="music.js?v=15" data-once data-src="assets/audio/envelope.wav?v=1"></script>
-  <script src="tap-engine.js?v=8"></script>
-  <script src="story-config.js?v=1"></script>
-  <script src="adult-config.js?v=1"></script>
+  <script src="music.js?v=16" data-once data-src="assets/audio/envelope.wav?v=1"></script>
+  <script src="tap-engine.js?v=9"></script>
+  <script src="story-config.js?v=2"></script>
+  <script src="adult-config.js?v=2"></script>
   <script>
   (function () {
     "use strict";
@@ -203,6 +219,39 @@
     const stage = document.querySelector(".stage");
 
     v.poster = CFG.poster; v.src = CFG.src;
+
+    // ---- Letter language toggle: EN default, ES optional (localStorage
+    // 'gywbt-lang', or a ?lang=es|en URL override that wins and re-stores).
+    // Toggling re-renders the two choice labels + the toggle itself
+    // immediately (no reload) and the chosen lang travels into the in-page
+    // kids/adult launches below, so the mounted journey matches the letter.
+    function gywbtLang() {
+      const m = /[?&]lang=(en|es)/.exec(location.search);
+      if (m) { try { localStorage.setItem("gywbt-lang", m[1]); } catch (e) {} return m[1]; }
+      let s = null; try { s = localStorage.getItem("gywbt-lang"); } catch (e) {}
+      return s === "es" ? "es" : "en";
+    }
+    const LETTER_TXT = {
+      en: { grown: "Glad You Were Born Today", kids: "Glad You Were Born Today (Kids)", toggle: "Español", toggleAria: "Switch to Spanish" },
+      es: { grown: "Glad You Were Born Today", kids: "Glad You Were Born Today (Para Niños)", toggle: "English", toggleAria: "Cambiar a inglés" },
+    };
+    let lang = gywbtLang();
+    const grownLink = document.querySelector(".sheet-btn.grown");
+    const kidsLink = document.querySelector(".sheet-btn.kids");
+    const langBtn = document.getElementById("langToggle");
+    function renderLetter() {
+      const T = LETTER_TXT[lang];
+      grownLink.textContent = T.grown;
+      kidsLink.textContent = T.kids;
+      langBtn.textContent = T.toggle;
+      langBtn.setAttribute("aria-label", T.toggleAria);
+    }
+    renderLetter();
+    langBtn.addEventListener("click", function () {
+      lang = lang === "es" ? "en" : "es";
+      try { localStorage.setItem("gywbt-lang", lang); } catch (e) {}
+      renderLetter();
+    });
 
     // ---- State machine ----
     let state = "loading";
@@ -374,7 +423,7 @@
       var world = document.createElement("div");
       world.id = "world";
       document.body.appendChild(world);
-      mountTapWorld(world, GYWBT_KIDS_CONFIG());
+      mountTapWorld(world, GYWBT_KIDS_CONFIG(lang));
     });
 
     // ---- In-page adult journey: same trick as the kids story above — launch
@@ -402,8 +451,8 @@
       world.id = "world";
       document.body.appendChild(world);
       var engine = document.createElement("script");
-      engine.src = "adult/tap-engine.js?v=10";
-      engine.onload = function () { mountTapWorld(world, GYWBT_ADULT_CONFIG()); };
+      engine.src = "adult/tap-engine.js?v=11";
+      engine.onload = function () { mountTapWorld(world, GYWBT_ADULT_CONFIG(lang)); };
       engine.onerror = function () { location.href = "adult/"; };
       document.body.appendChild(engine);
     });
