@@ -4,6 +4,12 @@ Branch: `adult-overhaul` (verified before starting — no push, no `main` touche
 
 Status: **DONE**
 
+**Controller review round (2 fixes applied, separate small commit):**
+1. Adult `quiet` eyebrow — "Sé honesto" was masculine-gendered for an unknown reader; replaced with the gender-neutral rhetorical idiom **"Seamos honestos"** ("let's be honest").
+2. Kids `glowup` — body said "Torre de pasteles" while the tag said "Torre de pastel"; unified both to the singular **"Torre de pastel"** (matching the EN singular "Cake tower" concept).
+
+Both fixes are reflected in the table below. `node --check` clean on both touched files; `git diff` confirmed exactly these two string edits, nothing else changed.
+
 ---
 
 ## 1. EN → ES string table (complete, for controller review)
@@ -49,7 +55,7 @@ literal translation, the adaptation is noted.
 | crash | tags | Confetti storm / Streamer trails | Tormenta de confeti / Estelas de serpentinas |
 | glowup | eyebrow | Minutes later | Minutos después |
 | glowup | title | Now THAT'S a birthday. | Eso sí es un cumpleaños. |
-| glowup | body | Cake tower. Balloon arches. And right in the middle, one kid who can't stop grinning. | Torre de pasteles. Arcos de globos. Y justo en el centro, un niño que no puede dejar de sonreír. |
+| glowup | body | Cake tower. Balloon arches. And right in the middle, one kid who can't stop grinning. | Torre de pastel. Arcos de globos. Y justo en el centro, un niño que no puede dejar de sonreír. |
 | glowup | tags | Cake tower / Balloon arch / Dance floor | Torre de pastel / Arco de globos / Pista de baile |
 | finale | eyebrow | From Starry & the Crashers | De parte de Starry y los Crashers |
 | finale | title | Glad you were born today. | Qué bueno que naciste. |
@@ -63,7 +69,7 @@ literal translation, the adaptation is noted.
 | Scene | Field | EN | ES |
 |---|---|---|---|
 | (top-level) | hint *(inert — see §3)* | scroll to crash the party | haz scroll para colarte en la fiesta |
-| quiet | eyebrow | Be honest | Sé honesto |
+| quiet | eyebrow | Be honest | Seamos honestos |
 | quiet | title | Birthdays got smaller, didn't they. | Los cumpleaños se hicieron más pequeños, ¿verdad? |
 | quiet | body | Somewhere between ten and forty, the parties turned into polite dinners that end by nine. | En algún punto entre los diez y los cuarenta, las fiestas se convirtieron en cenas educadas que terminan a las nueve. |
 | quiet | tags | Polite toasts / Early goodbyes | Brindis de compromiso / Despedidas tempranas |

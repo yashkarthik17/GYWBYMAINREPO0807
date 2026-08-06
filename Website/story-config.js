@@ -76,7 +76,7 @@ var GYWBT_KIDS_STRINGS = {
     glowup: {
       eyebrow: 'Minutos después',
       title: 'Eso sí es un cumpleaños.',
-      body: 'Torre de pasteles. Arcos de globos. Y justo en el centro, un niño que no puede dejar de sonreír.',
+      body: 'Torre de pastel. Arcos de globos. Y justo en el centro, un niño que no puede dejar de sonreír.',
       tags: ['Torre de pastel', 'Arco de globos', 'Pista de baile'],
     },
     finale: {

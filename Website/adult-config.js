@@ -65,7 +65,7 @@ var GYWBT_ADULT_STRINGS = {
     hint: 'haz scroll para colarte en la fiesta',
     chrome: { startLabel: 'Toca para reproducir la historia', skipLabel: 'Saltar al final »', nextLabel: 'Siguiente escena' },
     quiet: {
-      eyebrow: 'Sé honesto',
+      eyebrow: 'Seamos honestos',
       title: 'Los cumpleaños se hicieron más pequeños, ¿verdad?',
       body: 'En algún punto entre los diez y los cuarenta, las fiestas se convirtieron en cenas educadas que terminan a las nueve.',
       tags: ['Brindis de compromiso', 'Despedidas tempranas'],
