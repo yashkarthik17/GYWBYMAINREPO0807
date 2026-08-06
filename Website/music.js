@@ -20,6 +20,22 @@
   // the attribute (the envelope's classical strings) play from 0:00 as before.
   var START = parseFloat(tag && tag.getAttribute('data-start')) || 0;
 
+  // Spanish track override: data-src-es / data-start-es on the script tag.
+  // Resolved once at load, from the same lang source (?lang= URL override /
+  // localStorage['gywbt-lang']) the aria-label text below reads — this has to
+  // happen BEFORE the existence-check fetch below, since SRC drives that fetch.
+  // EN path is untouched: SRC/START only change when lang is 'es' AND
+  // data-src-es is present on the tag.
+  try {
+    var qLang0 = /[?&]lang=(en|es)/.exec(location.search);
+    var pageLang0 = qLang0 ? qLang0[1] : (localStorage.getItem('gywbt-lang') === 'es' ? 'es' : 'en');
+    var srcEs0 = tag && tag.getAttribute('data-src-es');
+    if (pageLang0 === 'es' && srcEs0) {
+      SRC = srcEs0;
+      START = parseFloat(tag.getAttribute('data-start-es') || '0');
+    }
+  } catch (e) {}
+
   fetch(SRC, { method: 'HEAD' })
     .then(function (r) { if (r.ok) build(); })
     .catch(function () { /* no file, no button */ });

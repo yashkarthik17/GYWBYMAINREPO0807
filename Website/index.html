@@ -189,7 +189,7 @@
   <canvas id="confetti"></canvas>
   <div class="loading" id="loading">Folding the paper…</div>
 
-  <script src="music.js?v=16" data-once data-src="assets/audio/envelope.wav?v=1"></script>
+  <script src="music.js?v=17" data-once data-src="assets/audio/envelope.wav?v=1"></script>
   <script src="tap-engine.js?v=10"></script>
   <script src="story-config.js?v=2"></script>
   <script src="adult-config.js?v=2"></script>
@@ -412,7 +412,10 @@
     document.querySelector(".sheet-btn.kids").addEventListener("click", function (e) {
       if (!window.mountTapWorld || !window.GYWBT_KIDS_CONFIG) return;  // fall back to story.html
       e.preventDefault();
-      if (window.swMusic && window.swMusic.swap) window.swMusic.swap("assets/audio/theme.wav?v=2", 11);
+      if (window.swMusic && window.swMusic.swap) {
+        if (lang === "es") window.swMusic.swap("assets/audio/theme-es.wav?v=1", 0);
+        else window.swMusic.swap("assets/audio/theme.wav?v=2", 11);
+      }
       try { history.pushState({ kids: 1 }, "", "#kids"); } catch (err) {}
       stage.style.display = "none";
       document.querySelector(".ui").style.display = "none";
@@ -439,7 +442,10 @@
       // above, despite the shared filename) — music.js's default src on that page
       // resolves to /adult/assets/audio/theme.wav?v=3, so swap to that exact URL
       // here too, or a direct /adult/ visit and this in-page launch play different songs.
-      if (window.swMusic && window.swMusic.swap) window.swMusic.swap("/adult/assets/audio/theme.wav?v=3", 11);
+      if (window.swMusic && window.swMusic.swap) {
+        if (lang === "es") window.swMusic.swap("/adult/assets/audio/theme-es.wav?v=1", 0);
+        else window.swMusic.swap("/adult/assets/audio/theme.wav?v=3", 11);
+      }
       try { history.pushState({ adult: 1 }, "", "#adult"); } catch (err) {}
       stage.style.display = "none";
       document.querySelector(".ui").style.display = "none";
