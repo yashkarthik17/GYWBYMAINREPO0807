@@ -12,7 +12,7 @@ function GYWBT_ADULT_CONFIG() {
     // so chase-play keeps up instead of racing/skipping (scroll-skip fix)
     scrollMobileFactor: 2.6,
     journeyMobile: {
-      clip: '/adult/assets/vid/journey-m.mp4?v=8',
+      clip: '/adult/assets/vid/journey-m.mp4?v=9',
       poster: '/adult/assets/journey-poster-m.webp?v=7',
       spans: [[0.0, 8.042], [8.042, 16.042], [16.042, 24.042], [24.042, 32.042], [32.042, 40.042]],
     },
@@ -34,8 +34,8 @@ function GYWBT_ADULT_CONFIG() {
         body:'One little cloud clears the fence. Nobody checks their phone again all night.',
         tags:['Confetti included'] },
       { id:'photo', label:'Say Cheese',
-        still:'/adult/assets/photo.webp?v=8', poster:'/adult/assets/photo-poster.webp?v=7', posterMobile:'/adult/assets/photo-poster-m.webp?v=8',
-        clip:'/adult/assets/vid/photo.mp4?v=7', clipMobile:'/adult/assets/vid/photo-m.mp4?v=8',
+        still:'/adult/assets/photo.webp?v=9', poster:'/adult/assets/photo-poster.webp?v=7', posterMobile:'/adult/assets/photo-poster-m.webp?v=9',
+        clip:'/adult/assets/vid/photo.mp4?v=7', clipMobile:'/adult/assets/vid/photo-m.mp4?v=9',
         scroll:1.8, linger:0.5, rate:1.1,
         accent:'#8B5CF6', eyebrow:'Say cheese',
         title:'Photos worth fighting over.',
