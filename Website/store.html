@@ -357,9 +357,9 @@
       <h2 data-i18n="music_h2">Press play.</h2>
       <p data-i18n="music_p">The 130-year-old birthday song had its turn. Hear the anthem once, then send it to someone who needs a better birthday song.</p>
       <div class="pills" role="list">
-        <span role="listitem" title="Link coming soon" data-i18n="pill1_title" data-i18n-attr="title">Spotify<small data-i18n="pill_soon1">soon</small></span>
-        <span role="listitem" title="Link coming soon" data-i18n="pill2_title" data-i18n-attr="title">Apple Music<small data-i18n="pill_soon2">soon</small></span>
-        <span role="listitem" title="Link coming soon" data-i18n="pill3_title" data-i18n-attr="title">YouTube<small data-i18n="pill_soon3">soon</small></span>
+        <span role="listitem" title="Link coming soon" data-i18n-title="pill1_title">Spotify<small data-i18n="pill_soon1">soon</small></span>
+        <span role="listitem" title="Link coming soon" data-i18n-title="pill2_title">Apple Music<small data-i18n="pill_soon2">soon</small></span>
+        <span role="listitem" title="Link coming soon" data-i18n-title="pill3_title">YouTube<small data-i18n="pill_soon3">soon</small></span>
       </div>
     </section>
 
@@ -454,7 +454,7 @@
       p12_tag: "Hoja de 20",
       music_eyebrow: "La tienda de música",
       music_h2: "Presiona play.",
-      music_p: "La canción de cumpleaños de 130 años ya tuvo su oportunidad. Escucha el himno una vez, y luego envíaselo a alguien que necesite una mejor canción de cumpleaños.",
+      music_p: "La canción de cumpleaños que ya tiene 130 años ya tuvo su oportunidad. Escucha el himno una vez, y luego envíaselo a alguien que necesite una mejor canción de cumpleaños.",
       pill1_title: "Enlace disponible pronto",
       pill2_title: "Enlace disponible pronto",
       pill3_title: "Enlace disponible pronto",
@@ -480,6 +480,15 @@
     document.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
       var key = el.getAttribute('data-i18n-alt');
       if (key in ES) el.setAttribute('alt', ES[key]);
+    });
+    // Tooltip-only swaps (e.g. the music pills' "Link coming soon" title):
+    // these elements deliberately do NOT carry data-i18n, so the
+    // .sw-i18n-pending [data-i18n] hiding rule never matches them — a title
+    // attribute is never painted at load (only shown on hover), so there's
+    // no FOUC risk in leaving them visible while pending.
+    document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-title');
+      if (key in ES) el.setAttribute('title', ES[key]);
     });
     document.documentElement.classList.remove('sw-i18n-pending');
   })();
