@@ -183,7 +183,7 @@
   <div class="sheet-actions" id="sheet" aria-hidden="true">
     <a class="sheet-btn grown" href="adult/">Glad You Were Born Today</a>
     <a class="sheet-btn kids" href="story.html">Glad You Were Born Today (Kids)</a>
-    <button type="button" class="sheet-lang" id="langToggle">Español</button>
+    <button type="button" class="sheet-lang" id="langToggle">Versión en español</button>
   </div>
 
   <canvas id="confetti"></canvas>
@@ -232,8 +232,8 @@
       return s === "es" ? "es" : "en";
     }
     const LETTER_TXT = {
-      en: { grown: "Glad You Were Born Today", kids: "Glad You Were Born Today (Kids)", toggle: "Español", toggleAria: "Switch to Spanish" },
-      es: { grown: "Glad You Were Born Today", kids: "Glad You Were Born Today (Para Niños)", toggle: "English", toggleAria: "Cambiar a inglés" },
+      en: { grown: "Glad You Were Born Today", kids: "Glad You Were Born Today (Kids)", toggle: "Versión en español", toggleAria: "Cambiar a la versión en español" },
+      es: { grown: "Qué bueno que naciste", kids: "Qué bueno que naciste (Para Niños)", toggle: "English version", toggleAria: "Switch to the English version" },
     };
     let lang = gywbtLang();
     const grownLink = document.querySelector(".sheet-btn.grown");
