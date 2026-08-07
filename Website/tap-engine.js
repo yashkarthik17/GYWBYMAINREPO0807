@@ -91,7 +91,16 @@ function mountTapWorld(container, config) {
     "  letter-spacing:.06em;padding:14px 18px;border-radius:13px;",
     "  box-shadow:0 6px 18px rgba(0,0,0,.3);}",
     ".tw-explore a:active{transform:translateY(1px);}",
-    "@media (prefers-reduced-motion:reduce){.tw video,.tw .tw-still,.tw-card{transition:none;}}"
+    // Resume pill: the runtime-stills (Low Power Mode) recovery affordance —
+    // ghost-pill recipe like .tw-skip, pinned bottom-center clear of the card.
+    ".tw-resume{position:absolute;left:50%;bottom:max(3.5vh,env(safe-area-inset-bottom));z-index:6;",
+    "  transform:translateX(-50%) translateY(8px);opacity:0;pointer-events:none;",
+    "  border:1px solid rgba(255,255,255,.45);background:rgba(18,27,52,.62);color:#FFF9EE;cursor:pointer;",
+    "  font-family:'Baloo 2',ui-rounded,system-ui,sans-serif;font-weight:700;font-size:12px;",
+    "  letter-spacing:.12em;text-transform:uppercase;padding:11px 20px;border-radius:999px;",
+    "  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:opacity .3s ease,transform .3s ease;}",
+    ".tw-resume.is-on{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}",
+    "@media (prefers-reduced-motion:reduce){.tw video,.tw .tw-still,.tw-card,.tw-resume{transition:none;}}"
   ].join("\n");
   var style = document.createElement("style");
   style.textContent = css;
@@ -109,9 +118,17 @@ function mountTapWorld(container, config) {
 
   var vids = [document.createElement("video"), document.createElement("video")];
   vids.forEach(function (v) {
-    v.muted = true; v.playsInline = true; v.setAttribute("playsinline", "");
+    // muted as BOTH property and attribute: the property is what play() checks,
+    // the attribute is what some Android WebView autoplay heuristics look at.
+    v.muted = true; v.setAttribute("muted", "");
+    v.playsInline = true; v.setAttribute("playsinline", "");
     v.preload = "auto";
     v.defaultPlaybackRate = RATE;
+    // No cast button / PiP hijack surfaces over the story (Android Chrome
+    // offers both on bare <video> elements).
+    try { v.disableRemotePlayback = true; } catch (e) {}
+    v.setAttribute("disableremoteplayback", "");
+    try { v.disablePictureInPicture = true; } catch (e) {}
     stage.appendChild(v);
   });
   var still = el("img", "tw-still");
@@ -143,6 +160,14 @@ function mountTapWorld(container, config) {
 
   // ---- state -------------------------------------------------------------
   var idx = -1, active = 0, stillsMode = reduce, started = false;
+  // Runtime-stills bookkeeping: stills mode entered because the OS refused
+  // play() at runtime (Low Power Mode, battery savers) is a TEMPORARY device
+  // state — recoverable, never a teardown. runtimeStills marks that case
+  // (never set for prefers-reduced-motion visitors); resumeArmedIdx /
+  // resumeFailedIdx let taps alternate resume-attempt → advance so a device
+  // that keeps refusing still steps through the slideshow instead of jamming
+  // on one scene.
+  var runtimeStills = false, resumeArmedIdx = -1, resumeFailedIdx = -1;
 
   // Accessibility: the tap catcher's nextLabel only means something in
   // stills mode, where tapping the stage is the sole way through the
@@ -181,6 +206,7 @@ function mountTapWorld(container, config) {
   function showExplore(s) {
     hideCard();               // the card and the buttons share the bottom of
     explore.innerHTML = "";   // the screen — never show both at once
+    hideResumePill();         // ...nor the pill under the explore stack
     var ex = s.explore;
     if (!ex || !ex.links) return;
     ex.links.forEach(function (l) {
@@ -216,15 +242,50 @@ function mountTapWorld(container, config) {
     dotEls.forEach(function (d, k) { d.className = k === si ? "is-here" : ""; });
   }
 
-  function enterStillsMode() {
+  function enterStillsMode(runtime) {
     if (stillsMode) return;
     stillsMode = true;
+    runtimeStills = !!runtime && !reduce;
     updateTapA11y();
     vids.forEach(function (v) { try { v.pause(); } catch (e) {} v.classList.remove("is-on"); });
     if (idx >= 0) {
       var item = PL[idx];
       renderStill(S[item.kind === "scene" ? item.si : nextSceneIdxOfConn(idx)]);
     }
+    if (runtimeStills && started) showResumePill();
+  }
+
+  // Resume pill: the visible affordance for the runtime-stills state (mirrors
+  // scrub-engine's motion pill). The actual retry runs in the tap handler /
+  // pill click — a real user activation, which is exactly what LPM-class
+  // playback policies accept.
+  var resumePill = null;
+  function showResumePill() {
+    if (!resumePill) {
+      resumePill = el("button", "tw-resume");
+      resumePill.type = "button";
+      resumePill.textContent = config.resumeLabel || "Tap to continue the story";
+      resumePill.addEventListener("click", function () { started = true; gestureResume(); });
+      stage.appendChild(resumePill);
+    }
+    resumePill.classList.add("is-on");
+  }
+  function hideResumePill() { if (resumePill) resumePill.classList.remove("is-on"); }
+
+  // In-gesture video retry from runtime stills: flip back to video mode and
+  // re-run the CURRENT item, so play() executes inside the user's tap. If the
+  // OS refuses again, go()'s catch drops us straight back to stills (pill
+  // re-shown, resumeFailedIdx recorded) — this can never dead-end.
+  function gestureResume() {
+    if (!stillsMode || !runtimeStills || reduce) return;
+    stillsMode = false; runtimeStills = false;
+    updateTapA11y();
+    hideResumePill();
+    still.classList.remove("is-on");
+    var at = idx < 0 ? 0 : idx;
+    resumeArmedIdx = at;
+    idx = -1; prepared = -1;
+    go(at);
   }
 
   function nextSceneIdxOfConn(p) { var q = nextSceneAt(p); return PL[q].si; }
@@ -285,6 +346,12 @@ function mountTapWorld(container, config) {
       swapped = true;
       active = 1 - active;
       prepared = -1;
+      // rVFC can fire for a PAUSED first frame (poster paint) — only treat a
+      // swap as "video works again" when we're actually in video mode.
+      if (!stillsMode) {
+        resumeArmedIdx = -1; resumeFailedIdx = -1;
+        still.classList.remove("is-on");           // clear any stall-watchdog still
+      }
       nextV.classList.add("is-on");
       curV.classList.remove("is-on");
       // let the crossfade finish before parking the old player and handing it
@@ -292,18 +359,31 @@ function mountTapWorld(container, config) {
       // outgoing side of the fade)
       setTimeout(function () {
         try { curV.pause(); } catch (e) {}
-        prepare(p + 1);
+        // Kick the NEXT item's download only once the clip ON STAGE can play
+        // through (or is well underway): two multi-MB downloads sharing one
+        // phone connection was starving the active clip mid-scene.
+        whenSafeToPrefetch(nextV, function () { if (idx === p) prepare(p + 1); });
       }, 700);
     }
 
     try { nextV.playbackRate = RATE * ((scene && scene.rate) || 1); } catch (e) {}
     var pr;
-    try { pr = nextV.play(); } catch (e) { enterStillsMode(); go(p); return; }
+    try { pr = nextV.play(); } catch (e) { enterStillsMode(true); go(p); return; }
     onFirstFrame(nextV, swap);
     if (pr && pr.then) {
-      pr.catch(function () {
-        // OS refused playback (Low Power Mode / policy): stills + tap-through.
-        enterStillsMode();
+      pr.catch(function (err) {
+        // A load()/pause() landing on an element whose play() is still pending
+        // rejects that play() with AbortError — a benign teardown race (skip
+        // tap or rapid advance mid-start), NOT an OS block. Treating it as one
+        // was permanently stranding the journey on stills (scrub-engine has
+        // filtered this same race all along).
+        if (err && err.name === "AbortError") return;
+        if (idx !== p) return;   // stale: the journey already moved on
+        if (p === resumeArmedIdx) { resumeArmedIdx = -1; resumeFailedIdx = p; }
+        // OS refused playback (Low Power Mode / policy): stills + tap-through,
+        // recoverably — the resume pill / next tap retries in-gesture.
+        enterStillsMode(true);
+        if (started) showResumePill();   // covers re-entry while already in stills
         var s = scene || S[nextSceneIdxOfConn(p)];
         renderStill(s);
         if (p === LAST) showExplore(s);
@@ -314,6 +394,61 @@ function mountTapWorld(container, config) {
       if (idx !== p) return;
       if (p === LAST) finish(); else go(p + 1);
     };
+
+    // Stall watchdog: a starving connection must never freeze the show with
+    // no exit (there was NO recovery path at all before — a mid-clip network
+    // stall held a half-frame forever). No playback progress for 6s → put the
+    // scene's still up (real artwork + copy, not a frozen frame) while the
+    // decoder keeps trying; if progress resumes the still comes straight back
+    // down. 12s more with nothing, or a fatal media error → advance: later
+    // items may be cached/buffered, and the finale must stay reachable.
+    var lastT = -1, lastMove = performance.now(), stallStill = false;
+    function stallNext() {
+      if (idx !== p) return;
+      if (p === LAST) { renderStill(S[N - 1]); showExplore(S[N - 1]); return; }
+      go(p + 1);
+    }
+    var wd = setInterval(function () {
+      if (idx !== p || stillsMode || nextV.ended) { clearInterval(wd); return; }
+      var t = nextV.currentTime;
+      if (t !== lastT) {
+        lastT = t; lastMove = performance.now();
+        if (stallStill) { stallStill = false; still.classList.remove("is-on"); }
+        return;
+      }
+      var dead = performance.now() - lastMove;
+      if (dead > 6000 && !stallStill) {
+        stallStill = true;
+        renderStill(scene || S[nextSceneIdxOfConn(p)]);
+      } else if (dead > 18000) {
+        clearInterval(wd);
+        stallNext();
+      }
+    }, 500);
+    nextV.onerror = function () {
+      if (idx !== p) return;
+      clearInterval(wd);
+      renderStill(scene || S[nextSceneIdxOfConn(p)]);
+      setTimeout(stallNext, 1200);
+    };
+  }
+
+  // Prefetch gate for swap(): fire cb once the active clip is safe to share
+  // bandwidth with — buffered to the end (readyState 4) or 60% played.
+  function whenSafeToPrefetch(v, cb) {
+    if (v.readyState >= 4) { cb(); return; }
+    var done = false;
+    function fire() {
+      if (done) return; done = true;
+      v.removeEventListener("canplaythrough", fire);
+      v.removeEventListener("timeupdate", part);
+      cb();
+    }
+    function part() {
+      if (v.duration && v.currentTime > v.duration * 0.6) fire();
+    }
+    v.addEventListener("canplaythrough", fire);
+    v.addEventListener("timeupdate", part);
   }
 
   function finish() {
@@ -332,6 +467,8 @@ function mountTapWorld(container, config) {
     startBtn.addEventListener("click", function () {
       startBtn.remove(); startBtn = null; started = true;
       stillsMode = reduce;
+      runtimeStills = false; resumeFailedIdx = -1;
+      hideResumePill();
       updateTapA11y();
       still.classList.remove("is-on");
       var at = idx < 0 ? 0 : idx;
@@ -358,7 +495,15 @@ function mountTapWorld(container, config) {
   // accidental taps during video playback were causing jittery skips/pauses.
   tap.addEventListener("click", function () {
     started = true;
-    if (stillsMode) advance();
+    if (stillsMode) {
+      // Runtime stills (LPM-class refusal): this tap is a fresh user
+      // activation — use it to try video again for the scene on stage. If the
+      // last attempt at THIS scene already failed, advance the slideshow
+      // instead, so a device that keeps refusing still moves forward (taps
+      // alternate retry → advance → retry …).
+      if (runtimeStills && !reduce && idx !== resumeFailedIdx) { gestureResume(); return; }
+      advance();
+    }
   });
   skip.addEventListener("click", function () {
     started = true;

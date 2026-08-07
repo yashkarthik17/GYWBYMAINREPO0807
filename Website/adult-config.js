@@ -26,7 +26,7 @@ function gywbtLang() {
 var GYWBT_ADULT_STRINGS = {
   en: {
     hint: 'scroll to crash the party',
-    chrome: { startLabel: 'Tap to play the story', skipLabel: 'Skip to end »', nextLabel: 'Next scene' },
+    chrome: { startLabel: 'Tap to play the story', skipLabel: 'Skip to end »', nextLabel: 'Next scene', resumeLabel: 'Tap to continue the story' },
     quiet: {
       eyebrow: 'Be honest',
       title: 'Birthdays got smaller, didn’t they.',
@@ -63,7 +63,7 @@ var GYWBT_ADULT_STRINGS = {
   },
   es: {
     hint: 'haz scroll para colarte en la fiesta',
-    chrome: { startLabel: 'Toca para reproducir la historia', skipLabel: 'Saltar al final »', nextLabel: 'Siguiente escena' },
+    chrome: { startLabel: 'Toca para reproducir la historia', skipLabel: 'Saltar al final »', nextLabel: 'Siguiente escena', resumeLabel: 'Toca para continuar la historia' },
     quiet: {
       eyebrow: 'Seamos honestos',
       title: 'Los cumpleaños se hicieron más pequeños, ¿verdad?',
@@ -108,6 +108,7 @@ function GYWBT_ADULT_CONFIG(lang) {
     startLabel: T.chrome.startLabel,
     skipLabel: T.chrome.skipLabel,
     nextLabel: T.chrome.nextLabel,
+    resumeLabel: T.chrome.resumeLabel,
     diveScroll: 1.5,
     crossfade: 0.12,
     // longer mobile track: same scroll speed demands ~30% less playback rate,

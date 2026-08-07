@@ -19,7 +19,7 @@ function gywbtLang() {
 
 var GYWBT_KIDS_STRINGS = {
   en: {
-    chrome: { startLabel: 'Tap to play the story', skipLabel: 'Skip to end »', nextLabel: 'Next scene' },
+    chrome: { startLabel: 'Tap to play the story', skipLabel: 'Skip to end »', nextLabel: 'Next scene', resumeLabel: 'Tap to continue the story' },
     beige: {
       eyebrow: 'Right now, somewhere',
       title: 'A birthday nobody noticed.',
@@ -54,7 +54,7 @@ var GYWBT_KIDS_STRINGS = {
     },
   },
   es: {
-    chrome: { startLabel: 'Toca para reproducir la historia', skipLabel: 'Saltar al final »', nextLabel: 'Siguiente escena' },
+    chrome: { startLabel: 'Toca para reproducir la historia', skipLabel: 'Saltar al final »', nextLabel: 'Siguiente escena', resumeLabel: 'Toca para continuar la historia' },
     beige: {
       eyebrow: 'Ahora mismo, en algún lugar',
       title: 'Un cumpleaños que nadie notó.',
@@ -100,6 +100,7 @@ function GYWBT_KIDS_CONFIG(lang) {
     startLabel: T.chrome.startLabel,
     skipLabel: T.chrome.skipLabel,
     nextLabel: T.chrome.nextLabel,
+    resumeLabel: T.chrome.resumeLabel,
     sections: [
       {
         id: 'beige', label: 'The Beige Party',
