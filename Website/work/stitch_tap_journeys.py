@@ -49,6 +49,10 @@ JOBS = {
 # crossfade consumes — the seam lands on moving footage.
 TRIMS = {
     "adult": [(0, 0), (0, 1.15), (0, 0), (0, 0), (0, 0)],
+    # glowup-m: the round-7 source trim took 0.7s, but freezedetect measures a
+    # further 0.77s frozen tail (6.5625 -> EOF at 7.333) — same 2->3 "stuck"
+    # on phones. Trim 0.59s, leaving the ~0.18s beat the crossfade consumes.
+    "adult-m": [(0, 0), (0, 0.59), (0, 0), (0, 0), (0, 0)],
 }
 
 

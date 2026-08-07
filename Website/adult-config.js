@@ -145,11 +145,11 @@ function GYWBT_ADULT_CONFIG(lang) {
     // (Replaces the retired scroll-engine journeyMobile block.)
     journey: {
       clip: '/adult/assets/vid/journey-tap.mp4?v=3',
-      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=2',
+      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=3',
       poster: '/adult/assets/journey-tap-poster.webp?v=1',
       posterMobile: '/adult/assets/journey-tap-m-poster.webp?v=1',
       spans: [[0.0,6.436],[6.436,13.178],[13.178,20.339],[20.339,27.499],[27.499,34.683]],
-      spansMobile: [[0.0,6.436],[6.436,13.62],[13.62,20.326],[20.326,27.486],[27.486,34.683]],
+      spansMobile: [[0.0,6.436],[6.436,13.03],[13.03,19.736],[19.736,26.896],[26.896,34.083]],
     },
     sections: [
       { id:'quiet', label:'The Quiet Party',
