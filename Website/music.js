@@ -28,7 +28,7 @@
   // data-src-es is present on the tag.
   try {
     var qLang0 = /[?&]lang=(en|es)/.exec(location.search);
-    var pageLang0 = qLang0 ? qLang0[1] : (localStorage.getItem('gywbt-lang') === 'es' ? 'es' : 'en');
+    var pageLang0 = qLang0 ? qLang0[1] : 'en';   // no stored preference
     var srcEs0 = tag && tag.getAttribute('data-src-es');
     if (pageLang0 === 'es' && srcEs0) {
       SRC = srcEs0;
@@ -52,7 +52,7 @@
     var mLang = 'en';
     try {
       var qm = /[?&]lang=(en|es)/.exec(location.search);
-      mLang = qm ? qm[1] : (localStorage.getItem('gywbt-lang') === 'es' ? 'es' : 'en');
+      mLang = qm ? qm[1] : 'en';   // no stored preference
     } catch (e) {}
     var M = mLang === 'es'
       ? { play: 'Reproducir la canción', pause: 'Pausar la canción' }

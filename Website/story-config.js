@@ -12,9 +12,8 @@
    or a ?lang= URL override — for the standalone story.html mount. */
 function gywbtLang() {
   var m = /[?&]lang=(en|es)/.exec(location.search);
-  if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
-  var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
-  return s === 'es' ? 'es' : 'en';
+  if (m) return m[1];
+  return 'en';   // no stored preference (user direction): explicit ?lang= only
 }
 
 var GYWBT_KIDS_STRINGS = {
@@ -121,6 +120,7 @@ function GYWBT_KIDS_CONFIG(lang) {
     window.addEventListener('pointerdown', retry);
     window.addEventListener('touchend', retry, { passive: true });
   }
+  function LNG(h) { return lang === 'es' ? h + '?lang=es' : h; }
   return {
     playbackRate: 1.15,
     startLabel: T.chrome.startLabel,
@@ -210,7 +210,7 @@ function GYWBT_KIDS_CONFIG(lang) {
         body: T.finale.body,
         tags: [],
         explore: { label: T.finale.exploreLabel, links: [
-          { label: T.finale.crashers, href: '/crashers.html' },
+          { label: T.finale.crashers, href: LNG('/crashers.html') },
           { label: T.finale.again, href: '#top' },
         ] },
       },

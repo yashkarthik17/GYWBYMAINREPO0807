@@ -12,9 +12,8 @@
   (function () {
     function gywbtLang() {
       var m = /[?&]lang=(en|es)/.exec(location.search);
-      if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
-      var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
-      return s === 'es' ? 'es' : 'en';
+  if (m) return m[1];
+  return 'en';   // no stored preference (user direction): explicit ?lang= only
     }
     if (gywbtLang() === 'es') document.documentElement.classList.add('sw-i18n-pending');
   })();
@@ -148,14 +147,13 @@
 
   <footer data-i18n="footer">&copy; 2026 <b>Glad You Were Born Today</b> &middot; No birthday alone. Ever.</footer>
 
-  <script src="nav.js?v=5"></script>
+  <script src="nav.js?v=6"></script>
   <script>
   (function () {
     function gywbtLang() {
       var m = /[?&]lang=(en|es)/.exec(location.search);
-      if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
-      var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
-      return s === 'es' ? 'es' : 'en';
+  if (m) return m[1];
+  return 'en';   // no stored preference (user direction): explicit ?lang= only
     }
     if (gywbtLang() !== 'es') { document.documentElement.classList.remove('sw-i18n-pending'); return; }
 

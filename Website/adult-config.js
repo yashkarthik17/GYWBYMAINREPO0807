@@ -18,9 +18,8 @@
    table/future-proofing, even though nothing currently renders it. */
 function gywbtLang() {
   var m = /[?&]lang=(en|es)/.exec(location.search);
-  if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
-  var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
-  return s === 'es' ? 'es' : 'en';
+  if (m) return m[1];
+  return 'en';   // no stored preference (user direction): explicit ?lang= only
 }
 
 var GYWBT_ADULT_STRINGS = {
@@ -126,6 +125,7 @@ function GYWBT_ADULT_CONFIG(lang) {
     window.addEventListener('pointerdown', retry);
     window.addEventListener('touchend', retry, { passive: true });
   }
+  function LNG(h) { return lang === 'es' ? h + '?lang=es' : h; }
   return {
     hint: T.hint,
     startLabel: T.chrome.startLabel,
@@ -192,10 +192,10 @@ function GYWBT_ADULT_CONFIG(lang) {
         title: T.sendoff.title,
         body: T.sendoff.body,
         explore:{ label: T.sendoff.exploreLabel, links:[
-          { label: T.sendoff.hire, href:'/hire.html' },
-          { label: T.sendoff.crew, href:'/adult/crew.html' },
-          { label: T.sendoff.store, href:'/store.html' },
-          { label: T.sendoff.mission, href:'/mission.html' },
+          { label: T.sendoff.hire, href: LNG('/hire.html') },
+          { label: T.sendoff.crew, href: LNG('/adult/crew.html') },
+          { label: T.sendoff.store, href: LNG('/store.html') },
+          { label: T.sendoff.mission, href: LNG('/mission.html') },
           { label: T.sendoff.again, href:'#top' },
         ] } },
     ],

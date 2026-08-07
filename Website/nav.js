@@ -14,9 +14,8 @@
 
   function gywbtLang() {
     var m = /[?&]lang=(en|es)/.exec(location.search);
-    if (m) { try { localStorage.setItem('gywbt-lang', m[1]); } catch (e) {} return m[1]; }
-    var s = null; try { s = localStorage.getItem('gywbt-lang'); } catch (e) {}
-    return s === 'es' ? 'es' : 'en';
+  if (m) return m[1];
+  return 'en';   // no stored preference (user direction): explicit ?lang= only
   }
 
   var path = location.pathname;
@@ -47,6 +46,14 @@
     { key: "irl",      label: T.irl,      href: adult || "index.html", match: inAdult && file === "index.html" },
     { key: "crew",     label: T.crew,     href: adult + "crew.html",  match: file === "crew.html" },
   ];
+  // No stored preference: a page that resolved Spanish (?lang=es) forwards
+  // the choice explicitly on every nav link, so the language survives
+  // navigation without any storage. Brand link stays clean - the envelope
+  // always greets in English.
+  if (lang === 'es') LINKS.forEach(function (l) {
+    if (l.key === 'home') return;   // the envelope ALWAYS greets in English
+    l.href += (l.href.indexOf('?') >= 0 ? '&' : '?') + 'lang=es';
+  });
   // the bar shows the essentials inline; the menu always carries everything
   var INLINE = ["story", "crashers", "store", "hire", "mission"];
 

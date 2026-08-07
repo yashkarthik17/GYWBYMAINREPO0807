@@ -189,10 +189,10 @@
   <canvas id="confetti"></canvas>
   <div class="loading" id="loading">Folding the paper…</div>
 
-  <script src="music.js?v=18" data-once data-src="assets/audio/envelope.wav?v=1"></script>
+  <script src="music.js?v=19" data-once data-src="assets/audio/envelope.wav?v=1"></script>
   <script src="tap-engine.js?v=13"></script>
   <script src="story-config.js?v=6"></script>
-  <script src="adult-config.js?v=9"></script>
+  <script src="adult-config.js?v=10"></script>
   <script>
   (function () {
     "use strict";
@@ -229,7 +229,7 @@
     // chosen lang still travels into the in-page kids/adult launches below.
     function gywbtLang() {
       const m = /[?&]lang=(en|es)/.exec(location.search);
-      if (m) { try { localStorage.setItem("gywbt-lang", m[1]); } catch (e) {} return m[1]; }
+      if (m) return m[1];
       return "en";
     }
     const LETTER_TXT = {
@@ -253,11 +253,14 @@
       // a later toggle only matters for a replayed visit).
       const lines = document.querySelectorAll(".cine__line");
       if (lines.length >= 2) { lines[0].textContent = T.cine1; lines[1].textContent = T.cine2; }
+      // No stored preference: the chosen language travels ONLY via explicit
+      // URLs (fallback navigation) and the in-page launch's lang argument.
+      grownLink.href = lang === "es" ? "adult/?lang=es" : "adult/";
+      kidsLink.href = lang === "es" ? "story.html?lang=es" : "story.html";
     }
     renderLetter();
     langBtn.addEventListener("click", function () {
       lang = lang === "es" ? "en" : "es";
-      try { localStorage.setItem("gywbt-lang", lang); } catch (e) {}
       renderLetter();
     });
 
