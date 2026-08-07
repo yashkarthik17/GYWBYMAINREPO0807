@@ -42,6 +42,15 @@ JOBS = {
     "adult-m": ("adult/assets/vid",  ADULT_NAMES, "-m", ADULT_RATES, "journey-tap-m", 26, "4M",  "8M"),
 }
 
+# Per-segment (head, tail) trims in SOURCE seconds, applied before rate baking.
+# adult landscape glowup: freezedetect measured a 1.33s FROZEN tail (the 2->3
+# "stuck" hang — the mobile renders got this trim at the source; the landscape
+# files never did). Trim 1.15s so ~0.18s of hold remains, which the 0.15s
+# crossfade consumes — the seam lands on moving footage.
+TRIMS = {
+    "adult": [(0, 0), (0, 1.15), (0, 0), (0, 0), (0, 0)],
+}
+
 
 def sh(args):
     r = subprocess.run(args, capture_output=True, text=True)
@@ -61,8 +70,10 @@ def stitch(key):
     files = [os.path.join(vdir, f"{n}{suffix}.mp4") for n in names]
     out = os.path.join(vdir, f"{outbase}.mp4")
 
-    # effective (rate-baked) durations drive the xfade offsets
-    D = [dur(f) / r for f, r in zip(files, rates)]
+    trims = TRIMS.get(key, [(0, 0)] * len(files))
+    # effective (trimmed, rate-baked) durations drive the xfade offsets
+    raw = [dur(f) for f in files]
+    D = [(d - h - t) / r for d, (h, t), r in zip(raw, trims, rates)]
     X = [0.0]
     for i in range(1, len(files)):
         X.append(X[i - 1] + D[i - 1] - FADE)
@@ -71,10 +82,12 @@ def stitch(key):
     for f in files:
         inputs += ["-i", f]
 
-    # per-input: bake the pacing (setpts) and re-time to CFR for xfade
+    # per-input: trim, bake the pacing (setpts) and re-time to CFR for xfade
     parts = []
     for i, r in enumerate(rates):
-        parts.append(f"[{i}:v]setpts=PTS/{r:.6f},fps={FPS}[s{i}]")
+        h, t = trims[i]
+        pre = f"trim=start={h}:end={raw[i] - t:.6f}," if (h or t) else ""
+        parts.append(f"[{i}:v]{pre}setpts=(PTS-STARTPTS)/{r:.6f},fps={FPS}[s{i}]")
     prev = "s0"
     for k in range(1, len(files)):
         label = f"v{k}"
