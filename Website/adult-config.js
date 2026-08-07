@@ -108,22 +108,40 @@ function GYWBT_ADULT_CONFIG(lang) {
   // full rationale on swap() + the first-tap retry.
   var themeSrc = lang === 'es' ? '/adult/assets/audio/theme-es.wav?v=1' : '/adult/assets/audio/theme.wav?v=3';
   var themeStart = lang === 'es' ? 20 : 11;
-  var musicStarted = false;
+  // Full quiet-scene-1 cycle, replays included: entering scene 1 hushes
+  // whatever is playing (pause WITHOUT recording a mute), entering scene 2
+  // starts the theme - swap() on the first run, replay() (same track, same
+  // start offset, mute respected) on every later run. "Play it again" no
+  // longer touches the music itself; this hook owns the whole cycle.
+  var themeArmed = false, themeThisRun = false;
   function themeAtSceneTwo(si) {
-    if (musicStarted || si < 1) return;
-    if (!window.swMusic || !window.swMusic.swap) return;
-    musicStarted = true;
-    window.swMusic.swap(themeSrc, themeStart);
-    var retry = function (e) {
-      window.removeEventListener('pointerdown', retry);
-      window.removeEventListener('touchend', retry);
-      if (e && e.target && e.target.closest && e.target.closest('#sw-music')) return;
-      var s = null; try { s = sessionStorage.getItem('sw-music-on'); } catch (err) {}
-      if (s === '0') return;
-      if (!document.querySelector('#sw-music.is-on')) window.swMusic.on();
-    };
-    window.addEventListener('pointerdown', retry);
-    window.addEventListener('touchend', retry, { passive: true });
+    if (!window.swMusic) return;
+    if (si === 0) {
+      themeThisRun = false;
+      if (window.swMusic.hush) window.swMusic.hush();
+      return;
+    }
+    if (si < 1 || themeThisRun) return;
+    themeThisRun = true;
+    if (!themeArmed) {
+      themeArmed = true;
+      if (!window.swMusic.swap) return;
+      window.swMusic.swap(themeSrc, themeStart);
+      var retry = function (e) {
+        window.removeEventListener('pointerdown', retry);
+        window.removeEventListener('touchend', retry);
+        if (e && e.target && e.target.closest && e.target.closest('#sw-music')) return;
+        var s = null; try { s = sessionStorage.getItem('sw-music-on'); } catch (err) {}
+        if (s === '0') return;
+        if (!document.querySelector('#sw-music.is-on')) window.swMusic.on();
+      };
+      window.addEventListener('pointerdown', retry);
+      window.addEventListener('touchend', retry, { passive: true });
+      return;
+    }
+    var s = null; try { s = sessionStorage.getItem('sw-music-on'); } catch (err) {}
+    if (s === '0') return;
+    if (typeof window.swMusic.replay === 'function') window.swMusic.replay();
   }
   function LNG(h) { return lang === 'es' ? h + '?lang=es' : h; }
   return {

@@ -268,7 +268,10 @@ function mountTapWorld(container, config) {
       if (l.href === "#top") {
         a.className = "tw-explore__replay";
         a.addEventListener("click", function (e) {
-          e.preventDefault(); hideExplore(); replayMusicOnPlayAgain();
+          e.preventDefault(); hideExplore();
+          // With a config.onScene music hook, the hook owns the replay cycle
+          // (quiet scene 1, theme re-enters at scene 2).
+          if (!config.onScene) replayMusicOnPlayAgain();
           if (J && !stillsMode) { jSeekSeg(0, true); return; }
           go(0);
         });

@@ -223,13 +223,18 @@ function mountTapWorld(container, config) {
           // visitor explicitly muted earlier (same sessionStorage key
           // music.js writes) — mirrors the guard used in
           // adult/tap-engine.js's "Play it again" handler.
-          try {
-            if (window.swMusic && typeof window.swMusic.replay === "function") {
-              var muted = null;
-              try { muted = sessionStorage.getItem("sw-music-on"); } catch (e2) {}
-              if (muted !== "0") window.swMusic.replay();
-            }
-          } catch (err) {}
+          // With a config.onScene music hook, the hook owns the replay
+          // cycle (quiet scene 1, theme re-enters at scene 2) - only
+          // hook-less pages keep the old restart-with-the-tap behavior.
+          if (!config.onScene) {
+            try {
+              if (window.swMusic && typeof window.swMusic.replay === "function") {
+                var muted = null;
+                try { muted = sessionStorage.getItem("sw-music-on"); } catch (e2) {}
+                if (muted !== "0") window.swMusic.replay();
+              }
+            } catch (err) {}
+          }
           if (J && !stillsMode) { jSeekSeg(0, true); return; }
           go(0);
         });

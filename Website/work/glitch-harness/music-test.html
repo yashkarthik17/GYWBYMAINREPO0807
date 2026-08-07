@@ -18,6 +18,17 @@
   const f = document.createElement("iframe");
   f.src = PAGE;
   document.body.appendChild(f);
+  // ?replay=1: when the finale explore appears, click "Play it again" once —
+  // asserts the replay cycle (quiet scene 1 again, theme re-enters at scene 2)
+  let replayed = false;
+  if (Q.get("replay")) setInterval(() => {
+    if (replayed) return;
+    let d; try { d = f.contentDocument; } catch (e) { return; }
+    if (!d || !d.querySelector(".tw-explore.is-on")) return;
+    const btn = d.querySelector(".tw-explore__replay") || d.querySelector('.tw-explore a[href="#top"]');
+    if (btn) { replayed = true; btn.click(); }
+  }, 800);
+
   setInterval(() => {
     let d;
     try { d = f.contentDocument; } catch (e) { return; }
@@ -28,6 +39,7 @@
       t: +((performance.now() - t0) / 1000).toFixed(1),
       musicOn: !!d.querySelector("#sw-music.is-on"),
       btnExists: !!audioBtn,
+      replayed: replayed,
       card: card ? card.textContent : "",
       dot: Array.from(d.querySelectorAll(".tw-dots i")).findIndex(x => x.className === "is-here"),
     };
