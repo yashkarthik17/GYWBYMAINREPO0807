@@ -220,16 +220,17 @@
 
     v.poster = CFG.poster; v.src = CFG.src;
 
-    // ---- Letter language toggle: EN default, ES optional (localStorage
-    // 'gywbt-lang', or a ?lang=es|en URL override that wins and re-stores).
-    // Toggling re-renders the two choice labels + the toggle itself
-    // immediately (no reload) and the chosen lang travels into the in-page
-    // kids/adult launches below, so the mounted journey matches the letter.
+    // ---- Letter language: the envelope ALWAYS greets in English (user
+    // direction) — intro slides and letter buttons boot EN on every visit,
+    // including coming back from a journey (popstate reloads this page). The
+    // stored localStorage choice no longer drives THIS page's boot; only an
+    // explicit ?lang= URL does. Toggling still writes the choice, so the
+    // inner pages (story.html, adult/, store …) keep following it, and the
+    // chosen lang still travels into the in-page kids/adult launches below.
     function gywbtLang() {
       const m = /[?&]lang=(en|es)/.exec(location.search);
       if (m) { try { localStorage.setItem("gywbt-lang", m[1]); } catch (e) {} return m[1]; }
-      let s = null; try { s = localStorage.getItem("gywbt-lang"); } catch (e) {}
-      return s === "es" ? "es" : "en";
+      return "en";
     }
     const LETTER_TXT = {
       en: { grown: "Glad You Were Born Today", kids: "Glad You Were Born Today (Kids)", toggle: "Versión en español", toggleAria: "Cambiar a la versión en español",
