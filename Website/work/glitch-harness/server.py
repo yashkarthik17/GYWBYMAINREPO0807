@@ -43,6 +43,15 @@ class H(BaseHTTPRequestHandler):
         self.send_header("Content-Length", "0")
         self.end_headers()
 
+    def do_HEAD(self):
+        # music.js existence-probes its track with HEAD before building
+        path = unquote(urlsplit(self.path).path)
+        f = (ROOT / path.lstrip("/")).resolve()
+        ok = str(f).startswith(str(ROOT)) and f.is_file()
+        self.send_response(200 if ok else 404)
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+
     def do_GET(self):
         path = unquote(urlsplit(self.path).path)
         delay_ms, drip_kbps, stall_frac = 0, 0, None

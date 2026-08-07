@@ -131,6 +131,11 @@
     window.swMusic = {
       on: function () { var s = null; try { s = sessionStorage.getItem(KEY); } catch (e) {} if (s !== '0') set(true); },
       off: function () { set(false); },
+      // Pause WITHOUT recording a mute: off() writes '0' and would veto every
+      // later on()/swap() for the visit. The journey launches use hush() to
+      // silence the envelope strings for the quiet first scene while leaving
+      // scene 2's music entrance allowed.
+      hush: function () { audio.pause(); setUi(false); },
       // Switch tracks WITHOUT leaving the page (the audio element stays
       // gesture-unlocked, so the new track plays instantly — this is how the
       // in-page kids story keeps music from the envelope tap onward).

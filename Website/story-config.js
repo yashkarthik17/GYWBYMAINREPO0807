@@ -81,7 +81,7 @@ var GYWBT_KIDS_STRINGS = {
     },
     finale: {
       eyebrow: 'De parte de Starry y los Crashers',
-      title: 'Qué bueno que naciste.',
+      title: 'Feliz que naciste hoy.',
       body: 'No es el pastel. No son los regalos. Eres tú. Esa es toda la fiesta.',
       exploreLabel: 'Explora el mundo',
       crashers: 'Conoce a los Crashers',
@@ -95,12 +95,39 @@ function GYWBT_KIDS_CONFIG(lang) {
   var T = GYWBT_KIDS_STRINGS[lang];
   var phone = /[?&]swphone/.test(location.search) || Math.min(screen.width, screen.height) <= 600;
   function still(name) { return phone ? '/assets/' + name + '-p.webp?v=3' : '/assets/' + name + '.webp?v=4'; }
+  // Music enters at scene 2 (user direction): the beige party stays quiet, the
+  // theme starts when Starry's world appears. swap() covers every entry path —
+  // story.html direct (sets the same src and starts it) and the envelope's
+  // in-page launch (replaces the hushed strings on the gesture-unlocked
+  // element). A gesture-less direct visit can reach scene 2 with audio still
+  // locked (muted video autoplay needs no tap; audio does) — retry on the
+  // first tap, respecting the ♪ button's mute.
+  var themeSrc = lang === 'es' ? '/assets/audio/theme-es.wav?v=1' : '/assets/audio/theme.wav?v=3';
+  var themeStart = lang === 'es' ? 20 : 11;
+  var musicStarted = false;
+  function themeAtSceneTwo(si) {
+    if (musicStarted || si < 1) return;
+    if (!window.swMusic || !window.swMusic.swap) return;
+    musicStarted = true;
+    window.swMusic.swap(themeSrc, themeStart);
+    var retry = function (e) {
+      window.removeEventListener('pointerdown', retry);
+      window.removeEventListener('touchend', retry);
+      if (e && e.target && e.target.closest && e.target.closest('#sw-music')) return;
+      var s = null; try { s = sessionStorage.getItem('sw-music-on'); } catch (err) {}
+      if (s === '0') return;
+      if (!document.querySelector('#sw-music.is-on')) window.swMusic.on();
+    };
+    window.addEventListener('pointerdown', retry);
+    window.addEventListener('touchend', retry, { passive: true });
+  }
   return {
     playbackRate: 1.15,
     startLabel: T.chrome.startLabel,
     skipLabel: T.chrome.skipLabel,
     nextLabel: T.chrome.nextLabel,
     resumeLabel: T.chrome.resumeLabel,
+    onScene: themeAtSceneTwo,
     sections: [
       {
         id: 'beige', label: 'The Beige Party',

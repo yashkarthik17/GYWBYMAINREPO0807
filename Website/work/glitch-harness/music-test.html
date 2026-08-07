@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>scene-2 music timing test</title>
+<style>html,body{margin:0}iframe{width:100vw;height:100vh;border:0}</style>
+</head>
+<body>
+<script>
+  // Loads a real journey page in a same-origin iframe and reports, once a
+  // second, whether the theme music is playing (#sw-music.is-on) alongside
+  // which scene card is up. Run Chrome with
+  // --autoplay-policy=no-user-gesture-required so audio can actually start.
+  const Q = new URLSearchParams(location.search);
+  const PAGE = Q.get("page") || "/story.html";
+  const KEY = Q.get("key") || "music";
+  const t0 = performance.now();
+  const f = document.createElement("iframe");
+  f.src = PAGE;
+  document.body.appendChild(f);
+  setInterval(() => {
+    let d;
+    try { d = f.contentDocument; } catch (e) { return; }
+    if (!d) return;
+    const card = d.querySelector(".tw-card__title");
+    const audioBtn = d.querySelector("#sw-music");
+    const rec = {
+      t: +((performance.now() - t0) / 1000).toFixed(1),
+      musicOn: !!d.querySelector("#sw-music.is-on"),
+      btnExists: !!audioBtn,
+      card: card ? card.textContent : "",
+      dot: Array.from(d.querySelectorAll(".tw-dots i")).findIndex(x => x.className === "is-here"),
+    };
+    fetch("/report?s=" + KEY, { method: "POST", body: JSON.stringify(rec) }).catch(() => {});
+  }, 1000);
+</script>
+</body>
+</html>

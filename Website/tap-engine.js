@@ -323,6 +323,10 @@ function mountTapWorld(container, config) {
     explore.classList.remove("is-on");
     if (scene) { markDot(item.si); showCard(scene); }
     else hideCard();
+    // Page hook: fires on every SCENE entry, video and stills mode alike
+    // (config.onScene(sceneIndex)). Used to start the theme music at scene 2 —
+    // the handler latches itself, so re-entries (replay, resume) are its call.
+    if (scene && config.onScene) { try { config.onScene(item.si); } catch (e) {} }
 
     if (stillsMode) {
       if (!scene) { go(nextSceneAt(p)); return; }   // stills skip connectors

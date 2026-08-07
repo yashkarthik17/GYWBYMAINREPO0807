@@ -175,8 +175,8 @@
   </div>
 
   <div class="cine" id="cine" aria-hidden="true">
-    <p class="cine__line">The first new birthday song in a hundred years&nbsp;&mdash;</p>
     <p class="cine__line">Glad You Were Born Today</p>
+    <p class="cine__line">Have a happier birthday</p>
   </div>
 
   <!-- choices live on the letter; positioned by JS, revealed when the envelope opens -->
@@ -189,10 +189,10 @@
   <canvas id="confetti"></canvas>
   <div class="loading" id="loading">Folding the paper…</div>
 
-  <script src="music.js?v=17" data-once data-src="assets/audio/envelope.wav?v=1"></script>
-  <script src="tap-engine.js?v=11"></script>
-  <script src="story-config.js?v=3"></script>
-  <script src="adult-config.js?v=3"></script>
+  <script src="music.js?v=18" data-once data-src="assets/audio/envelope.wav?v=1"></script>
+  <script src="tap-engine.js?v=12"></script>
+  <script src="story-config.js?v=4"></script>
+  <script src="adult-config.js?v=4"></script>
   <script>
   (function () {
     "use strict";
@@ -232,8 +232,10 @@
       return s === "es" ? "es" : "en";
     }
     const LETTER_TXT = {
-      en: { grown: "Glad You Were Born Today", kids: "Glad You Were Born Today (Kids)", toggle: "Versión en español", toggleAria: "Cambiar a la versión en español" },
-      es: { grown: "Qué bueno que naciste", kids: "Qué bueno que naciste (Para Niños)", toggle: "English version", toggleAria: "Switch to the English version" },
+      en: { grown: "Glad You Were Born Today", kids: "Glad You Were Born Today (Kids)", toggle: "Versión en español", toggleAria: "Cambiar a la versión en español",
+            cine1: "Glad You Were Born Today", cine2: "Have a happier birthday" },
+      es: { grown: "Feliz que naciste hoy", kids: "Feliz que naciste hoy (Para Niños)", toggle: "English version", toggleAria: "Switch to the English version",
+            cine1: "Feliz que naciste hoy", cine2: "Que tengas un cumpleaños más feliz" },
     };
     let lang = gywbtLang();
     const grownLink = document.querySelector(".sheet-btn.grown");
@@ -245,6 +247,11 @@
       kidsLink.textContent = T.kids;
       langBtn.textContent = T.toggle;
       langBtn.setAttribute("aria-label", T.toggleAria);
+      // The intro slides speak the same language as the letter (they render
+      // before the toggle is reachable, so this covers the load-time lang;
+      // a later toggle only matters for a replayed visit).
+      const lines = document.querySelectorAll(".cine__line");
+      if (lines.length >= 2) { lines[0].textContent = T.cine1; lines[1].textContent = T.cine2; }
     }
     renderLetter();
     langBtn.addEventListener("click", function () {
@@ -412,10 +419,10 @@
     document.querySelector(".sheet-btn.kids").addEventListener("click", function (e) {
       if (!window.mountTapWorld || !window.GYWBT_KIDS_CONFIG) return;  // fall back to story.html
       e.preventDefault();
-      if (window.swMusic && window.swMusic.swap) {
-        if (lang === "es") window.swMusic.swap("assets/audio/theme-es.wav?v=1", 20);
-        else window.swMusic.swap("assets/audio/theme.wav?v=2", 11);
-      }
+      // Quiet first scene: silence the envelope strings WITHOUT recording a
+      // mute — the config's onScene hook starts the kids theme when scene 2
+      // arrives (the audio element stays gesture-unlocked from the seal tap).
+      if (window.swMusic && window.swMusic.hush) window.swMusic.hush();
       try { history.pushState({ kids: 1 }, "", "#kids"); } catch (err) {}
       stage.style.display = "none";
       document.querySelector(".ui").style.display = "none";
@@ -438,14 +445,10 @@
     document.querySelector(".sheet-btn.grown").addEventListener("click", function (e) {
       if (!window.GYWBT_ADULT_CONFIG) return;  // fall back to adult/
       e.preventDefault();
-      // adult/ has its OWN theme track (a different file from the kids/root one
-      // above, despite the shared filename) — music.js's default src on that page
-      // resolves to /adult/assets/audio/theme.wav?v=3, so swap to that exact URL
-      // here too, or a direct /adult/ visit and this in-page launch play different songs.
-      if (window.swMusic && window.swMusic.swap) {
-        if (lang === "es") window.swMusic.swap("/adult/assets/audio/theme-es.wav?v=1", 20);
-        else window.swMusic.swap("/adult/assets/audio/theme.wav?v=3", 11);
-      }
+      // Quiet first scene, same as the kids launch above: hush the strings and
+      // let the adult config's onScene hook start the adult theme (its own
+      // /adult/ track, a different file despite the shared filename) at scene 2.
+      if (window.swMusic && window.swMusic.hush) window.swMusic.hush();
       try { history.pushState({ adult: 1 }, "", "#adult"); } catch (err) {}
       stage.style.display = "none";
       document.querySelector(".ui").style.display = "none";
@@ -457,7 +460,7 @@
       world.id = "world";
       document.body.appendChild(world);
       var engine = document.createElement("script");
-      engine.src = "adult/tap-engine.js?v=13";
+      engine.src = "adult/tap-engine.js?v=14";
       engine.onload = function () { mountTapWorld(world, GYWBT_ADULT_CONFIG(lang)); };
       engine.onerror = function () { location.href = "adult/"; };
       document.body.appendChild(engine);

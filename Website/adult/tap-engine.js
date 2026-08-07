@@ -383,6 +383,10 @@ function mountTapWorld(container, config) {
     hideExplore();
     if (scene) { markDot(item.si); showCard(scene); }
     else hideCard();
+    // Page hook: fires on every SCENE entry, video and stills mode alike
+    // (config.onScene(sceneIndex)). Used to start the theme music at scene 2 —
+    // the handler latches itself, so re-entries (replay, resume) are its call.
+    if (scene && config.onScene) { try { config.onScene(item.si); } catch (e) {} }
 
     if (stillsMode) {
       if (!scene) { go(nextSceneAt(p)); return; }   // stills skip connectors
@@ -717,6 +721,9 @@ function mountTapWorld(container, config) {
   // design — this function never fires again after its one attempt.
   var musicNudged = false;
   function startMusicOnGesture() {
+    // When the page drives music via onScene (theme enters at scene 2), the
+    // first-gesture nudge must not jump the gun during the quiet first scene.
+    if (config.onScene) return;
     if (musicNudged) return;
     musicNudged = true;
     try {

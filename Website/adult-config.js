@@ -88,7 +88,7 @@ var GYWBT_ADULT_STRINGS = {
     },
     sendoff: {
       eyebrow: 'De parte de Starry y los Crashers',
-      title: 'Qué bueno que naciste.',
+      title: 'Feliz que naciste hoy.',
       body: 'Se despiden con la mano hasta que el jardín se oscurece. Y jamás olvidan una fecha.',
       exploreLabel: 'Explora',
       hire: 'Contrata a la Tripulación',
@@ -103,12 +103,36 @@ var GYWBT_ADULT_STRINGS = {
 function GYWBT_ADULT_CONFIG(lang) {
   lang = (lang === 'es' || lang === 'en') ? lang : gywbtLang();
   var T = GYWBT_ADULT_STRINGS[lang];
+  // Music enters at scene 2 (user direction) — same pattern as the kids
+  // config, pointed at the adult tracks (its own files under /adult/, a
+  // different song despite the shared filename). See story-config.js for the
+  // full rationale on swap() + the first-tap retry.
+  var themeSrc = lang === 'es' ? '/adult/assets/audio/theme-es.wav?v=1' : '/adult/assets/audio/theme.wav?v=3';
+  var themeStart = lang === 'es' ? 20 : 11;
+  var musicStarted = false;
+  function themeAtSceneTwo(si) {
+    if (musicStarted || si < 1) return;
+    if (!window.swMusic || !window.swMusic.swap) return;
+    musicStarted = true;
+    window.swMusic.swap(themeSrc, themeStart);
+    var retry = function (e) {
+      window.removeEventListener('pointerdown', retry);
+      window.removeEventListener('touchend', retry);
+      if (e && e.target && e.target.closest && e.target.closest('#sw-music')) return;
+      var s = null; try { s = sessionStorage.getItem('sw-music-on'); } catch (err) {}
+      if (s === '0') return;
+      if (!document.querySelector('#sw-music.is-on')) window.swMusic.on();
+    };
+    window.addEventListener('pointerdown', retry);
+    window.addEventListener('touchend', retry, { passive: true });
+  }
   return {
     hint: T.hint,
     startLabel: T.chrome.startLabel,
     skipLabel: T.chrome.skipLabel,
     nextLabel: T.chrome.nextLabel,
     resumeLabel: T.chrome.resumeLabel,
+    onScene: themeAtSceneTwo,
     diveScroll: 1.5,
     crossfade: 0.12,
     // longer mobile track: same scroll speed demands ~30% less playback rate,
