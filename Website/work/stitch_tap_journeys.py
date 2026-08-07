@@ -19,7 +19,14 @@ Run from Website/: python work/stitch_tap_journeys.py [--only kids-m,adult,...]
 import subprocess, os, json, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # Website/
+# Seam width per job. Kids keeps the tight 0.15s: its connector flights are
+# frame-matched into the neighbouring scenes, so the seam is invisible by
+# design. The adult chain has NO connectors — scenes are separate
+# compositions, and a 0.15s blend between unrelated shots reads as a jump
+# cut with a flicker. 0.6s is the standard vignette dissolve: long enough to
+# read as intentional, and it fully swallows the ~0.18s trimmed-tail beat.
 FADE = 0.15
+FADES = {"adult": 0.6, "adult-m": 0.6}
 # 60fps output grid: rate-baking (setpts) raises the effective source rate to
 # ~27.6-31.7fps; a 24fps grid DROPPED 13-24% of frames in an irregular cadence
 # (visible judder on camera flights). At 60 every source frame keeps its own
@@ -70,6 +77,7 @@ def dur(f):
 
 def stitch(key):
     vdir, names, suffix, rates, outbase, crf, maxrate, bufsize = JOBS[key]
+    fade = FADES.get(key, FADE)
     vdir = os.path.join(ROOT, vdir)
     files = [os.path.join(vdir, f"{n}{suffix}.mp4") for n in names]
     out = os.path.join(vdir, f"{outbase}.mp4")
@@ -80,7 +88,7 @@ def stitch(key):
     D = [(d - h - t) / r for d, (h, t), r in zip(raw, trims, rates)]
     X = [0.0]
     for i in range(1, len(files)):
-        X.append(X[i - 1] + D[i - 1] - FADE)
+        X.append(X[i - 1] + D[i - 1] - fade)
 
     inputs = []
     for f in files:
@@ -95,7 +103,7 @@ def stitch(key):
     prev = "s0"
     for k in range(1, len(files)):
         label = f"v{k}"
-        parts.append(f"[{prev}][s{k}]xfade=transition=fade:duration={FADE}:offset={X[k]:.6f}[{label}]")
+        parts.append(f"[{prev}][s{k}]xfade=transition=fade:duration={fade}:offset={X[k]:.6f}[{label}]")
         prev = label
     fc = ";".join(parts)
 
@@ -107,8 +115,8 @@ def stitch(key):
     total = dur(out)
     spans = []
     for i in range(len(files)):
-        t0 = X[i] + (FADE / 2 if i > 0 else 0.0)
-        t1 = X[i] + D[i] - (FADE / 2 if i < len(files) - 1 else 0.0)
+        t0 = X[i] + (fade / 2 if i > 0 else 0.0)
+        t1 = X[i] + D[i] - (fade / 2 if i < len(files) - 1 else 0.0)
         spans.append([round(t0, 3), round(min(t1, total - 0.05), 3)])
 
     poster = os.path.join(vdir, "..", f"{outbase}-poster.webp") if suffix == "" \

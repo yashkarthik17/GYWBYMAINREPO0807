@@ -144,12 +144,12 @@ function GYWBT_ADULT_CONFIG(lang) {
     // Regenerate with work/stitch_tap_journeys.py (prints these values).
     // (Replaces the retired scroll-engine journeyMobile block.)
     journey: {
-      clip: '/adult/assets/vid/journey-tap.mp4?v=3',
-      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=3',
+      clip: '/adult/assets/vid/journey-tap.mp4?v=4',
+      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=4',
       poster: '/adult/assets/journey-tap-poster.webp?v=1',
       posterMobile: '/adult/assets/journey-tap-m-poster.webp?v=1',
-      spans: [[0.0,6.436],[6.436,13.178],[13.178,20.339],[20.339,27.499],[27.499,34.683]],
-      spansMobile: [[0.0,6.436],[6.436,13.03],[13.03,19.736],[19.736,26.896],[26.896,34.083]],
+      spans: [[0.0,6.211],[6.211,12.503],[12.503,19.214],[19.214,25.924],[25.924,32.883]],
+      spansMobile: [[0.0,6.211],[6.211,12.355],[12.355,18.611],[18.611,25.321],[25.321,32.283]],
     },
     sections: [
       { id:'quiet', label:'The Quiet Party',
