@@ -88,7 +88,7 @@
   "adult": {
     "out": "adult/assets/vid/journey-tap.mp4",
     "poster": "adult/assets/journey-tap-poster.webp",
-    "total": 35.875,
+    "total": 35.883,
     "spans": [
       [
         0.0,
@@ -108,14 +108,14 @@
       ],
       [
         28.649,
-        35.825
+        35.833
       ]
     ]
   },
   "adult-m": {
     "out": "adult/assets/vid/journey-tap-m.mp4",
     "poster": "adult/assets/journey-tap-m-poster.webp",
-    "total": 34.708,
+    "total": 34.733,
     "spans": [
       [
         0.0,
@@ -135,7 +135,7 @@
       ],
       [
         27.486,
-        34.658
+        34.683
       ]
     ]
   }

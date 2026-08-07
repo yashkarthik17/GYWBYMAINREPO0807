@@ -133,8 +133,8 @@ function GYWBT_KIDS_CONFIG(lang) {
     // 9-item chain below (scene,conn,…scene) in stitched-timeline seconds.
     // Regenerate with work/stitch_tap_journeys.py (prints these values).
     journey: {
-      clip: '/assets/vid/journey-tap.mp4?v=1',
-      clipMobile: '/assets/vid/journey-tap-m.mp4?v=1',
+      clip: '/assets/vid/journey-tap.mp4?v=2',
+      clipMobile: '/assets/vid/journey-tap-m.mp4?v=2',
       poster: '/assets/journey-tap-poster.webp?v=1',
       posterMobile: '/assets/journey-tap-m-poster.webp?v=1',
       spans: [[0.0,6.809],[6.809,11.043],[11.043,17.151],[17.151,21.385],[21.385,27.494],[27.494,31.438],[31.438,37.274],[37.274,41.508],[41.508,47.367]],

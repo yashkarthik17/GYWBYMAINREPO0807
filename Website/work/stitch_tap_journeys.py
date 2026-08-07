@@ -20,7 +20,11 @@ import subprocess, os, json, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # Website/
 FADE = 0.15
-FPS = 24
+# 60fps output grid: rate-baking (setpts) raises the effective source rate to
+# ~27.6-31.7fps; a 24fps grid DROPPED 13-24% of frames in an irregular cadence
+# (visible judder on camera flights). At 60 every source frame keeps its own
+# slot — duplicates fill the rest and encode/decode as near-free skip frames.
+FPS = 60
 
 # chain: (basename, baked_rate) in site order. Kids: global 1.15, scenes
 # multiply (crashpad/crash 1.10, glowup/finale 1.15); connectors plain 1.15.
