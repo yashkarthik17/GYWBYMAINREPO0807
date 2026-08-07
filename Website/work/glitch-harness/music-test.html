@@ -18,6 +18,33 @@
   const f = document.createElement("iframe");
   f.src = PAGE;
   document.body.appendChild(f);
+  // ?envelope=kids|adult: drive the envelope front door — skip the intro,
+  // open the seal, then tap the requested journey button (the in-page launch
+  // path, which shares the engine+config but goes through hush() etc.)
+  const ENV = Q.get("envelope");
+  if (ENV) {
+    let opened = false, launched = false;
+    setInterval(() => {
+      let d; try { d = f.contentDocument; } catch (e) { return; }
+      if (!d) return;
+      if (!opened) {
+        const btn = d.getElementById("toggle");
+        if (btn && !btn.hidden) { opened = true; btn.click(); btn.click(); return; }
+        // a tap during the intro text skips to the envelope; next tick opens
+        const tapl = d.getElementById("taplayer");
+        if (tapl) tapl.click();
+        return;
+      }
+      if (!launched) {
+        const sheet = d.getElementById("sheet");
+        if (sheet && sheet.getAttribute("aria-hidden") === "false") {
+          launched = true;
+          d.querySelector(ENV === "adult" ? ".sheet-btn.grown" : ".sheet-btn.kids").click();
+        }
+      }
+    }, 700);
+  }
+
   // ?replay=1: when the finale explore appears, click "Play it again" once —
   // asserts the replay cycle (quiet scene 1 again, theme re-enters at scene 2)
   let replayed = false;
