@@ -138,10 +138,18 @@ function GYWBT_ADULT_CONFIG(lang) {
     // longer mobile track: same scroll speed demands ~30% less playback rate,
     // so chase-play keeps up instead of racing/skipping (scroll-skip fix)
     scrollMobileFactor: 2.6,
-    journeyMobile: {
-      clip: '/adult/assets/vid/journey-m.mp4?v=11',
-      poster: '/adult/assets/journey-poster-m.webp?v=7',
-      spans: [[0.0, 8.042], [8.042, 16.042], [16.042, 24.042], [24.042, 32.042], [32.042, 40.042]],
+    // Continuous journey: ONE stitched file per tier (crossfades + the tuned
+    // per-scene pacing baked in — the file plays at rate 1). spans mirror the
+    // 5-scene chain below (no connectors) in stitched-timeline seconds.
+    // Regenerate with work/stitch_tap_journeys.py (prints these values).
+    // (Replaces the retired scroll-engine journeyMobile block.)
+    journey: {
+      clip: '/adult/assets/vid/journey-tap.mp4?v=1',
+      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=1',
+      poster: '/adult/assets/journey-tap-poster.webp?v=1',
+      posterMobile: '/adult/assets/journey-tap-m-poster.webp?v=1',
+      spans: [[0.0,6.436],[6.436,14.328],[14.328,21.489],[21.489,28.649],[28.649,35.825]],
+      spansMobile: [[0.0,6.436],[6.436,13.62],[13.62,20.326],[20.326,27.486],[27.486,34.658]],
     },
     sections: [
       { id:'quiet', label:'The Quiet Party',

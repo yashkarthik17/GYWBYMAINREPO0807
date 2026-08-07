@@ -267,7 +267,11 @@ function mountTapWorld(container, config) {
       a.href = l.href; a.textContent = l.label;
       if (l.href === "#top") {
         a.className = "tw-explore__replay";
-        a.addEventListener("click", function (e) { e.preventDefault(); hideExplore(); replayMusicOnPlayAgain(); go(0); });
+        a.addEventListener("click", function (e) {
+          e.preventDefault(); hideExplore(); replayMusicOnPlayAgain();
+          if (J && !stillsMode) { jSeekSeg(0, true); return; }
+          go(0);
+        });
         explore.appendChild(a);
       } else {
         grid.appendChild(a);
@@ -315,7 +319,7 @@ function mountTapWorld(container, config) {
 
   // In-gesture video retry from runtime stills: flip back to video mode and
   // re-run the CURRENT item, so play() executes inside the user's tap. If the
-  // OS refuses again, go()'s catch drops us straight back to stills (pill
+  // OS refuses again, the play-catch drops us straight back to stills (pill
   // re-shown, resumeFailedIdx recorded) — this can never dead-end.
   function gestureResume() {
     if (!stillsMode || !runtimeStills || reduce) return;
@@ -325,8 +329,134 @@ function mountTapWorld(container, config) {
     still.classList.remove("is-on");
     var at = idx < 0 ? 0 : idx;
     resumeArmedIdx = at;
+    if (J) { jSeekSeg(at, false); jPlay(); return; }   // seek + play inside this tap
     idx = -1; prepared = -1;
     go(at);
+  }
+
+  // ---- continuous journey mode (config.journey) ---------------------------
+  // One stitched file per tier — crossfades AND the approved per-scene pacing
+  // are baked in at encode time — plays straight through on a single element:
+  // no per-clip handoffs, so no seam pauses (the early-handoff machinery in
+  // go() exists to hide exactly the seams this mode deletes), and in Low
+  // Power Mode there are no mid-journey play() calls for the OS to refuse.
+  // spans[] maps each PL item to its [t0,t1] in the stitched timeline and
+  // drives the cards, dots, skip/keys, and the scene-2 music hook. Stills
+  // fallback, the resume pill, overlay recovery, and reduced-motion
+  // tap-through reuse the existing chain machinery.
+  var J = null;
+  (function () {
+    var cj = config.journey;
+    if (!cj || !cj.spans || reduce) return;
+    var clip = (phone && cj.clipMobile) ? cj.clipMobile : cj.clip;
+    var spans = (phone && cj.spansMobile) ? cj.spansMobile : cj.spans;
+    if (!clip || spans.length !== PL.length) return;   // spans must mirror the chain
+    J = { clip: clip, spans: spans,
+          poster: (phone && cj.posterMobile) ? cj.posterMobile : (cj.poster || "") };
+  })();
+
+  function jSegAt(t) {
+    for (var k = J.spans.length - 1; k >= 0; k--) if (t >= J.spans[k][0]) return k;
+    return 0;
+  }
+
+  // Announce the segment the playhead is inside (card/dot/onScene) — the
+  // journey-mode replacement for go()'s bookkeeping. idx stays a PL index so
+  // every fallback path (stills, resume, finish) keeps working unchanged.
+  function jTrack() {
+    if (!J || stillsMode) return;
+    var k = jSegAt(vids[0].currentTime);
+    if (k === idx) return;
+    idx = k;
+    var item = PL[k];
+    var scene = item.kind === "scene" ? S[item.si] : null;
+    hideExplore();
+    if (scene) { markDot(item.si); showCard(scene); } else hideCard();
+    if (scene && config.onScene) { try { config.onScene(item.si); } catch (e) {} }
+  }
+
+  function jStillsHere() {
+    var item = PL[Math.max(0, idx)];
+    var s = item ? S[item.kind === "scene" ? item.si : nextSceneIdxOfConn(Math.max(0, idx))] : S[0];
+    renderStill(s);
+    if (idx === LAST) showExplore(s);
+  }
+
+  function jPlay() {
+    var jv = vids[0], pr;
+    try { pr = jv.play(); } catch (e) { enterStillsMode(true); jStillsHere(); return; }
+    if (pr && pr.then) {
+      pr.catch(function (err) {
+        if (err && err.name === "AbortError") return;   // benign teardown race
+        if (idx === resumeArmedIdx) { resumeArmedIdx = -1; resumeFailedIdx = idx; }
+        enterStillsMode(true);
+        if (started) showResumePill();
+        jStillsHere();
+        if (!started) {
+          startOverlay();
+          if (idx <= 0 && !recoveryOff) armRecoveryListeners(vids[0]);
+        }
+      });
+    }
+  }
+
+  function jSeekSeg(k, autoplay) {
+    var jv = vids[0];
+    k = Math.max(0, Math.min(LAST, k));
+    try { jv.currentTime = J.spans[k][0] + 0.01; } catch (e) {}
+    idx = -1;            // force jTrack to re-announce the segment
+    jTrack();
+    if (autoplay && jv.paused) jPlay();
+  }
+
+  function jBoot() {
+    var jv = vids[0];
+    // Pacing is BAKED into the stitched file — force rate 1 (the element was
+    // created with defaultPlaybackRate = RATE for chain mode).
+    try { jv.defaultPlaybackRate = 1; jv.playbackRate = 1; } catch (e) {}
+    jv.src = J.clip;
+    if (J.poster) jv.poster = J.poster;
+    try { jv.load(); } catch (e) {}
+    // 'playing' = honest playback: reveal the video, clear resume bookkeeping,
+    // and tear down the start overlay if a recovery retry just succeeded.
+    // (rVFC can fire for a paused poster frame, so it is NOT the signal here.)
+    jv.addEventListener("playing", function () {
+      if (stillsMode) return;
+      resumeArmedIdx = -1; resumeFailedIdx = -1;
+      jv.classList.add("is-on");
+      still.classList.remove("is-on");
+      hideResumePill();
+      if (startBtn) {
+        startBtn.remove(); startBtn = null;
+        started = true;
+        removeRecoveryListeners();
+      }
+    });
+    jv.ontimeupdate = jTrack;
+    jv.onended = function () { idx = LAST; finish(); };
+    // Stall watchdog, journey flavor: 6s of no progress while supposedly
+    // playing → the scene's artwork goes up while the buffer refills; the
+    // moment progress resumes it comes straight back down. A single file has
+    // no advance target, so patience (plus the artwork) IS the recovery.
+    var lastT = -1, lastMove = performance.now(), stallStill = false;
+    setInterval(function () {
+      if (stillsMode || jv.ended) return;
+      var t = jv.currentTime;
+      if (t !== lastT) {
+        lastT = t; lastMove = performance.now();
+        if (stallStill) { stallStill = false; still.classList.remove("is-on"); }
+        return;
+      }
+      if (jv.paused) { lastMove = performance.now(); return; }
+      if (performance.now() - lastMove > 6000 && !stallStill) {
+        stallStill = true;
+        jStillsHere();
+      }
+    }, 500);
+    jv.onerror = function () { jStillsHere(); };
+    idx = -1;
+    jTrack();     // announce scene 1 immediately (playhead at 0)
+    jPlay();
   }
 
   function nextSceneIdxOfConn(p) { var q = nextSceneAt(p); return PL[q].si; }
@@ -668,6 +798,7 @@ function mountTapWorld(container, config) {
     updateTapA11y();
     still.classList.remove("is-on");
     var at = idx < 0 ? 0 : idx;
+    if (J && !stillsMode) { jSeekSeg(at, false); jPlay(); return; }   // in-gesture
     idx = -1; prepared = -1;
     go(at);
   }
@@ -792,17 +923,28 @@ function mountTapWorld(container, config) {
   skip.addEventListener("click", function () {
     started = true;
     startMusicOnGesture();
+    if (J && !stillsMode) { jSeekSeg(LAST, true); return; }   // seek, keep playing
     if (idx === LAST) { finish(); return; }
     go(LAST);
   });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); advance(); }
+    if (e.key === "ArrowRight" || e.key === " ") {
+      e.preventDefault();
+      if (J && !stillsMode) { jSeekSeg(nextSceneAt(idx), true); return; }
+      advance();
+    }
     if (e.key === "ArrowLeft") {
+      if (J && !stillsMode) {
+        e.preventDefault();
+        var jq = prevSceneAt(idx);
+        jSeekSeg(jq < 0 ? 0 : jq, true);
+        return;
+      }
       var q = prevSceneAt(idx);
       if (q >= 0) { e.preventDefault(); go(q); }
     }
   });
 
   // ---- boot --------------------------------------------------------------
-  go(0);
+  if (J) jBoot(); else go(0);
 }

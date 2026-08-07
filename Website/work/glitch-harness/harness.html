@@ -28,7 +28,7 @@ const Q = new URLSearchParams(location.search);
 const SCEN = Q.get("s") || "normal";
 LOG("scenario=" + SCEN);
 
-if (SCEN === "lpm") {
+if (SCEN === "lpm" || SCEN === "jlpm") {
   (function () {
     let lastGesture = -1e9;
     ["pointerdown", "touchend", "click", "keydown"].forEach(t =>
@@ -58,6 +58,15 @@ if (SCEN === "lpm") {
   s.onload = boot;
   document.body.appendChild(s);
 
+  // journey-mode scenarios (j*): mount with a stitched tiny file + spans
+  const JSPANS = [[0, 1.425], [1.425, 2.275], [2.275, 3.625], [3.625, 4.475], [4.475, 5.86]];
+  function journeyUrl() {
+    const base = "work/glitch-harness/clips/journey.mp4";
+    if (SCEN === "jskip") return "/slow/1500/" + base;
+    if (SCEN === "jstall") return "/stall/0.3/" + base;
+    return "/" + base;
+  }
+
   function clipUrl(name) {
     const base = "work/glitch-harness/clips/" + name;
     if (SCEN === "abort") return "/slow/1500/" + base;
@@ -67,7 +76,7 @@ if (SCEN === "lpm") {
   }
 
   function boot() {
-    mountTapWorld(document.getElementById("world"), {
+    const cfg = {
       sections: [
         { id: "a", title: "Scene 1", eyebrow: "one",
           clip: clipUrl("s1.mp4"), poster: "/work/glitch-harness/clips/p1.webp",
@@ -81,8 +90,12 @@ if (SCEN === "lpm") {
           explore: { links: [{ label: "Play again", href: "#top" }] } },
       ],
       connectors: [clipUrl("c1.mp4"), clipUrl("c2.mp4")],
-    });
-    LOG("mounted engine=" + ENGINE);
+    };
+    if (SCEN.startsWith("j")) {
+      cfg.journey = { clip: journeyUrl(), poster: "/work/glitch-harness/clips/pj.webp", spans: JSPANS };
+    }
+    mountTapWorld(document.getElementById("world"), cfg);
+    LOG("mounted engine=" + ENGINE + " journey=" + SCEN.startsWith("j"));
     instrument();
     drive();
   }
@@ -96,15 +109,15 @@ if (SCEN === "lpm") {
         { method: "POST", body: JSON.stringify(window.__probe()) }).catch(() => {});
     }, 1000);
 
-    if (SCEN === "abort") {
+    if (SCEN === "abort" || SCEN === "jskip") {
       // deterministic race: SKIP (a started=true path, like a real tap) while
-      // scene 1's play() is still pending on the slow connection
+      // the video's play() is still pending on the slow connection
       setTimeout(() => {
         LOG("driver: click Skip during pending play");
         document.querySelector(".tw-skip").click();
       }, 400);
     }
-    if (SCEN === "lpm") {
+    if (SCEN === "lpm" || SCEN === "jlpm") {
       // the initial autoplay was rejected (no gesture yet) -> overlay should
       // be up; "tap" it (counts as a gesture for the LPM play() wrapper)
       setTimeout(() => {
