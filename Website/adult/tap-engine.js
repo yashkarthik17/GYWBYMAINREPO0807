@@ -92,10 +92,14 @@ function mountTapWorld(container, config) {
     "  opacity:0;transition:opacity .6s ease;}",
     ".tw-scrim.is-on{opacity:1;}",
     ".tw-skip.is-hidden{display:none;}",
+    // Explore fades up with the finale instead of popping in (QA): always
+    // flex, revealed via opacity/transform; visibility keeps it out of the
+    // tab order while hidden.
     ".tw-explore{position:absolute;left:50%;bottom:max(7vh,env(safe-area-inset-bottom));z-index:6;",
-    "  transform:translateX(-50%);width:min(92vw,560px);display:none;flex-direction:column;",
-    "  align-items:center;gap:14px;}",
-    ".tw-explore.is-on{display:flex;}",
+    "  transform:translateX(-50%) translateY(14px);width:min(92vw,560px);display:flex;flex-direction:column;",
+    "  align-items:center;gap:14px;opacity:0;pointer-events:none;visibility:hidden;",
+    "  transition:opacity .8s ease,transform .8s ease,visibility .8s;}",
+    ".tw-explore.is-on{opacity:1;pointer-events:auto;visibility:visible;transform:translateX(-50%) translateY(0);}",
     // The 4 nav links (Hire/Meet/Store/Mission) sit in a 2x2 grid — same
     // cream-gradient card style as before, just half-width now.
     ".tw-explore__grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;}",
@@ -125,7 +129,7 @@ function mountTapWorld(container, config) {
     "  letter-spacing:.12em;text-transform:uppercase;padding:11px 20px;border-radius:999px;",
     "  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:opacity .3s ease,transform .3s ease;}",
     ".tw-resume.is-on{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}",
-    "@media (prefers-reduced-motion:reduce){.tw video,.tw .tw-still,.tw-card,.tw-scrim,.tw-resume{transition:none;}}"
+    "@media (prefers-reduced-motion:reduce){.tw video,.tw .tw-still,.tw-card,.tw-scrim,.tw-resume,.tw-explore{transition:none;}}"
   ].join("\n");
   var style = document.createElement("style");
   style.textContent = css;
@@ -369,7 +373,10 @@ function mountTapWorld(container, config) {
   function jTrack() {
     if (!J || stillsMode) return;
     var k = jSegAt(vids[0].currentTime);
-    if (k === idx) return;
+    if (k !== idx) jAnnounce(k);
+  }
+
+  function jAnnounce(k) {
     idx = k;
     var item = PL[k];
     var scene = item.kind === "scene" ? S[item.si] : null;
@@ -403,12 +410,22 @@ function mountTapWorld(container, config) {
     }
   }
 
+  // Coalesced seeking: never issue a new currentTime while the decoder is
+  // still resolving the last seek — rapid skips queue only the LATEST target
+  // and apply it on 'seeked' (phone decoders can wedge under a seek storm;
+  // the scrub engine learned this same rule the hard way). The card/dot
+  // announce the TARGET immediately so the UI stays snappy regardless.
+  var jPendSeek = -1, jPendPlay = false;
   function jSeekSeg(k, autoplay) {
     var jv = vids[0];
     k = Math.max(0, Math.min(LAST, k));
+    jAnnounce(k);
+    if (jv.seeking) {
+      jPendSeek = k;
+      jPendPlay = jPendPlay || !!autoplay;
+      return;
+    }
     try { jv.currentTime = J.spans[k][0] + 0.01; } catch (e) {}
-    idx = -1;            // force jTrack to re-announce the segment
-    jTrack();
     if (autoplay && jv.paused) jPlay();
   }
 
@@ -436,6 +453,14 @@ function mountTapWorld(container, config) {
       }
     });
     jv.ontimeupdate = jTrack;
+    jv.addEventListener("seeked", function () {
+      if (jPendSeek >= 0) {
+        var k = jPendSeek; jPendSeek = -1;
+        try { jv.currentTime = J.spans[k][0] + 0.01; } catch (e) {}
+        return;   // the queued seek lands next; play resumes on ITS 'seeked'
+      }
+      if (jPendPlay && jv.paused && !stillsMode) { jPendPlay = false; jPlay(); }
+    });
     jv.onended = function () { idx = LAST; finish(); };
     // Stall watchdog, journey flavor: 6s of no progress while supposedly
     // playing → the scene's artwork goes up while the buffer refills; the

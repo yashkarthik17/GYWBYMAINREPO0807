@@ -163,7 +163,7 @@ function GYWBT_ADULT_CONFIG(lang) {
     // (Replaces the retired scroll-engine journeyMobile block.)
     journey: {
       clip: '/adult/assets/vid/journey-tap.mp4?v=4',
-      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=4',
+      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=5',
       poster: '/adult/assets/journey-tap-poster.webp?v=1',
       posterMobile: '/adult/assets/journey-tap-m-poster.webp?v=1',
       spans: [[0.0,6.211],[6.211,12.503],[12.503,19.214],[19.214,25.924],[25.924,32.883]],

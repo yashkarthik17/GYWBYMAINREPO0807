@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Glad You Were Born Today</title>
 <meta name="description" content="You're invited. Break the seal to enter the world of Starry &amp; the Crashers — the crew that crashes boring birthday parties and makes them unforgettable." />
 <link rel="icon" type="image/png" href="/assets/favicon.png?v=1" />
@@ -190,9 +190,9 @@
   <div class="loading" id="loading">Folding the paper…</div>
 
   <script src="music.js?v=19" data-once data-src="assets/audio/envelope.wav?v=1"></script>
-  <script src="tap-engine.js?v=14"></script>
-  <script src="story-config.js?v=7"></script>
-  <script src="adult-config.js?v=11"></script>
+  <script src="tap-engine.js?v=15"></script>
+  <script src="story-config.js?v=8"></script>
+  <script src="adult-config.js?v=12"></script>
   <script>
   (function () {
     "use strict";
@@ -411,7 +411,10 @@
       }
     };
 
-    tap.addEventListener("click", () => toggle());
+    // A tap on the envelope only OPENS it (or skips the intro text). Sealing
+    // back is the button's job alone — misclicks around the kids/adult choices
+    // were closing the letter and forcing the re-open wait (QA).
+    tap.addEventListener("click", () => { if (state !== "open") toggle(); });
     btn.addEventListener("click", () => toggle());
     if (/[?&]open/.test(location.search))        // QA shortcut, same as old page
       v.addEventListener("loadeddata", () => setTimeout(() => { v.currentTime = CFG.anchor; setState("sealed"); toggle(); }, 300), { once: true });
@@ -420,6 +423,17 @@
     // element gesture-unlocked, so the music switches to the kids track and
     // plays through the story with zero extra taps (a navigation would let
     // the browser re-mute everything).
+    // Tear the envelope down for real when a journey takes over: release the
+    // envelope video's decoder and remove the nodes — hidden layers with a
+    // parked video were still costing memory/compositing on older devices (QA).
+    function teardownEnvelope() {
+      try { v.pause(); v.removeAttribute("src"); v.load(); } catch (err) {}
+      [stage, document.querySelector(".ui"), sheetEl, cineEl,
+       document.getElementById("confetti"), loading].forEach(function (n) {
+        if (n && n.parentNode) n.parentNode.removeChild(n);
+      });
+    }
+
     document.querySelector(".sheet-btn.kids").addEventListener("click", function (e) {
       if (!window.mountTapWorld || !window.GYWBT_KIDS_CONFIG) return;  // fall back to story.html
       e.preventDefault();
@@ -428,12 +442,7 @@
       // arrives (the audio element stays gesture-unlocked from the seal tap).
       if (window.swMusic && window.swMusic.hush) window.swMusic.hush();
       try { history.pushState({ kids: 1 }, "", "#kids"); } catch (err) {}
-      stage.style.display = "none";
-      document.querySelector(".ui").style.display = "none";
-      sheetEl.style.display = "none";
-      cineEl.style.display = "none";
-      document.getElementById("confetti").style.display = "none";
-      try { v.pause(); } catch (err) {}
+      teardownEnvelope();
       var world = document.createElement("div");
       world.id = "world";
       document.body.appendChild(world);
@@ -454,17 +463,12 @@
       // /adult/ track, a different file despite the shared filename) at scene 2.
       if (window.swMusic && window.swMusic.hush) window.swMusic.hush();
       try { history.pushState({ adult: 1 }, "", "#adult"); } catch (err) {}
-      stage.style.display = "none";
-      document.querySelector(".ui").style.display = "none";
-      sheetEl.style.display = "none";
-      cineEl.style.display = "none";
-      document.getElementById("confetti").style.display = "none";
-      try { v.pause(); } catch (err) {}
+      teardownEnvelope();
       var world = document.createElement("div");
       world.id = "world";
       document.body.appendChild(world);
       var engine = document.createElement("script");
-      engine.src = "adult/tap-engine.js?v=16";
+      engine.src = "adult/tap-engine.js?v=17";
       engine.onload = function () { mountTapWorld(world, GYWBT_ADULT_CONFIG(lang)); };
       engine.onerror = function () { location.href = "adult/"; };
       document.body.appendChild(engine);

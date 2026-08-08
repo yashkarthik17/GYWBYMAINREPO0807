@@ -44,9 +44,9 @@ ADULT_NAMES = ["quiet", "glowup", "photo", "patio", "sendoff"]
 JOBS = {
     # key: (vid_dir, [names], suffix, rates, out_basename, crf, maxrate, bufsize)
     "kids":    ("assets/vid",        KIDS_NAMES,  "",   KIDS_RATES,  "journey-tap",   22, "6M",  "12M"),
-    "kids-m":  ("assets/vid",        KIDS_NAMES,  "-m", KIDS_RATES,  "journey-tap-m", 26, "4M",  "8M"),
+    "kids-m":  ("assets/vid",        KIDS_NAMES,  "-m", KIDS_RATES,  "journey-tap-m", 24, "5M",  "10M"),
     "adult":   ("adult/assets/vid",  ADULT_NAMES, "",   ADULT_RATES, "journey-tap",   22, "6M",  "12M"),
-    "adult-m": ("adult/assets/vid",  ADULT_NAMES, "-m", ADULT_RATES, "journey-tap-m", 26, "4M",  "8M"),
+    "adult-m": ("adult/assets/vid",  ADULT_NAMES, "-m", ADULT_RATES, "journey-tap-m", 24, "5M",  "10M"),
 }
 
 # Per-segment (head, tail) trims in SOURCE seconds, applied before rate baking.

@@ -16,6 +16,7 @@ from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[2]   # .../Website
 LOCK = threading.Lock()
+MP4_KBPS = 0   # global mp4 throttle, set via PUT /throttle/<kbps>
 
 
 class H(BaseHTTPRequestHandler):
@@ -35,6 +36,20 @@ class H(BaseHTTPRequestHandler):
             with LOCK:
                 with out.open("a", encoding="utf-8") as fh:
                     fh.write(body.rstrip("\n") + "\n")
+            self.send_response(204)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+            return
+        self.send_response(404)
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+
+    def do_PUT(self):
+        # global mp4 throttle control: PUT /throttle/<kbps> (0 = off)
+        global MP4_KBPS
+        q = urlsplit(self.path)
+        if q.path.startswith("/throttle/"):
+            MP4_KBPS = int(q.path.rsplit("/", 1)[1])
             self.send_response(204)
             self.send_header("Content-Length", "0")
             self.end_headers()
@@ -77,6 +92,10 @@ class H(BaseHTTPRequestHandler):
         ctype = mimetypes.guess_type(str(f))[0] or "application/octet-stream"
         if delay_ms:
             time.sleep(delay_ms / 1000)
+        # global mp4 throttle (set via PUT /throttle/<kbps>) — approximates a
+        # real cellular connection for pages whose asset URLs can't be prefixed
+        if MP4_KBPS and str(f).endswith(".mp4") and not drip_kbps:
+            drip_kbps = MP4_KBPS
 
         # Range support (video elements ask for ranges; 200-with-full-body also
         # works for mp4 but honoring ranges keeps behavior browser-realistic).
