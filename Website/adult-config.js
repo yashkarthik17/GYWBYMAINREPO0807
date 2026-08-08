@@ -167,12 +167,12 @@ function GYWBT_ADULT_CONFIG(lang) {
       // the no-MSE fallback. Regenerate with work/hls_package.py.
       hls: '/adult/assets/vid/hls/journey-tap/journey.m3u8',
       hlsMobile: '/adult/assets/vid/hls/journey-tap-m/journey.m3u8',
-      clip: '/adult/assets/vid/journey-tap.mp4?v=4',
-      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=5',
+      clip: '/adult/assets/vid/journey-tap.mp4?v=5',
+      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=6',
       poster: '/adult/assets/journey-tap-poster.webp?v=1',
       posterMobile: '/adult/assets/journey-tap-m-poster.webp?v=1',
-      spans: [[0.0,6.211],[6.211,12.503],[12.503,19.214],[19.214,25.924],[25.924,32.883]],
-      spansMobile: [[0.0,6.211],[6.211,12.355],[12.355,18.611],[18.611,25.321],[25.321,32.283]],
+      spans: [[0.0,4.592],[4.592,9.784],[9.784,15.585],[15.585,20.705],[20.705,27.667]],
+      spansMobile: [[0.0,6.211],[6.211,11.695],[11.695,17.951],[17.951,23.071],[23.071,30.033]],
     },
     sections: [
       { id:'quiet', label:'The Quiet Party',

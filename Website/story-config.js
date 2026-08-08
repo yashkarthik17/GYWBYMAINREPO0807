@@ -156,12 +156,12 @@ function GYWBT_KIDS_CONFIG(lang) {
       // the no-MSE fallback. Regenerate with work/hls_package.py.
       hls: '/assets/vid/hls/journey-tap/journey.m3u8',
       hlsMobile: '/assets/vid/hls/journey-tap-m/journey.m3u8',
-      clip: '/assets/vid/journey-tap.mp4?v=2',
-      clipMobile: '/assets/vid/journey-tap-m.mp4?v=3',
+      clip: '/assets/vid/journey-tap.mp4?v=3',
+      clipMobile: '/assets/vid/journey-tap-m.mp4?v=4',
       poster: '/assets/journey-tap-poster.webp?v=1',
       posterMobile: '/assets/journey-tap-m-poster.webp?v=1',
-      spans: [[0.0,6.809],[6.809,11.043],[11.043,17.151],[17.151,21.385],[21.385,27.494],[27.494,31.438],[31.438,37.274],[37.274,41.508],[41.508,47.367]],
-      spansMobile: [[0.0,6.809],[6.809,11.043],[11.043,17.151],[17.151,21.385],[21.385,27.494],[27.494,31.184],[31.184,37.02],[37.02,41.254],[41.254,47.117]],
+      spans: [[0.0,6.734],[6.734,10.601],[10.601,16.559],[16.559,20.208],[20.208,26.166],[26.166,29.308],[29.308,34.806],[34.806,37.368],[37.368,42.4]],
+      spansMobile: [[0.0,6.734],[6.734,9.949],[9.949,15.907],[15.907,19.991],[19.991,25.751],[25.751,29.292],[29.292,34.789],[34.789,38.221],[38.221,44.0]],
     },
     sections: [
       {

@@ -26,7 +26,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # Website/
 # cut with a flicker. 0.6s is the standard vignette dissolve: long enough to
 # read as intentional, and it fully swallows the ~0.18s trimmed-tail beat.
 FADE = 0.15
-FADES = {"adult": 0.6, "adult-m": 0.6}
+# Kids seams widen slightly (0.15 -> 0.3): trimming breaks the exact
+# end-frame == next-first-frame match the connectors were built with, and a
+# 0.3s dissolve over MOVING footage bridges that invisibly while staying
+# snappy. Adult keeps its 0.6s vignette dissolves.
+FADES = {"adult": 0.6, "adult-m": 0.6, "kids": 0.3, "kids-m": 0.3}
 # 60fps output grid: rate-baking (setpts) raises the effective source rate to
 # ~27.6-31.7fps; a 24fps grid DROPPED 13-24% of frames in an irregular cadence
 # (visible judder on camera flights). At 60 every source frame keeps its own
@@ -49,17 +53,19 @@ JOBS = {
     "adult-m": ("adult/assets/vid",  ADULT_NAMES, "-m", ADULT_RATES, "journey-tap-m", 24, "5M",  "10M"),
 }
 
-# Per-segment (head, tail) trims in SOURCE seconds, applied before rate baking.
-# adult landscape glowup: freezedetect measured a 1.33s FROZEN tail (the 2->3
-# "stuck" hang — the mobile renders got this trim at the source; the landscape
-# files never did). Trim 1.15s so ~0.18s of hold remains, which the 0.15s
-# crossfade consumes — the seam lands on moving footage.
+# Per-segment (head, tail) trims in SOURCE seconds, applied before rate
+# baking. Derived from motion profiles (tblend-difference YAVG, 0.25s
+# buckets): every stretch at a boundary running under 45% of the clip's
+# median motion is cut (tail cap 2s, head cap 1s) — the settles/hovers the
+# clips ease into read as a PAUSE at every seam once stitched (user report:
+# "pauses between clips through the entire website"). First heads and last
+# tails are never cut. Re-derive with the motion profiler in the repo notes
+# if clips are re-rendered.
 TRIMS = {
-    "adult": [(0, 0), (0, 1.15), (0, 0), (0, 0), (0, 0)],
-    # glowup-m: the round-7 source trim took 0.7s, but freezedetect measures a
-    # further 0.77s frozen tail (6.5625 -> EOF at 7.333) — same 2->3 "stuck"
-    # on phones. Trim 0.59s, leaving the ~0.18s beat the crossfade consumes.
-    "adult-m": [(0, 0), (0, 0.59), (0, 0), (0, 0), (0, 0)],
+    "kids":    [(0.0, 0.0), (0.0, 0.25), (0.0, 0.0), (0.25, 0.25), (0.0, 0.0), (0.5, 0.25), (0.25, 0.0), (0.75, 1.0), (1.0, 0.0)],
+    "kids-m":  [(0.0, 0.0), (0.0, 1.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.25), (0.0, 0.0), (0.0, 0.25), (0.25, 0.5), (0.0, 0.0)],
+    "adult":   [(0.0, 2.0), (0.5, 1.75), (0.0, 1.0), (0.75, 1.0), (0.0, 0.0)],
+    "adult-m": [(0.0, 0.0), (0.0, 1.25), (0.0, 0.0), (0.25, 1.5), (0.0, 0.0)],
 }
 
 
