@@ -316,6 +316,8 @@ function mountTapWorld(container, config) {
     var spans = (phone && cj.spansMobile) ? cj.spansMobile : cj.spans;
     if (!clip || spans.length !== PL.length) return;   // spans must mirror the chain
     J = { clip: clip, spans: spans,
+          hls: (phone && cj.hlsMobile) ? cj.hlsMobile : (cj.hls || ""),
+          hlsLib: cj.hlsLib || "/assets/vendor/hls-1.5.20.min.js",
           poster: (phone && cj.posterMobile) ? cj.posterMobile : (cj.poster || "") };
   })();
 
@@ -383,14 +385,52 @@ function mountTapWorld(container, config) {
     if (autoplay && jv.paused) jPlay();
   }
 
+  // Source attach, best pipe first: native HLS (Safari/iOS) → hls.js over
+  // MSE (Chrome/Android/desktop; lazy-loads the self-hosted lib) → the
+  // progressive MP4. The adaptive ladder starts on a low rung immediately
+  // and shifts up, so weak connections get smooth-but-softer video instead
+  // of stalls. The media timeline is identical across pipes, so spans,
+  // cards, seeks, and the watchdog don't change at all.
+  function jAttachSource(jv) {
+    if (J.hls && jv.canPlayType("application/vnd.apple.mpegurl")) {
+      jv.src = J.hls;
+      try { jv.load(); } catch (e) {}
+      return;
+    }
+    if (J.hls && window.MediaSource) {
+      var boot = function () {
+        if (!window.Hls || !window.Hls.isSupported()) { jMp4(jv); return; }
+        var h = new window.Hls({ maxBufferLength: 20, capLevelToPlayerSize: true });
+        h.on(window.Hls.Events.ERROR, function (ev, data) {
+          // fatal streaming error → drop to the progressive MP4, same timeline
+          if (data && data.fatal) { try { h.destroy(); } catch (e) {} jMp4(jv); jPlay(); }
+        });
+        h.loadSource(J.hls);
+        h.attachMedia(jv);
+        jv._hls = h;
+      };
+      if (window.Hls) { boot(); return; }
+      var sc = document.createElement("script");
+      sc.src = J.hlsLib;
+      sc.onload = boot;
+      sc.onerror = function () { jMp4(jv); jPlay(); };
+      document.head.appendChild(sc);
+      return;
+    }
+    jMp4(jv);
+  }
+  function jMp4(jv) {
+    jv.src = J.clip;
+    try { jv.load(); } catch (e) {}
+  }
+
   function jBoot() {
     var jv = vids[0];
     // Pacing is BAKED into the stitched file — force rate 1 (the element was
     // created with defaultPlaybackRate = RATE for chain mode).
     try { jv.defaultPlaybackRate = 1; jv.playbackRate = 1; } catch (e) {}
-    jv.src = J.clip;
     if (J.poster) jv.poster = J.poster;
-    try { jv.load(); } catch (e) {}
+    jAttachSource(jv);
     // 'playing' = honest playback: reveal the video, clear resume bookkeeping.
     // (rVFC can fire for a paused poster frame, so it is NOT the signal here.)
     jv.addEventListener("playing", function () {
@@ -429,7 +469,17 @@ function mountTapWorld(container, config) {
         jStillsHere();
       }
     }, 500);
-    jv.onerror = function () { jStillsHere(); };
+    jv.onerror = function () {
+      // element-level error (bad pipe / decode): if HLS was active, fall to
+      // the progressive MP4 once before settling for artwork
+      if (jv._hls) {
+        try { jv._hls.destroy(); } catch (e) {}
+        jv._hls = null;
+        jMp4(jv); jPlay();
+        return;
+      }
+      jStillsHere();
+    };
     idx = -1;
     jTrack();     // announce scene 1 immediately (playhead at 0)
     jPlay();

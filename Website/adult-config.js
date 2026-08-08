@@ -162,6 +162,11 @@ function GYWBT_ADULT_CONFIG(lang) {
     // Regenerate with work/stitch_tap_journeys.py (prints these values).
     // (Replaces the retired scroll-engine journeyMobile block.)
     journey: {
+      // Adaptive delivery: the HLS ladder starts low and shifts up with the
+      // connection (Safari native / hls.js elsewhere); the MP4s below remain
+      // the no-MSE fallback. Regenerate with work/hls_package.py.
+      hls: '/adult/assets/vid/hls/journey-tap/journey.m3u8',
+      hlsMobile: '/adult/assets/vid/hls/journey-tap-m/journey.m3u8',
       clip: '/adult/assets/vid/journey-tap.mp4?v=4',
       clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=5',
       poster: '/adult/assets/journey-tap-poster.webp?v=1',

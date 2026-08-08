@@ -93,6 +93,8 @@ if (SCEN === "lpm" || SCEN === "jlpm") {
     };
     if (SCEN.startsWith("j")) {
       cfg.journey = { clip: journeyUrl(), poster: "/work/glitch-harness/clips/pj.webp", spans: JSPANS };
+      // jhls: exercise the adaptive pipe (hls.js over MSE) with a tiny ladder
+      if (SCEN === "jhls") cfg.journey.hls = "/work/glitch-harness/clips/hls/journey.m3u8";
     }
     mountTapWorld(document.getElementById("world"), cfg);
     LOG("mounted engine=" + ENGINE + " journey=" + SCEN.startsWith("j"));
@@ -166,6 +168,7 @@ if (SCEN === "lpm" || SCEN === "jlpm") {
         vids: vids.map(v => ({
           on: v.classList.contains("is-on"), paused: v.paused, ended: v.ended,
           t: +v.currentTime.toFixed(2), rs: v.readyState,
+          hlsLevel: v._hls ? v._hls.currentLevel : -9,
           src: (v.currentSrc || "").split("/").pop(),
         })),
         log: window.__log.slice(-25),

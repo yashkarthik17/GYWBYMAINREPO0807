@@ -151,6 +151,11 @@ function GYWBT_KIDS_CONFIG(lang) {
     // 9-item chain below (scene,conn,…scene) in stitched-timeline seconds.
     // Regenerate with work/stitch_tap_journeys.py (prints these values).
     journey: {
+      // Adaptive delivery: the HLS ladder starts low and shifts up with the
+      // connection (Safari native / hls.js elsewhere); the MP4s below remain
+      // the no-MSE fallback. Regenerate with work/hls_package.py.
+      hls: '/assets/vid/hls/journey-tap/journey.m3u8',
+      hlsMobile: '/assets/vid/hls/journey-tap-m/journey.m3u8',
       clip: '/assets/vid/journey-tap.mp4?v=2',
       clipMobile: '/assets/vid/journey-tap-m.mp4?v=3',
       poster: '/assets/journey-tap-poster.webp?v=1',

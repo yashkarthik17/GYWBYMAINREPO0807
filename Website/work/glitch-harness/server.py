@@ -17,6 +17,8 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parents[2]   # .../Website
 LOCK = threading.Lock()
 MP4_KBPS = 0   # global mp4 throttle, set via PUT /throttle/<kbps>
+mimetypes.add_type("application/vnd.apple.mpegurl", ".m3u8")
+mimetypes.add_type("video/mp4", ".m4s")
 
 
 class H(BaseHTTPRequestHandler):
@@ -94,7 +96,7 @@ class H(BaseHTTPRequestHandler):
             time.sleep(delay_ms / 1000)
         # global mp4 throttle (set via PUT /throttle/<kbps>) — approximates a
         # real cellular connection for pages whose asset URLs can't be prefixed
-        if MP4_KBPS and str(f).endswith(".mp4") and not drip_kbps:
+        if MP4_KBPS and (str(f).endswith(".mp4") or str(f).endswith(".m4s")) and not drip_kbps:
             drip_kbps = MP4_KBPS
 
         # Range support (video elements ask for ranges; 200-with-full-body also
