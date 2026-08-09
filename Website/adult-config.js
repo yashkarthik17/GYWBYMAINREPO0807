@@ -157,8 +157,6 @@ function GYWBT_ADULT_CONFIG(lang) {
     resumeLabel: T.chrome.resumeLabel,
     onScene: themeAtSceneTwo,
     onTime: themeAtSix,
-    // clip foley ducked well under the theme song (user: song louder)
-    clipVolume: 0.15,
     diveScroll: 1.5,
     crossfade: 0.12,
     // longer mobile track: same scroll speed demands ~30% less playback rate,
@@ -175,8 +173,8 @@ function GYWBT_ADULT_CONFIG(lang) {
       // the no-MSE fallback. Regenerate with work/hls_package.py.
       hls: '/adult/assets/vid/hls/journey-tap/journey.m3u8',
       hlsMobile: '/adult/assets/vid/hls/journey-tap-m/journey.m3u8',
-      clip: '/adult/assets/vid/journey-tap.mp4?v=7',
-      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=11',
+      clip: '/adult/assets/vid/journey-tap.mp4?v=8',
+      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=12',
       poster: '/adult/assets/journey-tap-poster.webp?v=1',
       posterMobile: '/adult/assets/journey-tap-m-poster.webp?v=1',
       spans: [[0.0,6.0],[6.0,13.9],[13.9,17.5],[17.5,21.5],[21.5,27.07]],
