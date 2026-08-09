@@ -171,8 +171,8 @@ function GYWBT_ADULT_CONFIG(lang) {
       clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=8',
       poster: '/adult/assets/journey-tap-poster.webp?v=1',
       posterMobile: '/adult/assets/journey-tap-m-poster.webp?v=1',
-      spans: [[0.0,5.0],[5.0,13.9],[13.9,17.5],[17.5,21.5],[21.5,27.07]],
-      spansMobile: [[0.0,5.0],[5.0,12.85],[12.85,15.5],[15.5,20.5],[20.5,26.08]],
+      spans: [[0.0,6.0],[6.0,13.9],[13.9,17.5],[17.5,21.5],[21.5,27.07]],
+      spansMobile: [[0.0,7.5],[7.5,12.85],[12.85,15.5],[15.5,20.5],[20.5,26.08]],
     },
     sections: [
       { id:'quiet', label:'The Quiet Party',
