@@ -451,7 +451,12 @@ function mountTapWorld(container, config) {
     var jUnmute = function () {
       window.removeEventListener("pointerdown", jUnmute);
       window.removeEventListener("touchend", jUnmute);
-      try { jv.muted = false; jv.removeAttribute("muted"); } catch (e) {}
+      try {
+        jv.muted = false; jv.removeAttribute("muted");
+        // clip audio sits UNDER the site's theme song — config.clipVolume
+        // ducks the foley/ambience so the music reads loud and clear
+        jv.volume = (config.clipVolume != null ? config.clipVolume : 1);
+      } catch (e) {}
     };
     if (navigator.userActivation && navigator.userActivation.hasBeenActive) {
       jUnmute();

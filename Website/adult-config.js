@@ -157,6 +157,8 @@ function GYWBT_ADULT_CONFIG(lang) {
     resumeLabel: T.chrome.resumeLabel,
     onScene: themeAtSceneTwo,
     onTime: themeAtSix,
+    // clip foley ducked well under the theme song (user: song louder)
+    clipVolume: 0.35,
     diveScroll: 1.5,
     crossfade: 0.12,
     // longer mobile track: same scroll speed demands ~30% less playback rate,
