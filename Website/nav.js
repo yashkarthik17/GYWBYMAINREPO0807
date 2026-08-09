@@ -18,6 +18,11 @@
   return 'en';   // no stored preference (user direction): explicit ?lang= only
   }
 
+  // data-minimal on the script tag: render ONLY a floating stacked-menu
+  // icon + the dropdown panel — no bar, no brand, no body padding. For the
+  // cinematic pages (envelope, journeys) where a full bar doesn't belong.
+  var MINIMAL = !!(document.currentScript && document.currentScript.hasAttribute('data-minimal'));
+
   var path = location.pathname;
   var inAdult = /\/adult\//.test(path);
   var root = inAdult ? "../" : "";
@@ -58,7 +63,17 @@
   var INLINE = ["story", "crashers", "store", "hire", "mission"];
 
   var css = [
-    "body{padding-top:56px;}",
+    MINIMAL ? "" : "body{padding-top:56px;}",
+    ".gnav-mini{position:fixed;top:14px;right:max(14px,env(safe-area-inset-right));z-index:1000;",
+    "  display:flex;flex-direction:column;justify-content:center;gap:4px;width:44px;height:44px;",
+    "  padding:0 11px;border:1px solid rgba(255,255,255,.4);border-radius:12px;cursor:pointer;",
+    "  background:rgba(18,27,52,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}",
+    ".gnav-mini i{display:block;height:2px;border-radius:2px;background:#FFF9EE;transition:transform .2s ease,opacity .2s ease;}",
+    ".gnav-mini[aria-expanded=true] i:nth-child(1){transform:translateY(6px) rotate(45deg);}",
+    ".gnav-mini[aria-expanded=true] i:nth-child(2){opacity:0;}",
+    ".gnav-mini[aria-expanded=true] i:nth-child(3){transform:translateY(-6px) rotate(-45deg);}",
+    ".gnav-mini:focus-visible{outline:3px solid #FFC93C;outline-offset:2px;}",
+    ".gnav__panel--mini{top:64px;}",
     ".gnav{position:fixed;top:0;left:0;right:0;z-index:1000;height:56px;display:flex;align-items:center;",
     "  justify-content:space-between;gap:12px;padding:0 clamp(14px,4vw,40px);",
     "  font-family:'Baloo 2',ui-rounded,'SF Pro Rounded','Segoe UI',system-ui,sans-serif;",
@@ -106,10 +121,43 @@
 
   function el(tag, cls) { var n = document.createElement(tag); if (cls) n.className = cls; return n; }
 
+  function buildMinimal(style) {
+    var burger = el("button", "gnav-mini");
+    burger.setAttribute("aria-label", T.menu);
+    burger.setAttribute("aria-expanded", "false");
+    burger.appendChild(document.createElement("i"));
+    burger.appendChild(document.createElement("i"));
+    burger.appendChild(document.createElement("i"));
+
+    var panel = el("nav", "gnav__panel gnav__panel--mini gnav--darkpanel");
+    LINKS.forEach(function (l) {
+      var a = document.createElement("a");
+      a.href = l.href; a.textContent = l.label;
+      if (l.match) a.className = "is-here";
+      panel.appendChild(a);
+    });
+    function setOpen(open) {
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
+      panel.classList.toggle("open", open);
+    }
+    burger.addEventListener("click", function () {
+      setOpen(burger.getAttribute("aria-expanded") !== "true");
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setOpen(false);
+    });
+    document.addEventListener("click", function (e) {
+      if (!panel.contains(e.target) && !burger.contains(e.target)) setOpen(false);
+    });
+    document.body.appendChild(panel);
+    document.body.appendChild(burger);
+  }
+
   function build() {
     var style = document.createElement("style");
     style.textContent = css;
     document.head.appendChild(style);
+    if (MINIMAL) { buildMinimal(style); return; }
 
     // Site icon on every page that carries the nav (the envelope page sets
     // its own <link> tags in markup — it doesn't load nav.js).
