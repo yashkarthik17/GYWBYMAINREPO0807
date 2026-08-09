@@ -71,7 +71,7 @@ function mountTapWorld(container, config) {
     "  display:flex;gap:7px;pointer-events:none;}",
     ".tw-dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);transition:background .3s,transform .3s;}",
     ".tw-dots i.is-here{background:#FFC93C;transform:scale(1.25);}",
-    ".tw-skip{position:absolute;top:calc(56px + 10px);right:max(14px,env(safe-area-inset-right));z-index:6;",
+    ".tw-skip{position:absolute;top:calc(56px + 10px);right:14px;right:max(14px,env(safe-area-inset-right));z-index:6;",
     "  border:1px solid rgba(255,255,255,.4);background:rgba(18,27,52,.45);color:#FFF9EE;cursor:pointer;",
     "  font-family:'Baloo 2',ui-rounded,system-ui,sans-serif;font-weight:700;font-size:12px;",
     "  letter-spacing:.14em;text-transform:uppercase;padding:9px 16px;border-radius:999px;",
@@ -98,7 +98,7 @@ function mountTapWorld(container, config) {
     ".tw-explore a:active{transform:translateY(1px);}",
     // Resume pill: the runtime-stills (Low Power Mode) recovery affordance —
     // ghost-pill recipe like .tw-skip, pinned bottom-center clear of the card.
-    ".tw-resume{position:absolute;left:50%;bottom:max(3.5vh,env(safe-area-inset-bottom));z-index:6;",
+    ".tw-resume{position:absolute;left:50%;bottom:24px;bottom:max(3.5vh,env(safe-area-inset-bottom));z-index:6;",
     "  transform:translateX(-50%) translateY(8px);opacity:0;pointer-events:none;",
     "  border:1px solid rgba(255,255,255,.45);background:rgba(18,27,52,.62);color:#FFF9EE;cursor:pointer;",
     "  font-family:'Baloo 2',ui-rounded,system-ui,sans-serif;font-weight:700;font-size:12px;",
