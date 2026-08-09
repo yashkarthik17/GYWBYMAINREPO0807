@@ -52,6 +52,12 @@ def sh(args):
     return r.stdout + r.stderr
 
 
+def probe_types(path):
+    r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_type",
+                        "-of", "csv=p=0", path], capture_output=True, text=True)
+    return r.stdout
+
+
 def probe(path, entries, stream=True):
     sel = ["-select_streams", "v:0", "-show_entries", f"stream={entries}"] if stream \
         else ["-show_entries", f"format={entries}"]
@@ -75,9 +81,12 @@ def package(key):
             continue
         seg = f"{outdir}/{name}_%03d.m4s"
         pl = f"{outdir}/{name}.m3u8"
+        # carry the master's audio into the rung when it has one
+        has_audio = "audio" in probe_types(master)
+        audio_args = ["-c:a", "aac", "-b:a", "128k", "-ac", "2"] if has_audio else ["-an"]
         sh(["ffmpeg", "-v", "error", "-y", "-i", master,
             "-vf", f"scale={scale},fps={fps}",
-            "-an", "-c:v", "libx264", "-preset", "medium", "-crf", str(crf),
+            *audio_args, "-c:v", "libx264", "-preset", "medium", "-crf", str(crf),
             "-maxrate", f"{mrk}k", "-bufsize", f"{mrk * 2}k", "-pix_fmt", "yuv420p",
             "-g", str(fps * 2), "-keyint_min", str(fps * 2), "-sc_threshold", "0",
             "-f", "hls", "-hls_time", "4", "-hls_playlist_type", "vod",
@@ -89,6 +98,7 @@ def package(key):
                    if f.startswith(name + "_") and (f.endswith(".m4s") or f.endswith(".mp4")))
         avg_bw = int(size * 8 / dur)
         peak_bw = max(int(mrk * 1000 * 1.15), avg_bw)
+        if has_audio: codec = codec + ",mp4a.40.2"
         variants.append((peak_bw, avg_bw, res, fps, codec, f"{name}.m3u8"))
         print(f"  {key}/{name}: {res}@{fps} avg {avg_bw//1000}kbps ({size/1e6:.1f} MB)")
 

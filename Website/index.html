@@ -190,7 +190,7 @@
   <div class="loading" id="loading">Folding the paper…</div>
 
   <script src="music.js?v=19" data-once data-src="assets/audio/envelope.wav?v=1"></script>
-  <script src="tap-engine.js?v=17"></script>
+  <script src="tap-engine.js?v=18"></script>
   <script src="story-config.js?v=11"></script>
   <script src="adult-config.js?v=20"></script>
   <script>
@@ -426,6 +426,16 @@
     // Tear the envelope down for real when a journey takes over: release the
     // envelope video's decoder and remove the nodes — hidden layers with a
     // parked video were still costing memory/compositing on older devices (QA).
+    // The journey deserves the site menu (story.html has it; the in-page
+    // launch didn't): pull nav.js in once a journey takes over.
+    function mountSiteNav() {
+      if (document.querySelector(".gnav") || document.getElementById("gnav-loader")) return;
+      var s = document.createElement("script");
+      s.id = "gnav-loader";
+      s.src = "nav.js?v=6";
+      document.body.appendChild(s);
+    }
+
     function teardownEnvelope() {
       try { v.pause(); v.removeAttribute("src"); v.load(); } catch (err) {}
       [stage, document.querySelector(".ui"), sheetEl, cineEl,
@@ -443,6 +453,7 @@
       if (window.swMusic && window.swMusic.hush) window.swMusic.hush();
       try { history.pushState({ kids: 1 }, "", "#kids"); } catch (err) {}
       teardownEnvelope();
+      mountSiteNav();
       var world = document.createElement("div");
       world.id = "world";
       document.body.appendChild(world);
@@ -464,11 +475,12 @@
       if (window.swMusic && window.swMusic.hush) window.swMusic.hush();
       try { history.pushState({ adult: 1 }, "", "#adult"); } catch (err) {}
       teardownEnvelope();
+      mountSiteNav();
       var world = document.createElement("div");
       world.id = "world";
       document.body.appendChild(world);
       var engine = document.createElement("script");
-      engine.src = "adult/tap-engine.js?v=19";
+      engine.src = "adult/tap-engine.js?v=20";
       engine.onload = function () { mountTapWorld(world, GYWBT_ADULT_CONFIG(lang)); };
       engine.onerror = function () { location.href = "adult/"; };
       document.body.appendChild(engine);

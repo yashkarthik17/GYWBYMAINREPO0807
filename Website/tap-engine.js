@@ -444,6 +444,21 @@ function mountTapWorld(container, config) {
       still.classList.remove("is-on");
       hideResumePill();
     });
+    // Clip audio: autoplay must START muted (policy), then unmute on the
+    // first real user gesture — or immediately if the journey was mounted
+    // from one (the envelope launch). The ♪ button keeps controlling the
+    // site music independently.
+    var jUnmute = function () {
+      window.removeEventListener("pointerdown", jUnmute);
+      window.removeEventListener("touchend", jUnmute);
+      try { jv.muted = false; jv.removeAttribute("muted"); } catch (e) {}
+    };
+    if (navigator.userActivation && navigator.userActivation.hasBeenActive) {
+      jUnmute();
+    } else {
+      window.addEventListener("pointerdown", jUnmute);
+      window.addEventListener("touchend", jUnmute, { passive: true });
+    }
     jv.ontimeupdate = jTrack;
     jv.addEventListener("seeked", function () {
       if (jPendSeek >= 0) {
