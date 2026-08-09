@@ -1,0 +1,29 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>menu probe</title>
+<style>html,body{margin:0;background:#111}iframe{border:0;display:block}</style></head>
+<body>
+<script>
+  // ?page=/story.html&w=1280&h=850 — embeds the page at the given size and
+  // clicks the nav burger as soon as the frame loads, so a headless
+  // screenshot captures the dropdown in its open state.
+  const Q = new URLSearchParams(location.search);
+  const f = document.createElement("iframe");
+  f.src = Q.get("page") || "/story.html";
+  f.style.width = (Q.get("w") || "1280") + "px";
+  f.style.height = (Q.get("h") || "850") + "px";
+  f.onload = () => {
+    const tryClick = () => {
+      let d; try { d = f.contentDocument; } catch (e) { return true; }
+      const b = d && d.querySelector(".gnav__burger, .gnav-mini");
+      if (!b) return false;
+      b.click();
+      return true;
+    };
+    if (!tryClick()) {
+      let n = 0;
+      const iv = setInterval(() => { if (tryClick() || ++n > 20) clearInterval(iv); }, 250);
+    }
+  };
+  document.body.appendChild(f);
+</script>
+</body></html>
