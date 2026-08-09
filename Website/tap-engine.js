@@ -329,9 +329,24 @@ function mountTapWorld(container, config) {
   // Announce the segment the playhead is inside (card/dot/onScene) — the
   // journey-mode replacement for go()'s bookkeeping. idx stays a PL index so
   // every fallback path (stills, resume, finish) keeps working unchanged.
+  // Dynamic duck: the clip's own audio plays FULL until the theme song
+  // enters (the site-wide 6s rule / config.duckAtTime), then eases down to
+  // config.clipVolume so the song owns the mix. Seeking back before the
+  // entry point (replay) restores full volume the same way.
+  var jDuckTo = (config.clipVolume != null ? config.clipVolume : 1);
+  var jDuckAt = (config.duckAtTime != null ? config.duckAtTime : 6.0);
+  function jDuckTarget(t) { return t >= jDuckAt ? jDuckTo : 1; }
+
   function jTrack() {
     if (!J || stillsMode) return;
     var t = vids[0].currentTime;
+    var jv0 = vids[0];
+    if (!jv0.muted) {
+      var tgt = jDuckTarget(t);
+      var v = jv0.volume;
+      if (Math.abs(v - tgt) > 0.02) jv0.volume = v + (tgt - v) * 0.35;   // eases over ~1s
+      else if (v !== tgt) jv0.volume = tgt;
+    }
     // page hook driven by PLAYBACK TIME (config.onTime) — e.g. the music
     // entering at a fixed second regardless of scene boundaries
     if (config.onTime) { try { config.onTime(t); } catch (e) {} }
@@ -453,9 +468,7 @@ function mountTapWorld(container, config) {
       window.removeEventListener("touchend", jUnmute);
       try {
         jv.muted = false; jv.removeAttribute("muted");
-        // clip audio sits UNDER the site's theme song — config.clipVolume
-        // ducks the foley/ambience so the music reads loud and clear
-        jv.volume = (config.clipVolume != null ? config.clipVolume : 1);
+        jv.volume = jDuckTarget(jv.currentTime);
       } catch (e) {}
     };
     if (navigator.userActivation && navigator.userActivation.hasBeenActive) {
