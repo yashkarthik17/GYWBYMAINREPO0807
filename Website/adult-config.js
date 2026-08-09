@@ -144,6 +144,11 @@ function GYWBT_ADULT_CONFIG(lang) {
     if (typeof window.swMusic.replay === 'function') window.swMusic.replay();
   }
   function LNG(h) { return lang === 'es' ? h + '?lang=es' : h; }
+  // Music enters at the SIX-SECOND mark on every journey (user direction):
+  // time-driven in video mode; the scene hook remains the stills-mode
+  // fallback and the replay reset (scene 1 re-entry hushes + re-arms).
+  function themeAtSix(t) { if (t >= 6.0) themeAtSceneTwo(1); }
+
   return {
     hint: T.hint,
     startLabel: T.chrome.startLabel,
@@ -151,6 +156,7 @@ function GYWBT_ADULT_CONFIG(lang) {
     nextLabel: T.chrome.nextLabel,
     resumeLabel: T.chrome.resumeLabel,
     onScene: themeAtSceneTwo,
+    onTime: themeAtSix,
     diveScroll: 1.5,
     crossfade: 0.12,
     // longer mobile track: same scroll speed demands ~30% less playback rate,
@@ -168,11 +174,11 @@ function GYWBT_ADULT_CONFIG(lang) {
       hls: '/adult/assets/vid/hls/journey-tap/journey.m3u8',
       hlsMobile: '/adult/assets/vid/hls/journey-tap-m/journey.m3u8',
       clip: '/adult/assets/vid/journey-tap.mp4?v=6',
-      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=8',
+      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=9',
       poster: '/adult/assets/journey-tap-poster.webp?v=1',
       posterMobile: '/adult/assets/journey-tap-m-poster.webp?v=1',
       spans: [[0.0,6.0],[6.0,13.9],[13.9,17.5],[17.5,21.5],[21.5,27.07]],
-      spansMobile: [[0.0,7.5],[7.5,12.85],[12.85,15.5],[15.5,20.5],[20.5,26.08]],
+      spansMobile: [[0.0,7.0],[7.0,12.85],[12.85,15.5],[15.5,20.5],[20.5,26.08]],
     },
     sections: [
       { id:'quiet', label:'The Quiet Party',

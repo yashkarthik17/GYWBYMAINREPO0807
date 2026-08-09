@@ -374,7 +374,11 @@ function mountTapWorld(container, config) {
   // every fallback path (stills, resume, finish) keeps working unchanged.
   function jTrack() {
     if (!J || stillsMode) return;
-    var k = jSegAt(vids[0].currentTime);
+    var t = vids[0].currentTime;
+    // page hook driven by PLAYBACK TIME (config.onTime) — e.g. the music
+    // entering at a fixed second regardless of scene boundaries
+    if (config.onTime) { try { config.onTime(t); } catch (e) {} }
+    var k = jSegAt(t);
     if (k !== idx) jAnnounce(k);
   }
 

@@ -139,6 +139,11 @@ function GYWBT_KIDS_CONFIG(lang) {
     if (typeof window.swMusic.replay === 'function') window.swMusic.replay();
   }
   function LNG(h) { return lang === 'es' ? h + '?lang=es' : h; }
+  // Music enters at the SIX-SECOND mark on every journey (user direction):
+  // time-driven in video mode; the scene hook remains the stills-mode
+  // fallback and the replay reset (scene 1 re-entry hushes + re-arms).
+  function themeAtSix(t) { if (t >= 6.0) themeAtSceneTwo(1); }
+
   return {
     playbackRate: 1.15,
     startLabel: T.chrome.startLabel,
@@ -146,6 +151,7 @@ function GYWBT_KIDS_CONFIG(lang) {
     nextLabel: T.chrome.nextLabel,
     resumeLabel: T.chrome.resumeLabel,
     onScene: themeAtSceneTwo,
+    onTime: themeAtSix,
     // Continuous journey: ONE stitched file per tier (crossfades + the tuned
     // per-scene pacing baked in — the file plays at rate 1). spans mirror the
     // 9-item chain below (scene,conn,…scene) in stitched-timeline seconds.
