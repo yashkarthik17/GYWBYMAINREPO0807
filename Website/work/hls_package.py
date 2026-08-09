@@ -65,8 +65,14 @@ def package(key):
     os.makedirs(outdir, exist_ok=True)
 
     dur = float(probe(master, "duration", stream=False))
+    mw = int(probe(master, "width").split(",")[0])
     variants = []
     for name, scale, fps, crf, mrk, res, codec in rungs:
+        # never upscale: skip rungs wider than the master (e.g. a 720p master
+        # skips the 1080 rung)
+        if int(scale.split(":")[0]) > mw:
+            print(f"  {key}/{name}: skipped (master is {mw}px wide)")
+            continue
         seg = f"{outdir}/{name}_%03d.m4s"
         pl = f"{outdir}/{name}.m3u8"
         sh(["ffmpeg", "-v", "error", "-y", "-i", master,
