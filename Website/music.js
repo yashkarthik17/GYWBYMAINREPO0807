@@ -139,16 +139,38 @@
     // alone doesn't cover it; window blur does. Pause whenever the page hides
     // OR loses focus and resume only if WE paused it; a real exit (pagehide)
     // stops it outright.
-    var pausedByHide = false;
+    var pausedByHide = false, lcArmed = false;
     function lcPause() { if (!audio.paused) { pausedByHide = true; audio.pause(); } }
+    // Resume our own pause (or a start deferred while hidden). Plays
+    // DIRECTLY, not via set(true): set()'s hidden/unfocused gate eats the
+    // resume on iOS, where the page turns visible before the window regains
+    // focus and the 'focus' event is unreliable after the tab switcher. And
+    // if play() is rejected — iOS tears down the audio session while
+    // backgrounded, then demands a fresh gesture — finish the resume on the
+    // visitor's next tap anywhere.
     function lcResume() {
-      if (pausedByHide) {
-        pausedByHide = false;
-        // set(true) rather than a bare play(): a start DEFERRED while hidden
-        // never lit the ♪ button, so the honest path fixes UI + storage too.
-        // (If focus still lags visibility, set() just re-defers to 'focus'.)
-        set(true);
-      }
+      if (!pausedByHide || document.hidden) return;
+      pausedByHide = false;
+      seekIntoTrack();
+      audio.play().then(function () {
+        setUi(true);
+        try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      }).catch(function () {
+        pausedByHide = true;
+        setUi(false);
+        if (lcArmed) return;
+        lcArmed = true;
+        var re = function (e) {
+          window.removeEventListener('pointerdown', re);
+          window.removeEventListener('touchend', re);
+          lcArmed = false;
+          // their tap IS the ♪ button: its own handler owns what happens
+          if (e && e.target && e.target.closest && e.target.closest('#sw-music')) { pausedByHide = false; return; }
+          lcResume();
+        };
+        window.addEventListener('pointerdown', re);
+        window.addEventListener('touchend', re, { passive: true });
+      });
     }
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) lcPause(); else lcResume();
