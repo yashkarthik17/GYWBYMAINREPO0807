@@ -1,8 +1,22 @@
 /* Site-wide nav bar — one solid, always-visible menu bar for every page.
    Include with <script src="nav.js"></script> (or ../nav.js from adult/).
-   Detects its own path depth and theme: pages under /adult/ get the navy bar. */
+   Detects its own path depth and theme: pages under /adult/ get the navy bar.
+
+   i18n: labels fork EN/ES via gywbtLang() (the same ~6-line helper duplicated
+   in index.html/story-config.js/adult-config.js — reads localStorage
+   ['gywbt-lang'], with a ?lang=en|es URL override that wins and re-stores).
+   Labels are looked up by a stable `key`, not by the displayed text, so the
+   inline-vs-menu filter and the "is-here" matching stay language-agnostic.
+   EN is unchanged byte-for-byte from before this pass — the ES branch is
+   purely additive. */
 (function () {
   "use strict";
+
+  function gywbtLang() {
+    var m = /[?&]lang=(en|es)/.exec(location.search);
+  if (m) return m[1];
+  return 'en';   // no stored preference (user direction): explicit ?lang= only
+  }
 
   var path = location.pathname;
   var inAdult = /\/adult\//.test(path);
@@ -10,19 +24,38 @@
   var adult = inAdult ? "" : "adult/";
   var file = path.split("/").pop() || "index.html";
   var dark = inAdult;
+  var lang = gywbtLang();
+
+  var NAV_LABELS = {
+    en: { home: "Home", story: "Story", crashers: "Crashers", store: "Party Store",
+          hire: "Hire the Crew", mission: "Our Mission", irl: "In Real Life", crew: "The Crew",
+          menu: "Menu", brandHome: "Glad You Were Born Today — home" },
+    es: { home: "Inicio", story: "Historia", crashers: "Los Crashers", store: "La Tienda de Fiestas",
+          hire: "Contrata a la Tripulación", mission: "Nuestra Misión", irl: "En la Vida Real", crew: "La Tripulación",
+          menu: "Menú", brandHome: "Glad You Were Born Today — inicio" },
+  };
+  var T = NAV_LABELS[lang];
 
   var LINKS = [
-    { label: "Home",          href: root + "index.html",  match: !inAdult && file === "index.html" },
-    { label: "Story",         href: root + "story.html",  match: file === "story.html" },
-    { label: "Crashers",      href: root + "crashers.html", match: file === "crashers.html" },
-    { label: "Party Store",   href: root + "store.html",  match: file === "store.html" },
-    { label: "Hire the Crew", href: root + "hire.html",   match: file === "hire.html" },
-    { label: "Our Mission",   href: root + "mission.html", match: file === "mission.html" },
-    { label: "In Real Life",  href: adult || "index.html", match: inAdult && file === "index.html" },
-    { label: "The Crew",      href: adult + "crew.html",  match: file === "crew.html" },
+    { key: "home",     label: T.home,     href: root + "index.html",  match: !inAdult && file === "index.html" },
+    { key: "story",    label: T.story,    href: root + "story.html",  match: file === "story.html" },
+    { key: "crashers", label: T.crashers, href: root + "crashers.html", match: file === "crashers.html" },
+    { key: "store",    label: T.store,    href: root + "store.html",  match: file === "store.html" },
+    { key: "hire",     label: T.hire,     href: root + "hire.html",   match: file === "hire.html" },
+    { key: "mission",  label: T.mission,  href: root + "mission.html", match: file === "mission.html" },
+    { key: "irl",      label: T.irl,      href: adult || "index.html", match: inAdult && file === "index.html" },
+    { key: "crew",     label: T.crew,     href: adult + "crew.html",  match: file === "crew.html" },
   ];
+  // No stored preference: a page that resolved Spanish (?lang=es) forwards
+  // the choice explicitly on every nav link, so the language survives
+  // navigation without any storage. Brand link stays clean - the envelope
+  // always greets in English.
+  if (lang === 'es') LINKS.forEach(function (l) {
+    if (l.key === 'home') return;   // the envelope ALWAYS greets in English
+    l.href += (l.href.indexOf('?') >= 0 ? '&' : '?') + 'lang=es';
+  });
   // the bar shows the essentials inline; the menu always carries everything
-  var INLINE = ["Story", "Crashers", "Party Store", "Hire the Crew", "Our Mission"];
+  var INLINE = ["story", "crashers", "store", "hire", "mission"];
 
   var css = [
     "body{padding-top:56px;}",
@@ -91,7 +124,7 @@
 
     var brand = el("a", "gnav__brand");
     brand.href = root + "index.html";
-    brand.setAttribute("aria-label", "Glad You Were Born Today — home");
+    brand.setAttribute("aria-label", T.brandHome);
     var mark = document.createElement("img");
     mark.className = "gnav__mark";
     mark.src = "/assets/logo.webp?v=1";
@@ -101,7 +134,7 @@
 
     var links = el("nav", "gnav__links");
     LINKS.forEach(function (l) {
-      if (INLINE.indexOf(l.label) < 0) return;
+      if (INLINE.indexOf(l.key) < 0) return;
       var a = document.createElement("a");
       a.href = l.href; a.textContent = l.label;
       if (l.match) a.className = "is-here";
@@ -110,7 +143,7 @@
     bar.appendChild(links);
 
     var burger = el("button", "gnav__burger");
-    burger.setAttribute("aria-label", "Menu");
+    burger.setAttribute("aria-label", T.menu);
     burger.setAttribute("aria-expanded", "false");
     burger.appendChild(document.createElement("i"));
     burger.appendChild(document.createElement("i"));

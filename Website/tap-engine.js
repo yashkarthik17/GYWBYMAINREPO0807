@@ -2,9 +2,14 @@
    Scenes auto-play in sequence and crossfade into each other; where the config
    provides connector clips (the aerial flights that bridged scenes in the
    scroll version) they play between scenes as wordless transitions, so every
-   cut lands on the frame-matched footage the world was built with. Tap skips
-   to the next scene (connectors are skipped, not replayed); "Skip to end"
-   jumps to the finale, which holds its last frame and shows the explore links.
+   cut lands on the frame-matched footage the world was built with. In video
+   mode scenes advance on their own via crossfade — ArrowRight/Space step
+   forward a scene at a time, and "Skip to end" jumps to the finale — while a
+   stage tap is a passive gesture surface only, since accidental taps
+   mid-video caused jittery skips. In the tap-through stills fallback
+   (below), tapping the stage IS how you advance (connectors are skipped,
+   not replayed); "Skip to end" always jumps to the finale, which holds its
+   last frame and shows the explore links.
    Reuses the scrub engine's section config shape unchanged (clip/clipMobile/
    poster/posterMobile/still + eyebrow/title/body/tags/accent/explore,
    connectors/connectorsMobile); journey/scroll keys are ignored.
@@ -77,16 +82,30 @@ function mountTapWorld(container, config) {
     "  background:rgba(18,27,52,.35);border:0;cursor:pointer;color:#FFF9EE;",
     "  font-family:'Baloo 2',ui-rounded,system-ui,sans-serif;font-weight:800;font-size:clamp(18px,3vw,24px);",
     "  letter-spacing:.06em;text-shadow:0 2px 14px rgba(0,0,0,.6);}",
+    // Explore fades up with the finale instead of popping in (QA): always
+    // flex, revealed via opacity/transform; visibility keeps it out of the
+    // tab order while hidden.
     ".tw-explore{position:absolute;left:50%;bottom:max(7vh,env(safe-area-inset-bottom));z-index:6;",
-    "  transform:translateX(-50%);width:min(88vw,420px);display:none;flex-direction:column;gap:10px;}",
-    ".tw-explore.is-on{display:flex;}",
+    "  transform:translateX(-50%) translateY(14px);width:min(88vw,420px);display:flex;flex-direction:column;gap:10px;",
+    "  opacity:0;pointer-events:none;visibility:hidden;",
+    "  transition:opacity .8s ease,transform .8s ease,visibility .8s;}",
+    ".tw-explore.is-on{opacity:1;pointer-events:auto;visibility:visible;transform:translateX(-50%) translateY(0);}",
     ".tw-explore a{display:block;text-align:center;text-decoration:none;color:#1D2B50;",
     "  background:linear-gradient(180deg,#FFFDF6,#F1E3BE);border:1px solid rgba(184,134,46,.55);",
     "  font-family:'Baloo 2',ui-rounded,system-ui,sans-serif;font-weight:700;font-size:15px;",
     "  letter-spacing:.06em;padding:14px 18px;border-radius:13px;",
     "  box-shadow:0 6px 18px rgba(0,0,0,.3);}",
     ".tw-explore a:active{transform:translateY(1px);}",
-    "@media (prefers-reduced-motion:reduce){.tw video,.tw .tw-still,.tw-card{transition:none;}}"
+    // Resume pill: the runtime-stills (Low Power Mode) recovery affordance —
+    // ghost-pill recipe like .tw-skip, pinned bottom-center clear of the card.
+    ".tw-resume{position:absolute;left:50%;bottom:max(3.5vh,env(safe-area-inset-bottom));z-index:6;",
+    "  transform:translateX(-50%) translateY(8px);opacity:0;pointer-events:none;",
+    "  border:1px solid rgba(255,255,255,.45);background:rgba(18,27,52,.62);color:#FFF9EE;cursor:pointer;",
+    "  font-family:'Baloo 2',ui-rounded,system-ui,sans-serif;font-weight:700;font-size:12px;",
+    "  letter-spacing:.12em;text-transform:uppercase;padding:11px 20px;border-radius:999px;",
+    "  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:opacity .3s ease,transform .3s ease;}",
+    ".tw-resume.is-on{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}",
+    "@media (prefers-reduced-motion:reduce){.tw video,.tw .tw-still,.tw-card,.tw-resume,.tw-explore{transition:none;}}"
   ].join("\n");
   var style = document.createElement("style");
   style.textContent = css;
@@ -104,9 +123,17 @@ function mountTapWorld(container, config) {
 
   var vids = [document.createElement("video"), document.createElement("video")];
   vids.forEach(function (v) {
-    v.muted = true; v.playsInline = true; v.setAttribute("playsinline", "");
+    // muted as BOTH property and attribute: the property is what play() checks,
+    // the attribute is what some Android WebView autoplay heuristics look at.
+    v.muted = true; v.setAttribute("muted", "");
+    v.playsInline = true; v.setAttribute("playsinline", "");
     v.preload = "auto";
     v.defaultPlaybackRate = RATE;
+    // No cast button / PiP hijack surfaces over the story (Android Chrome
+    // offers both on bare <video> elements).
+    try { v.disableRemotePlayback = true; } catch (e) {}
+    v.setAttribute("disableremoteplayback", "");
+    try { v.disablePictureInPicture = true; } catch (e) {}
     stage.appendChild(v);
   });
   var still = el("img", "tw-still");
@@ -114,7 +141,6 @@ function mountTapWorld(container, config) {
   stage.appendChild(still);
 
   var tap = el("button", "tw-tap");
-  tap.setAttribute("aria-label", "Next scene");
   stage.appendChild(tap);
 
   var card = el("div", "tw-card");
@@ -139,6 +165,36 @@ function mountTapWorld(container, config) {
 
   // ---- state -------------------------------------------------------------
   var idx = -1, active = 0, stillsMode = reduce, started = false;
+  // Runtime-stills bookkeeping: stills mode entered because the OS refused
+  // play() at runtime (Low Power Mode, battery savers) is a TEMPORARY device
+  // state — recoverable, never a teardown. runtimeStills marks that case
+  // (never set for prefers-reduced-motion visitors); resumeArmedIdx /
+  // resumeFailedIdx let taps alternate resume-attempt → advance so a device
+  // that keeps refusing still steps through the slideshow instead of jamming
+  // on one scene.
+  var runtimeStills = false, resumeArmedIdx = -1, resumeFailedIdx = -1;
+
+  // Accessibility: the tap catcher's nextLabel only means something in
+  // stills mode, where tapping the stage is the sole way through the
+  // slideshow (see the tap click handler near the bottom of this file). In
+  // video mode the catcher is a passive gesture surface with no advance
+  // action, so it's hidden from assistive tech and pulled out of the tab
+  // order instead of announcing a "Next scene" affordance that no longer
+  // does anything. Called once at init (covers reduce:true booting straight
+  // into stills mode) and on every stillsMode transition — enterStillsMode()
+  // and the start overlay's `stillsMode = reduce` reset.
+  function updateTapA11y() {
+    if (stillsMode) {
+      tap.setAttribute("aria-label", config.nextLabel || "Next scene");
+      tap.removeAttribute("aria-hidden");
+      tap.removeAttribute("tabindex");
+    } else {
+      tap.removeAttribute("aria-label");
+      tap.setAttribute("aria-hidden", "true");
+      tap.setAttribute("tabindex", "-1");
+    }
+  }
+  updateTapA11y();
 
   function showCard(s) {
     cEyebrow.textContent = s.eyebrow || "";
@@ -155,6 +211,7 @@ function mountTapWorld(container, config) {
   function showExplore(s) {
     hideCard();               // the card and the buttons share the bottom of
     explore.innerHTML = "";   // the screen — never show both at once
+    hideResumePill();         // ...nor the pill under the explore stack
     var ex = s.explore;
     if (!ex || !ex.links) return;
     ex.links.forEach(function (l) {
@@ -171,13 +228,19 @@ function mountTapWorld(container, config) {
           // visitor explicitly muted earlier (same sessionStorage key
           // music.js writes) — mirrors the guard used in
           // adult/tap-engine.js's "Play it again" handler.
-          try {
-            if (window.swMusic && typeof window.swMusic.replay === "function") {
-              var muted = null;
-              try { muted = sessionStorage.getItem("sw-music-on"); } catch (e2) {}
-              if (muted !== "0") window.swMusic.replay();
-            }
-          } catch (err) {}
+          // With a config.onScene music hook, the hook owns the replay
+          // cycle (quiet scene 1, theme re-enters at scene 2) - only
+          // hook-less pages keep the old restart-with-the-tap behavior.
+          if (!config.onScene) {
+            try {
+              if (window.swMusic && typeof window.swMusic.replay === "function") {
+                var muted = null;
+                try { muted = sessionStorage.getItem("sw-music-on"); } catch (e2) {}
+                if (muted !== "0") window.swMusic.replay();
+              }
+            } catch (err) {}
+          }
+          if (J && !stillsMode) { jSeekSeg(0, true); return; }
           go(0);
         });
       }
@@ -190,14 +253,240 @@ function mountTapWorld(container, config) {
     dotEls.forEach(function (d, k) { d.className = k === si ? "is-here" : ""; });
   }
 
-  function enterStillsMode() {
+  function enterStillsMode(runtime) {
     if (stillsMode) return;
     stillsMode = true;
+    runtimeStills = !!runtime && !reduce;
+    updateTapA11y();
     vids.forEach(function (v) { try { v.pause(); } catch (e) {} v.classList.remove("is-on"); });
     if (idx >= 0) {
       var item = PL[idx];
       renderStill(S[item.kind === "scene" ? item.si : nextSceneIdxOfConn(idx)]);
     }
+    if (runtimeStills && started) showResumePill();
+  }
+
+  // Resume pill: the visible affordance for the runtime-stills state (mirrors
+  // scrub-engine's motion pill). The actual retry runs in the tap handler /
+  // pill click — a real user activation, which is exactly what LPM-class
+  // playback policies accept.
+  var resumePill = null;
+  function showResumePill() {
+    if (!resumePill) {
+      resumePill = el("button", "tw-resume");
+      resumePill.type = "button";
+      resumePill.textContent = config.resumeLabel || "Tap to continue the story";
+      resumePill.addEventListener("click", function () { started = true; gestureResume(); });
+      stage.appendChild(resumePill);
+    }
+    resumePill.classList.add("is-on");
+  }
+  function hideResumePill() { if (resumePill) resumePill.classList.remove("is-on"); }
+
+  // In-gesture video retry from runtime stills: flip back to video mode and
+  // re-run the CURRENT item, so play() executes inside the user's tap. If the
+  // OS refuses again, the play-catch drops us straight back to stills (pill
+  // re-shown, resumeFailedIdx recorded) — this can never dead-end.
+  function gestureResume() {
+    if (!stillsMode || !runtimeStills || reduce) return;
+    stillsMode = false; runtimeStills = false;
+    updateTapA11y();
+    hideResumePill();
+    still.classList.remove("is-on");
+    var at = idx < 0 ? 0 : idx;
+    resumeArmedIdx = at;
+    if (J) { jSeekSeg(at, false); jPlay(); return; }   // seek + play inside this tap
+    idx = -1; prepared = -1;
+    go(at);
+  }
+
+  // ---- continuous journey mode (config.journey) ---------------------------
+  // One stitched file per tier — crossfades AND the approved per-scene pacing
+  // are baked in at encode time — plays straight through on a single element:
+  // no per-clip handoffs, so no seam pauses, and (in Low Power Mode) no
+  // mid-journey play() calls for the OS to refuse. spans[] maps each PL item
+  // to its [t0,t1] in the stitched timeline and drives the cards, dots,
+  // skip/keys, and the scene-2 music hook. Stills fallback, the resume pill,
+  // and reduced-motion tap-through reuse the existing chain machinery.
+  var J = null;
+  (function () {
+    var cj = config.journey;
+    if (!cj || !cj.spans || reduce) return;
+    var clip = (phone && cj.clipMobile) ? cj.clipMobile : cj.clip;
+    var spans = (phone && cj.spansMobile) ? cj.spansMobile : cj.spans;
+    if (!clip || spans.length !== PL.length) return;   // spans must mirror the chain
+    J = { clip: clip, spans: spans,
+          hls: (phone && cj.hlsMobile) ? cj.hlsMobile : (cj.hls || ""),
+          hlsLib: cj.hlsLib || "/assets/vendor/hls-1.5.20.min.js",
+          poster: (phone && cj.posterMobile) ? cj.posterMobile : (cj.poster || "") };
+  })();
+
+  function jSegAt(t) {
+    for (var k = J.spans.length - 1; k >= 0; k--) if (t >= J.spans[k][0]) return k;
+    return 0;
+  }
+
+  // Announce the segment the playhead is inside (card/dot/onScene) — the
+  // journey-mode replacement for go()'s bookkeeping. idx stays a PL index so
+  // every fallback path (stills, resume, finish) keeps working unchanged.
+  function jTrack() {
+    if (!J || stillsMode) return;
+    var t = vids[0].currentTime;
+    // page hook driven by PLAYBACK TIME (config.onTime) — e.g. the music
+    // entering at a fixed second regardless of scene boundaries
+    if (config.onTime) { try { config.onTime(t); } catch (e) {} }
+    var k = jSegAt(t);
+    if (k !== idx) jAnnounce(k);
+  }
+
+  function jAnnounce(k) {
+    idx = k;
+    var item = PL[k];
+    var scene = item.kind === "scene" ? S[item.si] : null;
+    explore.classList.remove("is-on");
+    if (scene) { markDot(item.si); showCard(scene); } else hideCard();
+    if (scene && config.onScene) { try { config.onScene(item.si); } catch (e) {} }
+  }
+
+  function jStillsHere() {
+    var item = PL[Math.max(0, idx)];
+    var s = item ? S[item.kind === "scene" ? item.si : nextSceneIdxOfConn(Math.max(0, idx))] : S[0];
+    renderStill(s);
+    if (idx === LAST) showExplore(s);
+  }
+
+  function jPlay() {
+    var jv = vids[0], pr;
+    try { pr = jv.play(); } catch (e) { enterStillsMode(true); jStillsHere(); return; }
+    if (pr && pr.then) {
+      pr.catch(function (err) {
+        if (err && err.name === "AbortError") return;   // benign teardown race
+        if (idx === resumeArmedIdx) { resumeArmedIdx = -1; resumeFailedIdx = idx; }
+        enterStillsMode(true);
+        if (started) showResumePill();
+        jStillsHere();
+        if (!started) startOverlay();
+      });
+    }
+  }
+
+  // Coalesced seeking: never issue a new currentTime while the decoder is
+  // still resolving the last seek — rapid skips queue only the LATEST target
+  // and apply it on 'seeked' (phone decoders can wedge under a seek storm;
+  // the scrub engine learned this same rule the hard way). The card/dot
+  // announce the TARGET immediately so the UI stays snappy regardless.
+  var jPendSeek = -1, jPendPlay = false;
+  function jSeekSeg(k, autoplay) {
+    var jv = vids[0];
+    k = Math.max(0, Math.min(LAST, k));
+    jAnnounce(k);
+    if (jv.seeking) {
+      jPendSeek = k;
+      jPendPlay = jPendPlay || !!autoplay;
+      return;
+    }
+    try { jv.currentTime = J.spans[k][0] + 0.01; } catch (e) {}
+    if (autoplay && jv.paused) jPlay();
+  }
+
+  // Source attach, best pipe first: native HLS (Safari/iOS) → hls.js over
+  // MSE (Chrome/Android/desktop; lazy-loads the self-hosted lib) → the
+  // progressive MP4. The adaptive ladder starts on a low rung immediately
+  // and shifts up, so weak connections get smooth-but-softer video instead
+  // of stalls. The media timeline is identical across pipes, so spans,
+  // cards, seeks, and the watchdog don't change at all.
+  function jAttachSource(jv) {
+    if (J.hls && jv.canPlayType("application/vnd.apple.mpegurl")) {
+      jv.src = J.hls;
+      try { jv.load(); } catch (e) {}
+      return;
+    }
+    if (J.hls && window.MediaSource) {
+      var boot = function () {
+        if (!window.Hls || !window.Hls.isSupported()) { jMp4(jv); return; }
+        var h = new window.Hls({ maxBufferLength: 20, capLevelToPlayerSize: true });
+        h.on(window.Hls.Events.ERROR, function (ev, data) {
+          // fatal streaming error → drop to the progressive MP4, same timeline
+          if (data && data.fatal) { try { h.destroy(); } catch (e) {} jMp4(jv); jPlay(); }
+        });
+        h.loadSource(J.hls);
+        h.attachMedia(jv);
+        jv._hls = h;
+      };
+      if (window.Hls) { boot(); return; }
+      var sc = document.createElement("script");
+      sc.src = J.hlsLib;
+      sc.onload = boot;
+      sc.onerror = function () { jMp4(jv); jPlay(); };
+      document.head.appendChild(sc);
+      return;
+    }
+    jMp4(jv);
+  }
+  function jMp4(jv) {
+    jv.src = J.clip;
+    try { jv.load(); } catch (e) {}
+  }
+
+  function jBoot() {
+    var jv = vids[0];
+    // Pacing is BAKED into the stitched file — force rate 1 (the element was
+    // created with defaultPlaybackRate = RATE for chain mode).
+    try { jv.defaultPlaybackRate = 1; jv.playbackRate = 1; } catch (e) {}
+    if (J.poster) jv.poster = J.poster;
+    jAttachSource(jv);
+    // 'playing' = honest playback: reveal the video, clear resume bookkeeping.
+    // (rVFC can fire for a paused poster frame, so it is NOT the signal here.)
+    jv.addEventListener("playing", function () {
+      if (stillsMode) return;
+      resumeArmedIdx = -1; resumeFailedIdx = -1;
+      jv.classList.add("is-on");
+      still.classList.remove("is-on");
+      hideResumePill();
+    });
+    jv.ontimeupdate = jTrack;
+    jv.addEventListener("seeked", function () {
+      if (jPendSeek >= 0) {
+        var k = jPendSeek; jPendSeek = -1;
+        try { jv.currentTime = J.spans[k][0] + 0.01; } catch (e) {}
+        return;   // the queued seek lands next; play resumes on ITS 'seeked'
+      }
+      if (jPendPlay && jv.paused && !stillsMode) { jPendPlay = false; jPlay(); }
+    });
+    jv.onended = function () { idx = LAST; finish(); };
+    // Stall watchdog, journey flavor: 6s of no progress while supposedly
+    // playing → the scene's artwork goes up while the buffer refills; the
+    // moment progress resumes it comes straight back down. A single file has
+    // no advance target, so patience (plus the artwork) IS the recovery.
+    var lastT = -1, lastMove = performance.now(), stallStill = false;
+    setInterval(function () {
+      if (stillsMode || jv.ended) return;
+      var t = jv.currentTime;
+      if (t !== lastT) {
+        lastT = t; lastMove = performance.now();
+        if (stallStill) { stallStill = false; still.classList.remove("is-on"); }
+        return;
+      }
+      if (jv.paused) { lastMove = performance.now(); return; }
+      if (performance.now() - lastMove > 6000 && !stallStill) {
+        stallStill = true;
+        jStillsHere();
+      }
+    }, 500);
+    jv.onerror = function () {
+      // element-level error (bad pipe / decode): if HLS was active, fall to
+      // the progressive MP4 once before settling for artwork
+      if (jv._hls) {
+        try { jv._hls.destroy(); } catch (e) {}
+        jv._hls = null;
+        jMp4(jv); jPlay();
+        return;
+      }
+      jStillsHere();
+    };
+    idx = -1;
+    jTrack();     // announce scene 1 immediately (playhead at 0)
+    jPlay();
   }
 
   function nextSceneIdxOfConn(p) { var q = nextSceneAt(p); return PL[q].si; }
@@ -235,6 +524,10 @@ function mountTapWorld(container, config) {
     explore.classList.remove("is-on");
     if (scene) { markDot(item.si); showCard(scene); }
     else hideCard();
+    // Page hook: fires on every SCENE entry, video and stills mode alike
+    // (config.onScene(sceneIndex)). Used to start the theme music at scene 2 —
+    // the handler latches itself, so re-entries (replay, resume) are its call.
+    if (scene && config.onScene) { try { config.onScene(item.si); } catch (e) {} }
 
     if (stillsMode) {
       if (!scene) { go(nextSceneAt(p)); return; }   // stills skip connectors
@@ -258,6 +551,12 @@ function mountTapWorld(container, config) {
       swapped = true;
       active = 1 - active;
       prepared = -1;
+      // rVFC can fire for a PAUSED first frame (poster paint) — only treat a
+      // swap as "video works again" when we're actually in video mode.
+      if (!stillsMode) {
+        resumeArmedIdx = -1; resumeFailedIdx = -1;
+        still.classList.remove("is-on");           // clear any stall-watchdog still
+      }
       nextV.classList.add("is-on");
       curV.classList.remove("is-on");
       // let the crossfade finish before parking the old player and handing it
@@ -265,18 +564,31 @@ function mountTapWorld(container, config) {
       // outgoing side of the fade)
       setTimeout(function () {
         try { curV.pause(); } catch (e) {}
-        prepare(p + 1);
+        // Kick the NEXT item's download only once the clip ON STAGE can play
+        // through (or is well underway): two multi-MB downloads sharing one
+        // phone connection was starving the active clip mid-scene.
+        whenSafeToPrefetch(nextV, function () { if (idx === p) prepare(p + 1); });
       }, 700);
     }
 
     try { nextV.playbackRate = RATE * ((scene && scene.rate) || 1); } catch (e) {}
     var pr;
-    try { pr = nextV.play(); } catch (e) { enterStillsMode(); go(p); return; }
+    try { pr = nextV.play(); } catch (e) { enterStillsMode(true); go(p); return; }
     onFirstFrame(nextV, swap);
     if (pr && pr.then) {
-      pr.catch(function () {
-        // OS refused playback (Low Power Mode / policy): stills + tap-through.
-        enterStillsMode();
+      pr.catch(function (err) {
+        // A load()/pause() landing on an element whose play() is still pending
+        // rejects that play() with AbortError — a benign teardown race (skip
+        // tap or rapid advance mid-start), NOT an OS block. Treating it as one
+        // was permanently stranding the journey on stills (scrub-engine has
+        // filtered this same race all along).
+        if (err && err.name === "AbortError") return;
+        if (idx !== p) return;   // stale: the journey already moved on
+        if (p === resumeArmedIdx) { resumeArmedIdx = -1; resumeFailedIdx = p; }
+        // OS refused playback (Low Power Mode / policy): stills + tap-through,
+        // recoverably — the resume pill / next tap retries in-gesture.
+        enterStillsMode(true);
+        if (started) showResumePill();   // covers re-entry while already in stills
         var s = scene || S[nextSceneIdxOfConn(p)];
         renderStill(s);
         if (p === LAST) showExplore(s);
@@ -287,6 +599,61 @@ function mountTapWorld(container, config) {
       if (idx !== p) return;
       if (p === LAST) finish(); else go(p + 1);
     };
+
+    // Stall watchdog: a starving connection must never freeze the show with
+    // no exit (there was NO recovery path at all before — a mid-clip network
+    // stall held a half-frame forever). No playback progress for 6s → put the
+    // scene's still up (real artwork + copy, not a frozen frame) while the
+    // decoder keeps trying; if progress resumes the still comes straight back
+    // down. 12s more with nothing, or a fatal media error → advance: later
+    // items may be cached/buffered, and the finale must stay reachable.
+    var lastT = -1, lastMove = performance.now(), stallStill = false;
+    function stallNext() {
+      if (idx !== p) return;
+      if (p === LAST) { renderStill(S[N - 1]); showExplore(S[N - 1]); return; }
+      go(p + 1);
+    }
+    var wd = setInterval(function () {
+      if (idx !== p || stillsMode || nextV.ended) { clearInterval(wd); return; }
+      var t = nextV.currentTime;
+      if (t !== lastT) {
+        lastT = t; lastMove = performance.now();
+        if (stallStill) { stallStill = false; still.classList.remove("is-on"); }
+        return;
+      }
+      var dead = performance.now() - lastMove;
+      if (dead > 6000 && !stallStill) {
+        stallStill = true;
+        renderStill(scene || S[nextSceneIdxOfConn(p)]);
+      } else if (dead > 18000) {
+        clearInterval(wd);
+        stallNext();
+      }
+    }, 500);
+    nextV.onerror = function () {
+      if (idx !== p) return;
+      clearInterval(wd);
+      renderStill(scene || S[nextSceneIdxOfConn(p)]);
+      setTimeout(stallNext, 1200);
+    };
+  }
+
+  // Prefetch gate for swap(): fire cb once the active clip is safe to share
+  // bandwidth with — buffered to the end (readyState 4) or 60% played.
+  function whenSafeToPrefetch(v, cb) {
+    if (v.readyState >= 4) { cb(); return; }
+    var done = false;
+    function fire() {
+      if (done) return; done = true;
+      v.removeEventListener("canplaythrough", fire);
+      v.removeEventListener("timeupdate", part);
+      cb();
+    }
+    function part() {
+      if (v.duration && v.currentTime > v.duration * 0.6) fire();
+    }
+    v.addEventListener("canplaythrough", fire);
+    v.addEventListener("timeupdate", part);
   }
 
   function finish() {
@@ -305,32 +672,69 @@ function mountTapWorld(container, config) {
     startBtn.addEventListener("click", function () {
       startBtn.remove(); startBtn = null; started = true;
       stillsMode = reduce;
+      runtimeStills = false; resumeFailedIdx = -1;
+      hideResumePill();
+      updateTapA11y();
       still.classList.remove("is-on");
       var at = idx < 0 ? 0 : idx;
+      if (J && !stillsMode) { jSeekSeg(at, false); jPlay(); return; }   // in-gesture
       idx = -1; prepared = -1; go(at);
     });
     stage.appendChild(startBtn);
   }
 
-  // ---- input: tap = next scene (connectors are skipped, not replayed) -----
-  tap.addEventListener("click", function () {
-    started = true;
+  // Advance to the next scene (connectors are skipped, not replayed), or
+  // finish() at the finale. Shared by stills-mode tap and ArrowRight/Space —
+  // extracted so keyboard can drive it directly instead of proxying through
+  // tap.click(), since tap.click() no longer advances in video mode (see
+  // below) but deliberate keypresses should still step scenes there.
+  function advance() {
     if (idx >= LAST) { finish(); return; }
     go(nextSceneAt(idx));
+  }
+
+  // ---- input ---------------------------------------------------------------
+  // Tap only advances in stills mode (the autoplay-refused / reduced-motion
+  // fallback, where it's the sole way through the slideshow — "the page
+  // never dead-ends"). In video mode the full-stage tap catcher stays in the
+  // DOM as a passive gesture surface but no longer advances scenes —
+  // accidental taps during video playback were causing jittery skips/pauses.
+  tap.addEventListener("click", function () {
+    started = true;
+    if (stillsMode) {
+      // Runtime stills (LPM-class refusal): this tap is a fresh user
+      // activation — use it to try video again for the scene on stage. If the
+      // last attempt at THIS scene already failed, advance the slideshow
+      // instead, so a device that keeps refusing still moves forward (taps
+      // alternate retry → advance → retry …).
+      if (runtimeStills && !reduce && idx !== resumeFailedIdx) { gestureResume(); return; }
+      advance();
+    }
   });
   skip.addEventListener("click", function () {
     started = true;
+    if (J && !stillsMode) { jSeekSeg(LAST, true); return; }   // seek, keep playing
     if (idx === LAST) { finish(); return; }
     go(LAST);
   });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); tap.click(); }
+    if (e.key === "ArrowRight" || e.key === " ") {
+      e.preventDefault();
+      if (J && !stillsMode) { jSeekSeg(nextSceneAt(idx), true); return; }
+      advance();
+    }
     if (e.key === "ArrowLeft") {
+      if (J && !stillsMode) {
+        e.preventDefault();
+        var jq = prevSceneAt(idx);
+        jSeekSeg(jq < 0 ? 0 : jq, true);
+        return;
+      }
       var q = prevSceneAt(idx);
       if (q >= 0) { e.preventDefault(); go(q); }
     }
   });
 
   // ---- boot --------------------------------------------------------------
-  go(0);
+  if (J) jBoot(); else go(0);
 }

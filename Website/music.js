@@ -20,6 +20,22 @@
   // the attribute (the envelope's classical strings) play from 0:00 as before.
   var START = parseFloat(tag && tag.getAttribute('data-start')) || 0;
 
+  // Spanish track override: data-src-es / data-start-es on the script tag.
+  // Resolved once at load, from the same lang source (?lang= URL override /
+  // localStorage['gywbt-lang']) the aria-label text below reads — this has to
+  // happen BEFORE the existence-check fetch below, since SRC drives that fetch.
+  // EN path is untouched: SRC/START only change when lang is 'es' AND
+  // data-src-es is present on the tag.
+  try {
+    var qLang0 = /[?&]lang=(en|es)/.exec(location.search);
+    var pageLang0 = qLang0 ? qLang0[1] : 'en';   // no stored preference
+    var srcEs0 = tag && tag.getAttribute('data-src-es');
+    if (pageLang0 === 'es' && srcEs0) {
+      SRC = srcEs0;
+      START = parseFloat(tag.getAttribute('data-start-es') || '0');
+    }
+  } catch (e) {}
+
   fetch(SRC, { method: 'HEAD' })
     .then(function (r) { if (r.ok) build(); })
     .catch(function () { /* no file, no button */ });
@@ -27,6 +43,20 @@
   function build() {
     var audio = new Audio(SRC);
     audio.preload = 'none';
+
+    // i18n: aria-label text only, read once at build time from the same
+    // ?lang= URL / localStorage['gywbt-lang'] the letter toggle writes.
+    // Static, not live — this button can exist before the toggle's own
+    // script runs, and re-wiring it to react to a later toggle click isn't
+    // "trivial," so it's out of scope here (see task-spanish-report.md).
+    var mLang = 'en';
+    try {
+      var qm = /[?&]lang=(en|es)/.exec(location.search);
+      mLang = qm ? qm[1] : 'en';   // no stored preference
+    } catch (e) {}
+    var M = mLang === 'es'
+      ? { play: 'Reproducir la canción', pause: 'Pausar la canción' }
+      : { play: 'Play the theme song', pause: 'Pause the theme song' };
 
     // Seek past the intro. With an offset we can't use native looping (it always
     // rewinds to 0), so loop by hand on 'ended'. preload='none' means metadata
@@ -54,7 +84,7 @@
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.id = 'sw-music';
-    btn.setAttribute('aria-label', 'Play the theme song');
+    btn.setAttribute('aria-label', M.play);
     btn.setAttribute('aria-pressed', 'false');
     btn.textContent = '♪';
 
@@ -76,7 +106,7 @@
     function setUi(on) {
       btn.classList.toggle('is-on', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      btn.setAttribute('aria-label', on ? 'Pause the theme song' : 'Play the theme song');
+      btn.setAttribute('aria-label', on ? M.pause : M.play);
     }
 
     function set(on) {
@@ -101,6 +131,11 @@
     window.swMusic = {
       on: function () { var s = null; try { s = sessionStorage.getItem(KEY); } catch (e) {} if (s !== '0') set(true); },
       off: function () { set(false); },
+      // Pause WITHOUT recording a mute: off() writes '0' and would veto every
+      // later on()/swap() for the visit. The journey launches use hush() to
+      // silence the envelope strings for the quiet first scene while leaving
+      // scene 2's music entrance allowed.
+      hush: function () { audio.pause(); setUi(false); },
       // Switch tracks WITHOUT leaving the page (the audio element stays
       // gesture-unlocked, so the new track plays instantly — this is how the
       // in-page kids story keeps music from the envelope tap onward).

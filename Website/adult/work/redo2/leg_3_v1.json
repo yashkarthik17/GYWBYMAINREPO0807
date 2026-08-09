@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1848bde8-e529-4730-bae8-813a3c318c1c",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260806_045143_1848bde8-e529-4730-bae8-813a3c318c1c.mp4",
+    "created_at": 1785991903.812366,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. The camera continues the exact same slow, steady forward drift it was already in, descending gently from the hovering cloud into the heart of the glowing backyard party, the air already completely filled edge-to-edge with an overwhelming, screen-filling blizzard of colorful confetti so dense and constant it never lets up for a single moment of the shot, as the three CRASHERS — small toddler-sized creatures whose bodies are simple ROUND hooded onesies, soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats, the patterns only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print, each with a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood — LEAP one after another off the cloud's front deck and land softly on the lawn in little bounces, tumbling into a playful run, chasing each other in circles around the laughing young adult friends, massive volumes of confetti swirling thick and heavy around the leaping Crashers in every direction and blanketing the entire lawn in deep drifts underfoot, active and free — nobody holds or carries them — while STARRY — a tall golden five-pointed star character with a friendly cartoon face on the star body, large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile, wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots — hops down last with puffy white gloves spread wide and dances behind the group as thick unbroken torrents of confetti keep pouring down all around him, phone flashes popping softly as the friends laugh and snap photos of the chaos through a dense, ever-falling curtain of confetti raining down nonstop through the entire shot with no letup at any point, swirling and glittering through the warm string-light glow, the cloud drifting up and out of frame overhead. The camera eases back and glides forward across the lawn as the friends and the four characters gather together facing the camera, thick confetti still swirling and falling all around them in the air the whole time, on top of the deep drifts of confetti already carpeting the ground underfoot. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift onto the settled group-photo moment, the air around the group still dense and alive with falling, swirling confetti even as everyone holds the pose, ready to continue.\r\nThroughout the ENTIRE shot there are EXACTLY three Crasher mascots in total (one orange zigzag, one blue diamond, one green paint-splatter) and EXACTLY one star mascot in total — the same four characters from the first frame to the last; no additional, duplicate, background, distant or partial mascots ever appear anywhere in the frame at any moment. Every human being in the scene is a young adult in their 20s or 30s — absolutely no human children, no babies, no toddlers, no minors, no middle-aged people, no elderly people, nobody with gray hair, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "fababb75-b82a-497b-9d30-35a70be7869a",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/fababb75-b82a-497b-9d30-35a70be7869a.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "82a371df-affd-4b4c-955d-91f9bb0fa72f",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/82a371df-affd-4b4c-955d-91f9bb0fa72f.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

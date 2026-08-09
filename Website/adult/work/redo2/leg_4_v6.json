@@ -1,0 +1,47 @@
+[
+  {
+    "id": "ecd9e708-7ee6-44f9-928d-a0cb4dfec734",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260806_063640_ecd9e708-7ee6-44f9-928d-a0cb4dfec734.mp4",
+    "created_at": 1785998200.910334,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. The camera continues the exact same slow, steady, perfectly straight forward drift it was already in, gliding in under a pergola wrapped in warm string lights, where a young adult host in his 20s carries a big birthday cake topped with lit sparklers to the long table while a lively circle of young adult friends in their 20s and 30s around the table cheer and clap. The three CRASHERS — small toddler-sized creatures whose bodies are simple ROUND hooded onesies, soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats, the patterns only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print, each with a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood — bounce excitedly at the table edge, one proudly holding up a stack of paper plates. Already well before this moment, Starry has quietly taken up a spot far in the background, over by the string-light fence line, well behind and off to the side of the seated crowd — a small, distant, person-sized figure, the same height as the adult guests, partly hidden behind the standing friends. He stays planted in that one distant background spot, completely still, for the entire rest of the shot: he does not step, walk, hop, lean, reach, or move toward the table or toward the camera at any point, and he never crosses near the lens. The camera itself only ever pushes straight forward and slightly downward toward the cake and candles, tilting away from the sky and away from Starry's distant spot, so his small distant figure simply falls outside the shrinking frame edges on its own as the shot tightens — by the tightest candle close-up he has already been outside the frame for some time, with no part of him — no face, no eyes, no mouth, no hat, no gloved hand — visible anywhere in that shot. That tightest close-up shows only the cake, the candles, their sparkler and flames, and the blurred hands/shoulders of the nearest seated adults, with soft dark out-of-focus foliage and fence above the cake — never a golden star shape of any size anywhere in that framing. At no point does Starry ever appear large, close, behind the cake, above the cake, or looming — he is a small, still, distant background figure the whole time, then simply off-camera. No cloud or clubhouse is in frame. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift facing the cake table, holding on the candlelight, ready to continue.\r\nEvery human being in the scene is a young adult in their 20s or 30s — absolutely no human children, no babies, no toddlers, no minors, no middle-aged people, no elderly people, nobody with gray hair, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "7d5b8018-18ad-4ff9-bf3a-dac1f64b7aad",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/7d5b8018-18ad-4ff9-bf3a-dac1f64b7aad.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "71a4b45c-83ca-42a0-8711-dc375966edc9",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/71a4b45c-83ca-42a0-8711-dc375966edc9.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "3c38ddc7-2492-4f0a-af60-e25eb3be462d",
+    "status": "completed",
+    "display_name": "Seedance 2.0",
+    "job_set_type": "seedance_2_0",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/hf_20260805_090436_3c38ddc7-2492-4f0a-af60-e25eb3be462d.mp4",
+    "created_at": 1785920676.884911,
+    "params": {
+      "width": 1080,
+      "height": 1920,
+      "prompt": "Single continuous cinematic camera move, no cuts. Cinematic photorealistic live-action hybrid footage, vertical 9:16, shallow depth of field, real textures. Smooth, graceful, slow camera motion, subtle parallax. Absolutely no text, no captions, no logos, no lettering or writing on any object. The camera continues the exact same slow, steady forward drift it was already in, descending gently from the hovering cloud into the heart of the glowing backyard party as the three CRASHERS — small toddler-sized creatures whose bodies are simple ROUND hooded onesies, soft round hooded baby-suit silhouettes, NOT shaped like bolts or diamonds or splats, the patterns only the FABRIC PRINT of each onesie: one onesie in orange fabric with a yellow zigzag print, one in blue fabric with a purple diamond print, one in green fabric with a multicolor paint-splatter print, each with a pale round face peeking out of its snug hood, big sparkly jewel-like eyes, rosy round blush cheeks, a tiny happy smile, and a red-and-white striped cone party hat on top of the hood — LEAP one after another off the cloud's front deck and land softly on the lawn in little bounces, tumbling into a playful run, chasing each other in circles around the laughing young adult friends and diving through drifts of confetti, active and free — nobody holds or carries them — while STARRY — a tall golden five-pointed star character with a friendly cartoon face on the star body, large cartoon eyes with white sclera and blue irises, thin black eyebrows, a happy open smile, wearing a pink polka-dot cone party hat, with rainbow-checkered fabric arms and legs, puffy white four-fingered cartoon gloves, and round shiny golden boots — hops down last with puffy white gloves spread wide and dances behind the group, phone flashes popping softly as the friends laugh and snap photos of the chaos, confetti still drifting down through the warm string-light glow, the cloud drifting up and out of frame overhead. The camera eases back and glides forward across the lawn as the friends and the four characters gather together facing the camera. In the final second, all motion eases and the camera settles into a slow, steady, perfectly straight forward drift onto the settled group-photo moment, ready to continue.\nThroughout the ENTIRE shot there are EXACTLY three Crasher mascots in total (one orange zigzag, one blue diamond, one green paint-splatter) and EXACTLY one star mascot in total — the same four characters from the first frame to the last; no additional, duplicate, background, distant or partial mascots ever appear anywhere in the frame at any moment. Every human being in the scene is a young adult in their 20s or 30s — absolutely no human children, no babies, no toddlers, no minors, no middle-aged people, no elderly people, nobody with gray hair, no small human figures of any kind anywhere in frame or background; the only child-sized figures allowed are the three vinyl-toy Crasher mascots in their hooded onesies.",
+      "genre": "auto",
+      "medias": [
+        {
+          "data": {
+            "id": "8c69d6ba-da22-4cfc-9415-865b0e9edb6b",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/8c69d6ba-da22-4cfc-9415-865b0e9edb6b.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        },
+        {
+          "data": {
+            "id": "eb6ff99f-218e-46fe-94aa-168793e14ecc",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3BS0SeFHG5AcAVc0XsdSHFObtj0/eb6ff99f-218e-46fe-94aa-168793e14ecc.png",
+            "type": "media_input"
+          },
+          "role": "end_image"
+        }
+      ],
+      "duration": 8,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": true,
+      "multi_shots": false,
+      "multi_shot_mode": "custom",
+      "multi_prompt": [],
+      "speedramp": "auto",
+      "reference_elements": [],
+      "prompt_language": "en",
+      "mode": "std",
+      "model": "seedance_2_0",
+      "bitrate_mode": "standard"
+    }
+  }
+]

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>scene-2 music timing test</title>
+<style>html,body{margin:0}iframe{width:100vw;height:100vh;border:0}</style>
+</head>
+<body>
+<script>
+  // Loads a real journey page in a same-origin iframe and reports, once a
+  // second, whether the theme music is playing (#sw-music.is-on) alongside
+  // which scene card is up. Run Chrome with
+  // --autoplay-policy=no-user-gesture-required so audio can actually start.
+  const Q = new URLSearchParams(location.search);
+  const PAGE = Q.get("page") || "/story.html";
+  const KEY = Q.get("key") || "music";
+  const t0 = performance.now();
+  const f = document.createElement("iframe");
+  f.src = PAGE;
+  document.body.appendChild(f);
+  // ?envelope=kids|adult: drive the envelope front door — skip the intro,
+  // open the seal, then tap the requested journey button (the in-page launch
+  // path, which shares the engine+config but goes through hush() etc.)
+  const ENV = Q.get("envelope");
+  if (ENV) {
+    let opened = false, launched = false;
+    setInterval(() => {
+      let d; try { d = f.contentDocument; } catch (e) { return; }
+      if (!d) return;
+      if (!opened) {
+        const btn = d.getElementById("toggle");
+        if (btn && !btn.hidden) { opened = true; btn.click(); btn.click(); return; }
+        // a tap during the intro text skips to the envelope; next tick opens
+        const tapl = d.getElementById("taplayer");
+        if (tapl) tapl.click();
+        return;
+      }
+      if (!launched) {
+        const sheet = d.getElementById("sheet");
+        if (sheet && sheet.getAttribute("aria-hidden") === "false") {
+          launched = true;
+          d.querySelector(ENV === "adult" ? ".sheet-btn.grown" : ".sheet-btn.kids").click();
+        }
+      }
+    }, 700);
+  }
+
+  // ?replay=1: when the finale explore appears, click "Play it again" once —
+  // asserts the replay cycle (quiet scene 1 again, theme re-enters at scene 2)
+  let replayed = false;
+  if (Q.get("replay")) setInterval(() => {
+    if (replayed) return;
+    let d; try { d = f.contentDocument; } catch (e) { return; }
+    if (!d || !d.querySelector(".tw-explore.is-on")) return;
+    const btn = d.querySelector(".tw-explore__replay") || d.querySelector('.tw-explore a[href="#top"]');
+    if (btn) { replayed = true; btn.click(); }
+  }, 800);
+
+  // ?mash=N: at t=2s dispatch N rapid ArrowRight keydowns (120ms apart) at the
+  // iframe document — the "clicking through too quickly" repro. ?mashSpace=1
+  // uses Space instead.
+  const MASH = parseInt(Q.get("mash") || "0", 10);
+  const MASHAT = parseInt(Q.get("mashAt") || "2000", 10);
+  if (MASH) setTimeout(() => {
+    let d; try { d = f.contentDocument; } catch (e) { return; }
+    if (!d) return;
+    const key = Q.get("mashSpace") ? " " : "ArrowRight";
+    let n = 0;
+    const iv = setInterval(() => {
+      if (++n > MASH) { clearInterval(iv); return; }
+      d.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
+    }, 120);
+  }, MASHAT);
+
+  setInterval(() => {
+    let d;
+    try { d = f.contentDocument; } catch (e) { return; }
+    if (!d) return;
+    const card = d.querySelector(".tw-card__title");
+    const audioBtn = d.querySelector("#sw-music");
+    const v = d.querySelector(".tw video.is-on") || d.querySelector(".tw video");
+    const rec = {
+      t: +((performance.now() - t0) / 1000).toFixed(1),
+      musicOn: !!d.querySelector("#sw-music.is-on"),
+      btnExists: !!audioBtn,
+      replayed: replayed,
+      card: card ? card.textContent : "",
+      dot: Array.from(d.querySelectorAll(".tw-dots i")).findIndex(x => x.className === "is-here"),
+      vT: v ? +v.currentTime.toFixed(2) : -1,
+      vPaused: v ? v.paused : null,
+      vEnded: v ? v.ended : null,
+      vSeeking: v ? v.seeking : null,
+      vErr: v && v.error ? v.error.code : 0,
+      vRS: v ? v.readyState : -1,
+      hlsLevel: v && v._hls ? v._hls.currentLevel : -9,
+      hlsLevels: v && v._hls && v._hls.levels ? v._hls.levels.length : 0,
+      stillOn: !!d.querySelector(".tw-still.is-on"),
+    };
+    fetch("/report?s=" + KEY, { method: "POST", body: JSON.stringify(rec) }).catch(() => {});
+  }, 1000);
+</script>
+</body>
+</html>

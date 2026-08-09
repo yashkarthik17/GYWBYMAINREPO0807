@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>tap-engine glitch harness</title>
+<style>html,body{margin:0;background:#131F3E;}</style>
+<script>
+/* ---- instrumentation + scenario setup (runs before the engine) ----------
+   Scenarios (?s=):
+     normal — baseline: everything served plain; journey should reach finale
+     abort  — clips via /slow/1500/: play() pending long enough that an
+              ArrowRight at t=400ms load()s over it -> AbortError race
+     lpm    — models Low Power Mode: play() resolves only within 1s of a real
+              user gesture, else rejects NotAllowedError
+     stall  — scene 2 via /stall/0.4/: download hangs mid-clip
+   The engine file is the REAL ../../tap-engine.js (kids) or
+   ../../adult/tap-engine.js with ?engine=adult.
+-------------------------------------------------------------------------- */
+window.__log = [];
+window.__t0 = performance.now();
+function LOG(m) {
+  const e = ((performance.now() - window.__t0) / 1000).toFixed(2) + "s " + m;
+  window.__log.push(e);
+  console.log("[harness] " + e);
+}
+const Q = new URLSearchParams(location.search);
+const SCEN = Q.get("s") || "normal";
+LOG("scenario=" + SCEN);
+
+if (SCEN === "lpm" || SCEN === "jlpm") {
+  (function () {
+    let lastGesture = -1e9;
+    ["pointerdown", "touchend", "click", "keydown"].forEach(t =>
+      window.addEventListener(t, () => { lastGesture = performance.now(); }, true));
+    const orig = HTMLMediaElement.prototype.play;
+    HTMLMediaElement.prototype.play = function () {
+      if (performance.now() - lastGesture < 1000) {
+        LOG("play() ALLOWED (in-gesture) " + (this.currentSrc || this.src).split("/").pop());
+        return orig.apply(this);
+      }
+      LOG("play() REJECTED NotAllowedError " + (this.currentSrc || this.src).split("/").pop());
+      return Promise.reject(new DOMException(
+        "play() failed because the user didn't interact with the document first.",
+        "NotAllowedError"));
+    };
+  })();
+}
+</script>
+</head>
+<body>
+<div id="world"></div>
+<script>
+  // load the real engine, then mount
+  const ENGINE = Q.get("engine") === "adult" ? "../../adult/tap-engine.js" : "../../tap-engine.js";
+  const s = document.createElement("script");
+  s.src = ENGINE + "?t=" + Date.now();
+  s.onload = boot;
+  document.body.appendChild(s);
+
+  // journey-mode scenarios (j*): mount with a stitched tiny file + spans
+  const JSPANS = [[0, 1.425], [1.425, 2.275], [2.275, 3.625], [3.625, 4.475], [4.475, 5.86]];
+  function journeyUrl() {
+    const base = "work/glitch-harness/clips/journey.mp4";
+    if (SCEN === "jskip") return "/slow/1500/" + base;
+    if (SCEN === "jstall") return "/stall/0.3/" + base;
+    return "/" + base;
+  }
+
+  function clipUrl(name) {
+    const base = "work/glitch-harness/clips/" + name;
+    if (SCEN === "abort") return "/slow/1500/" + base;
+    if (SCEN === "stall" && name === "s2.mp4") return "/stall/0.4/" + base;
+    if (SCEN === "drip") return "/drip/25/" + base;
+    return "/" + base;
+  }
+
+  function boot() {
+    const cfg = {
+      sections: [
+        { id: "a", title: "Scene 1", eyebrow: "one",
+          clip: clipUrl("s1.mp4"), poster: "/work/glitch-harness/clips/p1.webp",
+          still: "/work/glitch-harness/clips/p1.webp", accent: "#E84A9B" },
+        { id: "b", title: "Scene 2", eyebrow: "two",
+          clip: clipUrl("s2.mp4"), poster: "/work/glitch-harness/clips/p2.webp",
+          still: "/work/glitch-harness/clips/p2.webp", accent: "#FFC93C" },
+        { id: "c", title: "Scene 3", eyebrow: "three",
+          clip: clipUrl("s3.mp4"), poster: "/work/glitch-harness/clips/p3.webp",
+          still: "/work/glitch-harness/clips/p3.webp", accent: "#8fdcc0",
+          explore: { links: [{ label: "Play again", href: "#top" }] } },
+      ],
+      connectors: [clipUrl("c1.mp4"), clipUrl("c2.mp4")],
+    };
+    if (SCEN.startsWith("j")) {
+      cfg.journey = { clip: journeyUrl(), poster: "/work/glitch-harness/clips/pj.webp", spans: JSPANS };
+      // jhls: exercise the adaptive pipe (hls.js over MSE) with a tiny ladder
+      if (SCEN === "jhls") cfg.journey.hls = "/work/glitch-harness/clips/hls/journey.m3u8";
+    }
+    mountTapWorld(document.getElementById("world"), cfg);
+    LOG("mounted engine=" + ENGINE + " journey=" + SCEN.startsWith("j"));
+    instrument();
+    drive();
+  }
+
+  // headless auto-driver: plays the user role per scenario, and POSTs the
+  // probe to the harness server once a second so no CDP hookup is needed.
+  function drive() {
+    setInterval(() => {
+      if (!window.__probe) return;
+      fetch("/report?s=" + SCEN + "-" + (Q.get("engine") || "kids"),
+        { method: "POST", body: JSON.stringify(window.__probe()) }).catch(() => {});
+    }, 1000);
+
+    if (SCEN === "abort" || SCEN === "jskip") {
+      // deterministic race: SKIP (a started=true path, like a real tap) while
+      // the video's play() is still pending on the slow connection
+      setTimeout(() => {
+        LOG("driver: click Skip during pending play");
+        document.querySelector(".tw-skip").click();
+      }, 400);
+    }
+    if (SCEN === "lpm" || SCEN === "jlpm") {
+      // the initial autoplay was rejected (no gesture yet) -> overlay should
+      // be up; "tap" it (counts as a gesture for the LPM play() wrapper)
+      setTimeout(() => {
+        const b = document.querySelector(".tw-start");
+        LOG("driver: overlay " + (b ? "present, clicking" : "MISSING"));
+        if (b) b.click();
+      }, 2500);
+      // later, after the silent mid-journey degrade, give a fresh gesture tap
+      // (a fixed engine should use it to resume video; the broken one just
+      // steps the stills slideshow)
+      setTimeout(() => {
+        LOG("driver: fresh gesture tap on stage");
+        const t = document.querySelector(".tw-tap");
+        if (t) t.click();
+      }, 10000);
+    }
+  }
+
+  function instrument() {
+    const still = document.querySelector(".tw-still");
+    const vids = Array.from(document.querySelectorAll(".tw video"));
+    new MutationObserver(() => {
+      LOG("still.is-on=" + still.classList.contains("is-on"));
+    }).observe(still, { attributes: true, attributeFilter: ["class"] });
+    vids.forEach((v, i) => {
+      ["play", "pause", "ended", "error", "waiting", "stalled"].forEach(ev =>
+        v.addEventListener(ev, () => LOG("v" + i + " " + ev + " t=" + v.currentTime.toFixed(2) +
+          " src=" + (v.currentSrc || "").split("/").pop())));
+    });
+    new MutationObserver(() => {
+      const ex = document.querySelector(".tw-explore");
+      if (ex && ex.classList.contains("is-on")) LOG("EXPLORE shown (finale reached)");
+    }).observe(document.querySelector(".tw"), { attributes: true, subtree: true, attributeFilter: ["class"] });
+
+    window.__probe = function () {
+      const card = document.querySelector(".tw-card__title");
+      const startBtn = document.querySelector(".tw-start");
+      return {
+        scenario: SCEN,
+        stillOn: still.classList.contains("is-on"),
+        stillSrc: (still.src || "").split("/").pop(),
+        startOverlay: !!startBtn,
+        resumePill: !!document.querySelector(".tw-resume.is-on"),
+        exploreOn: !!document.querySelector(".tw-explore.is-on"),
+        cardTitle: card ? card.textContent : "",
+        vids: vids.map(v => ({
+          on: v.classList.contains("is-on"), paused: v.paused, ended: v.ended,
+          t: +v.currentTime.toFixed(2), rs: v.readyState,
+          hlsLevel: v._hls ? v._hls.currentLevel : -9,
+          src: (v.currentSrc || "").split("/").pop(),
+        })),
+        log: window.__log.slice(-25),
+      };
+    };
+  }
+</script>
+</body>
+</html>

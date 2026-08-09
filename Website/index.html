@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Glad You Were Born Today</title>
 <meta name="description" content="You're invited. Break the seal to enter the world of Starry &amp; the Crashers — the crew that crashes boring birthday parties and makes them unforgettable." />
 <link rel="icon" type="image/png" href="/assets/favicon.png?v=1" />
@@ -90,7 +90,8 @@
   /* while the envelope is sealed, the invisible choices must swallow NOTHING —
      visibility (not just opacity) also stops clicks landing through the paper */
   .sheet-actions[aria-hidden="true"]{visibility:hidden;}
-  .sheet-actions[aria-hidden="true"] .sheet-btn{pointer-events:none;}
+  .sheet-actions[aria-hidden="true"] .sheet-btn,
+  .sheet-actions[aria-hidden="true"] .sheet-lang{pointer-events:none;}
   .sheet-btn{
     pointer-events:auto;cursor:pointer;text-decoration:none;text-align:center;
     background:linear-gradient(180deg,#FFFDF6,#F8F0DA);
@@ -107,6 +108,20 @@
   .sheet-btn:hover{box-shadow:0 7px 18px rgba(80,54,10,.24);}
   .sheet-btn.grown{color:#8E2233;}
   .sheet-btn.kids{color:#2E4396;}
+
+  /* small, unobtrusive language switch below the two choices — shows the
+     OTHER language as the clickable option (Español while reading English,
+     English while reading Spanish) */
+  .sheet-lang{
+    pointer-events:auto;cursor:pointer;text-decoration:none;
+    background:transparent;border:0;color:#8E2233;opacity:.68;
+    font-family:var(--font-display);font-size:11px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;
+    padding:6px 10px;margin-top:-2px;
+    transition:opacity .16s ease;
+  }
+  .sheet-lang:hover{opacity:1;}
+  .sheet-lang:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
 
   .loading{
     position:fixed;inset:0;z-index:7;display:flex;align-items:center;justify-content:center;
@@ -160,23 +175,24 @@
   </div>
 
   <div class="cine" id="cine" aria-hidden="true">
-    <p class="cine__line">The first new birthday song in a hundred years&nbsp;&mdash;</p>
     <p class="cine__line">Glad You Were Born Today</p>
+    <p class="cine__line">Have a happier birthday</p>
   </div>
 
   <!-- choices live on the letter; positioned by JS, revealed when the envelope opens -->
   <div class="sheet-actions" id="sheet" aria-hidden="true">
     <a class="sheet-btn grown" href="adult/">Glad You Were Born Today</a>
     <a class="sheet-btn kids" href="story.html">Glad You Were Born Today (Kids)</a>
+    <button type="button" class="sheet-lang" id="langToggle">Versión en español</button>
   </div>
 
   <canvas id="confetti"></canvas>
   <div class="loading" id="loading">Folding the paper…</div>
 
-  <script src="music.js?v=15" data-once data-src="assets/audio/envelope.wav?v=1"></script>
-  <script src="tap-engine.js?v=8"></script>
-  <script src="story-config.js?v=1"></script>
-  <script src="adult-config.js?v=1"></script>
+  <script src="music.js?v=19" data-once data-src="assets/audio/envelope.wav?v=1"></script>
+  <script src="tap-engine.js?v=17"></script>
+  <script src="story-config.js?v=11"></script>
+  <script src="adult-config.js?v=20"></script>
   <script>
   (function () {
     "use strict";
@@ -203,6 +219,50 @@
     const stage = document.querySelector(".stage");
 
     v.poster = CFG.poster; v.src = CFG.src;
+
+    // ---- Letter language: the envelope ALWAYS greets in English (user
+    // direction) — intro slides and letter buttons boot EN on every visit,
+    // including coming back from a journey (popstate reloads this page). The
+    // stored localStorage choice no longer drives THIS page's boot; only an
+    // explicit ?lang= URL does. Toggling still writes the choice, so the
+    // inner pages (story.html, adult/, store …) keep following it, and the
+    // chosen lang still travels into the in-page kids/adult launches below.
+    function gywbtLang() {
+      const m = /[?&]lang=(en|es)/.exec(location.search);
+      if (m) return m[1];
+      return "en";
+    }
+    const LETTER_TXT = {
+      en: { grown: "Glad You Were Born Today", kids: "Glad You Were Born Today (Kids)", toggle: "Versión en español", toggleAria: "Cambiar a la versión en español",
+            cine1: "Glad You Were Born Today", cine2: "Have a happier birthday" },
+      es: { grown: "Feliz que naciste hoy", kids: "Feliz que naciste hoy (Para Niños)", toggle: "English version", toggleAria: "Switch to the English version",
+            cine1: "Feliz que naciste hoy", cine2: "Que tengas un cumpleaños más feliz" },
+    };
+    let lang = gywbtLang();
+    const grownLink = document.querySelector(".sheet-btn.grown");
+    const kidsLink = document.querySelector(".sheet-btn.kids");
+    const langBtn = document.getElementById("langToggle");
+    function renderLetter() {
+      const T = LETTER_TXT[lang];
+      grownLink.textContent = T.grown;
+      kidsLink.textContent = T.kids;
+      langBtn.textContent = T.toggle;
+      langBtn.setAttribute("aria-label", T.toggleAria);
+      // The intro slides speak the same language as the letter (they render
+      // before the toggle is reachable, so this covers the load-time lang;
+      // a later toggle only matters for a replayed visit).
+      const lines = document.querySelectorAll(".cine__line");
+      if (lines.length >= 2) { lines[0].textContent = T.cine1; lines[1].textContent = T.cine2; }
+      // No stored preference: the chosen language travels ONLY via explicit
+      // URLs (fallback navigation) and the in-page launch's lang argument.
+      grownLink.href = lang === "es" ? "adult/?lang=es" : "adult/";
+      kidsLink.href = lang === "es" ? "story.html?lang=es" : "story.html";
+    }
+    renderLetter();
+    langBtn.addEventListener("click", function () {
+      lang = lang === "es" ? "en" : "es";
+      renderLetter();
+    });
 
     // ---- State machine ----
     let state = "loading";
@@ -351,7 +411,10 @@
       }
     };
 
-    tap.addEventListener("click", () => toggle());
+    // A tap on the envelope only OPENS it (or skips the intro text). Sealing
+    // back is the button's job alone — misclicks around the kids/adult choices
+    // were closing the letter and forcing the re-open wait (QA).
+    tap.addEventListener("click", () => { if (state !== "open") toggle(); });
     btn.addEventListener("click", () => toggle());
     if (/[?&]open/.test(location.search))        // QA shortcut, same as old page
       v.addEventListener("loadeddata", () => setTimeout(() => { v.currentTime = CFG.anchor; setState("sealed"); toggle(); }, 300), { once: true });
@@ -360,21 +423,30 @@
     // element gesture-unlocked, so the music switches to the kids track and
     // plays through the story with zero extra taps (a navigation would let
     // the browser re-mute everything).
+    // Tear the envelope down for real when a journey takes over: release the
+    // envelope video's decoder and remove the nodes — hidden layers with a
+    // parked video were still costing memory/compositing on older devices (QA).
+    function teardownEnvelope() {
+      try { v.pause(); v.removeAttribute("src"); v.load(); } catch (err) {}
+      [stage, document.querySelector(".ui"), sheetEl, cineEl,
+       document.getElementById("confetti"), loading].forEach(function (n) {
+        if (n && n.parentNode) n.parentNode.removeChild(n);
+      });
+    }
+
     document.querySelector(".sheet-btn.kids").addEventListener("click", function (e) {
       if (!window.mountTapWorld || !window.GYWBT_KIDS_CONFIG) return;  // fall back to story.html
       e.preventDefault();
-      if (window.swMusic && window.swMusic.swap) window.swMusic.swap("assets/audio/theme.wav?v=2", 11);
+      // Quiet first scene: silence the envelope strings WITHOUT recording a
+      // mute — the config's onScene hook starts the kids theme when scene 2
+      // arrives (the audio element stays gesture-unlocked from the seal tap).
+      if (window.swMusic && window.swMusic.hush) window.swMusic.hush();
       try { history.pushState({ kids: 1 }, "", "#kids"); } catch (err) {}
-      stage.style.display = "none";
-      document.querySelector(".ui").style.display = "none";
-      sheetEl.style.display = "none";
-      cineEl.style.display = "none";
-      document.getElementById("confetti").style.display = "none";
-      try { v.pause(); } catch (err) {}
+      teardownEnvelope();
       var world = document.createElement("div");
       world.id = "world";
       document.body.appendChild(world);
-      mountTapWorld(world, GYWBT_KIDS_CONFIG());
+      mountTapWorld(world, GYWBT_KIDS_CONFIG(lang));
     });
 
     // ---- In-page adult journey: same trick as the kids story above — launch
@@ -386,24 +458,18 @@
     document.querySelector(".sheet-btn.grown").addEventListener("click", function (e) {
       if (!window.GYWBT_ADULT_CONFIG) return;  // fall back to adult/
       e.preventDefault();
-      // adult/ has its OWN theme track (a different file from the kids/root one
-      // above, despite the shared filename) — music.js's default src on that page
-      // resolves to /adult/assets/audio/theme.wav?v=3, so swap to that exact URL
-      // here too, or a direct /adult/ visit and this in-page launch play different songs.
-      if (window.swMusic && window.swMusic.swap) window.swMusic.swap("/adult/assets/audio/theme.wav?v=3", 11);
+      // Quiet first scene, same as the kids launch above: hush the strings and
+      // let the adult config's onScene hook start the adult theme (its own
+      // /adult/ track, a different file despite the shared filename) at scene 2.
+      if (window.swMusic && window.swMusic.hush) window.swMusic.hush();
       try { history.pushState({ adult: 1 }, "", "#adult"); } catch (err) {}
-      stage.style.display = "none";
-      document.querySelector(".ui").style.display = "none";
-      sheetEl.style.display = "none";
-      cineEl.style.display = "none";
-      document.getElementById("confetti").style.display = "none";
-      try { v.pause(); } catch (err) {}
+      teardownEnvelope();
       var world = document.createElement("div");
       world.id = "world";
       document.body.appendChild(world);
       var engine = document.createElement("script");
-      engine.src = "adult/tap-engine.js?v=10";
-      engine.onload = function () { mountTapWorld(world, GYWBT_ADULT_CONFIG()); };
+      engine.src = "adult/tap-engine.js?v=19";
+      engine.onload = function () { mountTapWorld(world, GYWBT_ADULT_CONFIG(lang)); };
       engine.onerror = function () { location.href = "adult/"; };
       document.body.appendChild(engine);
     });
