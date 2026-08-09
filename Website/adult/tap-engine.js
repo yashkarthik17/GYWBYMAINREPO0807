@@ -531,17 +531,30 @@ function mountTapWorld(container, config) {
     }
     // Tab switcher / background: iOS can keep the page "visible" while it
     // sits in the tab switcher, so visibilitychange alone misses it — window
-    // blur covers that. Mute the clip rather than pausing it (playback state
-    // belongs to the watchdog/seek machinery) and restore only if WE muted.
-    var jHideMuted = false;
-    var jLcMute = function () { if (!jv.muted) { jHideMuted = true; try { jv.muted = true; } catch (e) {} } };
-    var jLcRestore = function () { if (jHideMuted) { jHideMuted = false; try { jv.muted = false; } catch (e) {} } };
+    // blur covers that. Pause AND mute the clip while away: pausing is safe
+    // (the stall watchdog treats a paused video as healthy) and it stops the
+    // timeline advancing — otherwise onTime fires the music entrance at 6s
+    // behind the visitor's back and they come back mid-story. The mute stays
+    // as a backstop for any path that resumes playback while hidden. Restore
+    // both only if WE changed them.
+    var jHideMuted = false, jHidePaused = false;
+    var jLcAway = function () {
+      if (!jv.muted) { jHideMuted = true; try { jv.muted = true; } catch (e) {} }
+      if (!jv.paused && !jv.ended) { jHidePaused = true; try { jv.pause(); } catch (e) {} }
+    };
+    var jLcBack = function () {
+      if (jHideMuted) { jHideMuted = false; try { jv.muted = false; } catch (e) {} }
+      if (jHidePaused) { jHidePaused = false; if (!stillsMode && !jv.ended) jPlay(); }
+    };
     document.addEventListener("visibilitychange", function () {
-      if (document.hidden) jLcMute(); else jLcRestore();
+      if (document.hidden) jLcAway(); else jLcBack();
     });
-    window.addEventListener("blur", jLcMute);
-    window.addEventListener("focus", jLcRestore);
-    window.addEventListener("pagehide", function () { jHideMuted = false; try { jv.muted = true; } catch (e) {} });
+    window.addEventListener("blur", jLcAway);
+    window.addEventListener("focus", jLcBack);
+    window.addEventListener("pagehide", function () {
+      jHideMuted = false; jHidePaused = false;
+      try { jv.muted = true; jv.pause(); } catch (e) {}
+    });
     jv.ontimeupdate = jTrack;
     jv.addEventListener("seeked", function () {
       if (jPendSeek >= 0) {

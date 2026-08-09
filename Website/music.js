@@ -111,6 +111,14 @@
 
     function set(on) {
       if (on) {
+        // Never START audio while the page is hidden or unfocused (tab
+        // switcher, another window): the journeys' 6-second music entrance
+        // fires from the video timeline, which can land while the visitor is
+        // away. Defer — lcResume() re-runs this on return.
+        if (document.hidden || (document.hasFocus && !document.hasFocus())) {
+          pausedByHide = true;
+          return;
+        }
         seekIntoTrack();
         audio.play().then(function () {
           setUi(true);
@@ -136,7 +144,10 @@
     function lcResume() {
       if (pausedByHide) {
         pausedByHide = false;
-        audio.play().catch(function () { setUi(false); });
+        // set(true) rather than a bare play(): a start DEFERRED while hidden
+        // never lit the ♪ button, so the honest path fixes UI + storage too.
+        // (If focus still lags visibility, set() just re-defers to 'focus'.)
+        set(true);
       }
     }
     document.addEventListener('visibilitychange', function () {
