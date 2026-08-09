@@ -125,6 +125,24 @@
 
     btn.addEventListener('click', function () { set(audio.paused); });
 
+    // Page lifecycle: iOS lets a pure-audio element keep playing when Safari
+    // is backgrounded or swiped away (it treats it like a music app). Pause
+    // the song whenever the page hides and resume only if WE paused it; a
+    // real exit (pagehide) stops it outright.
+    var pausedByHide = false;
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        if (!audio.paused) { pausedByHide = true; audio.pause(); }
+      } else if (pausedByHide) {
+        pausedByHide = false;
+        audio.play().catch(function () { setUi(false); });
+      }
+    });
+    window.addEventListener('pagehide', function () {
+      pausedByHide = false;
+      try { audio.pause(); } catch (e) {}
+    });
+
     // Public hook: pages can start/stop the theme inside their own user-gesture
     // handlers (the envelope page starts it the moment the seal is tapped).
     // Respects an explicit mute from earlier in the visit.
