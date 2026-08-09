@@ -126,18 +126,24 @@
     btn.addEventListener('click', function () { set(audio.paused); });
 
     // Page lifecycle: iOS lets a pure-audio element keep playing when Safari
-    // is backgrounded or swiped away (it treats it like a music app). Pause
-    // the song whenever the page hides and resume only if WE paused it; a
-    // real exit (pagehide) stops it outright.
+    // is backgrounded, swiped away, or sitting in the tab switcher — and in
+    // the switcher the page can still count as "visible", so visibilitychange
+    // alone doesn't cover it; window blur does. Pause whenever the page hides
+    // OR loses focus and resume only if WE paused it; a real exit (pagehide)
+    // stops it outright.
     var pausedByHide = false;
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) {
-        if (!audio.paused) { pausedByHide = true; audio.pause(); }
-      } else if (pausedByHide) {
+    function lcPause() { if (!audio.paused) { pausedByHide = true; audio.pause(); } }
+    function lcResume() {
+      if (pausedByHide) {
         pausedByHide = false;
         audio.play().catch(function () { setUi(false); });
       }
+    }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) lcPause(); else lcResume();
     });
+    window.addEventListener('blur', lcPause);
+    window.addEventListener('focus', lcResume);
     window.addEventListener('pagehide', function () {
       pausedByHide = false;
       try { audio.pause(); } catch (e) {}

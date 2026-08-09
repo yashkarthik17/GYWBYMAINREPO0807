@@ -529,6 +529,19 @@ function mountTapWorld(container, config) {
       window.addEventListener("pointerdown", jUnmute);
       window.addEventListener("touchend", jUnmute, { passive: true });
     }
+    // Tab switcher / background: iOS can keep the page "visible" while it
+    // sits in the tab switcher, so visibilitychange alone misses it — window
+    // blur covers that. Mute the clip rather than pausing it (playback state
+    // belongs to the watchdog/seek machinery) and restore only if WE muted.
+    var jHideMuted = false;
+    var jLcMute = function () { if (!jv.muted) { jHideMuted = true; try { jv.muted = true; } catch (e) {} } };
+    var jLcRestore = function () { if (jHideMuted) { jHideMuted = false; try { jv.muted = false; } catch (e) {} } };
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) jLcMute(); else jLcRestore();
+    });
+    window.addEventListener("blur", jLcMute);
+    window.addEventListener("focus", jLcRestore);
+    window.addEventListener("pagehide", function () { jHideMuted = false; try { jv.muted = true; } catch (e) {} });
     jv.ontimeupdate = jTrack;
     jv.addEventListener("seeked", function () {
       if (jPendSeek >= 0) {
