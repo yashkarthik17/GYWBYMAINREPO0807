@@ -59,6 +59,16 @@ var GYWBT_ADULT_STRINGS = {
       mission: 'Our Mission',
       again: 'Play it again',
     },
+    flyhome: {
+      eyebrow: 'Home time',
+      title: 'The cloud comes back for them.',
+      body: 'The Crashers pile aboard and sail over the sleeping streets, trailing gold.',
+    },
+    goodnight: {
+      eyebrow: 'Somewhere below',
+      title: 'One kid sees them go.',
+      body: 'A wave from the deck — then they streak off among the stars. Until the next birthday.',
+    },
   },
   es: {
     hint: 'haz scroll para colarte en la fiesta',
@@ -95,6 +105,16 @@ var GYWBT_ADULT_STRINGS = {
       store: 'La Tienda de Fiestas',
       mission: 'Nuestra Misión',
       again: 'Verlo de nuevo',
+    },
+    flyhome: {
+      eyebrow: 'Hora de volver',
+      title: 'La nube vuelve por ellos.',
+      body: 'Los Crashers suben a bordo y navegan sobre las calles dormidas, dejando una estela dorada.',
+    },
+    goodnight: {
+      eyebrow: 'En algún lugar allá abajo',
+      title: 'Un niño los ve pasar.',
+      body: 'Un saludo desde la cubierta — y salen disparados entre las estrellas. Hasta el próximo cumpleaños.',
     },
   },
 };
@@ -171,14 +191,17 @@ function GYWBT_ADULT_CONFIG(lang) {
       // Adaptive delivery: the HLS ladder starts low and shifts up with the
       // connection (Safari native / hls.js elsewhere); the MP4s below remain
       // the no-MSE fallback. Regenerate with work/hls_package.py.
-      hls: '/adult/assets/vid/hls/journey-tap/journey.m3u8',
-      hlsMobile: '/adult/assets/vid/hls/journey-tap-m/journey.m3u8',
-      clip: '/adult/assets/vid/journey-tap.mp4?v=8',
-      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=12',
+      hls: '/adult/assets/vid/hls/journey-tap/journey.m3u8?v=2',
+      hlsMobile: '/adult/assets/vid/hls/journey-tap-m/journey.m3u8?v=2',
+      clip: '/adult/assets/vid/journey-tap.mp4?v=9',
+      clipMobile: '/adult/assets/vid/journey-tap-m.mp4?v=13',
       poster: '/adult/assets/journey-tap-poster.webp?v=1',
       posterMobile: '/adult/assets/journey-tap-m-poster.webp?v=1',
-      spans: [[0.0,6.0],[6.0,13.9],[13.9,17.5],[17.5,21.5],[21.5,27.07]],
-      spansMobile: [[0.0,7.0],[7.0,13.0],[13.0,16.5],[16.5,23.0],[23.0,30.03]],
+      // take-C fly-off appended behind a 0.6s star-sky crossfade (desktop
+      // join at 26.45, mobile at 29.37 — spans flip cards at the fade's
+      // midpoint). boarding+ascent = flyhome, kid+speed-off = goodnight.
+      spans: [[0.0,6.0],[6.0,13.9],[13.9,17.5],[17.5,21.5],[21.5,26.75],[26.75,33.95],[33.95,41.49]],
+      spansMobile: [[0.0,7.0],[7.0,13.0],[13.0,16.5],[16.5,23.0],[23.0,29.67],[29.67,36.87],[36.87,44.41]],
     },
     sections: [
       { id:'quiet', label:'The Quiet Party',
@@ -219,7 +242,21 @@ function GYWBT_ADULT_CONFIG(lang) {
         scroll:2, linger:0.45, rate:1.1,
         accent:'#5BB8F0', eyebrow: T.sendoff.eyebrow,
         title: T.sendoff.title,
-        body: T.sendoff.body,
+        body: T.sendoff.body },
+      { id:'flyhome', label:'The Ride Home',
+        still:'/adult/assets/flyhome.webp?v=1', poster:'/adult/assets/flyhome-poster.webp?v=1', posterMobile:'/adult/assets/flyhome-poster-m.webp?v=1',
+        clip:'/adult/assets/vid/journey-tap.mp4?v=9', clipMobile:'/adult/assets/vid/journey-tap-m.mp4?v=13',
+        scroll:1.6, rate:1.0,
+        accent:'#e6c46a', eyebrow: T.flyhome.eyebrow,
+        title: T.flyhome.title,
+        body: T.flyhome.body },
+      { id:'goodnight', label:'Good Night',
+        still:'/adult/assets/goodnight.webp?v=1', poster:'/adult/assets/goodnight-poster.webp?v=1', posterMobile:'/adult/assets/goodnight-poster-m.webp?v=1',
+        clip:'/adult/assets/vid/journey-tap.mp4?v=9', clipMobile:'/adult/assets/vid/journey-tap-m.mp4?v=13',
+        scroll:2, linger:0.45, rate:1.0,
+        accent:'#5BB8F0', eyebrow: T.goodnight.eyebrow,
+        title: T.goodnight.title,
+        body: T.goodnight.body,
         explore:{ label: T.sendoff.exploreLabel, links:[
           { label: T.sendoff.hire, href: LNG('/hire.html') },
           { label: T.sendoff.crew, href: LNG('/adult/crew.html') },
