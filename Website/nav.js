@@ -79,7 +79,7 @@
     ".gnav-mini:focus-visible{outline:3px solid #FFC93C;outline-offset:2px;}",
     ".gnav__panel.gnav__panel--mini{top:64px;left:auto;right:14px;right:max(14px,env(safe-area-inset-right));",
     "  width:280px;width:min(320px,calc(100vw - 28px));border-radius:16px;",
-    "  border:1px solid rgba(255,255,255,.14);box-shadow:0 18px 40px rgba(0,0,0,.45);",
+    "  background:rgb(18,27,52);border:1px solid rgba(255,255,255,.14);box-shadow:0 18px 40px rgba(0,0,0,.45);",
     "  max-height:calc(100vh - 84px);overflow:auto;-webkit-overflow-scrolling:touch;padding:4px 16px 8px;}",
     ".gnav{position:fixed;top:0;left:0;right:0;z-index:1000;height:56px;display:flex;align-items:center;",
     "  justify-content:space-between;gap:12px;padding:0 clamp(14px,4vw,40px);",
@@ -90,6 +90,9 @@
     ".gnav--overlay{background:rgba(18,27,52,.42);border-bottom:1px solid rgba(255,255,255,.10);box-shadow:none;}",
     ".gnav--overlay .gnav__links{display:none !important;}",
     ".gnav--overlay .gnav__burger{display:flex !important;}",
+    // menu open: the glass bar turns SOLID so the dropdown reads as one
+    // opaque sheet instead of floating over the video (user direction)
+    ".gnav--overlay.gnav--open{background:rgb(18,27,52);border-bottom-color:rgba(230,196,106,.35);box-shadow:0 4px 18px rgba(0,0,0,.35);}",
     ".gnav a{text-decoration:none;}",
     ".gnav__brand{display:flex;align-items:center;gap:9px;color:#1D2B50;font-weight:700;font-size:1.02rem;white-space:nowrap;min-width:0;}",
     ".gnav--dark .gnav__brand{color:#FFF9EE;}",
@@ -219,6 +222,7 @@
     function setOpen(open) {
       burger.setAttribute("aria-expanded", open ? "true" : "false");
       panel.classList.toggle("open", open);
+      bar.classList.toggle("gnav--open", open);
     }
     burger.addEventListener("click", function () {
       setOpen(burger.getAttribute("aria-expanded") !== "true");

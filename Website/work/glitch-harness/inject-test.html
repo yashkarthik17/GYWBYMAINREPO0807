@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>nav inject test</title></head>
+<body>
+<script>
+  // Mimics teardownEnvelope(): append nav.js with data-overlay AFTER the
+  // document has finished loading, then report what mounted into the DOM so
+  // a headless --dump-dom run can grep the outcome.
+  setTimeout(function () {
+    var s = document.createElement('script');
+    s.src = '/nav.js?v=9';
+    s.setAttribute('data-overlay', '');
+    document.body.appendChild(s);
+    var iv = setInterval(function () {
+      var bar = document.querySelector('.gnav');
+      if (!bar) return;
+      clearInterval(iv);
+      var d = document.createElement('div');
+      d.id = 'probe-result';
+      d.textContent = 'GNAV[' + bar.className + '] BURGER:' + !!bar.querySelector('.gnav__burger') +
+        ' BRAND:' + !!bar.querySelector('.gnav__brand') + ' PANEL:' + !!document.querySelector('.gnav__panel--mini');
+      document.body.appendChild(d);
+    }, 100);
+  }, 50);
+</script>
+</body></html>
