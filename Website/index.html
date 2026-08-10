@@ -432,6 +432,16 @@
        document.getElementById("confetti"), loading].forEach(function (n) {
         if (n && n.parentNode) n.parentNode.removeChild(n);
       });
+      // The envelope itself carries no nav (user direction) — but the journey
+      // that replaces it should match the standalone pages, so the overlay
+      // header (logo + stacked menu) mounts the moment a journey takes over.
+      // Injected AFTER the launch's pushState so nav.js reads the right lang.
+      if (!document.querySelector(".gnav")) {
+        var nav = document.createElement("script");
+        nav.src = "nav.js?v=9";
+        nav.setAttribute("data-overlay", "");
+        document.body.appendChild(nav);
+      }
     }
 
     document.querySelector(".sheet-btn.kids").addEventListener("click", function (e) {
@@ -441,7 +451,7 @@
       // mute — the config's onScene hook starts the kids theme when scene 2
       // arrives (the audio element stays gesture-unlocked from the seal tap).
       if (window.swMusic && window.swMusic.hush) window.swMusic.hush();
-      try { history.pushState({ kids: 1 }, "", "#kids"); } catch (err) {}
+      try { history.pushState({ kids: 1 }, "", (lang === "es" ? "?lang=es" : "") + "#kids"); } catch (err) {}
       teardownEnvelope();
       var world = document.createElement("div");
       world.id = "world";
@@ -462,7 +472,7 @@
       // let the adult config's onScene hook start the adult theme (its own
       // /adult/ track, a different file despite the shared filename) at scene 2.
       if (window.swMusic && window.swMusic.hush) window.swMusic.hush();
-      try { history.pushState({ adult: 1 }, "", "#adult"); } catch (err) {}
+      try { history.pushState({ adult: 1 }, "", (lang === "es" ? "?lang=es" : "") + "#adult"); } catch (err) {}
       teardownEnvelope();
       var world = document.createElement("div");
       world.id = "world";
